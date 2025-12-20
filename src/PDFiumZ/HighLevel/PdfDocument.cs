@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PDFiumZ.HighLevel;
 
@@ -153,6 +156,27 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
+    /// Asynchronously opens a PDF document from a file path.
+    /// </summary>
+    /// <param name="filePath">Path to the PDF file.</param>
+    /// <param name="password">Optional password for encrypted PDFs (UTF-8 or Latin-1).</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a new <see cref="PdfDocument"/> instance.</returns>
+    /// <exception cref="ArgumentNullException">filePath is null.</exception>
+    /// <exception cref="FileNotFoundException">File does not exist.</exception>
+    /// <exception cref="PdfLoadException">Failed to load PDF (invalid format, wrong password, etc.).</exception>
+    /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public static Task<PdfDocument> OpenAsync(string filePath, string? password = null, CancellationToken cancellationToken = default)
+    {
+        return Task.Run(() =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            return Open(filePath, password);
+        }, cancellationToken);
+    }
+
+    /// <summary>
     /// Opens a PDF document from a byte array in memory.
     /// </summary>
     /// <param name="data">PDF file content as byte array.</param>
@@ -191,6 +215,27 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
+    /// Asynchronously opens a PDF document from a byte array in memory.
+    /// </summary>
+    /// <param name="data">PDF file content as byte array.</param>
+    /// <param name="password">Optional password for encrypted PDFs.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a new <see cref="PdfDocument"/> instance.</returns>
+    /// <exception cref="ArgumentNullException">data is null.</exception>
+    /// <exception cref="ArgumentException">data is empty.</exception>
+    /// <exception cref="PdfLoadException">Failed to load PDF.</exception>
+    /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public static Task<PdfDocument> OpenFromMemoryAsync(byte[] data, string? password = null, CancellationToken cancellationToken = default)
+    {
+        return Task.Run(() =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            return OpenFromMemory(data, password);
+        }, cancellationToken);
+    }
+
+    /// <summary>
     /// Gets a page by zero-based index.
     /// </summary>
     /// <param name="index">Zero-based page index.</param>
@@ -210,6 +255,37 @@ public sealed class PdfDocument : IDisposable
             throw new PdfException($"Failed to load page {index}.");
 
         return new PdfPage(pageHandle, index, this);
+    }
+
+    /// <summary>
+    /// Gets a range of consecutive pages.
+    /// </summary>
+    /// <param name="startIndex">Zero-based index of the first page to get.</param>
+    /// <param name="count">Number of pages to get.</param>
+    /// <returns>An enumerable of <see cref="PdfPage"/> instances that must be disposed.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">startIndex or count is invalid.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to load one or more pages.</exception>
+    public IEnumerable<PdfPage> GetPages(int startIndex, int count)
+    {
+        ThrowIfDisposed();
+
+        if (startIndex < 0 || startIndex >= PageCount)
+            throw new ArgumentOutOfRangeException(nameof(startIndex),
+                $"Start index {startIndex} is out of range (0-{PageCount - 1}).");
+
+        if (count <= 0)
+            throw new ArgumentOutOfRangeException(nameof(count), "Count must be positive.");
+
+        if (startIndex + count > PageCount)
+            throw new ArgumentOutOfRangeException(nameof(count),
+                $"Range ({startIndex} + {count}) exceeds page count ({PageCount}).");
+
+        // Load pages lazily
+        for (int i = startIndex; i < startIndex + count; i++)
+        {
+            yield return GetPage(i);
+        }
     }
 
     /// <summary>
@@ -316,6 +392,69 @@ public sealed class PdfDocument : IDisposable
                 $"Page index {index} is out of range (0-{PageCount - 1}).");
 
         fpdf_edit.FPDFPageDelete(_handle!, index);
+    }
+
+    /// <summary>
+    /// Deletes multiple pages at the specified indices.
+    /// Pages are deleted in descending order to maintain correct indices during deletion.
+    /// </summary>
+    /// <param name="pageIndices">Array of zero-based page indices to delete.</param>
+    /// <exception cref="ArgumentNullException">pageIndices is null.</exception>
+    /// <exception cref="ArgumentException">pageIndices is empty or contains invalid indices.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    public void DeletePages(params int[] pageIndices)
+    {
+        if (pageIndices is null)
+            throw new ArgumentNullException(nameof(pageIndices));
+        if (pageIndices.Length == 0)
+            throw new ArgumentException("Page indices array cannot be empty.", nameof(pageIndices));
+
+        ThrowIfDisposed();
+
+        // Validate all indices first
+        foreach (var index in pageIndices)
+        {
+            if (index < 0 || index >= PageCount)
+                throw new ArgumentException($"Page index {index} is out of range (0-{PageCount - 1}).", nameof(pageIndices));
+        }
+
+        // Sort indices in descending order to avoid index shifts during deletion
+        var sortedIndices = pageIndices.Distinct().OrderByDescending(i => i).ToArray();
+
+        // Delete pages in descending order
+        foreach (var index in sortedIndices)
+        {
+            fpdf_edit.FPDFPageDelete(_handle!, index);
+        }
+    }
+
+    /// <summary>
+    /// Deletes a range of consecutive pages.
+    /// </summary>
+    /// <param name="startIndex">Zero-based index of the first page to delete.</param>
+    /// <param name="count">Number of pages to delete.</param>
+    /// <exception cref="ArgumentOutOfRangeException">startIndex or count is invalid.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    public void DeletePages(int startIndex, int count)
+    {
+        ThrowIfDisposed();
+
+        if (startIndex < 0 || startIndex >= PageCount)
+            throw new ArgumentOutOfRangeException(nameof(startIndex),
+                $"Start index {startIndex} is out of range (0-{PageCount - 1}).");
+
+        if (count <= 0)
+            throw new ArgumentOutOfRangeException(nameof(count), "Count must be positive.");
+
+        if (startIndex + count > PageCount)
+            throw new ArgumentOutOfRangeException(nameof(count),
+                $"Range ({startIndex} + {count}) exceeds page count ({PageCount}).");
+
+        // Delete pages in descending order to avoid index shifts
+        for (int i = startIndex + count - 1; i >= startIndex; i--)
+        {
+            fpdf_edit.FPDFPageDelete(_handle!, i);
+        }
     }
 
     /// <summary>
@@ -426,6 +565,25 @@ public sealed class PdfDocument : IDisposable
         var result = fpdf_save.FPDF_SaveAsCopy(_handle!, writer.GetWriteStruct(), 0);
         if (result == 0)
             throw new PdfException($"Failed to save PDF to '{filePath}'.");
+    }
+
+    /// <summary>
+    /// Asynchronously saves the document to a file.
+    /// </summary>
+    /// <param name="filePath">Path where to save the PDF file.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    /// <exception cref="ArgumentNullException">filePath is null.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to save document.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public Task SaveToFileAsync(string filePath, CancellationToken cancellationToken = default)
+    {
+        return Task.Run(() =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            SaveToFile(filePath);
+        }, cancellationToken);
     }
 
     /// <summary>
