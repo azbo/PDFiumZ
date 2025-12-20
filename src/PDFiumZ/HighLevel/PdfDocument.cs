@@ -92,6 +92,28 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
+    /// Gets whether this document contains interactive form fields.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    public bool HasForm
+    {
+        get
+        {
+            ThrowIfDisposed();
+            // Check if document has form dictionary by creating a form handle
+            // If form handle is null, document doesn't have forms
+            var formHandle = CreateFormHandle();
+            if (formHandle is null || formHandle.__Instance == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            DestroyFormHandle(formHandle);
+            return true;
+        }
+    }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="PdfDocument"/> class.
     /// Internal constructor - factory methods only.
     /// </summary>
@@ -404,6 +426,39 @@ public sealed class PdfDocument : IDisposable
         var result = fpdf_save.FPDF_SaveAsCopy(_handle!, writer.GetWriteStruct(), 0);
         if (result == 0)
             throw new PdfException($"Failed to save PDF to '{filePath}'.");
+    }
+
+    /// <summary>
+    /// Flattens all form fields and annotations in the document, converting them to static content.
+    /// This operation is irreversible and makes the form non-interactive.
+    /// </summary>
+    /// <param name="printMode">If true, flattens for print mode (includes all content). If false, flattens for normal display mode (may exclude print-only content).</param>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to flatten forms on one or more pages.</exception>
+    public void FlattenForm(bool printMode = false)
+    {
+        ThrowIfDisposed();
+
+        int flag = printMode ? 1 : 0; // FLAT_PRINT = 1, FLAT_NORMALDISPLAY = 0
+        var failures = new System.Collections.Generic.List<int>();
+
+        // Flatten each page
+        for (int i = 0; i < PageCount; i++)
+        {
+            using var page = GetPage(i);
+            var result = fpdf_flatten.FPDFPageFlatten(page._handle!, flag);
+
+            // Result values: FLATTEN_SUCCESS = 0, FLATTEN_NOTHINGTODO = 1, FLATTEN_FAIL = 2
+            if (result == 2) // FLATTEN_FAIL
+            {
+                failures.Add(i);
+            }
+        }
+
+        if (failures.Count > 0)
+        {
+            throw new PdfException($"Failed to flatten forms on {failures.Count} page(s): {string.Join(", ", failures)}");
+        }
     }
 
     /// <summary>
