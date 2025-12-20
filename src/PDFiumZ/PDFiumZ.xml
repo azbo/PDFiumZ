@@ -117,6 +117,229 @@
             <param name="message">The error message that explains the reason for the exception.</param>
             <param name="inner">The exception that is the cause of the current exception.</param>
         </member>
+        <member name="T:PDFiumZ.HighLevel.GenericAnnotation">
+            <summary>
+            Represents a generic PDF annotation for types that don't have specialized implementations yet.
+            This class provides basic annotation functionality while specific annotation types are being implemented.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.GenericAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,PDFiumZ.HighLevel.PdfAnnotationType,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.GenericAnnotation"/> class.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfAnnotation">
+            <summary>
+            Base class for all PDF annotations.
+            Manages the lifecycle of a PDFium annotation handle and provides common functionality.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfAnnotation.Index">
+            <summary>
+            Gets the zero-based index of this annotation in the page.
+            Returns -1 if the annotation is not yet added to a page.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfAnnotation.Type">
+            <summary>
+            Gets the type of this annotation.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfAnnotation.Bounds">
+            <summary>
+            Gets or sets the bounding rectangle of the annotation in page coordinates.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfAnnotation.Color">
+            <summary>
+            Gets or sets the color of the annotation in ARGB format.
+            Not all annotation types support color.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,PDFiumZ.HighLevel.PdfAnnotationType,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfAnnotation"/> class.
+            Internal constructor - created by derived classes only.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfAnnotation.GetColorInternal">
+            <summary>
+            Gets the color of the annotation. Derived classes can override this.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfAnnotation.SetColorInternal(System.UInt32)">
+            <summary>
+            Sets the color of the annotation. Derived classes can override this.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfAnnotation.ThrowIfDisposed">
+            <summary>
+            Throws an exception if the annotation has been disposed.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfAnnotation.Dispose">
+            <summary>
+            Disposes the annotation and releases the native handle.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfAnnotation.Dispose(System.Boolean)">
+            <summary>
+            Disposes the annotation.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfAnnotation.Finalize">
+            <summary>
+            Finalizer.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfAnnotationType">
+            <summary>
+            Represents the type of a PDF annotation.
+            Based on the PDF specification (ISO 32000) and PDFium annotation types.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Unknown">
+            <summary>
+            Unknown or unsupported annotation type.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Text">
+            <summary>
+            Text annotation (sticky note/comment).
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Link">
+            <summary>
+            Link annotation (hyperlink).
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.FreeText">
+            <summary>
+            Free text annotation (text box with border).
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Line">
+            <summary>
+            Line annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Square">
+            <summary>
+            Square (rectangle) annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Circle">
+            <summary>
+            Circle (ellipse) annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Polygon">
+            <summary>
+            Polygon annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.PolyLine">
+            <summary>
+            Polyline annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Highlight">
+            <summary>
+            Highlight annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Underline">
+            <summary>
+            Underline annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Squiggly">
+            <summary>
+            Squiggly underline annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.StrikeOut">
+            <summary>
+            Strikeout annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Stamp">
+            <summary>
+            Stamp annotation (rubber stamp).
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Caret">
+            <summary>
+            Caret annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Ink">
+            <summary>
+            Ink annotation (freehand drawing).
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Popup">
+            <summary>
+            Popup annotation (associated with parent annotation).
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.FileAttachment">
+            <summary>
+            File attachment annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Sound">
+            <summary>
+            Sound annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Movie">
+            <summary>
+            Movie annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Widget">
+            <summary>
+            Widget annotation (form field).
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Screen">
+            <summary>
+            Screen annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.PrinterMark">
+            <summary>
+            Printer mark annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.TrapNet">
+            <summary>
+            Trap network annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Watermark">
+            <summary>
+            Watermark annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.ThreeD">
+            <summary>
+            3D annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.Redact">
+            <summary>
+            Redaction annotation.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotationType.XfaWidget">
+            <summary>
+            XFA widget annotation.
+            </summary>
+        </member>
         <member name="T:PDFiumZ.HighLevel.PdfBookmark">
             <summary>
             Represents a bookmark (outline item) in a PDF document.
@@ -587,6 +810,60 @@
             Signature field (digital signature).
             </summary>
         </member>
+        <member name="T:PDFiumZ.HighLevel.PdfHighlightAnnotation">
+            <summary>
+            Represents a highlight annotation in a PDF document.
+            Highlight annotations mark selected text with a colored background.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfHighlightAnnotation.Create(PDFiumZ.HighLevel.PdfPage,PDFiumZ.HighLevel.PdfRectangle,System.UInt32)">
+            <summary>
+            Creates a new highlight annotation on the specified page.
+            </summary>
+            <param name="page">The page to add the annotation to.</param>
+            <param name="bounds">The bounding rectangle of the highlight.</param>
+            <param name="color">The highlight color in ARGB format (default: yellow with 50% opacity).</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfHighlightAnnotation"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">page is null.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create annotation.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfHighlightAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfHighlightAnnotation"/> class.
+            Internal constructor - use factory methods to create annotations.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfHighlightAnnotation.GetQuadPoints">
+            <summary>
+            Gets the quad points that define the highlighted regions.
+            Each quad point represents a quadrilateral region (typically a text selection).
+            </summary>
+            <returns>An array of rectangles representing the highlighted regions.</returns>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfHighlightAnnotation.SetQuadPoints(PDFiumZ.HighLevel.PdfRectangle[])">
+            <summary>
+            Sets the quad points that define the highlighted regions.
+            Each rectangle is converted to a quadrilateral for the highlight.
+            </summary>
+            <param name="rectangles">The rectangles to highlight.</param>
+            <exception cref="T:System.ArgumentNullException">rectangles is null.</exception>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to set quad points.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfHighlightAnnotation.AddQuadPoint(PDFiumZ.HighLevel.PdfRectangle)">
+            <summary>
+            Adds a rectangular region to the highlight.
+            </summary>
+            <param name="rectangle">The rectangle to add.</param>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to add quad point.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfHighlightAnnotation.CreateQuadFromRectangle(PDFiumZ.HighLevel.PdfRectangle)">
+            <summary>
+            Creates a FS_QUADPOINTSF structure from a rectangle.
+            </summary>
+        </member>
         <member name="T:PDFiumZ.HighLevel.PdfImage">
             <summary>
             Represents a rendered PDF page as a bitmap.
@@ -987,6 +1264,55 @@
             Releases all resources used by the <see cref="T:PDFiumZ.HighLevel.PdfPage"/>.
             </summary>
         </member>
+        <member name="M:PDFiumZ.HighLevel.PdfPage.GetAnnotationCount">
+            <summary>
+            Gets the number of annotations on this page.
+            </summary>
+            <returns>The number of annotations.</returns>
+            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfPage.GetAnnotation(System.Int32)">
+            <summary>
+            Gets an annotation by its index.
+            </summary>
+            <param name="index">The zero-based index of the annotation.</param>
+            <returns>The annotation at the specified index, or null if not found or unsupported type.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">index is negative.</exception>
+            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfPage.GetAnnotations">
+            <summary>
+            Gets all annotations on the page.
+            </summary>
+            <returns>An enumerable of all annotations on the page.</returns>
+            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfPage.GetAnnotations``1">
+            <summary>
+            Gets all annotations of a specific type.
+            </summary>
+            <typeparam name="T">The type of annotation to retrieve.</typeparam>
+            <returns>An enumerable of annotations of the specified type.</returns>
+            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfPage.RemoveAnnotation(System.Int32)">
+            <summary>
+            Removes an annotation from the page by its index.
+            </summary>
+            <param name="index">The zero-based index of the annotation to remove.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">index is negative.</exception>
+            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to remove annotation.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfPage.RemoveAnnotation(PDFiumZ.HighLevel.PdfAnnotation)">
+            <summary>
+            Removes the specified annotation from the page.
+            </summary>
+            <param name="annotation">The annotation to remove.</param>
+            <exception cref="T:System.ArgumentNullException">annotation is null.</exception>
+            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to remove annotation.</exception>
+        </member>
         <member name="T:PDFiumZ.HighLevel.PdfPageObjectType">
             <summary>
             Represents the type of a PDF page object.
@@ -1085,6 +1411,162 @@
             <summary>
             Gets the bottom edge coordinate.
             </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfStampAnnotation">
+            <summary>
+            Represents a stamp annotation (rubber stamp) in a PDF document.
+            Stamp annotations display a predefined icon or graphic representing a rubber stamp.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfStampAnnotation.Create(PDFiumZ.HighLevel.PdfPage,PDFiumZ.HighLevel.PdfRectangle,PDFiumZ.HighLevel.PdfStampType)">
+            <summary>
+            Creates a new stamp annotation at the specified location.
+            </summary>
+            <param name="page">The page to add the annotation to.</param>
+            <param name="bounds">The bounding rectangle of the stamp.</param>
+            <param name="stampType">The type of stamp to create.</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfStampAnnotation"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">page is null.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create annotation.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfStampAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,System.Int32)">
+            <summary>
+            Initializes a new instance from an existing annotation handle.
+            Internal constructor - used when loading existing annotations.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfStampAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,System.Int32,PDFiumZ.HighLevel.PdfStampType)">
+            <summary>
+            Initializes a new instance for a newly created annotation.
+            Internal constructor - used when creating new annotations.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfStampAnnotation.StampType">
+            <summary>
+            Gets the type of stamp for this annotation.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfStampAnnotation.ReadStampType">
+            <summary>
+            Reads the stamp type from an existing annotation.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfStampAnnotation.SetStampIcon(PDFiumZ.HighLevel.PdfStampType)">
+            <summary>
+            Sets the stamp icon name based on the stamp type.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfStampType">
+            <summary>
+            Represents the type of PDF stamp annotation.
+            Based on standard PDF stamp types defined in the PDF specification.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStampType.Approved">
+            <summary>
+            Approved stamp.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStampType.Experimental">
+            <summary>
+            Experimental stamp.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStampType.NotApproved">
+            <summary>
+            Not Approved stamp.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStampType.AsIs">
+            <summary>
+            As Is stamp.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStampType.Expired">
+            <summary>
+            Expired stamp.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStampType.NotForPublicRelease">
+            <summary>
+            Not For Public Release stamp.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStampType.Confidential">
+            <summary>
+            Confidential stamp.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStampType.Final">
+            <summary>
+            Final stamp.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStampType.Sold">
+            <summary>
+            Sold stamp.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStampType.Departmental">
+            <summary>
+            Departmental stamp.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStampType.ForComment">
+            <summary>
+            For Comment stamp.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStampType.TopSecret">
+            <summary>
+            Top Secret stamp.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStampType.ForPublicRelease">
+            <summary>
+            For Public Release stamp.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStampType.Draft">
+            <summary>
+            Draft stamp.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfTextAnnotation">
+            <summary>
+            Represents a text annotation (sticky note/comment) in a PDF document.
+            Text annotations appear as small icons that display a popup with text content when clicked.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTextAnnotation.Create(PDFiumZ.HighLevel.PdfPage,System.Double,System.Double,System.String)">
+            <summary>
+            Creates a new text annotation at the specified position.
+            </summary>
+            <param name="page">The page to add the annotation to.</param>
+            <param name="x">The X coordinate of the annotation icon.</param>
+            <param name="y">The Y coordinate of the annotation icon.</param>
+            <param name="contents">The text content of the annotation.</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfTextAnnotation"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">page is null.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create annotation.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTextAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfTextAnnotation"/> class.
+            Internal constructor - use factory methods to create annotations.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfTextAnnotation.Contents">
+            <summary>
+            Gets or sets the text content of the annotation.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfTextAnnotation.Author">
+            <summary>
+            Gets or sets the author of the annotation.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfTextSearchResult">
             <summary>
