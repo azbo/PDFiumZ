@@ -131,20 +131,24 @@ namespace PDFiumCoreDemo
                 document.InsertBlankPage(0, 595, 842);
                 Console.WriteLine($"   After insert: {document.PageCount} page(s)");
 
-                // Delete the last page
-                document.DeletePage(document.PageCount - 1);
+                // Insert another blank page at the end
+                document.InsertBlankPage(document.PageCount, 595, 842);
+                Console.WriteLine($"   After 2nd insert: {document.PageCount} page(s)");
+
+                // Delete the first blank page we inserted
+                document.DeletePage(0);
                 Console.WriteLine($"   After delete: {document.PageCount} page(s)");
 
-                // Move first page to the end (swap pages)
+                // Move last page to position 1 (after original content)
                 if (document.PageCount > 1)
                 {
-                    document.MovePages(new[] { 0 }, document.PageCount - 1);
-                    Console.WriteLine($"   Moved first page to end");
+                    document.MovePages(new[] { document.PageCount - 1 }, 1);
+                    Console.WriteLine($"   Moved last page to position 1");
                 }
 
-                // Save modified document
+                // Save modified document (should have: original page, blank page)
                 document.SaveToFile("output-modified.pdf");
-                Console.WriteLine($"   Saved: output-modified.pdf\n");
+                Console.WriteLine($"   Saved: output-modified.pdf (original page + blank page)\n");
             }
             finally
             {
