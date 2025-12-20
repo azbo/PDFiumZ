@@ -5,9 +5,8 @@ namespace PDFiumZ.HighLevel;
 
 /// <summary>
 /// Represents a form field annotation in a PDF page.
-/// Provides read-only access to form field properties.
-/// Note: This is a simplified implementation that provides basic form field information.
-/// For interactive form filling, use the low-level fpdf_annot API.
+/// Provides read and write access to form field properties.
+/// Supports setting values, checking/unchecking boxes, and selecting options.
 /// </summary>
 public sealed unsafe class PdfFormField : IDisposable
 {
@@ -240,6 +239,159 @@ public sealed unsafe class PdfFormField : IDisposable
         var displayName = !string.IsNullOrEmpty(AlternateName) ? AlternateName : Name;
         return $"{FieldType}: {displayName} = {Value}";
     }
+
+    #region Write Operations
+
+    /// <summary>
+    /// Sets the value of the form field (for text fields, combo boxes, etc.).
+    /// </summary>
+    /// <param name="value">The new value to set.</param>
+    /// <exception cref="ArgumentNullException">value is null.</exception>
+    /// <exception cref="ObjectDisposedException">The form field has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to set the value.</exception>
+    public void SetValue(string value)
+    {
+        if (value is null)
+            throw new ArgumentNullException(nameof(value));
+
+        ThrowIfDisposed();
+
+        // Convert to UTF-16LE (ushort array)
+        var utf16Array = new ushort[value.Length + 1]; // +1 for null terminator
+        for (int i = 0; i < value.Length; i++)
+        {
+            utf16Array[i] = value[i];
+        }
+        utf16Array[value.Length] = 0; // Null terminator
+
+        // Set the "V" (Value) key using FPDFAnnotSetStringValue
+        var result = fpdf_annot.FPDFAnnotSetStringValue(_annotHandle!, "V", ref utf16Array[0]);
+        if (result == 0)
+        {
+            throw new PdfException("Failed to set form field value.");
+        }
+
+        // Clear cached value
+        _value = null;
+
+        // Update the annotation's appearance
+        fpdf_annot.FPDFAnnotSetAP(_annotHandle!, 0, ref utf16Array[0]); // 0 = Normal appearance
+    }
+
+    /// <summary>
+    /// Sets the checked state for checkboxes and radio buttons.
+    /// </summary>
+    /// <param name="isChecked">True to check the box, false to uncheck.</param>
+    /// <exception cref="ObjectDisposedException">The form field has been disposed.</exception>
+    /// <exception cref="InvalidOperationException">This field is not a checkbox or radio button.</exception>
+    /// <exception cref="PdfException">Failed to set the checked state.</exception>
+    public void SetChecked(bool isChecked)
+    {
+        ThrowIfDisposed();
+
+        if (FieldType != PdfFormFieldType.CheckBox && FieldType != PdfFormFieldType.RadioButton)
+        {
+            throw new InvalidOperationException($"SetChecked can only be called on CheckBox or RadioButton fields. Current field type: {FieldType}");
+        }
+
+        // For checkboxes and radio buttons, we set the appearance state (AS)
+        // "Yes" or "Off" are common values, but we need to check what values this field supports
+        var stateValue = isChecked ? "Yes" : "Off";
+        var utf16Array = new ushort[stateValue.Length + 1];
+        for (int i = 0; i < stateValue.Length; i++)
+        {
+            utf16Array[i] = stateValue[i];
+        }
+        utf16Array[stateValue.Length] = 0;
+
+        var result = fpdf_annot.FPDFAnnotSetStringValue(_annotHandle!, "AS", ref utf16Array[0]);
+        if (result == 0)
+        {
+            throw new PdfException("Failed to set checkbox/radio button state.");
+        }
+    }
+
+    /// <summary>
+    /// Sets the selected option for combo boxes and list boxes (single selection).
+    /// </summary>
+    /// <param name="index">Zero-based index of the option to select.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
+    /// <exception cref="ObjectDisposedException">The form field has been disposed.</exception>
+    /// <exception cref="InvalidOperationException">This field is not a combo box or list box.</exception>
+    /// <exception cref="PdfException">Failed to select the option.</exception>
+    public void SetSelectedOption(int index)
+    {
+        ThrowIfDisposed();
+
+        if (FieldType != PdfFormFieldType.ComboBox && FieldType != PdfFormFieldType.ListBox)
+        {
+            throw new InvalidOperationException($"SetSelectedOption can only be called on ComboBox or ListBox fields. Current field type: {FieldType}");
+        }
+
+        var optionCount = GetOptionCount();
+        if (index < 0 || index >= optionCount)
+            throw new ArgumentOutOfRangeException(nameof(index),
+                $"Option index {index} is out of range (0-{optionCount - 1}).");
+
+        // Use FORM_SetIndexSelected to select the option
+        var result = fpdf_formfill.FORM_SetIndexSelected(_formHandle!, _page._handle!, index, 1);
+        if (result == 0)
+        {
+            throw new PdfException($"Failed to select option at index {index}.");
+        }
+
+        // Clear cached value
+        _value = null;
+    }
+
+    /// <summary>
+    /// Sets multiple selected options for list boxes (multiple selection).
+    /// </summary>
+    /// <param name="indices">Array of zero-based indices of options to select.</param>
+    /// <exception cref="ArgumentNullException">indices is null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Any index is out of range.</exception>
+    /// <exception cref="ObjectDisposedException">The form field has been disposed.</exception>
+    /// <exception cref="InvalidOperationException">This field is not a list box.</exception>
+    /// <exception cref="PdfException">Failed to select options.</exception>
+    public void SetSelectedOptions(int[] indices)
+    {
+        if (indices is null)
+            throw new ArgumentNullException(nameof(indices));
+
+        ThrowIfDisposed();
+
+        if (FieldType != PdfFormFieldType.ListBox)
+        {
+            throw new InvalidOperationException($"SetSelectedOptions can only be called on ListBox fields. Current field type: {FieldType}");
+        }
+
+        var optionCount = GetOptionCount();
+
+        // First, deselect all options
+        for (int i = 0; i < optionCount; i++)
+        {
+            fpdf_formfill.FORM_SetIndexSelected(_formHandle!, _page._handle!, i, 0);
+        }
+
+        // Then select the specified indices
+        foreach (var index in indices)
+        {
+            if (index < 0 || index >= optionCount)
+                throw new ArgumentOutOfRangeException(nameof(indices),
+                    $"Option index {index} is out of range (0-{optionCount - 1}).");
+
+            var result = fpdf_formfill.FORM_SetIndexSelected(_formHandle!, _page._handle!, index, 1);
+            if (result == 0)
+            {
+                throw new PdfException($"Failed to select option at index {index}.");
+            }
+        }
+
+        // Clear cached value
+        _value = null;
+    }
+
+    #endregion
 
     /// <summary>
     /// Releases all resources used by the <see cref="PdfFormField"/>.
