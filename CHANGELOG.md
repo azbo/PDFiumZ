@@ -85,9 +85,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `PdfPage.GetPageObject(index)` - Get page object information
   - Extracted images can be saved using SkiaSharp extension methods
 
+- **Annotation Support**
+  - `PdfAnnotation` - Base class for PDF annotations with IDisposable pattern
+  - `PdfAnnotationType` - Enumeration of 27 PDF annotation types
+  - `PdfHighlightAnnotation` - Highlight annotation with quad points support
+    - Create highlights with custom colors (ARGB format)
+    - Set/Get quad points for multi-line highlighting
+  - `PdfTextAnnotation` - Text annotation (sticky note)
+    - Create text annotations at specific coordinates
+    - Set/Get contents and author properties
+  - `PdfStampAnnotation` - Stamp annotation (rubber stamp)
+    - 14 standard stamp types (Draft, Approved, Confidential, etc.)
+    - Custom positioning and sizing
+  - `GenericAnnotation` - Fallback wrapper for unsupported annotation types
+  - Annotation management methods on `PdfPage`:
+    - `GetAnnotationCount()` - Get total annotation count
+    - `GetAnnotation(index)` - Get annotation by index
+    - `GetAnnotations()` - Enumerate all annotations
+    - `GetAnnotations<T>()` - Filter annotations by type
+    - `RemoveAnnotation(index)` - Remove annotation by index
+    - `RemoveAnnotation(annotation)` - Remove specific annotation
+  - Supports reading existing annotations and creating new ones
+  - All annotation properties (color, bounds, type-specific data) accessible
+  - Changes persist when document is saved
+
 - **Demo Application Updates**
   - Added comprehensive examples for all high-level API features
   - Demonstrates rendering, text extraction, and page manipulation
+  - Added annotation management demo with all annotation types (highlight, text, stamps)
+  - Shows annotation creation, reading, filtering, and removal operations
   - Shows proper resource management patterns
 
 ### Changed

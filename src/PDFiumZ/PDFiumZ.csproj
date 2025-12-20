@@ -10,7 +10,7 @@
     <PackageTags>pdf pdfium dotnet pinvoke interop rendering extraction forms bookmarks</PackageTags>
     <RepositoryUrl>https://github.com/azbo/PDFiumZ</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Authors>PDFiumZ Contributors</Authors>
+    <Authors>azbo</Authors>
 	<PackageIcon>icon.png</PackageIcon>
     <DocumentationFile>PDFiumZ.xml</DocumentationFile>
     <OutputPath>$(SolutionDir)../artifacts/</OutputPath>
