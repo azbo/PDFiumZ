@@ -15,6 +15,7 @@ namespace PDFiumCoreDemo
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
+            DemoPageManipulation();
 
             Console.WriteLine("\nDemo completed successfully!");
         }
@@ -103,6 +104,45 @@ namespace PDFiumCoreDemo
                 var text = page.ExtractText();
                 Console.WriteLine($"   Extracted {text.Length} characters");
                 Console.WriteLine($"   Preview: {text.Substring(0, Math.Min(100, text.Length))}...\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates page manipulation operations.
+        /// </summary>
+        static void DemoPageManipulation()
+        {
+            Console.WriteLine("4. Page Manipulation");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                using var document = PdfDocument.Open("pdf-sample.pdf");
+                Console.WriteLine($"   Original: {document.PageCount} page(s)");
+
+                // Insert a blank A4 page at the beginning
+                document.InsertBlankPage(0, 595, 842);
+                Console.WriteLine($"   After insert: {document.PageCount} page(s)");
+
+                // Delete the last page
+                document.DeletePage(document.PageCount - 1);
+                Console.WriteLine($"   After delete: {document.PageCount} page(s)");
+
+                // Move first page to the end (swap pages)
+                if (document.PageCount > 1)
+                {
+                    document.MovePages(new[] { 0 }, document.PageCount - 1);
+                    Console.WriteLine($"   Moved first page to end");
+                }
+
+                // Save modified document
+                document.SaveToFile("output-modified.pdf");
+                Console.WriteLine($"   Saved: output-modified.pdf\n");
             }
             finally
             {

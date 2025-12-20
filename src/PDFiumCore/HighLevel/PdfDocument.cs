@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -10,7 +11,7 @@ namespace PDFiumCore.HighLevel;
 /// </summary>
 public sealed class PdfDocument : IDisposable
 {
-    private FpdfDocumentT? _handle;
+    internal FpdfDocumentT? _handle;
     private readonly string? _filePath;
     private bool _disposed;
 
@@ -157,6 +158,219 @@ public sealed class PdfDocument : IDisposable
             throw new PdfException($"Failed to load page {index}.");
 
         return new PdfPage(pageHandle, index, this);
+    }
+
+    /// <summary>
+    /// Inserts a new blank page at the specified index.
+    /// </summary>
+    /// <param name="index">Zero-based index where to insert (0 = beginning, PageCount = end).</param>
+    /// <param name="width">Page width in points (1/72 inch). Standard A4 = 595.</param>
+    /// <param name="height">Page height in points (1/72 inch). Standard A4 = 842.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Index or dimensions are invalid.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to create page.</exception>
+    public void InsertBlankPage(int index, double width, double height)
+    {
+        ThrowIfDisposed();
+        if (index < 0 || index > PageCount)
+            throw new ArgumentOutOfRangeException(nameof(index),
+                $"Insert index {index} is out of range (0-{PageCount}).");
+        if (width <= 0 || height <= 0)
+            throw new ArgumentOutOfRangeException(nameof(width),
+                "Page dimensions must be positive.");
+
+        var pageHandle = fpdf_edit.FPDFPageNew(_handle!, index, width, height);
+        if (pageHandle is null || pageHandle.__Instance == IntPtr.Zero)
+            throw new PdfException($"Failed to create blank page at index {index}.");
+
+        // Close the page immediately as we don't need to return it
+        fpdfview.FPDF_ClosePage(pageHandle);
+    }
+
+    /// <summary>
+    /// Deletes the page at the specified index.
+    /// </summary>
+    /// <param name="index">Zero-based page index to delete.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    public void DeletePage(int index)
+    {
+        ThrowIfDisposed();
+        if (index < 0 || index >= PageCount)
+            throw new ArgumentOutOfRangeException(nameof(index),
+                $"Page index {index} is out of range (0-{PageCount - 1}).");
+
+        fpdf_edit.FPDFPageDelete(_handle!, index);
+    }
+
+    /// <summary>
+    /// Moves pages to a new position within the document.
+    /// </summary>
+    /// <param name="pageIndices">Array of zero-based page indices to move.</param>
+    /// <param name="destIndex">Destination index where pages will be moved.</param>
+    /// <exception cref="ArgumentNullException">pageIndices is null.</exception>
+    /// <exception cref="ArgumentException">pageIndices is empty or contains invalid indices.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to move pages.</exception>
+    public void MovePages(int[] pageIndices, int destIndex)
+    {
+        ThrowIfDisposed();
+        if (pageIndices is null)
+            throw new ArgumentNullException(nameof(pageIndices));
+        if (pageIndices.Length == 0)
+            throw new ArgumentException("Page indices array cannot be empty.", nameof(pageIndices));
+        if (destIndex < 0 || destIndex >= PageCount)
+            throw new ArgumentOutOfRangeException(nameof(destIndex),
+                $"Destination index {destIndex} is out of range (0-{PageCount - 1}).");
+
+        // Validate all indices
+        foreach (var idx in pageIndices)
+        {
+            if (idx < 0 || idx >= PageCount)
+                throw new ArgumentException($"Page index {idx} is out of range (0-{PageCount - 1}).", nameof(pageIndices));
+        }
+
+        var result = fpdf_edit.FPDF_MovePages(_handle!, ref pageIndices[0], (uint)pageIndices.Length, destIndex);
+        if (result == 0)
+            throw new PdfException($"Failed to move {pageIndices.Length} page(s) to index {destIndex}.");
+    }
+
+    /// <summary>
+    /// Imports pages from another document using a page range string.
+    /// </summary>
+    /// <param name="sourceDoc">Source PDF document to copy pages from.</param>
+    /// <param name="pageRange">Page range string (e.g., "1,3,5-7" or null for all pages).</param>
+    /// <param name="insertAtIndex">Index where to insert pages in this document.</param>
+    /// <exception cref="ArgumentNullException">sourceDoc is null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">insertAtIndex is invalid.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to import pages.</exception>
+    public void ImportPages(PdfDocument sourceDoc, string? pageRange = null, int insertAtIndex = -1)
+    {
+        ThrowIfDisposed();
+        if (sourceDoc is null)
+            throw new ArgumentNullException(nameof(sourceDoc));
+        if (sourceDoc._disposed)
+            throw new ObjectDisposedException(nameof(sourceDoc), "Source document has been disposed.");
+        if (insertAtIndex < -1 || insertAtIndex > PageCount)
+            throw new ArgumentOutOfRangeException(nameof(insertAtIndex),
+                $"Insert index {insertAtIndex} is out of range (-1 for end, 0-{PageCount}).");
+
+        var result = fpdf_ppo.FPDF_ImportPages(_handle!, sourceDoc._handle!, pageRange, insertAtIndex);
+        if (result == 0)
+            throw new PdfException($"Failed to import pages from source document (range: {pageRange ?? "all"}).");
+    }
+
+    /// <summary>
+    /// Imports specific pages by index from another document.
+    /// </summary>
+    /// <param name="sourceDoc">Source PDF document to copy pages from.</param>
+    /// <param name="pageIndices">Array of zero-based page indices to import from source.</param>
+    /// <param name="insertAtIndex">Index where to insert pages in this document.</param>
+    /// <exception cref="ArgumentNullException">sourceDoc or pageIndices is null.</exception>
+    /// <exception cref="ArgumentException">pageIndices is empty.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">insertAtIndex is invalid.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to import pages.</exception>
+    public void ImportPagesAt(PdfDocument sourceDoc, int[] pageIndices, int insertAtIndex = -1)
+    {
+        ThrowIfDisposed();
+        if (sourceDoc is null)
+            throw new ArgumentNullException(nameof(sourceDoc));
+        if (sourceDoc._disposed)
+            throw new ObjectDisposedException(nameof(sourceDoc), "Source document has been disposed.");
+        if (pageIndices is null)
+            throw new ArgumentNullException(nameof(pageIndices));
+        if (pageIndices.Length == 0)
+            throw new ArgumentException("Page indices array cannot be empty.", nameof(pageIndices));
+        if (insertAtIndex < -1 || insertAtIndex > PageCount)
+            throw new ArgumentOutOfRangeException(nameof(insertAtIndex),
+                $"Insert index {insertAtIndex} is out of range (-1 for end, 0-{PageCount}).");
+
+        var result = fpdf_ppo.FPDF_ImportPagesByIndex(_handle!, sourceDoc._handle!, ref pageIndices[0], (uint)pageIndices.Length, insertAtIndex);
+        if (result == 0)
+            throw new PdfException($"Failed to import {pageIndices.Length} page(s) from source document.");
+    }
+
+    /// <summary>
+    /// Saves the document to a file.
+    /// </summary>
+    /// <param name="filePath">Path where to save the PDF file.</param>
+    /// <exception cref="ArgumentNullException">filePath is null.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to save document.</exception>
+    public void SaveToFile(string filePath)
+    {
+        ThrowIfDisposed();
+        if (filePath is null)
+            throw new ArgumentNullException(nameof(filePath));
+
+        using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+        var writer = new PdfFileWriter(fileStream);
+
+        var result = fpdf_save.FPDF_SaveAsCopy(_handle!, writer.GetWriteStruct(), 0);
+        if (result == 0)
+            throw new PdfException($"Failed to save PDF to '{filePath}'.");
+    }
+
+    /// <summary>
+    /// Gets the first (root-level) bookmark in the document, or null if none.
+    /// </summary>
+    /// <returns>The first bookmark, or null if document has no bookmarks.</returns>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    public PdfBookmark? GetFirstBookmark()
+    {
+        ThrowIfDisposed();
+
+        // Pass null as bookmark parameter to get first root bookmark
+        var bookmarkHandle = fpdf_doc.FPDFBookmarkGetFirstChild(_handle!, null);
+        if (bookmarkHandle is null || bookmarkHandle.__Instance == IntPtr.Zero)
+            return null;
+
+        return new PdfBookmark(bookmarkHandle, this);
+    }
+
+    /// <summary>
+    /// Gets all root-level bookmarks in the document.
+    /// </summary>
+    /// <returns>An enumerable of root bookmarks.</returns>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    public IEnumerable<PdfBookmark> GetBookmarks()
+    {
+        var bookmark = GetFirstBookmark();
+        while (bookmark is not null)
+        {
+            yield return bookmark;
+            bookmark = bookmark.GetNextSibling();
+        }
+    }
+
+    /// <summary>
+    /// Finds a bookmark by its title text.
+    /// </summary>
+    /// <param name="title">The bookmark title to search for.</param>
+    /// <returns>The bookmark if found, or null if not found.</returns>
+    /// <exception cref="ArgumentNullException">title is null.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    public unsafe PdfBookmark? FindBookmark(string title)
+    {
+        ThrowIfDisposed();
+        if (title is null)
+            throw new ArgumentNullException(nameof(title));
+
+        // Convert string to UTF-16 (ushort array)
+        var titleUtf16 = new ushort[title.Length + 1];
+        for (int i = 0; i < title.Length; i++)
+        {
+            titleUtf16[i] = title[i];
+        }
+        titleUtf16[title.Length] = 0; // Null terminator
+
+        var bookmarkHandle = fpdf_doc.FPDFBookmarkFind(_handle!, ref titleUtf16[0]);
+        if (bookmarkHandle is null || bookmarkHandle.__Instance == IntPtr.Zero)
+            return null;
+
+        return new PdfBookmark(bookmarkHandle, this);
     }
 
     /// <summary>
