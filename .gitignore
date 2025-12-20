@@ -3,3 +3,5 @@
 /artifacts/*
 /src/PDFiumCore/runtimes
 /src/PDFiumCoreBindingsGenerator/Properties/launchSettings.json
+.claude/
+/src/PDFiumCore/releases.json

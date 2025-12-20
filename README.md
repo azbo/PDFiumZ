@@ -1,6 +1,8 @@
 # <img src="./src/PDFiumCore/icon.png" width="48"> PDFiumCore [![NuGet](https://img.shields.io/nuget/v/PDFiumCore.svg?maxAge=60)](https://www.nuget.org/packages/PDFiumCore) [![Action Workflow](https://github.com/Dtronix/PDFiumCore/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Dtronix/PDFiumCore/actions)
 
-PDFiumCore is a .NET Standard 2.1 wrapper for the [PDFium](https://pdfium.googlesource.com/pdfium/) library which includes the [binaries](https://github.com/bblanchon/pdfium-binaries) and header pinvoke bindings.  Supports Linux-x64, OSX-x64, Win-x64, Win-x86.
+PDFiumCore is a .NET 8.0+ wrapper for the [PDFium](https://pdfium.googlesource.com/pdfium/) library which includes the [binaries](https://github.com/bblanchon/pdfium-binaries) and header pinvoke bindings.  Supports Linux-x64, OSX-x64, Win-x64, Win-x86.
+
+**Current PDFium Version: 145.0.7578.0** (chromium/7578) - Includes improved text reading capabilities
 
 Bindings are generated from the binaries and header files created at [pdfium-binaries](https://github.com/bblanchon/pdfium-binaries) repository.
 
@@ -9,7 +11,7 @@ Bindings are generated from the binaries and header files created at [pdfium-bin
 The preferred way to use this project is to use the [Nuget Package](https://www.nuget.org/packages/PDFiumCore).  This will ensure all the proper bindings in the `*.deps.json` are generated and included for the targeted environments.
 
 ### Build Requirements
-- .NET 6.0
+- .NET 8.0+
 
 ### Manual Building 
 

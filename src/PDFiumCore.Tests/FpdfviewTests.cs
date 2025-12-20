@@ -44,7 +44,7 @@ namespace PDFiumCore.Tests
             fixed (void* ptr = fileBytes)
             {
                 var document = fpdfview.FPDF_LoadMemDocument(new IntPtr(ptr), fileBytes.Length, null);
-                Assert.AreEqual(1, fpdfview.FPDF_GetPageCount(document));
+                Assert.Equals(1, fpdfview.FPDF_GetPageCount(document));
             }
         }
     }
