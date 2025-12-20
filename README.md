@@ -203,6 +203,38 @@ try
         annotPage.RemoveAnnotation(0);
         document.SaveToFile("annotations-removed.pdf");
     }
+
+    // Content creation - add text and shapes
+    using var contentPage = document.GetPage(0);
+
+    // Load fonts
+    var helvetica = PdfFont.LoadStandardFont(document, PdfStandardFont.Helvetica);
+    var timesBold = PdfFont.LoadStandardFont(document, PdfStandardFont.TimesBold);
+
+    // Begin editing page content
+    using (var editor = contentPage.BeginEdit())
+    {
+        // Add title text
+        editor.AddText("Created with PDFiumZ", 50, 750, timesBold, 24);
+
+        // Add body text
+        editor.AddText("This content was added programmatically.", 50, 700, helvetica, 14);
+
+        // Add colored rectangles
+        editor.AddRectangle(
+            new PdfRectangle(50, 600, 150, 100),
+            0xFFFF0000,  // Red stroke
+            0x800000FF   // Blue fill, 50% opacity
+        );
+
+        // Generate content to persist changes
+        editor.GenerateContent();
+    }
+
+    helvetica.Dispose();
+    timesBold.Dispose();
+
+    document.SaveToFile("output-with-content.pdf");
 }
 finally
 {
@@ -215,7 +247,7 @@ finally
 - ✅ Fluent rendering options (`WithDpi()`, `WithScale()`, `WithTransparency()`)
 - ✅ Page manipulation (insert, delete, move, import)
 - ✅ Bookmark navigation with tree traversal
-- ✅ Form field reading (all standard field types)
+- ✅ Form field reading and writing (all standard field types)
 - ✅ Document metadata access (title, author, dates, etc.)
 - ✅ Page labels (custom page numbering)
 - ✅ Hyperlink support (detect links at coordinates)
@@ -226,6 +258,8 @@ finally
 - ✅ Document saving
 - ✅ Zero-copy image access via `Span<byte>`
 - ✅ **Annotation support** (highlight, text notes, stamps)
+- ✅ **Content creation** (add text, images, shapes to pages)
+- ✅ **Font management** (standard PDF fonts and TrueType fonts)
 
 #### Low-Level API
 

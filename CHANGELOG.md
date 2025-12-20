@@ -41,14 +41,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `FindBookmark()` - Search bookmarks by title
 
 - **Form Field Operations**
-  - `PdfFormField` - Form field annotation with read-only access
+  - `PdfFormField` - Form field annotation with read and write access
     - Read field properties: Name, AlternateName, Value, FieldType, Flags
     - Check checkbox/radio button state: IsChecked
     - Access combo box/list box options: GetAllOptions(), GetOptionLabel(), IsOptionSelected()
+    - Write operations:
+      - `SetValue(string)` - Set text field value
+      - `SetChecked(bool)` - Set checkbox/radio button state
+      - `SetSelectedOption(int)` - Set single selection for combo/list boxes
+      - `SetSelectedOptions(int[])` - Set multiple selections for list boxes
   - `PdfFormFieldType` - Enumeration of 7 standard field types (TextField, CheckBox, RadioButton, ComboBox, ListBox, PushButton, Signature)
   - `GetFormFieldCount()` - Get count of form fields on page
   - `GetFormField(index)` - Get specific form field
   - `GetFormFields()` - Enumerate all form fields on page
+  - `PdfDocument.HasForm` - Check if document contains interactive forms
+  - `PdfDocument.FlattenForm()` - Convert interactive forms to static content
 
 - **Document Metadata**
   - `PdfMetadata` - Document metadata class with standard PDF properties
@@ -109,11 +116,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - All annotation properties (color, bounds, type-specific data) accessible
   - Changes persist when document is saved
 
+- **Content Creation** - Add text, images, and shapes to PDF pages
+  - `PdfFont` - Font management with resource disposal
+    - `LoadStandardFont(document, string)` - Load font by name
+    - `LoadStandardFont(document, PdfStandardFont)` - Load font by enum
+    - `LoadTrueTypeFont(document, byte[], bool)` - Load custom TrueType fonts
+    - `PdfStandardFont` enum - 14 standard PDF fonts (Helvetica, Times, Courier, etc.)
+  - `PdfContentEditor` - Content editing with IDisposable pattern
+    - `AddText(text, x, y, font, fontSize)` - Add text at specified position
+    - `AddImage(imageData, width, height, bounds)` - Add images from BGRA bitmap data
+    - `AddRectangle(bounds, strokeColor, fillColor)` - Add rectangles with colors
+    - `RemoveObject(index)` - Remove page objects by index
+    - `GenerateContent()` - Persist changes to page content stream
+  - `PdfPage` content editing methods:
+    - `BeginEdit()` - Create content editor for page
+    - `GenerateContent()` - Regenerate page content stream
+  - Support for standard PDF fonts (14 built-in fonts that don't require embedding)
+  - Support for custom TrueType fonts from byte arrays
+  - ARGB color format for stroke and fill colors with alpha channel support
+  - Proper resource management with automatic cleanup
+
 - **Demo Application Updates**
   - Added comprehensive examples for all high-level API features
   - Demonstrates rendering, text extraction, and page manipulation
   - Added annotation management demo with all annotation types (highlight, text, stamps)
   - Shows annotation creation, reading, filtering, and removal operations
+  - Added content creation demo with text and shapes
+  - Demonstrates font loading and management
   - Shows proper resource management patterns
 
 ### Changed
