@@ -106,6 +106,7 @@ finally
 - ✅ Page labels (custom page numbering)
 - ✅ Hyperlink support (detect links at coordinates)
 - ✅ Text extraction
+- ✅ Text search with position information (case-sensitive, whole-word options)
 - ✅ Document saving
 - ✅ Zero-copy image access via `Span<byte>`
 

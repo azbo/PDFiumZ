@@ -16,6 +16,7 @@ namespace PDFiumCoreDemo
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
+            DemoTextSearch();
             DemoMetadata();
             DemoPageLabels();
             DemoPageManipulation();
@@ -116,11 +117,54 @@ namespace PDFiumCoreDemo
         }
 
         /// <summary>
+        /// Demonstrates text search functionality.
+        /// </summary>
+        static void DemoTextSearch()
+        {
+            Console.WriteLine("4. Text Search");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var page = document.GetPage(0);
+
+                // Search for text (case-insensitive)
+                var searchTerm = "PDF";
+                var results = page.SearchText(searchTerm, matchCase: false);
+
+                Console.WriteLine($"   Searching for '{searchTerm}' (case-insensitive):");
+                Console.WriteLine($"   Found {results.Count} occurrence(s)");
+
+                foreach (var result in results)
+                {
+                    Console.WriteLine($"      Match at char {result.CharIndex}: \"{result.Text}\"");
+                    Console.WriteLine($"      Bounding boxes: {result.BoundingRectangles.Count}");
+
+                    foreach (var rect in result.BoundingRectangles)
+                    {
+                        Console.WriteLine($"         {rect}");
+                    }
+                }
+
+                // Search with case sensitivity
+                var caseSensitiveResults = page.SearchText(searchTerm, matchCase: true);
+                Console.WriteLine($"\n   Searching for '{searchTerm}' (case-sensitive):");
+                Console.WriteLine($"   Found {caseSensitiveResults.Count} occurrence(s)\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
         /// Demonstrates document metadata access.
         /// </summary>
         static void DemoMetadata()
         {
-            Console.WriteLine("4. Document Metadata");
+            Console.WriteLine("5. Document Metadata");
 
             PdfiumLibrary.Initialize();
 
@@ -149,7 +193,7 @@ namespace PDFiumCoreDemo
         /// </summary>
         static void DemoPageLabels()
         {
-            Console.WriteLine("5. Page Labels");
+            Console.WriteLine("6. Page Labels");
 
             PdfiumLibrary.Initialize();
 
@@ -185,7 +229,7 @@ namespace PDFiumCoreDemo
         /// </summary>
         static void DemoPageManipulation()
         {
-            Console.WriteLine("6. Page Manipulation");
+            Console.WriteLine("7. Page Manipulation");
 
             PdfiumLibrary.Initialize();
 
@@ -228,7 +272,7 @@ namespace PDFiumCoreDemo
         /// </summary>
         static void DemoFormFields()
         {
-            Console.WriteLine("7. Form Field Reading");
+            Console.WriteLine("8. Form Field Reading");
 
             PdfiumLibrary.Initialize();
 
