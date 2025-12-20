@@ -62,6 +62,13 @@ try
         }
     }
 
+    // Access document metadata
+    var meta = document.Metadata;
+    Console.WriteLine($"Title: {meta.Title}");
+    Console.WriteLine($"Author: {meta.Author}");
+    Console.WriteLine($"Producer: {meta.Producer}");
+    Console.WriteLine($"Creation Date: {meta.CreationDate}");
+
     // Read form fields
     using var formPage = document.GetPage(0);
     foreach (var field in formPage.GetFormFields())
@@ -95,6 +102,7 @@ finally
 - ✅ Page manipulation (insert, delete, move, import)
 - ✅ Bookmark navigation with tree traversal
 - ✅ Form field reading (all standard field types)
+- ✅ Document metadata access (title, author, dates, etc.)
 - ✅ Text extraction
 - ✅ Document saving
 - ✅ Zero-copy image access via `Span<byte>`
