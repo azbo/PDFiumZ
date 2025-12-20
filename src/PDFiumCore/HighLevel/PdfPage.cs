@@ -261,6 +261,24 @@ public sealed unsafe class PdfPage : IDisposable
     }
 
     /// <summary>
+    /// Gets a hyperlink at the specified point on the page.
+    /// </summary>
+    /// <param name="x">X coordinate in page coordinate system.</param>
+    /// <param name="y">Y coordinate in page coordinate system.</param>
+    /// <returns>A <see cref="PdfLink"/> instance, or null if no link exists at the point.</returns>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public PdfLink? GetLinkAtPoint(double x, double y)
+    {
+        ThrowIfDisposed();
+
+        var linkHandle = fpdf_doc.FPDFLinkGetLinkAtPoint(_handle!, x, y);
+        if (linkHandle == null || linkHandle.__Instance == IntPtr.Zero)
+            return null;
+
+        return new PdfLink(linkHandle, this);
+    }
+
+    /// <summary>
     /// Releases all resources used by the <see cref="PdfPage"/>.
     /// </summary>
     public void Dispose()
