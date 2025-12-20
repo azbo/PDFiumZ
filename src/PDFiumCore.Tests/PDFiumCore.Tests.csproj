@@ -28,6 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PDFiumCore\PDFiumCore.csproj" />
+    <ProjectReference Include="..\PDFiumZ\PDFiumZ.csproj" />
   </ItemGroup>
 </Project>
