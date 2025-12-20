@@ -1,18 +1,57 @@
-# <img src="./src/PDFiumCore/icon.png" width="48"> PDFiumCore [![NuGet](https://img.shields.io/nuget/v/PDFiumCore.svg?maxAge=60)](https://www.nuget.org/packages/PDFiumCore) [![Action Workflow](https://github.com/Dtronix/PDFiumCore/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Dtronix/PDFiumCore/actions)
+# <img src="./src/PDFiumCore/icon.png" width="48"> PDFiumZ [![NuGet](https://img.shields.io/nuget/v/PDFiumZ.svg?maxAge=60)](https://www.nuget.org/packages/PDFiumZ)
 
-PDFiumCore is a .NET 8.0+ wrapper for the [PDFium](https://pdfium.googlesource.com/pdfium/) library which includes the [binaries](https://github.com/bblanchon/pdfium-binaries) and header pinvoke bindings.  Supports Linux-x64, OSX-x64, Win-x64, Win-x86.
+PDFiumZ is a modern .NET 10.0+ wrapper for [PDFium](https://pdfium.googlesource.com/pdfium/) with a comprehensive high-level API. Built on [PDFium binaries](https://github.com/bblanchon/pdfium-binaries) with P/Invoke bindings. Supports Linux-x64, OSX-x64, Win-x64, Win-x86.
 
 **Current PDFium Version: 145.0.7578.0** (chromium/7578) - Includes improved text reading capabilities
 
-Bindings are generated from the binaries and header files created at [pdfium-binaries](https://github.com/bblanchon/pdfium-binaries) repository.
+## Installation
 
-### Usage
+Install via NuGet Package Manager:
 
-The preferred way to use this project is to use the [Nuget Package](https://www.nuget.org/packages/PDFiumCore).  This will ensure all the proper bindings in the `*.deps.json` are generated and included for the targeted environments.
+```bash
+dotnet add package PDFiumZ
+```
 
-#### High-Level API (Recommended)
+Or via Package Manager Console:
 
-PDFiumCore now includes a high-level API (`PDFiumCore.HighLevel` namespace) that provides a modern, easy-to-use interface with automatic resource management:
+```powershell
+Install-Package PDFiumZ
+```
+
+## Quick Start
+
+```csharp
+using PDFiumCore;
+using PDFiumCore.HighLevel;
+
+// Initialize library (call once at application start)
+PdfiumLibrary.Initialize();
+
+try
+{
+    // Open and render a PDF
+    using var document = PdfDocument.Open("sample.pdf");
+    using var page = document.GetPage(0);
+    using var image = page.RenderToImage();
+
+    // Save as PNG
+    image.SaveAsSkiaPng("output.png");
+
+    // Extract text
+    var text = page.ExtractText();
+    Console.WriteLine(text);
+}
+finally
+{
+    PdfiumLibrary.Shutdown();
+}
+```
+
+## Features
+
+### High-Level API (Recommended)
+
+PDFiumZ provides a modern, fluent API that makes PDF operations simple and intuitive:
 
 ```csharp
 using PDFiumCore;
@@ -116,47 +155,20 @@ finally
 
 The low-level P/Invoke API is still available for advanced scenarios through the `fpdfview`, `fpdf_edit`, `fpdf_doc` classes.
 
-### Build Requirements
-- .NET 8.0+
+## Build Requirements
+- .NET 10.0 SDK or later
 
-### Manual Building 
+## Building from Source
 
-Execute the CreateBindingsPackage.bat
-
-This will do the following:
- - Download the specified files at the passed pdfium-binaries API url.
- - Extracts the zip & tgz files into the `asset/libraries`directory.
- - Opens the pdfium-windows-x64 directory and parses the header files via CppSharp and generates ``PDFiumCore.cs`` in the current directory.
- - Copies the libraries and licenses into their respective ``src/PDFiumCore/runtimes`` directories.
- - Copies/Overrides ``src/PDFiumCore/PDFiumCore.cs`` with the newly generated ``PDFiumCore.cs``.
-
-##### PDFiumCoreBindingsGenerator Parameters
-
-PDFiumCoreBindingsGenerator.exe requires the following parameters:
-
- - [0] Set to either a specific Github API release ID for the `bblanchon/pdfium-binaries` project or `latest`. This is to determine the release version and binary assets to download.
- - [1] Set to true to download the libraries and generate the bindings.  Set to false to only download the libraries.
- - [2] Version to set the Version.Revision property to.  This is used for building patches. Usually set to "0"
-
-
-### ToDo
- - Create an actual parser for the comments and generate functional C# method documentation.
- - Include documentation for more than just the public methods.
- - Investigate ARM builds for inclusion.
+1. Clone the repository
+2. Run `dotnet build` in the `src` directory
+3. Run `dotnet pack` to create NuGet packages
 
 ### Resources
 
-https://pdfium.googlesource.com/pdfium/
-
-https://github.com/bblanchon/pdfium-binaries
-
-https://github.com/mono/CppSharp
+- [PDFium Source](https://pdfium.googlesource.com/pdfium/)
+- [PDFium Binaries](https://github.com/bblanchon/pdfium-binaries)
+- [CppSharp](https://github.com/mono/CppSharp)
 
 ### License
-Matching the PDFium project, this project is released under [Apache-2.0 License](LICENSE).
-
-### Sponsor / 赞助
-
-If this project helps you, consider buying me a coffee! 如果这个项目对你有帮助，请考虑支持一下！
-
-<img src="./src/PDFiumCore/收款.jpg" width="200">
+This project is released under [Apache-2.0 License](LICENSE), matching the PDFium project license.
