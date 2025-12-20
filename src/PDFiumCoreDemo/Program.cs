@@ -17,6 +17,7 @@ namespace PDFiumCoreDemo
             DemoAdvancedRendering();
             DemoTextExtraction();
             DemoMetadata();
+            DemoPageLabels();
             DemoPageManipulation();
             DemoFormFields();
 
@@ -144,11 +145,47 @@ namespace PDFiumCoreDemo
         }
 
         /// <summary>
+        /// Demonstrates page labels (custom page numbering).
+        /// </summary>
+        static void DemoPageLabels()
+        {
+            Console.WriteLine("5. Page Labels");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                using var document = PdfDocument.Open("pdf-sample.pdf");
+
+                Console.WriteLine($"   Document has {document.PageCount} page(s)");
+                Console.WriteLine("   Page labels:");
+
+                // Show labels for each page
+                for (int i = 0; i < Math.Min(document.PageCount, 10); i++)
+                {
+                    var label = document.GetPageLabel(i);
+                    Console.WriteLine($"      Page {i} → \"{label}\"");
+                }
+
+                if (document.PageCount > 10)
+                {
+                    Console.WriteLine($"      ... ({document.PageCount - 10} more pages)");
+                }
+
+                Console.WriteLine();
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
         /// Demonstrates page manipulation operations.
         /// </summary>
         static void DemoPageManipulation()
         {
-            Console.WriteLine("5. Page Manipulation");
+            Console.WriteLine("6. Page Manipulation");
 
             PdfiumLibrary.Initialize();
 
@@ -191,7 +228,7 @@ namespace PDFiumCoreDemo
         /// </summary>
         static void DemoFormFields()
         {
-            Console.WriteLine("6. Form Field Reading");
+            Console.WriteLine("7. Form Field Reading");
 
             PdfiumLibrary.Initialize();
 

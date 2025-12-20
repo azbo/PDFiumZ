@@ -103,6 +103,8 @@ finally
 - ✅ Bookmark navigation with tree traversal
 - ✅ Form field reading (all standard field types)
 - ✅ Document metadata access (title, author, dates, etc.)
+- ✅ Page labels (custom page numbering)
+- ✅ Hyperlink support (detect links at coordinates)
 - ✅ Text extraction
 - ✅ Document saving
 - ✅ Zero-copy image access via `Span<byte>`
