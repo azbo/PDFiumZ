@@ -182,6 +182,130 @@ public sealed unsafe class PdfPage : IDisposable
     }
 
     /// <summary>
+    /// Searches for text on the page and returns all matches.
+    /// </summary>
+    /// <param name="searchText">Text to search for.</param>
+    /// <param name="matchCase">If true, performs case-sensitive search.</param>
+    /// <param name="matchWholeWord">If true, only matches whole words.</param>
+    /// <returns>A list of search results with position information.</returns>
+    /// <exception cref="ArgumentNullException">searchText is null.</exception>
+    /// <exception cref="ArgumentException">searchText is empty.</exception>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to load text or perform search.</exception>
+    public IReadOnlyList<PdfTextSearchResult> SearchText(string searchText, bool matchCase = false, bool matchWholeWord = false)
+    {
+        ThrowIfDisposed();
+        if (searchText is null)
+            throw new ArgumentNullException(nameof(searchText));
+        if (string.IsNullOrEmpty(searchText))
+            throw new ArgumentException("Search text cannot be empty.", nameof(searchText));
+
+        var results = new List<PdfTextSearchResult>();
+
+        var textPage = fpdf_text.FPDFTextLoadPage(_handle!);
+        if (textPage is null || textPage.__Instance == IntPtr.Zero)
+            throw new PdfException($"Failed to load text for page {_index}.");
+
+        try
+        {
+            // Convert search text to UTF-16
+            var searchUtf16 = new ushort[searchText.Length + 1];
+            for (int i = 0; i < searchText.Length; i++)
+            {
+                searchUtf16[i] = searchText[i];
+            }
+            searchUtf16[searchText.Length] = 0; // Null terminator
+
+            // Build search flags
+            uint flags = 0;
+            if (matchCase)
+                flags |= 0x00000001; // FPDF_MATCHCASE
+            if (matchWholeWord)
+                flags |= 0x00000002; // FPDF_MATCHWHOLEWORD
+
+            // Start search
+            var searchHandle = fpdf_text.FPDFTextFindStart(textPage, ref searchUtf16[0], flags, 0);
+            if (searchHandle is null || searchHandle.__Instance == IntPtr.Zero)
+            {
+                return results;
+            }
+
+            try
+            {
+                // Find all occurrences
+                while (fpdf_text.FPDFTextFindNext(searchHandle) != 0)
+                {
+                    var charIndex = fpdf_text.FPDFTextGetSchResultIndex(searchHandle);
+                    var charCount = fpdf_text.FPDFTextGetSchCount(searchHandle);
+
+                    if (charIndex < 0 || charCount <= 0)
+                        continue;
+
+                    // Get matched text
+                    var matchedText = GetTextRange(textPage, charIndex, charCount);
+
+                    // Get bounding rectangles
+                    var rectangles = GetTextRectangles(textPage, charIndex, charCount);
+
+                    results.Add(new PdfTextSearchResult(charIndex, charCount, matchedText, rectangles));
+                }
+            }
+            finally
+            {
+                fpdf_text.FPDFTextFindClose(searchHandle);
+            }
+
+            return results;
+        }
+        finally
+        {
+            fpdf_text.FPDFTextClosePage(textPage);
+        }
+    }
+
+    /// <summary>
+    /// Gets text for a specific character range.
+    /// </summary>
+    private string GetTextRange(FpdfTextpageT textPage, int startIndex, int count)
+    {
+        var buffer = new ushort[count + 1];
+        var bytesWritten = fpdf_text.FPDFTextGetText(textPage, startIndex, count, ref buffer[0]);
+
+        if (bytesWritten <= 1)
+            return string.Empty;
+
+        fixed (ushort* pBuffer = buffer)
+        {
+            return new string((char*)pBuffer, 0, bytesWritten - 1);
+        }
+    }
+
+    /// <summary>
+    /// Gets bounding rectangles for a text range.
+    /// </summary>
+    private IReadOnlyList<PdfRectangle> GetTextRectangles(FpdfTextpageT textPage, int startIndex, int count)
+    {
+        var rectangles = new List<PdfRectangle>();
+
+        // Get number of rectangles for this text range
+        var rectCount = fpdf_text.FPDFTextCountRects(textPage, startIndex, count);
+
+        for (int i = 0; i < rectCount; i++)
+        {
+            double left = 0, top = 0, right = 0, bottom = 0;
+
+            if (fpdf_text.FPDFTextGetRect(textPage, i, ref left, ref top, ref right, ref bottom) != 0)
+            {
+                // Convert from PDFium's (left, top, right, bottom) to PdfRectangle's (x, y, width, height)
+                // PDFium's coordinate system: origin at bottom-left, Y increases upward
+                rectangles.Add(new PdfRectangle(left, bottom, right - left, top - bottom));
+            }
+        }
+
+        return rectangles;
+    }
+
+    /// <summary>
     /// Gets the number of form field annotations on this page.
     /// </summary>
     /// <returns>The count of form field annotations.</returns>

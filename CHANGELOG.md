@@ -63,6 +63,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `PdfLinkDestinationType` - Enum for destination types (InternalPage, ExternalUri, Unknown)
   - `PdfPage.GetLinkAtPoint(x, y)` - Detect link at specific coordinate
 
+- **Text Search**
+  - `PdfTextSearchResult` - Search result class with match position and bounding rectangles
+  - `PdfPage.SearchText()` - Search for text on page with case-sensitive and whole-word options
+  - Returns character indices, matched text, and bounding rectangles for each occurrence
+  - Supports multi-line text matches with multiple bounding rectangles
+
 - **Demo Application Updates**
   - Added comprehensive examples for all high-level API features
   - Demonstrates rendering, text extraction, and page manipulation
