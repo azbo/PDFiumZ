@@ -454,6 +454,12 @@
             </summary>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
         </member>
+        <member name="P:PDFiumZ.HighLevel.PdfDocument.HasForm">
+            <summary>
+            Gets whether this document contains interactive form fields.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
+        </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocument.#ctor(PDFiumZ.FpdfDocumentT,System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> class.
@@ -577,6 +583,15 @@
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to save document.</exception>
         </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.FlattenForm(System.Boolean)">
+            <summary>
+            Flattens all form fields and annotations in the document, converting them to static content.
+            This operation is irreversible and makes the form non-interactive.
+            </summary>
+            <param name="printMode">If true, flattens for print mode (includes all content). If false, flattens for normal display mode (may exclude print-only content).</param>
+            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to flatten forms on one or more pages.</exception>
+        </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocument.GetFirstBookmark">
             <summary>
             Gets the first (root-level) bookmark in the document, or null if none.
@@ -680,9 +695,8 @@
         <member name="T:PDFiumZ.HighLevel.PdfFormField">
             <summary>
             Represents a form field annotation in a PDF page.
-            Provides read-only access to form field properties.
-            Note: This is a simplified implementation that provides basic form field information.
-            For interactive form filling, use the low-level fpdf_annot API.
+            Provides read and write access to form field properties.
+            Supports setting values, checking/unchecking boxes, and selecting options.
             </summary>
         </member>
         <member name="P:PDFiumZ.HighLevel.PdfFormField.Index">
@@ -759,6 +773,45 @@
             <summary>
             Returns a string representation of the form field.
             </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFormField.SetValue(System.String)">
+            <summary>
+            Sets the value of the form field (for text fields, combo boxes, etc.).
+            </summary>
+            <param name="value">The new value to set.</param>
+            <exception cref="T:System.ArgumentNullException">value is null.</exception>
+            <exception cref="T:System.ObjectDisposedException">The form field has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to set the value.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFormField.SetChecked(System.Boolean)">
+            <summary>
+            Sets the checked state for checkboxes and radio buttons.
+            </summary>
+            <param name="isChecked">True to check the box, false to uncheck.</param>
+            <exception cref="T:System.ObjectDisposedException">The form field has been disposed.</exception>
+            <exception cref="T:System.InvalidOperationException">This field is not a checkbox or radio button.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to set the checked state.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFormField.SetSelectedOption(System.Int32)">
+            <summary>
+            Sets the selected option for combo boxes and list boxes (single selection).
+            </summary>
+            <param name="index">Zero-based index of the option to select.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Index is out of range.</exception>
+            <exception cref="T:System.ObjectDisposedException">The form field has been disposed.</exception>
+            <exception cref="T:System.InvalidOperationException">This field is not a combo box or list box.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to select the option.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFormField.SetSelectedOptions(System.Int32[])">
+            <summary>
+            Sets multiple selected options for list boxes (multiple selection).
+            </summary>
+            <param name="indices">Array of zero-based indices of options to select.</param>
+            <exception cref="T:System.ArgumentNullException">indices is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Any index is out of range.</exception>
+            <exception cref="T:System.ObjectDisposedException">The form field has been disposed.</exception>
+            <exception cref="T:System.InvalidOperationException">This field is not a list box.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to select options.</exception>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfFormField.Dispose">
             <summary>
