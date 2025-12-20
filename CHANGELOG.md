@@ -136,6 +136,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - ARGB color format for stroke and fill colors with alpha channel support
   - Proper resource management with automatic cleanup
 
+- **Async API Support** - Non-blocking async operations with cancellation support
+  - `PdfDocument` async methods:
+    - `OpenAsync(filePath, password?, cancellationToken)` - Async document loading from file
+    - `OpenFromMemoryAsync(data, password?, cancellationToken)` - Async loading from memory
+    - `SaveToFileAsync(filePath, cancellationToken)` - Async document saving
+  - `PdfPage` async methods:
+    - `RenderToImageAsync(cancellationToken)` - Async rendering with default options
+    - `RenderToImageAsync(options, cancellationToken)` - Async rendering with custom options
+  - All async methods support `CancellationToken` for operation cancellation
+  - Designed for responsive UI applications and high-throughput scenarios
+  - Compatible with Task-based Asynchronous Pattern (TAP)
+
+- **Batch Operations** - Efficient multi-page processing
+  - `PdfDocument.GetPages(startIndex, count)` - Retrieve consecutive page range with lazy loading
+  - `PdfDocument.DeletePages(params int[])` - Delete multiple pages by indices
+    - Automatic descending order sorting to prevent index shift issues
+    - Duplicate index detection and removal
+  - `PdfDocument.DeletePages(startIndex, count)` - Delete consecutive page range
+  - Optimized for processing large documents efficiently
+  - Memory-efficient lazy loading for page retrieval
+
 - **Demo Application Updates**
   - Added comprehensive examples for all high-level API features
   - Demonstrates rendering, text extraction, and page manipulation
@@ -143,6 +164,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Shows annotation creation, reading, filtering, and removal operations
   - Added content creation demo with text and shapes
   - Demonstrates font loading and management
+  - Added async operations demo with timing and cancellation
+  - Added batch operations demo with page retrieval and deletion
   - Shows proper resource management patterns
 
 ### Changed

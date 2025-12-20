@@ -235,6 +235,53 @@ try
     timesBold.Dispose();
 
     document.SaveToFile("output-with-content.pdf");
+
+    // Async operations - non-blocking operations with cancellation support
+    Console.WriteLine("Async Operations Demo:");
+
+    // Async document loading
+    using var asyncDoc = await PdfDocument.OpenAsync("sample.pdf");
+    Console.WriteLine($"Loaded {asyncDoc.PageCount} pages asynchronously");
+
+    // Async page rendering
+    using var asyncPage = asyncDoc.GetPage(0);
+    using var asyncImage = await asyncPage.RenderToImageAsync();
+    Console.WriteLine($"Rendered {asyncImage.Width}x{asyncImage.Height} asynchronously");
+
+    // Async saving
+    await asyncDoc.SaveToFileAsync("output-async.pdf");
+
+    // Cancellation support
+    using var cts = new System.Threading.CancellationTokenSource();
+    cts.CancelAfter(100);
+    try
+    {
+        using var cancelDoc = await PdfDocument.OpenAsync("sample.pdf", cancellationToken: cts.Token);
+    }
+    catch (OperationCanceledException)
+    {
+        Console.WriteLine("Operation was canceled");
+    }
+
+    // Batch operations - efficient multi-page processing
+    Console.WriteLine("Batch Operations Demo:");
+
+    using var batchDoc = PdfDocument.Open("sample.pdf");
+
+    // Get multiple consecutive pages
+    var pages = batchDoc.GetPages(0, 3).ToList();
+    Console.WriteLine($"Retrieved {pages.Count} pages in batch");
+    pages.ForEach(p => p.Dispose());
+
+    // Delete multiple pages by indices (non-consecutive)
+    batchDoc.DeletePages(1, 3, 5);  // Deletes pages at indices 1, 3, and 5
+    Console.WriteLine($"Pages after batch deletion: {batchDoc.PageCount}");
+
+    // Delete consecutive page range
+    batchDoc.DeletePages(0, 2);  // Deletes first 2 pages (indices 0 and 1)
+    Console.WriteLine($"Pages after range deletion: {batchDoc.PageCount}");
+
+    batchDoc.SaveToFile("output-batch.pdf");
 }
 finally
 {
@@ -260,6 +307,8 @@ finally
 - ✅ **Annotation support** (highlight, text notes, stamps)
 - ✅ **Content creation** (add text, images, shapes to pages)
 - ✅ **Font management** (standard PDF fonts and TrueType fonts)
+- ✅ **Async API** (non-blocking operations with cancellation support)
+- ✅ **Batch operations** (efficient multi-page processing)
 
 #### Low-Level API
 
