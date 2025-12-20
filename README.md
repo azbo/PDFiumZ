@@ -259,9 +259,5 @@ If you find PDFiumZ useful, you can support the project development:
   <img src="./docs/alipay-qr.png" width="200" alt="Alipay">
 </div>
 
-*Please add QR code images to `docs/` directory:*
-- `docs/wechat-pay-qr.png` - WeChat Pay QR code
-- `docs/alipay-qr.png` - Alipay QR code
-
 Thank you for your support! ❤️
 
