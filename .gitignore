@@ -5,3 +5,15 @@
 /src/PDFiumZBindingsGenerator/Properties/launchSettings.json
 .claude/
 /src/PDFiumZ/releases.json
+
+# Test output files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+!**/docs/**/*.png
+!**/docs/**/*.jpg
+
+# Legacy solution files
+PDFiumCore.sln

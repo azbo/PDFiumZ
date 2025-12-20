@@ -405,17 +405,9 @@ namespace PDFiumZDemo
             var page = fpdfview.FPDF_LoadPage(document, 0);
             fpdfview.FPDF_GetPageSizeByIndex(document, 0, ref pageWidth, ref pageHeight);
 
-            var viewport = new Rectangle()
-            {
-                X = 0,
-                Y = 0,
-                Width = pageWidth,
-                Height = pageHeight,
-            };
-
             var bitmap = fpdfview.FPDFBitmapCreateEx(
-                (int)viewport.Width,
-                (int)viewport.Height,
+                (int)pageWidth,
+                (int)pageHeight,
                 (int)FPDFBitmapFormat.BGRA,
                 IntPtr.Zero,
                 0);
