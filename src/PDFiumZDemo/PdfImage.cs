@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
 using PDFiumZ;
 using SkiaSharp;
-using RectangleF = System.Drawing.RectangleF;
 
 namespace PDFiumZDemo
 {
