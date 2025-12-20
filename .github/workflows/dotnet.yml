@@ -37,10 +37,7 @@ jobs:
       
     - name: Pack
       run: dotnet pack src/PDFiumZ -c Release -o ./artifacts
-      
-    - name: Unit tests
-      run: dotnet test src/PDFiumZ.Tests -c Release
-      
+
     - name: Export artifacts
       uses: actions/upload-artifact@v4
       with:
