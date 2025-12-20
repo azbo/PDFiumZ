@@ -3,8 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using CppSharp;
 using ICSharpCode.SharpZipLib.GZip;
 using ICSharpCode.SharpZipLib.Tar;
@@ -14,7 +15,7 @@ namespace PDFiumZBindingsGenerator
 {
     class Program
     {
-        private static WebClient _client;
+        private static readonly HttpClient _httpClient = new HttpClient();
 
         private class LibInfo
         {
@@ -49,7 +50,7 @@ namespace PDFiumZBindingsGenerator
             WriteError("Could not determine project root directory.");
             throw new Exception();
         }
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var gitubReleaseId = args.Length > 0 ? args[0] : "latest";
             var buildBindings = args.Length > 1 ? bool.Parse(args[1]) : true;
@@ -65,16 +66,8 @@ namespace PDFiumZBindingsGenerator
 
 
             Console.WriteLine("Downloading PDFium release info...");
-            _client = new WebClient();
-
-            _client.DownloadProgressChanged += (sender, eventArgs) =>
-            {
-                Console.WriteLine($"{eventArgs.BytesReceived}/{eventArgs.TotalBytesToReceive}");
-                Console.CursorLeft = 0;
-            };
-
-            _client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0;");
-            var json = _client.DownloadString(pdfiumReleaseGithubUrl);
+            _httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0;");
+            var json = await _httpClient.GetStringAsync(pdfiumReleaseGithubUrl);
 
             Console.WriteLine("Downloaded. Reading PDFium release info...");
             var releaseInfo = JsonConvert.DeserializeObject<Release>(json);
@@ -94,7 +87,7 @@ namespace PDFiumZBindingsGenerator
             Directory.CreateDirectory(destinationLibraryPath);
 
             var win64Asset = releaseInfo.Assets.First(a => a.Name.ToLower().Contains(win64Info.PackageName));
-            win64Info.ExtractedLibBaseDirectory = DownloadAndExtract(win64Asset.BrowserDownloadUrl, destinationLibraryPath);
+            win64Info.ExtractedLibBaseDirectory = await DownloadAndExtract(win64Asset.BrowserDownloadUrl, destinationLibraryPath);
 
             if (buildBindings)
             {
@@ -179,7 +172,7 @@ namespace PDFiumZBindingsGenerator
             }
         }
 
-        private static string DownloadAndExtract(string downloadUrl, string baseDestination)
+        private static async Task<string> DownloadAndExtract(string downloadUrl, string baseDestination)
         {
             var uri = new Uri(downloadUrl);
             var filename = Path.GetFileName(uri.LocalPath);
@@ -194,7 +187,16 @@ namespace PDFiumZBindingsGenerator
 
             Console.WriteLine($"Downloading {filename}...");
 
-            _client.DownloadFile(downloadUrl, fullFilePath);
+            // Download file using HttpClient
+            using (var response = await _httpClient.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead))
+            {
+                response.EnsureSuccessStatusCode();
+
+                using (var fileStream = new FileStream(fullFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    await response.Content.CopyToAsync(fileStream);
+                }
+            }
 
             Console.WriteLine("Download Complete. Unzipping...");
 
