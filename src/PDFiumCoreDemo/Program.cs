@@ -16,6 +16,7 @@ namespace PDFiumCoreDemo
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
+            DemoMetadata();
             DemoPageManipulation();
             DemoFormFields();
 
@@ -114,11 +115,40 @@ namespace PDFiumCoreDemo
         }
 
         /// <summary>
+        /// Demonstrates document metadata access.
+        /// </summary>
+        static void DemoMetadata()
+        {
+            Console.WriteLine("4. Document Metadata");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                using var document = PdfDocument.Open("pdf-sample.pdf");
+                var meta = document.Metadata;
+
+                Console.WriteLine($"   Title: {(string.IsNullOrEmpty(meta.Title) ? "(none)" : meta.Title)}");
+                Console.WriteLine($"   Author: {(string.IsNullOrEmpty(meta.Author) ? "(none)" : meta.Author)}");
+                Console.WriteLine($"   Subject: {(string.IsNullOrEmpty(meta.Subject) ? "(none)" : meta.Subject)}");
+                Console.WriteLine($"   Keywords: {(string.IsNullOrEmpty(meta.Keywords) ? "(none)" : meta.Keywords)}");
+                Console.WriteLine($"   Creator: {(string.IsNullOrEmpty(meta.Creator) ? "(none)" : meta.Creator)}");
+                Console.WriteLine($"   Producer: {(string.IsNullOrEmpty(meta.Producer) ? "(none)" : meta.Producer)}");
+                Console.WriteLine($"   Creation Date: {meta.CreationDate ?? "(none)"}");
+                Console.WriteLine($"   Modification Date: {meta.ModificationDate ?? "(none)"}\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
         /// Demonstrates page manipulation operations.
         /// </summary>
         static void DemoPageManipulation()
         {
-            Console.WriteLine("4. Page Manipulation");
+            Console.WriteLine("5. Page Manipulation");
 
             PdfiumLibrary.Initialize();
 
@@ -161,7 +191,7 @@ namespace PDFiumCoreDemo
         /// </summary>
         static void DemoFormFields()
         {
-            Console.WriteLine("5. Form Field Reading");
+            Console.WriteLine("6. Form Field Reading");
 
             PdfiumLibrary.Initialize();
 

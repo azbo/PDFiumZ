@@ -44,6 +44,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `GetFormField(index)` - Get specific form field
   - `GetFormFields()` - Enumerate all form fields on page
 
+- **Document Metadata**
+  - `PdfMetadata` - Document metadata class with standard PDF properties
+    - Title, Author, Subject, Keywords - Basic document information
+    - Creator, Producer - Application information
+    - CreationDate, ModificationDate - Timestamp information in PDF format
+  - `PdfDocument.Metadata` - Property to access document metadata with lazy loading
+
 - **Demo Application Updates**
   - Added comprehensive examples for all high-level API features
   - Demonstrates rendering, text extraction, and page manipulation

@@ -14,6 +14,7 @@ public sealed class PdfDocument : IDisposable
     internal FpdfDocumentT? _handle;
     private readonly string? _filePath;
     private bool _disposed;
+    private PdfMetadata? _metadata;
 
     /// <summary>
     /// Gets the file path if document was loaded from file, null if from memory.
@@ -58,6 +59,35 @@ public sealed class PdfDocument : IDisposable
             int version = 0;
             fpdfview.FPDF_GetFileVersion(_handle!, ref version);
             return version;
+        }
+    }
+
+    /// <summary>
+    /// Gets the document metadata including title, author, subject, keywords, etc.
+    /// Metadata is cached after first access.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    public PdfMetadata Metadata
+    {
+        get
+        {
+            ThrowIfDisposed();
+
+            if (_metadata == null)
+            {
+                _metadata = new PdfMetadata(
+                    title: GetMetadataString("Title"),
+                    author: GetMetadataString("Author"),
+                    subject: GetMetadataString("Subject"),
+                    keywords: GetMetadataString("Keywords"),
+                    creator: GetMetadataString("Creator"),
+                    producer: GetMetadataString("Producer"),
+                    creationDate: GetMetadataString("CreationDate", allowEmpty: true),
+                    modificationDate: GetMetadataString("ModDate", allowEmpty: true)
+                );
+            }
+
+            return _metadata;
         }
     }
 
@@ -424,6 +454,45 @@ public sealed class PdfDocument : IDisposable
         if (!PdfiumLibrary.IsInitialized)
             throw new InvalidOperationException(
                 "PDFium library not initialized. Call PdfiumLibrary.Initialize() first.");
+    }
+
+    /// <summary>
+    /// Gets a metadata string for the specified tag.
+    /// </summary>
+    /// <param name="tag">Metadata tag (e.g., "Title", "Author", "Subject").</param>
+    /// <param name="allowEmpty">If true, returns null for empty strings; otherwise returns empty string.</param>
+    /// <returns>Metadata value or empty string/null if not available.</returns>
+    private unsafe string? GetMetadataString(string tag, bool allowEmpty = false)
+    {
+        ThrowIfDisposed();
+
+        // Get required buffer size (in bytes, including null terminator)
+        var bufferSize = fpdf_doc.FPDF_GetMetaText(_handle!, tag, IntPtr.Zero, 0);
+
+        if (bufferSize <= 2) // 2 bytes = just null terminator for UTF-16
+        {
+            return allowEmpty ? null : string.Empty;
+        }
+
+        // Allocate buffer (UTF-16, so divide by 2 for ushort count)
+        var buffer = new ushort[bufferSize / 2];
+
+        fixed (ushort* pBuffer = buffer)
+        {
+            var bytesWritten = fpdf_doc.FPDF_GetMetaText(
+                _handle!, tag, (IntPtr)pBuffer, bufferSize);
+
+            if (bytesWritten <= 2)
+            {
+                return allowEmpty ? null : string.Empty;
+            }
+
+            // Convert UTF-16 to string (bytesWritten includes null terminator)
+            var text = new string((char*)pBuffer, 0, (int)(bytesWritten / 2) - 1);
+
+            // Return null for empty strings if allowEmpty is true
+            return (allowEmpty && string.IsNullOrEmpty(text)) ? null : text;
+        }
     }
 
     private static string GetLastError()

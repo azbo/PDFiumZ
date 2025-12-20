@@ -6,6 +6,7 @@
 - [Page Operations](#page-operations)
 - [Rendering](#rendering)
 - [Text Extraction](#text-extraction)
+- [Document Metadata](#document-metadata)
 - [Bookmarks](#bookmarks)
 - [Page Manipulation](#page-manipulation)
 - [Form Fields](#form-fields)
@@ -210,6 +211,163 @@ for (int i = 0; i < document.PageCount; i++)
     Console.WriteLine($"--- Page {i + 1} ---");
     Console.WriteLine(text);
 }
+```
+
+## Document Metadata
+
+### Accessing Metadata
+
+```csharp
+using var document = PdfDocument.Open("sample.pdf");
+
+// Access metadata (cached after first access)
+var meta = document.Metadata;
+
+Console.WriteLine($"Title: {meta.Title}");
+Console.WriteLine($"Author: {meta.Author}");
+Console.WriteLine($"Subject: {meta.Subject}");
+Console.WriteLine($"Keywords: {meta.Keywords}");
+Console.WriteLine($"Creator: {meta.Creator}");           // Application that created original document
+Console.WriteLine($"Producer: {meta.Producer}");         // PDF producer application
+Console.WriteLine($"Creation Date: {meta.CreationDate ?? "Not available"}");
+Console.WriteLine($"Modification Date: {meta.ModificationDate ?? "Not available"}");
+```
+
+### Understanding Metadata Properties
+
+**Basic Document Information:**
+- `Title` - Document title
+- `Author` - Document author
+- `Subject` - Document subject or description
+- `Keywords` - Keywords associated with document
+
+**Application Information:**
+- `Creator` - Name of application that created the original document (e.g., "Microsoft Word")
+- `Producer` - Name of application that produced the PDF (e.g., "Acrobat Distiller")
+
+**Timestamps:**
+- `CreationDate` - When document was created (PDF date format: "D:YYYYMMDDHHmmSSOHH'mm'")
+- `ModificationDate` - When document was last modified (PDF date format)
+
+### Date Format
+
+PDF dates use a specific format string:
+```
+D:YYYYMMDDHHmmSSOHH'mm'
+
+Example: D:20231225120000+08'00'
+  Year:   2023
+  Month:  12 (December)
+  Day:    25
+  Hour:   12
+  Minute: 00
+  Second: 00
+  TZ:     +08'00' (UTC+8)
+```
+
+### Handling Missing Metadata
+
+```csharp
+using var document = PdfDocument.Open("sample.pdf");
+var meta = document.Metadata;
+
+// Check for empty strings
+if (string.IsNullOrEmpty(meta.Title))
+{
+    Console.WriteLine("No title available");
+}
+
+// Dates may be null if not present
+if (meta.CreationDate != null)
+{
+    Console.WriteLine($"Created: {meta.CreationDate}");
+}
+else
+{
+    Console.WriteLine("Creation date not available");
+}
+```
+
+### Practical Examples
+
+**Generate Document Info Report:**
+```csharp
+using var document = PdfDocument.Open("sample.pdf");
+var meta = document.Metadata;
+
+Console.WriteLine("=== Document Information ===");
+Console.WriteLine($"File: {document.FilePath}");
+Console.WriteLine($"Pages: {document.PageCount}");
+Console.WriteLine($"PDF Version: 1.{document.FileVersion / 10}");
+Console.WriteLine();
+
+Console.WriteLine("=== Metadata ===");
+Console.WriteLine($"Title: {meta.Title}");
+Console.WriteLine($"Author: {meta.Author}");
+Console.WriteLine($"Subject: {meta.Subject}");
+Console.WriteLine($"Keywords: {meta.Keywords}");
+Console.WriteLine();
+
+Console.WriteLine("=== Technical Information ===");
+Console.WriteLine($"Creator: {meta.Creator}");
+Console.WriteLine($"Producer: {meta.Producer}");
+Console.WriteLine($"Created: {meta.CreationDate ?? "Unknown"}");
+Console.WriteLine($"Modified: {meta.ModificationDate ?? "Unknown"}");
+```
+
+**Search PDFs by Metadata:**
+```csharp
+string[] pdfFiles = Directory.GetFiles("./documents", "*.pdf");
+var results = new List<(string File, string Author, string Title)>();
+
+PdfiumLibrary.Initialize();
+try
+{
+    foreach (var file in pdfFiles)
+    {
+        using var doc = PdfDocument.Open(file);
+        var meta = doc.Metadata;
+
+        // Search by author
+        if (meta.Author.Contains("John Doe", StringComparison.OrdinalIgnoreCase))
+        {
+            results.Add((file, meta.Author, meta.Title));
+        }
+    }
+}
+finally
+{
+    PdfiumLibrary.Shutdown();
+}
+
+foreach (var (file, author, title) in results)
+{
+    Console.WriteLine($"{file}: {title} by {author}");
+}
+```
+
+**Extract Metadata to JSON:**
+```csharp
+using System.Text.Json;
+
+using var document = PdfDocument.Open("sample.pdf");
+var meta = document.Metadata;
+
+var json = JsonSerializer.Serialize(new
+{
+    title = meta.Title,
+    author = meta.Author,
+    subject = meta.Subject,
+    keywords = meta.Keywords,
+    creator = meta.Creator,
+    producer = meta.Producer,
+    creationDate = meta.CreationDate,
+    modificationDate = meta.ModificationDate,
+    pageCount = document.PageCount,
+    pdfVersion = $"1.{document.FileVersion / 10}"
+}, new JsonSerializerOptions { WriteIndented = true });
+
+File.WriteAllText("metadata.json", json);
 ```
 
 ## Bookmarks
