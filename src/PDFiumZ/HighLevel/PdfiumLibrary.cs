@@ -1,6 +1,6 @@
 using System;
 
-namespace PDFiumCore.HighLevel;
+namespace PDFiumZ.HighLevel;
 
 /// <summary>
 /// Manages PDFium library initialization and cleanup.

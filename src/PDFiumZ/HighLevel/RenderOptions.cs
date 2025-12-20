@@ -1,6 +1,6 @@
 using System;
 
-namespace PDFiumCore.HighLevel;
+namespace PDFiumZ.HighLevel;
 
 /// <summary>
 /// Fluent builder for configuring PDF page rendering.

@@ -1,6 +1,6 @@
 using System;
 
-namespace PDFiumCore.HighLevel;
+namespace PDFiumZ.HighLevel;
 
 /// <summary>
 /// Represents a destination that a link points to.

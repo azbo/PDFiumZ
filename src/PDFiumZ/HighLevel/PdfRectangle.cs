@@ -1,4 +1,4 @@
-namespace PDFiumCore.HighLevel;
+namespace PDFiumZ.HighLevel;
 
 /// <summary>
 /// Represents a rectangle in PDF coordinate space.

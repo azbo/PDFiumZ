@@ -1,9 +1,9 @@
-using PDFiumCore.HighLevel;
+using PDFiumZ.HighLevel;
 using SkiaSharp;
 using System;
 using System.IO;
 
-namespace PDFiumCore.SkiaSharp
+namespace PDFiumZ.SkiaSharp
 {
     /// <summary>
     /// Extension methods for integrating PdfImage with SkiaSharp.

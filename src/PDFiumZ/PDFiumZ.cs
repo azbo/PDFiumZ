@@ -16,7 +16,7 @@ using __IntPtr = global::System.IntPtr;
 
 #pragma warning disable CS0109 // Member does not hide an inherited member; new keyword is not required
 
-namespace PDFiumCore
+namespace PDFiumZ
 {
     public enum FPDF_TEXT_RENDERMODE
     {
@@ -54,15 +54,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfActionT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfActionT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfActionT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfActionT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfActionT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfActionT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfActionT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfActionT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -124,15 +124,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfAnnotationT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfAnnotationT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfAnnotationT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfAnnotationT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfAnnotationT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfAnnotationT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfAnnotationT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfAnnotationT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -194,15 +194,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfAttachmentT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfAttachmentT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfAttachmentT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfAttachmentT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfAttachmentT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfAttachmentT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfAttachmentT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfAttachmentT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -264,15 +264,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfAvailT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfAvailT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfAvailT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfAvailT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfAvailT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfAvailT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfAvailT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfAvailT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -334,15 +334,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfBitmapT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfBitmapT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfBitmapT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfBitmapT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfBitmapT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfBitmapT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfBitmapT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfBitmapT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -404,15 +404,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfBookmarkT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfBookmarkT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfBookmarkT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfBookmarkT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfBookmarkT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfBookmarkT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfBookmarkT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfBookmarkT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -474,15 +474,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfClippathT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfClippathT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfClippathT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfClippathT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfClippathT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfClippathT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfClippathT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfClippathT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -544,15 +544,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfDestT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfDestT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfDestT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfDestT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfDestT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfDestT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfDestT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfDestT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -614,15 +614,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfDocumentT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfDocumentT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfDocumentT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfDocumentT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfDocumentT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfDocumentT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfDocumentT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfDocumentT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -684,15 +684,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfFontT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfFontT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfFontT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfFontT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfFontT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfFontT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfFontT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfFontT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -754,15 +754,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfFormHandleT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfFormHandleT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfFormHandleT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfFormHandleT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfFormHandleT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfFormHandleT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfFormHandleT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfFormHandleT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -824,15 +824,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfGlyphpathT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfGlyphpathT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfGlyphpathT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfGlyphpathT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfGlyphpathT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfGlyphpathT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfGlyphpathT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfGlyphpathT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -894,15 +894,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfJavascriptActionT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfJavascriptActionT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfJavascriptActionT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfJavascriptActionT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfJavascriptActionT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfJavascriptActionT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfJavascriptActionT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfJavascriptActionT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -964,15 +964,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfLinkT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfLinkT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfLinkT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfLinkT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfLinkT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfLinkT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfLinkT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfLinkT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -1034,15 +1034,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfPageT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfPageT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfPageT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfPageT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfPageT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfPageT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfPageT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfPageT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -1104,15 +1104,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfPagelinkT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfPagelinkT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfPagelinkT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfPagelinkT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfPagelinkT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfPagelinkT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfPagelinkT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfPagelinkT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -1174,15 +1174,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfPageobjectT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfPageobjectT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfPageobjectT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfPageobjectT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfPageobjectT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfPageobjectT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfPageobjectT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfPageobjectT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -1244,15 +1244,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfPageobjectmarkT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfPageobjectmarkT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfPageobjectmarkT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfPageobjectmarkT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfPageobjectmarkT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfPageobjectmarkT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfPageobjectmarkT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfPageobjectmarkT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -1314,15 +1314,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfPagerangeT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfPagerangeT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfPagerangeT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfPagerangeT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfPagerangeT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfPagerangeT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfPagerangeT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfPagerangeT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -1384,15 +1384,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfPathsegmentT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfPathsegmentT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfPathsegmentT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfPathsegmentT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfPathsegmentT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfPathsegmentT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfPathsegmentT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfPathsegmentT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -1454,15 +1454,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfSchhandleT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfSchhandleT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfSchhandleT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfSchhandleT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfSchhandleT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfSchhandleT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfSchhandleT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfSchhandleT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -1524,15 +1524,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfSignatureT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfSignatureT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfSignatureT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfSignatureT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfSignatureT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfSignatureT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfSignatureT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfSignatureT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -1594,15 +1594,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfStructelementT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfStructelementT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfStructelementT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfStructelementT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfStructelementT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfStructelementT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfStructelementT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfStructelementT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -1664,15 +1664,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfStructelementAttrT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfStructelementAttrT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfStructelementAttrT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfStructelementAttrT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfStructelementAttrT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfStructelementAttrT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfStructelementAttrT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfStructelementAttrT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -1734,15 +1734,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfStructelementAttrValueT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfStructelementAttrValueT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfStructelementAttrValueT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfStructelementAttrValueT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfStructelementAttrValueT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfStructelementAttrValueT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfStructelementAttrValueT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfStructelementAttrValueT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -1804,15 +1804,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfStructtreeT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfStructtreeT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfStructtreeT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfStructtreeT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfStructtreeT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfStructtreeT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfStructtreeT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfStructtreeT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -1874,15 +1874,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfTextpageT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfTextpageT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfTextpageT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfTextpageT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfTextpageT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfTextpageT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfTextpageT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfTextpageT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -1944,15 +1944,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfWidgetT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfWidgetT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfWidgetT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfWidgetT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfWidgetT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfWidgetT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfWidgetT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfWidgetT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -2014,15 +2014,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfXobjectT> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FpdfXobjectT>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfXobjectT> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FpdfXobjectT>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FpdfXobjectT managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FpdfXobjectT managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FpdfXobjectT managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FpdfXobjectT managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -2090,15 +2090,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_BSTR_> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_BSTR_>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_BSTR_> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_BSTR_>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FPDF_BSTR_ managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FPDF_BSTR_ managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FPDF_BSTR_ managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FPDF_BSTR_ managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -2153,17 +2153,17 @@ namespace PDFiumCore
 
         public FPDF_BSTR_()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_BSTR_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_BSTR_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FPDF_BSTR_(global::PDFiumCore.FPDF_BSTR_ _0)
+        public FPDF_BSTR_(global::PDFiumZ.FPDF_BSTR_ _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_BSTR_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_BSTR_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FPDF_BSTR_.__Internal*) __Instance) = *((global::PDFiumCore.FPDF_BSTR_.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FPDF_BSTR_.__Internal*) __Instance) = *((global::PDFiumZ.FPDF_BSTR_.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -2229,15 +2229,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FS_MATRIX_> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FS_MATRIX_>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FS_MATRIX_> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FS_MATRIX_>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FS_MATRIX_ managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FS_MATRIX_ managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FS_MATRIX_ managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FS_MATRIX_ managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -2292,17 +2292,17 @@ namespace PDFiumCore
 
         public FS_MATRIX_()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FS_MATRIX_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FS_MATRIX_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FS_MATRIX_(global::PDFiumCore.FS_MATRIX_ _0)
+        public FS_MATRIX_(global::PDFiumZ.FS_MATRIX_ _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FS_MATRIX_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FS_MATRIX_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FS_MATRIX_.__Internal*) __Instance) = *((global::PDFiumCore.FS_MATRIX_.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FS_MATRIX_.__Internal*) __Instance) = *((global::PDFiumZ.FS_MATRIX_.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -2418,15 +2418,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FS_RECTF_> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FS_RECTF_>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FS_RECTF_> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FS_RECTF_>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FS_RECTF_ managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FS_RECTF_ managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FS_RECTF_ managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FS_RECTF_ managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -2481,17 +2481,17 @@ namespace PDFiumCore
 
         public FS_RECTF_()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FS_RECTF_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FS_RECTF_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FS_RECTF_(global::PDFiumCore.FS_RECTF_ _0)
+        public FS_RECTF_(global::PDFiumZ.FS_RECTF_ _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FS_RECTF_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FS_RECTF_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FS_RECTF_.__Internal*) __Instance) = *((global::PDFiumCore.FS_RECTF_.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FS_RECTF_.__Internal*) __Instance) = *((global::PDFiumZ.FS_RECTF_.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -2579,15 +2579,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FS_SIZEF_> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FS_SIZEF_>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FS_SIZEF_> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FS_SIZEF_>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FS_SIZEF_ managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FS_SIZEF_ managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FS_SIZEF_ managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FS_SIZEF_ managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -2642,17 +2642,17 @@ namespace PDFiumCore
 
         public FS_SIZEF_()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FS_SIZEF_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FS_SIZEF_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FS_SIZEF_(global::PDFiumCore.FS_SIZEF_ _0)
+        public FS_SIZEF_(global::PDFiumZ.FS_SIZEF_ _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FS_SIZEF_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FS_SIZEF_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FS_SIZEF_.__Internal*) __Instance) = *((global::PDFiumCore.FS_SIZEF_.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FS_SIZEF_.__Internal*) __Instance) = *((global::PDFiumZ.FS_SIZEF_.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -2714,15 +2714,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FS_POINTF_> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FS_POINTF_>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FS_POINTF_> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FS_POINTF_>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FS_POINTF_ managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FS_POINTF_ managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FS_POINTF_ managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FS_POINTF_ managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -2777,17 +2777,17 @@ namespace PDFiumCore
 
         public FS_POINTF_()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FS_POINTF_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FS_POINTF_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FS_POINTF_(global::PDFiumCore.FS_POINTF_ _0)
+        public FS_POINTF_(global::PDFiumZ.FS_POINTF_ _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FS_POINTF_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FS_POINTF_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FS_POINTF_.__Internal*) __Instance) = *((global::PDFiumCore.FS_POINTF_.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FS_POINTF_.__Internal*) __Instance) = *((global::PDFiumZ.FS_POINTF_.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -2855,15 +2855,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FS_QUADPOINTSF> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FS_QUADPOINTSF>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FS_QUADPOINTSF> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FS_QUADPOINTSF>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FS_QUADPOINTSF managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FS_QUADPOINTSF managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FS_QUADPOINTSF managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FS_QUADPOINTSF managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -2918,17 +2918,17 @@ namespace PDFiumCore
 
         public FS_QUADPOINTSF()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FS_QUADPOINTSF.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FS_QUADPOINTSF.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FS_QUADPOINTSF(global::PDFiumCore.FS_QUADPOINTSF _0)
+        public FS_QUADPOINTSF(global::PDFiumZ.FS_QUADPOINTSF _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FS_QUADPOINTSF.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FS_QUADPOINTSF.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FS_QUADPOINTSF.__Internal*) __Instance) = *((global::PDFiumCore.FS_QUADPOINTSF.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FS_QUADPOINTSF.__Internal*) __Instance) = *((global::PDFiumZ.FS_QUADPOINTSF.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -3064,7 +3064,7 @@ namespace PDFiumCore
             internal __IntPtr m_pIsolate;
             internal uint m_v8EmbedderSlot;
             internal __IntPtr m_pPlatform;
-            internal global::PDFiumCore.FPDF_RENDERER_TYPE m_RendererType;
+            internal global::PDFiumZ.FPDF_RENDERER_TYPE m_RendererType;
 
             [SuppressUnmanagedCodeSecurity, DllImport("pdfium", EntryPoint = "??0FPDF_LIBRARY_CONFIG_@@QEAA@AEBU0@@Z", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern __IntPtr cctor(__IntPtr __instance, __IntPtr _0);
@@ -3072,15 +3072,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_LIBRARY_CONFIG_> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_LIBRARY_CONFIG_>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_LIBRARY_CONFIG_> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_LIBRARY_CONFIG_>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FPDF_LIBRARY_CONFIG_ managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FPDF_LIBRARY_CONFIG_ managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FPDF_LIBRARY_CONFIG_ managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FPDF_LIBRARY_CONFIG_ managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -3135,17 +3135,17 @@ namespace PDFiumCore
 
         public FPDF_LIBRARY_CONFIG_()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_LIBRARY_CONFIG_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_LIBRARY_CONFIG_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FPDF_LIBRARY_CONFIG_(global::PDFiumCore.FPDF_LIBRARY_CONFIG_ _0)
+        public FPDF_LIBRARY_CONFIG_(global::PDFiumZ.FPDF_LIBRARY_CONFIG_ _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_LIBRARY_CONFIG_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_LIBRARY_CONFIG_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FPDF_LIBRARY_CONFIG_.__Internal*) __Instance) = *((global::PDFiumCore.FPDF_LIBRARY_CONFIG_.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FPDF_LIBRARY_CONFIG_.__Internal*) __Instance) = *((global::PDFiumZ.FPDF_LIBRARY_CONFIG_.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -3218,7 +3218,7 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.FPDF_RENDERER_TYPE MRendererType
+        public global::PDFiumZ.FPDF_RENDERER_TYPE MRendererType
         {
             get
             {
@@ -3247,15 +3247,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_FILEACCESS> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_FILEACCESS>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_FILEACCESS> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_FILEACCESS>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FPDF_FILEACCESS managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FPDF_FILEACCESS managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FPDF_FILEACCESS managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FPDF_FILEACCESS managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -3310,17 +3310,17 @@ namespace PDFiumCore
 
         public FPDF_FILEACCESS()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_FILEACCESS.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_FILEACCESS.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FPDF_FILEACCESS(global::PDFiumCore.FPDF_FILEACCESS _0)
+        public FPDF_FILEACCESS(global::PDFiumZ.FPDF_FILEACCESS _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_FILEACCESS.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_FILEACCESS.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FPDF_FILEACCESS.__Internal*) __Instance) = *((global::PDFiumCore.FPDF_FILEACCESS.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FPDF_FILEACCESS.__Internal*) __Instance) = *((global::PDFiumZ.FPDF_FILEACCESS.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -3354,12 +3354,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr_uint_bytePtr_uint MGetBlock
+        public global::PDFiumZ.Delegates.Func_int___IntPtr_uint_bytePtr_uint MGetBlock
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->m_GetBlock;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr_uint_bytePtr_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr_uint_bytePtr_uint));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr_uint_bytePtr_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr_uint_bytePtr_uint));
             }
 
             set
@@ -3401,15 +3401,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_FILEHANDLER_> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_FILEHANDLER_>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_FILEHANDLER_> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_FILEHANDLER_>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FPDF_FILEHANDLER_ managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FPDF_FILEHANDLER_ managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FPDF_FILEHANDLER_ managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FPDF_FILEHANDLER_ managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -3464,17 +3464,17 @@ namespace PDFiumCore
 
         public FPDF_FILEHANDLER_()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_FILEHANDLER_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_FILEHANDLER_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FPDF_FILEHANDLER_(global::PDFiumCore.FPDF_FILEHANDLER_ _0)
+        public FPDF_FILEHANDLER_(global::PDFiumZ.FPDF_FILEHANDLER_ _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_FILEHANDLER_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_FILEHANDLER_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FPDF_FILEHANDLER_.__Internal*) __Instance) = *((global::PDFiumCore.FPDF_FILEHANDLER_.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FPDF_FILEHANDLER_.__Internal*) __Instance) = *((global::PDFiumZ.FPDF_FILEHANDLER_.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -3508,12 +3508,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr Release
+        public global::PDFiumZ.Delegates.Action___IntPtr Release
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->Release;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr));
             }
 
             set
@@ -3522,12 +3522,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_uint___IntPtr GetSize
+        public global::PDFiumZ.Delegates.Func_uint___IntPtr GetSize
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->GetSize;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_uint___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_uint___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_uint___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_uint___IntPtr));
             }
 
             set
@@ -3536,12 +3536,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr_uint___IntPtr_uint ReadBlock
+        public global::PDFiumZ.Delegates.Func_int___IntPtr_uint___IntPtr_uint ReadBlock
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->ReadBlock;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr_uint___IntPtr_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr_uint___IntPtr_uint));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr_uint___IntPtr_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr_uint___IntPtr_uint));
             }
 
             set
@@ -3550,12 +3550,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr_uint___IntPtr_uint WriteBlock
+        public global::PDFiumZ.Delegates.Func_int___IntPtr_uint___IntPtr_uint WriteBlock
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->WriteBlock;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr_uint___IntPtr_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr_uint___IntPtr_uint));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr_uint___IntPtr_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr_uint___IntPtr_uint));
             }
 
             set
@@ -3564,12 +3564,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr Flush
+        public global::PDFiumZ.Delegates.Func_int___IntPtr Flush
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->Flush;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr));
             }
 
             set
@@ -3578,12 +3578,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr_uint Truncate
+        public global::PDFiumZ.Delegates.Func_int___IntPtr_uint Truncate
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->Truncate;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr_uint));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr_uint));
             }
 
             set
@@ -3609,15 +3609,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_COLORSCHEME_> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_COLORSCHEME_>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_COLORSCHEME_> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_COLORSCHEME_>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FPDF_COLORSCHEME_ managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FPDF_COLORSCHEME_ managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FPDF_COLORSCHEME_ managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FPDF_COLORSCHEME_ managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -3672,17 +3672,17 @@ namespace PDFiumCore
 
         public FPDF_COLORSCHEME_()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_COLORSCHEME_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_COLORSCHEME_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FPDF_COLORSCHEME_(global::PDFiumCore.FPDF_COLORSCHEME_ _0)
+        public FPDF_COLORSCHEME_(global::PDFiumZ.FPDF_COLORSCHEME_ _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_COLORSCHEME_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_COLORSCHEME_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FPDF_COLORSCHEME_.__Internal*) __Instance) = *((global::PDFiumCore.FPDF_COLORSCHEME_.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FPDF_COLORSCHEME_.__Internal*) __Instance) = *((global::PDFiumZ.FPDF_COLORSCHEME_.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -3893,7 +3893,7 @@ namespace PDFiumCore
             internal static extern int FPDF_VIEWERREF_GetPrintPageRangeElement(__IntPtr pagerange, ulong index);
 
             [SuppressUnmanagedCodeSecurity, DllImport("pdfium", EntryPoint = "FPDF_VIEWERREF_GetDuplex", CallingConvention = __CallingConvention.Cdecl)]
-            internal static extern global::PDFiumCore.FPDF_DUPLEXTYPE_ FPDF_VIEWERREF_GetDuplex(__IntPtr document);
+            internal static extern global::PDFiumZ.FPDF_DUPLEXTYPE_ FPDF_VIEWERREF_GetDuplex(__IntPtr document);
 
             [SuppressUnmanagedCodeSecurity, DllImport("pdfium", EntryPoint = "FPDF_VIEWERREF_GetName", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern uint FPDF_VIEWERREF_GetName(__IntPtr document, [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CppSharp.Runtime.UTF8Marshaller))] string key, sbyte* buffer, uint length);
@@ -3926,7 +3926,7 @@ namespace PDFiumCore
         /// <para>None.</para>
         /// <para>Comments: You have to call this function before you can call any PDF processing functions.</para>
         /// </summary>
-        public static void FPDF_InitLibraryWithConfig(global::PDFiumCore.FPDF_LIBRARY_CONFIG_ config)
+        public static void FPDF_InitLibraryWithConfig(global::PDFiumZ.FPDF_LIBRARY_CONFIG_ config)
         {
             var __arg0 = config is null ? __IntPtr.Zero : config.__Instance;
             __Internal.FPDF_InitLibraryWithConfig(__arg0);
@@ -3988,10 +3988,10 @@ namespace PDFiumCore
         /// <para>The encoding for |file_path| is UTF-8.</para>
         /// <para>The encoding for |password| can be either UTF-8 or Latin-1. PDFs, depending on the security handler revision, will only accept one or the other encoding. If |password|'s encoding and the PDF's expected encoding do not match, FPDF_LoadDocument() will automatically convert |password| to the other encoding.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfDocumentT FPDF_LoadDocument(string file_path, string password)
+        public static global::PDFiumZ.FpdfDocumentT FPDF_LoadDocument(string file_path, string password)
         {
             var ___ret = __Internal.FPDF_LoadDocument(file_path, password);
-            var __result0 = global::PDFiumCore.FpdfDocumentT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfDocumentT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -4008,10 +4008,10 @@ namespace PDFiumCore
         /// <para>See the comments for FPDF_LoadDocument() regarding the encoding for |password|.</para>
         /// <para>Notes: If PDFium is built with the XFA module, the application should call FPDF_LoadXFA() function after the PDF document loaded to support XFA fields defined in the fpdfformfill.h file.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfDocumentT FPDF_LoadMemDocument(__IntPtr data_buf, int size, string password)
+        public static global::PDFiumZ.FpdfDocumentT FPDF_LoadMemDocument(__IntPtr data_buf, int size, string password)
         {
             var ___ret = __Internal.FPDF_LoadMemDocument(data_buf, size, password);
-            var __result0 = global::PDFiumCore.FpdfDocumentT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfDocumentT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -4028,10 +4028,10 @@ namespace PDFiumCore
         /// <para>See the comments for FPDF_LoadDocument() regarding the encoding for |password|.</para>
         /// <para>Notes: If PDFium is built with the XFA module, the application should call FPDF_LoadXFA() function after the PDF document loaded to support XFA fields defined in the fpdfformfill.h file.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfDocumentT FPDF_LoadMemDocument64(__IntPtr data_buf, ulong size, string password)
+        public static global::PDFiumZ.FpdfDocumentT FPDF_LoadMemDocument64(__IntPtr data_buf, ulong size, string password)
         {
             var ___ret = __Internal.FPDF_LoadMemDocument64(data_buf, size, password);
-            var __result0 = global::PDFiumCore.FpdfDocumentT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfDocumentT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -4048,11 +4048,11 @@ namespace PDFiumCore
         /// <para>See the comments for FPDF_LoadDocument() regarding the encoding for |password|.</para>
         /// <para>Notes: If PDFium is built with the XFA module, the application should call FPDF_LoadXFA() function after the PDF document loaded to support XFA fields defined in the fpdfformfill.h file.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfDocumentT FPDF_LoadCustomDocument(global::PDFiumCore.FPDF_FILEACCESS pFileAccess, string password)
+        public static global::PDFiumZ.FpdfDocumentT FPDF_LoadCustomDocument(global::PDFiumZ.FPDF_FILEACCESS pFileAccess, string password)
         {
             var __arg0 = pFileAccess is null ? __IntPtr.Zero : pFileAccess.__Instance;
             var ___ret = __Internal.FPDF_LoadCustomDocument(__arg0, password);
-            var __result0 = global::PDFiumCore.FpdfDocumentT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfDocumentT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -4066,7 +4066,7 @@ namespace PDFiumCore
         /// <para>True if succeeds, false otherwise.</para>
         /// <para>Comments: If the document was created by FPDF_CreateNewDocument, then this function will always fail.</para>
         /// </summary>
-        public static int FPDF_GetFileVersion(global::PDFiumCore.FpdfDocumentT doc, ref int fileVersion)
+        public static int FPDF_GetFileVersion(global::PDFiumZ.FpdfDocumentT doc, ref int fileVersion)
         {
             var __arg0 = doc is null ? __IntPtr.Zero : doc.__Instance;
             fixed (int* __fileVersion1 = &fileVersion)
@@ -4104,7 +4104,7 @@ namespace PDFiumCore
         /// <para>within the document.</para>
         /// <para>Comments: The return value can change over time as the PDF parser evolves.</para>
         /// </summary>
-        public static int FPDF_DocumentHasValidCrossReferenceTable(global::PDFiumCore.FpdfDocumentT document)
+        public static int FPDF_DocumentHasValidCrossReferenceTable(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_DocumentHasValidCrossReferenceTable(__arg0);
@@ -4124,7 +4124,7 @@ namespace PDFiumCore
         /// <para>trailer ends in the document. If |length| is less than the returned length,</para>
         /// <para>or |document| or |buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDF_GetTrailerEnds(global::PDFiumCore.FpdfDocumentT document, ref uint buffer, uint length)
+        public static uint FPDF_GetTrailerEnds(global::PDFiumZ.FpdfDocumentT document, ref uint buffer, uint length)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             fixed (uint* __buffer1 = &buffer)
@@ -4145,7 +4145,7 @@ namespace PDFiumCore
         /// <para>PDF Reference for detailed descriptions. If the document is not</para>
         /// <para>protected or was unlocked by the owner, 0xffffffff will be returned.</para>
         /// </summary>
-        public static uint FPDF_GetDocPermissions(global::PDFiumCore.FpdfDocumentT document)
+        public static uint FPDF_GetDocPermissions(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_GetDocPermissions(__arg0);
@@ -4163,7 +4163,7 @@ namespace PDFiumCore
         /// <para>protected, 0xffffffff will be returned. Always returns user</para>
         /// <para>permissions, even if the document was unlocked by the owner.</para>
         /// </summary>
-        public static uint FPDF_GetDocUserPermissions(global::PDFiumCore.FpdfDocumentT document)
+        public static uint FPDF_GetDocUserPermissions(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_GetDocUserPermissions(__arg0);
@@ -4180,7 +4180,7 @@ namespace PDFiumCore
         /// <para>Reference for a detailed description. If the document is not</para>
         /// <para>protected, -1 will be returned.</para>
         /// </summary>
-        public static int FPDF_GetSecurityHandlerRevision(global::PDFiumCore.FpdfDocumentT document)
+        public static int FPDF_GetSecurityHandlerRevision(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_GetSecurityHandlerRevision(__arg0);
@@ -4195,7 +4195,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>Total number of pages in the document.</para>
         /// </summary>
-        public static int FPDF_GetPageCount(global::PDFiumCore.FpdfDocumentT document)
+        public static int FPDF_GetPageCount(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_GetPageCount(__arg0);
@@ -4212,11 +4212,11 @@ namespace PDFiumCore
         /// <para>A handle to the loaded page, or NULL if page load fails.</para>
         /// <para>Comments: The loaded page can be rendered to devices using FPDF_RenderPage. The loaded page can be closed using FPDF_ClosePage.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPageT FPDF_LoadPage(global::PDFiumCore.FpdfDocumentT document, int page_index)
+        public static global::PDFiumZ.FpdfPageT FPDF_LoadPage(global::PDFiumZ.FpdfDocumentT document, int page_index)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_LoadPage(__arg0, page_index);
-            var __result0 = global::PDFiumCore.FpdfPageT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPageT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -4230,7 +4230,7 @@ namespace PDFiumCore
         /// <para>One point is 1/72 inch (around 0.3528 mm).</para>
         /// <para>Comments: Changing the rotation of |page| affects the return value.</para>
         /// </summary>
-        public static float FPDF_GetPageWidthF(global::PDFiumCore.FpdfPageT page)
+        public static float FPDF_GetPageWidthF(global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDF_GetPageWidthF(__arg0);
@@ -4250,7 +4250,7 @@ namespace PDFiumCore
         /// <para>future.</para>
         /// <para>Comments: Changing the rotation of |page| affects the return value.</para>
         /// </summary>
-        public static double FPDF_GetPageWidth(global::PDFiumCore.FpdfPageT page)
+        public static double FPDF_GetPageWidth(global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDF_GetPageWidth(__arg0);
@@ -4267,7 +4267,7 @@ namespace PDFiumCore
         /// <para>One point is 1/72 inch (around 0.3528 mm)</para>
         /// <para>Comments: Changing the rotation of |page| affects the return value.</para>
         /// </summary>
-        public static float FPDF_GetPageHeightF(global::PDFiumCore.FpdfPageT page)
+        public static float FPDF_GetPageHeightF(global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDF_GetPageHeightF(__arg0);
@@ -4287,7 +4287,7 @@ namespace PDFiumCore
         /// <para>future.</para>
         /// <para>Comments: Changing the rotation of |page| affects the return value.</para>
         /// </summary>
-        public static double FPDF_GetPageHeight(global::PDFiumCore.FpdfPageT page)
+        public static double FPDF_GetPageHeight(global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDF_GetPageHeight(__arg0);
@@ -4304,7 +4304,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>True for success.</para>
         /// </summary>
-        public static int FPDF_GetPageBoundingBox(global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FS_RECTF_ rect)
+        public static int FPDF_GetPageBoundingBox(global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FS_RECTF_ rect)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg1 = rect is null ? __IntPtr.Zero : rect.__Instance;
@@ -4322,7 +4322,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>Non-zero for success. 0 for error (document or page not found).</para>
         /// </summary>
-        public static int FPDF_GetPageSizeByIndexF(global::PDFiumCore.FpdfDocumentT document, int page_index, global::PDFiumCore.FS_SIZEF_ size)
+        public static int FPDF_GetPageSizeByIndexF(global::PDFiumZ.FpdfDocumentT document, int page_index, global::PDFiumZ.FS_SIZEF_ size)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg2 = size is null ? __IntPtr.Zero : size.__Instance;
@@ -4344,7 +4344,7 @@ namespace PDFiumCore
         /// <para>Prefer FPDF_GetPageSizeByIndexF() above. This will be deprecated in</para>
         /// <para>the future.</para>
         /// </summary>
-        public static int FPDF_GetPageSizeByIndex(global::PDFiumCore.FpdfDocumentT document, int page_index, ref double width, ref double height)
+        public static int FPDF_GetPageSizeByIndex(global::PDFiumZ.FpdfDocumentT document, int page_index, ref double width, ref double height)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             fixed (double* __width2 = &width)
@@ -4374,7 +4374,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>None.</para>
         /// </summary>
-        public static void FPDF_RenderPageBitmap(global::PDFiumCore.FpdfBitmapT bitmap, global::PDFiumCore.FpdfPageT page, int start_x, int start_y, int size_x, int size_y, int rotate, int flags)
+        public static void FPDF_RenderPageBitmap(global::PDFiumZ.FpdfBitmapT bitmap, global::PDFiumZ.FpdfPageT page, int start_x, int start_y, int size_x, int size_y, int rotate, int flags)
         {
             var __arg0 = bitmap is null ? __IntPtr.Zero : bitmap.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -4393,7 +4393,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>None. Note that behavior is undefined if det of |matrix| is 0.</para>
         /// </summary>
-        public static void FPDF_RenderPageBitmapWithMatrix(global::PDFiumCore.FpdfBitmapT bitmap, global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FS_MATRIX_ matrix, global::PDFiumCore.FS_RECTF_ clipping, int flags)
+        public static void FPDF_RenderPageBitmapWithMatrix(global::PDFiumZ.FpdfBitmapT bitmap, global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FS_MATRIX_ matrix, global::PDFiumZ.FS_RECTF_ clipping, int flags)
         {
             var __arg0 = bitmap is null ? __IntPtr.Zero : bitmap.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -4410,7 +4410,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>None.</para>
         /// </summary>
-        public static void FPDF_ClosePage(global::PDFiumCore.FpdfPageT page)
+        public static void FPDF_ClosePage(global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             __Internal.FPDF_ClosePage(__arg0);
@@ -4424,7 +4424,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>None.</para>
         /// </summary>
-        public static void FPDF_CloseDocument(global::PDFiumCore.FpdfDocumentT document)
+        public static void FPDF_CloseDocument(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             __Internal.FPDF_CloseDocument(__arg0);
@@ -4452,7 +4452,7 @@ namespace PDFiumCore
         /// <para>The device coordinate system is device dependent. For screen device, its origin is at the left-top corner of the window. However this origin can be altered by the Windows coordinate transformation utilities.</para>
         /// <para>You must make sure the start_x, start_y, size_x, size_y and rotate parameters have exactly same values as you used in the FPDF_RenderPage() function call.</para>
         /// </summary>
-        public static int FPDF_DeviceToPage(global::PDFiumCore.FpdfPageT page, int start_x, int start_y, int size_x, int size_y, int rotate, int device_x, int device_y, ref double page_x, ref double page_y)
+        public static int FPDF_DeviceToPage(global::PDFiumZ.FpdfPageT page, int start_x, int start_y, int size_x, int size_y, int rotate, int device_x, int device_y, ref double page_x, ref double page_y)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             fixed (double* __page_x8 = &page_x)
@@ -4486,7 +4486,7 @@ namespace PDFiumCore
         /// <para>|device_y| successfully receives the converted coordinates.</para>
         /// <para>Comments: See comments for FPDF_DeviceToPage().</para>
         /// </summary>
-        public static int FPDF_PageToDevice(global::PDFiumCore.FpdfPageT page, int start_x, int start_y, int size_x, int size_y, int rotate, double page_x, double page_y, ref int device_x, ref int device_y)
+        public static int FPDF_PageToDevice(global::PDFiumZ.FpdfPageT page, int start_x, int start_y, int size_x, int size_y, int rotate, double page_x, double page_y, ref int device_x, ref int device_y)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             fixed (int* __device_x8 = &device_x)
@@ -4517,10 +4517,10 @@ namespace PDFiumCore
         /// <para>Lines are stored one after another, with the top most line stored first. There is no gap between adjacent lines.</para>
         /// <para>This function allocates enough memory for holding all pixels in the bitmap, but it doesn't initialize the buffer. Applications can use FPDFBitmap_FillRect() to fill the bitmap using any color. If the OS allows it, this function can allocate up to 4 GB of memory.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfBitmapT FPDFBitmapCreate(int width, int height, int alpha)
+        public static global::PDFiumZ.FpdfBitmapT FPDFBitmapCreate(int width, int height, int alpha)
         {
             var ___ret = __Internal.FPDFBitmapCreate(width, height, alpha);
-            var __result0 = global::PDFiumCore.FpdfBitmapT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfBitmapT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -4539,10 +4539,10 @@ namespace PDFiumCore
         /// <para>If an external buffer is used, then the caller should destroy the buffer. FPDFBitmap_Destroy() will not destroy the buffer.</para>
         /// <para>It is recommended to use FPDFBitmap_GetStride() to get the stride value.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfBitmapT FPDFBitmapCreateEx(int width, int height, int format, __IntPtr first_scan, int stride)
+        public static global::PDFiumZ.FpdfBitmapT FPDFBitmapCreateEx(int width, int height, int format, __IntPtr first_scan, int stride)
         {
             var ___ret = __Internal.FPDFBitmapCreateEx(width, height, format, first_scan, stride);
-            var __result0 = global::PDFiumCore.FpdfBitmapT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfBitmapT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -4555,7 +4555,7 @@ namespace PDFiumCore
         /// <para>The format of the bitmap.</para>
         /// <para>Comments: Only formats supported by FPDFBitmap_CreateEx are supported by this function; see the list of such formats above.</para>
         /// </summary>
-        public static int FPDFBitmapGetFormat(global::PDFiumCore.FpdfBitmapT bitmap)
+        public static int FPDFBitmapGetFormat(global::PDFiumZ.FpdfBitmapT bitmap)
         {
             var __arg0 = bitmap is null ? __IntPtr.Zero : bitmap.__Instance;
             var ___ret = __Internal.FPDFBitmapGetFormat(__arg0);
@@ -4578,7 +4578,7 @@ namespace PDFiumCore
         /// <para>NOTE: If the alpha channel is used, this function does NOT composite the background with the source color, instead the background will be replaced by the source color and the alpha.</para>
         /// <para>If the alpha channel is not used, the alpha parameter is ignored.</para>
         /// </summary>
-        public static int FPDFBitmapFillRect(global::PDFiumCore.FpdfBitmapT bitmap, int left, int top, int width, int height, uint color)
+        public static int FPDFBitmapFillRect(global::PDFiumZ.FpdfBitmapT bitmap, int left, int top, int width, int height, uint color)
         {
             var __arg0 = bitmap is null ? __IntPtr.Zero : bitmap.__Instance;
             var ___ret = __Internal.FPDFBitmapFillRect(__arg0, left, top, width, height, color);
@@ -4596,7 +4596,7 @@ namespace PDFiumCore
         /// <para>Applications can use this function to get the bitmap buffer pointer, then manipulate any color and/or alpha values for any pixels in the bitmap.</para>
         /// <para>Use FPDFBitmap_GetFormat() to find out the format of the data.</para>
         /// </summary>
-        public static __IntPtr FPDFBitmapGetBuffer(global::PDFiumCore.FpdfBitmapT bitmap)
+        public static __IntPtr FPDFBitmapGetBuffer(global::PDFiumZ.FpdfBitmapT bitmap)
         {
             var __arg0 = bitmap is null ? __IntPtr.Zero : bitmap.__Instance;
             var ___ret = __Internal.FPDFBitmapGetBuffer(__arg0);
@@ -4611,7 +4611,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The width of the bitmap in pixels.</para>
         /// </summary>
-        public static int FPDFBitmapGetWidth(global::PDFiumCore.FpdfBitmapT bitmap)
+        public static int FPDFBitmapGetWidth(global::PDFiumZ.FpdfBitmapT bitmap)
         {
             var __arg0 = bitmap is null ? __IntPtr.Zero : bitmap.__Instance;
             var ___ret = __Internal.FPDFBitmapGetWidth(__arg0);
@@ -4626,7 +4626,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The height of the bitmap in pixels.</para>
         /// </summary>
-        public static int FPDFBitmapGetHeight(global::PDFiumCore.FpdfBitmapT bitmap)
+        public static int FPDFBitmapGetHeight(global::PDFiumZ.FpdfBitmapT bitmap)
         {
             var __arg0 = bitmap is null ? __IntPtr.Zero : bitmap.__Instance;
             var ___ret = __Internal.FPDFBitmapGetHeight(__arg0);
@@ -4642,7 +4642,7 @@ namespace PDFiumCore
         /// <para>The number of bytes for each line in the bitmap buffer.</para>
         /// <para>Comments: The stride may be more than width * number of bytes per pixel.</para>
         /// </summary>
-        public static int FPDFBitmapGetStride(global::PDFiumCore.FpdfBitmapT bitmap)
+        public static int FPDFBitmapGetStride(global::PDFiumZ.FpdfBitmapT bitmap)
         {
             var __arg0 = bitmap is null ? __IntPtr.Zero : bitmap.__Instance;
             var ___ret = __Internal.FPDFBitmapGetStride(__arg0);
@@ -4658,7 +4658,7 @@ namespace PDFiumCore
         /// <para>None.</para>
         /// <para>Comments: This function will not destroy any external buffers provided when the bitmap was created.</para>
         /// </summary>
-        public static void FPDFBitmapDestroy(global::PDFiumCore.FpdfBitmapT bitmap)
+        public static void FPDFBitmapDestroy(global::PDFiumZ.FpdfBitmapT bitmap)
         {
             var __arg0 = bitmap is null ? __IntPtr.Zero : bitmap.__Instance;
             __Internal.FPDFBitmapDestroy(__arg0);
@@ -4672,7 +4672,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>None.</para>
         /// </summary>
-        public static int FPDF_VIEWERREF_GetPrintScaling(global::PDFiumCore.FpdfDocumentT document)
+        public static int FPDF_VIEWERREF_GetPrintScaling(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_VIEWERREF_GetPrintScaling(__arg0);
@@ -4687,7 +4687,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The number of copies to be printed.</para>
         /// </summary>
-        public static int FPDF_VIEWERREF_GetNumCopies(global::PDFiumCore.FpdfDocumentT document)
+        public static int FPDF_VIEWERREF_GetNumCopies(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_VIEWERREF_GetNumCopies(__arg0);
@@ -4702,11 +4702,11 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The print page range to be used for printing.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPagerangeT FPDF_VIEWERREF_GetPrintPageRange(global::PDFiumCore.FpdfDocumentT document)
+        public static global::PDFiumZ.FpdfPagerangeT FPDF_VIEWERREF_GetPrintPageRange(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_VIEWERREF_GetPrintPageRange(__arg0);
-            var __result0 = global::PDFiumCore.FpdfPagerangeT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPagerangeT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -4718,7 +4718,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The number of elements in the page range. Returns 0 on error.</para>
         /// </summary>
-        public static ulong FPDF_VIEWERREF_GetPrintPageRangeCount(global::PDFiumCore.FpdfPagerangeT pagerange)
+        public static ulong FPDF_VIEWERREF_GetPrintPageRangeCount(global::PDFiumZ.FpdfPagerangeT pagerange)
         {
             var __arg0 = pagerange is null ? __IntPtr.Zero : pagerange.__Instance;
             var ___ret = __Internal.FPDF_VIEWERREF_GetPrintPageRangeCount(__arg0);
@@ -4735,7 +4735,7 @@ namespace PDFiumCore
         /// <para>The value of the element in the page range at a given index.</para>
         /// <para>Returns -1 on error.</para>
         /// </summary>
-        public static int FPDF_VIEWERREF_GetPrintPageRangeElement(global::PDFiumCore.FpdfPagerangeT pagerange, ulong index)
+        public static int FPDF_VIEWERREF_GetPrintPageRangeElement(global::PDFiumZ.FpdfPagerangeT pagerange, ulong index)
         {
             var __arg0 = pagerange is null ? __IntPtr.Zero : pagerange.__Instance;
             var ___ret = __Internal.FPDF_VIEWERREF_GetPrintPageRangeElement(__arg0, index);
@@ -4751,7 +4751,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The paper handling option to be used when printing.</para>
         /// </summary>
-        public static global::PDFiumCore.FPDF_DUPLEXTYPE_ FPDF_VIEWERREF_GetDuplex(global::PDFiumCore.FpdfDocumentT document)
+        public static global::PDFiumZ.FPDF_DUPLEXTYPE_ FPDF_VIEWERREF_GetDuplex(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_VIEWERREF_GetDuplex(__arg0);
@@ -4773,7 +4773,7 @@ namespace PDFiumCore
         /// <para>as when |document| is invalid. If |length| is less than the required</para>
         /// <para>length, or |buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDF_VIEWERREF_GetName(global::PDFiumCore.FpdfDocumentT document, string key, sbyte* buffer, uint length)
+        public static uint FPDF_VIEWERREF_GetName(global::PDFiumZ.FpdfDocumentT document, string key, sbyte* buffer, uint length)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_VIEWERREF_GetName(__arg0, key, buffer, length);
@@ -4788,7 +4788,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The count of named destinations.</para>
         /// </summary>
-        public static uint FPDF_CountNamedDests(global::PDFiumCore.FpdfDocumentT document)
+        public static uint FPDF_CountNamedDests(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_CountNamedDests(__arg0);
@@ -4804,11 +4804,11 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The handle to the destination.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfDestT FPDF_GetNamedDestByName(global::PDFiumCore.FpdfDocumentT document, string name)
+        public static global::PDFiumZ.FpdfDestT FPDF_GetNamedDestByName(global::PDFiumZ.FpdfDocumentT document, string name)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_GetNamedDestByName(__arg0, name);
-            var __result0 = global::PDFiumCore.FpdfDestT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfDestT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -4826,14 +4826,14 @@ namespace PDFiumCore
         /// <para>Comments: Call this function twice to get the name of the named destination: 1) First time pass in |buffer| as NULL and get buflen. 2) Second time pass in allocated |buffer| and buflen to retrieve |buffer|, which should be used as wchar_t*.</para>
         /// <para>If buflen is not sufficiently large, it will be set to -1 upon return.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfDestT FPDF_GetNamedDest(global::PDFiumCore.FpdfDocumentT document, int index, __IntPtr buffer, ref int buflen)
+        public static global::PDFiumZ.FpdfDestT FPDF_GetNamedDest(global::PDFiumZ.FpdfDocumentT document, int index, __IntPtr buffer, ref int buflen)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             fixed (int* __buflen3 = &buflen)
             {
                 var __arg3 = __buflen3;
                 var ___ret = __Internal.FPDF_GetNamedDest(__arg0, index, buffer, __arg3);
-                var __result0 = global::PDFiumCore.FpdfDestT.__GetOrCreateInstance(___ret, false);
+                var __result0 = global::PDFiumZ.FpdfDestT.__GetOrCreateInstance(___ret, false);
                 return __result0;
             }
         }
@@ -4846,7 +4846,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The number of valid packets, or -1 on error.</para>
         /// </summary>
-        public static int FPDF_GetXFAPacketCount(global::PDFiumCore.FpdfDocumentT document)
+        public static int FPDF_GetXFAPacketCount(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_GetXFAPacketCount(__arg0);
@@ -4869,7 +4869,7 @@ namespace PDFiumCore
         /// <para>equal to the length of the packet name. The packet name includes a</para>
         /// <para>terminating NUL character. |buffer| is unmodified on error.</para>
         /// </summary>
-        public static uint FPDF_GetXFAPacketName(global::PDFiumCore.FpdfDocumentT document, int index, __IntPtr buffer, uint buflen)
+        public static uint FPDF_GetXFAPacketName(global::PDFiumZ.FpdfDocumentT document, int index, __IntPtr buffer, uint buflen)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_GetXFAPacketName(__arg0, index, buffer, buflen);
@@ -4895,7 +4895,7 @@ namespace PDFiumCore
         /// <para>check both the return value and the input |buflen| is no less than the</para>
         /// <para>returned |out_buflen| before using the data in |buffer|.</para>
         /// </summary>
-        public static int FPDF_GetXFAPacketContent(global::PDFiumCore.FpdfDocumentT document, int index, __IntPtr buffer, uint buflen, ref uint out_buflen)
+        public static int FPDF_GetXFAPacketContent(global::PDFiumZ.FpdfDocumentT document, int index, __IntPtr buffer, uint buflen, ref uint out_buflen)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             fixed (uint* __out_buflen4 = &out_buflen)
@@ -4970,10 +4970,10 @@ namespace PDFiumCore
             internal static extern int FPDFAnnotRemoveObject(__IntPtr annot, int index);
 
             [SuppressUnmanagedCodeSecurity, DllImport("pdfium", EntryPoint = "FPDFAnnot_SetColor", CallingConvention = __CallingConvention.Cdecl)]
-            internal static extern int FPDFAnnotSetColor(__IntPtr annot, global::PDFiumCore.FPDFANNOT_COLORTYPE type, uint R, uint G, uint B, uint A);
+            internal static extern int FPDFAnnotSetColor(__IntPtr annot, global::PDFiumZ.FPDFANNOT_COLORTYPE type, uint R, uint G, uint B, uint A);
 
             [SuppressUnmanagedCodeSecurity, DllImport("pdfium", EntryPoint = "FPDFAnnot_GetColor", CallingConvention = __CallingConvention.Cdecl)]
-            internal static extern int FPDFAnnotGetColor(__IntPtr annot, global::PDFiumCore.FPDFANNOT_COLORTYPE type, uint* R, uint* G, uint* B, uint* A);
+            internal static extern int FPDFAnnotGetColor(__IntPtr annot, global::PDFiumZ.FPDFANNOT_COLORTYPE type, uint* R, uint* G, uint* B, uint* A);
 
             [SuppressUnmanagedCodeSecurity, DllImport("pdfium", EntryPoint = "FPDFAnnot_HasAttachmentPoints", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern int FPDFAnnotHasAttachmentPoints(__IntPtr annot);
@@ -5156,11 +5156,11 @@ namespace PDFiumCore
         /// <para>subtype   - the subtype of the new annotation.</para>
         /// <para>Returns a handle to the new annotation object, or NULL on failure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfAnnotationT FPDFPageCreateAnnot(global::PDFiumCore.FpdfPageT page, int subtype)
+        public static global::PDFiumZ.FpdfAnnotationT FPDFPageCreateAnnot(global::PDFiumZ.FpdfPageT page, int subtype)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFPageCreateAnnot(__arg0, subtype);
-            var __result0 = global::PDFiumCore.FpdfAnnotationT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfAnnotationT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -5170,7 +5170,7 @@ namespace PDFiumCore
         /// <para>page   - handle to a page.</para>
         /// <para>Returns the number of annotations in |page|.</para>
         /// </summary>
-        public static int FPDFPageGetAnnotCount(global::PDFiumCore.FpdfPageT page)
+        public static int FPDFPageGetAnnotCount(global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFPageGetAnnotCount(__arg0);
@@ -5185,11 +5185,11 @@ namespace PDFiumCore
         /// <para>index - the index of the annotation.</para>
         /// <para>Returns a handle to the annotation object, or NULL on failure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfAnnotationT FPDFPageGetAnnot(global::PDFiumCore.FpdfPageT page, int index)
+        public static global::PDFiumZ.FpdfAnnotationT FPDFPageGetAnnot(global::PDFiumZ.FpdfPageT page, int index)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFPageGetAnnot(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfAnnotationT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfAnnotationT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -5201,7 +5201,7 @@ namespace PDFiumCore
         /// <para>annot - handle to an annotation.</para>
         /// <para>Returns the index of |annot|, or -1 on failure.</para>
         /// </summary>
-        public static int FPDFPageGetAnnotIndex(global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FpdfAnnotationT annot)
+        public static int FPDFPageGetAnnotIndex(global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -5216,7 +5216,7 @@ namespace PDFiumCore
         /// <para>function does not remove the annotation from the document.</para>
         /// <para>annot  - handle to an annotation.</para>
         /// </summary>
-        public static void FPDFPageCloseAnnot(global::PDFiumCore.FpdfAnnotationT annot)
+        public static void FPDFPageCloseAnnot(global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             __Internal.FPDFPageCloseAnnot(__arg0);
@@ -5229,7 +5229,7 @@ namespace PDFiumCore
         /// <para>index - the index of the annotation.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFPageRemoveAnnot(global::PDFiumCore.FpdfPageT page, int index)
+        public static int FPDFPageRemoveAnnot(global::PDFiumZ.FpdfPageT page, int index)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFPageRemoveAnnot(__arg0, index);
@@ -5242,7 +5242,7 @@ namespace PDFiumCore
         /// <para>annot  - handle to an annotation.</para>
         /// <para>Returns the annotation subtype.</para>
         /// </summary>
-        public static int FPDFAnnotGetSubtype(global::PDFiumCore.FpdfAnnotationT annot)
+        public static int FPDFAnnotGetSubtype(global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotGetSubtype(__arg0);
@@ -5274,7 +5274,7 @@ namespace PDFiumCore
         /// <para>obj    - handle to the object that |annot| needs to update.</para>
         /// <para>Return true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotUpdateObject(global::PDFiumCore.FpdfAnnotationT annot, global::PDFiumCore.FpdfPageobjectT obj)
+        public static int FPDFAnnotUpdateObject(global::PDFiumZ.FpdfAnnotationT annot, global::PDFiumZ.FpdfPageobjectT obj)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var __arg1 = obj is null ? __IntPtr.Zero : obj.__Instance;
@@ -5295,7 +5295,7 @@ namespace PDFiumCore
         /// <para>Returns the 0-based index at which the new InkStroke is added in the InkList</para>
         /// <para>of the |annot|. Returns -1 on failure.</para>
         /// </summary>
-        public static int FPDFAnnotAddInkStroke(global::PDFiumCore.FpdfAnnotationT annot, global::PDFiumCore.FS_POINTF_ points, ulong point_count)
+        public static int FPDFAnnotAddInkStroke(global::PDFiumZ.FpdfAnnotationT annot, global::PDFiumZ.FS_POINTF_ points, ulong point_count)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var __arg1 = points is null ? __IntPtr.Zero : points.__Instance;
@@ -5311,7 +5311,7 @@ namespace PDFiumCore
         /// <para>Return true on successful removal of /InkList entry from context of the</para>
         /// <para>non-null ink |annot|. Returns false on failure.</para>
         /// </summary>
-        public static int FPDFAnnotRemoveInkList(global::PDFiumCore.FpdfAnnotationT annot)
+        public static int FPDFAnnotRemoveInkList(global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotRemoveInkList(__arg0);
@@ -5329,7 +5329,7 @@ namespace PDFiumCore
         /// <para>obj    - handle to the object that is to be added to |annot|.</para>
         /// <para>Return true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotAppendObject(global::PDFiumCore.FpdfAnnotationT annot, global::PDFiumCore.FpdfPageobjectT obj)
+        public static int FPDFAnnotAppendObject(global::PDFiumZ.FpdfAnnotationT annot, global::PDFiumZ.FpdfPageobjectT obj)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var __arg1 = obj is null ? __IntPtr.Zero : obj.__Instance;
@@ -5344,7 +5344,7 @@ namespace PDFiumCore
         /// <para>annot  - handle to an annotation.</para>
         /// <para>Returns the number of objects in |annot|.</para>
         /// </summary>
-        public static int FPDFAnnotGetObjectCount(global::PDFiumCore.FpdfAnnotationT annot)
+        public static int FPDFAnnotGetObjectCount(global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotGetObjectCount(__arg0);
@@ -5358,11 +5358,11 @@ namespace PDFiumCore
         /// <para>index  - the index of the object.</para>
         /// <para>Return a handle to the object, or NULL on failure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPageobjectT FPDFAnnotGetObject(global::PDFiumCore.FpdfAnnotationT annot, int index)
+        public static global::PDFiumZ.FpdfPageobjectT FPDFAnnotGetObject(global::PDFiumZ.FpdfAnnotationT annot, int index)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotGetObject(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -5373,7 +5373,7 @@ namespace PDFiumCore
         /// <para>index  - the index of the object to be removed.</para>
         /// <para>Return true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotRemoveObject(global::PDFiumCore.FpdfAnnotationT annot, int index)
+        public static int FPDFAnnotRemoveObject(global::PDFiumZ.FpdfAnnotationT annot, int index)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotRemoveObject(__arg0, index);
@@ -5391,7 +5391,7 @@ namespace PDFiumCore
         /// <para>A        - buffer to hold the opacity. Ranges from 0 to 255.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotSetColor(global::PDFiumCore.FpdfAnnotationT annot, global::PDFiumCore.FPDFANNOT_COLORTYPE type, uint R, uint G, uint B, uint A)
+        public static int FPDFAnnotSetColor(global::PDFiumZ.FpdfAnnotationT annot, global::PDFiumZ.FPDFANNOT_COLORTYPE type, uint R, uint G, uint B, uint A)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotSetColor(__arg0, type, R, G, B, A);
@@ -5410,7 +5410,7 @@ namespace PDFiumCore
         /// <para>A        - buffer to hold the opacity. Ranges from 0 to 255.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotGetColor(global::PDFiumCore.FpdfAnnotationT annot, global::PDFiumCore.FPDFANNOT_COLORTYPE type, ref uint R, ref uint G, ref uint B, ref uint A)
+        public static int FPDFAnnotGetColor(global::PDFiumZ.FpdfAnnotationT annot, global::PDFiumZ.FPDFANNOT_COLORTYPE type, ref uint R, ref uint G, ref uint B, ref uint A)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             fixed (uint* __R2 = &R)
@@ -5445,7 +5445,7 @@ namespace PDFiumCore
         /// <para>Returns true if the annotation is of a type that has quadpoints, false</para>
         /// <para>otherwise.</para>
         /// </summary>
-        public static int FPDFAnnotHasAttachmentPoints(global::PDFiumCore.FpdfAnnotationT annot)
+        public static int FPDFAnnotHasAttachmentPoints(global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotHasAttachmentPoints(__arg0);
@@ -5465,7 +5465,7 @@ namespace PDFiumCore
         /// <para>quad_points - the quadpoints to be set.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotSetAttachmentPoints(global::PDFiumCore.FpdfAnnotationT annot, ulong quad_index, global::PDFiumCore.FS_QUADPOINTSF quad_points)
+        public static int FPDFAnnotSetAttachmentPoints(global::PDFiumZ.FpdfAnnotationT annot, ulong quad_index, global::PDFiumZ.FS_QUADPOINTSF quad_points)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var __arg2 = quad_points is null ? __IntPtr.Zero : quad_points.__Instance;
@@ -5483,7 +5483,7 @@ namespace PDFiumCore
         /// <para>quad_points - the quadpoints to be set.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotAppendAttachmentPoints(global::PDFiumCore.FpdfAnnotationT annot, global::PDFiumCore.FS_QUADPOINTSF quad_points)
+        public static int FPDFAnnotAppendAttachmentPoints(global::PDFiumZ.FpdfAnnotationT annot, global::PDFiumZ.FS_QUADPOINTSF quad_points)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var __arg1 = quad_points is null ? __IntPtr.Zero : quad_points.__Instance;
@@ -5497,7 +5497,7 @@ namespace PDFiumCore
         /// <para>annot  - handle to an annotation.</para>
         /// <para>Returns the number of sets of quadpoints, or 0 on failure.</para>
         /// </summary>
-        public static ulong FPDFAnnotCountAttachmentPoints(global::PDFiumCore.FpdfAnnotationT annot)
+        public static ulong FPDFAnnotCountAttachmentPoints(global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotCountAttachmentPoints(__arg0);
@@ -5512,7 +5512,7 @@ namespace PDFiumCore
         /// <para>quad_points - receives the quadpoints; must not be NULL.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotGetAttachmentPoints(global::PDFiumCore.FpdfAnnotationT annot, ulong quad_index, global::PDFiumCore.FS_QUADPOINTSF quad_points)
+        public static int FPDFAnnotGetAttachmentPoints(global::PDFiumZ.FpdfAnnotationT annot, ulong quad_index, global::PDFiumZ.FS_QUADPOINTSF quad_points)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var __arg2 = quad_points is null ? __IntPtr.Zero : quad_points.__Instance;
@@ -5530,7 +5530,7 @@ namespace PDFiumCore
         /// <para>rect   - the annotation rectangle to be set.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotSetRect(global::PDFiumCore.FpdfAnnotationT annot, global::PDFiumCore.FS_RECTF_ rect)
+        public static int FPDFAnnotSetRect(global::PDFiumZ.FpdfAnnotationT annot, global::PDFiumZ.FS_RECTF_ rect)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var __arg1 = rect is null ? __IntPtr.Zero : rect.__Instance;
@@ -5545,7 +5545,7 @@ namespace PDFiumCore
         /// <para>rect   - receives the rectangle; must not be NULL.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotGetRect(global::PDFiumCore.FpdfAnnotationT annot, global::PDFiumCore.FS_RECTF_ rect)
+        public static int FPDFAnnotGetRect(global::PDFiumZ.FpdfAnnotationT annot, global::PDFiumZ.FS_RECTF_ rect)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var __arg1 = rect is null ? __IntPtr.Zero : rect.__Instance;
@@ -5564,7 +5564,7 @@ namespace PDFiumCore
         /// <para>Returns the number of points if the annotation is of type polygon or</para>
         /// <para>polyline, 0 otherwise.</para>
         /// </summary>
-        public static uint FPDFAnnotGetVertices(global::PDFiumCore.FpdfAnnotationT annot, global::PDFiumCore.FS_POINTF_ buffer, uint length)
+        public static uint FPDFAnnotGetVertices(global::PDFiumZ.FpdfAnnotationT annot, global::PDFiumZ.FS_POINTF_ buffer, uint length)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var __arg1 = buffer is null ? __IntPtr.Zero : buffer.__Instance;
@@ -5579,7 +5579,7 @@ namespace PDFiumCore
         /// <para>Returns the number of paths in the ink list if the annotation is of type ink,</para>
         /// <para>0 otherwise.</para>
         /// </summary>
-        public static uint FPDFAnnotGetInkListCount(global::PDFiumCore.FpdfAnnotationT annot)
+        public static uint FPDFAnnotGetInkListCount(global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotGetInkListCount(__arg0);
@@ -5598,7 +5598,7 @@ namespace PDFiumCore
         /// <para>Returns the number of points of the path if the annotation is of type ink, 0</para>
         /// <para>otherwise.</para>
         /// </summary>
-        public static uint FPDFAnnotGetInkListPath(global::PDFiumCore.FpdfAnnotationT annot, uint path_index, global::PDFiumCore.FS_POINTF_ buffer, uint length)
+        public static uint FPDFAnnotGetInkListPath(global::PDFiumZ.FpdfAnnotationT annot, uint path_index, global::PDFiumZ.FS_POINTF_ buffer, uint length)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var __arg2 = buffer is null ? __IntPtr.Zero : buffer.__Instance;
@@ -5615,7 +5615,7 @@ namespace PDFiumCore
         /// <para>Returns true if the annotation is of type line, |start| and |end| are not</para>
         /// <para>NULL, false otherwise.</para>
         /// </summary>
-        public static int FPDFAnnotGetLine(global::PDFiumCore.FpdfAnnotationT annot, global::PDFiumCore.FS_POINTF_ start, global::PDFiumCore.FS_POINTF_ end)
+        public static int FPDFAnnotGetLine(global::PDFiumZ.FpdfAnnotationT annot, global::PDFiumZ.FS_POINTF_ start, global::PDFiumZ.FS_POINTF_ end)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var __arg1 = start is null ? __IntPtr.Zero : start.__Instance;
@@ -5635,7 +5635,7 @@ namespace PDFiumCore
         /// <para>If |annot| contains an appearance stream that overrides the border values,</para>
         /// <para>then the appearance stream will be removed on success.</para>
         /// </summary>
-        public static int FPDFAnnotSetBorder(global::PDFiumCore.FpdfAnnotationT annot, float horizontal_radius, float vertical_radius, float border_width)
+        public static int FPDFAnnotSetBorder(global::PDFiumZ.FpdfAnnotationT annot, float horizontal_radius, float vertical_radius, float border_width)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotSetBorder(__arg0, horizontal_radius, vertical_radius, border_width);
@@ -5652,7 +5652,7 @@ namespace PDFiumCore
         /// <para>Returns true if |horizontal_radius|, |vertical_radius| and |border_width| are</para>
         /// <para>not NULL, false otherwise.</para>
         /// </summary>
-        public static int FPDFAnnotGetBorder(global::PDFiumCore.FpdfAnnotationT annot, ref float horizontal_radius, ref float vertical_radius, ref float border_width)
+        public static int FPDFAnnotGetBorder(global::PDFiumZ.FpdfAnnotationT annot, ref float horizontal_radius, ref float vertical_radius, ref float border_width)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             fixed (float* __horizontal_radius1 = &horizontal_radius)
@@ -5689,7 +5689,7 @@ namespace PDFiumCore
         /// <para>Returns the length of the string value in bytes, including the 2-byte</para>
         /// <para>null terminator.</para>
         /// </summary>
-        public static uint FPDFAnnotGetFormAdditionalActionJavaScript(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfAnnotationT annot, int @event, ref ushort buffer, uint buflen)
+        public static uint FPDFAnnotGetFormAdditionalActionJavaScript(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfAnnotationT annot, int @event, ref ushort buffer, uint buflen)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -5708,7 +5708,7 @@ namespace PDFiumCore
         /// <para>key    - the key to look for, encoded in UTF-8.</para>
         /// <para>Returns true if |key| exists.</para>
         /// </summary>
-        public static int FPDFAnnotHasKey(global::PDFiumCore.FpdfAnnotationT annot, string key)
+        public static int FPDFAnnotHasKey(global::PDFiumZ.FpdfAnnotationT annot, string key)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotHasKey(__arg0, key);
@@ -5722,7 +5722,7 @@ namespace PDFiumCore
         /// <para>key    - the key to look for, encoded in UTF-8.</para>
         /// <para>Returns the type of the dictionary value.</para>
         /// </summary>
-        public static int FPDFAnnotGetValueType(global::PDFiumCore.FpdfAnnotationT annot, string key)
+        public static int FPDFAnnotGetValueType(global::PDFiumZ.FpdfAnnotationT annot, string key)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotGetValueType(__arg0, key);
@@ -5739,7 +5739,7 @@ namespace PDFiumCore
         /// <para>value  - the string value to be set, encoded in UTF-16LE.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotSetStringValue(global::PDFiumCore.FpdfAnnotationT annot, string key, ref ushort value)
+        public static int FPDFAnnotSetStringValue(global::PDFiumZ.FpdfAnnotationT annot, string key, ref ushort value)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             fixed (ushort* __value2 = &value)
@@ -5765,7 +5765,7 @@ namespace PDFiumCore
         /// <para>buflen - length of the buffer in bytes.</para>
         /// <para>Returns the length of the string value in bytes.</para>
         /// </summary>
-        public static uint FPDFAnnotGetStringValue(global::PDFiumCore.FpdfAnnotationT annot, string key, ref ushort buffer, uint buflen)
+        public static uint FPDFAnnotGetStringValue(global::PDFiumZ.FpdfAnnotationT annot, string key, ref ushort buffer, uint buflen)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             fixed (ushort* __buffer2 = &buffer)
@@ -5787,7 +5787,7 @@ namespace PDFiumCore
         /// <para>value  - receives the value, must not be NULL.</para>
         /// <para>Returns True if value found, False otherwise.</para>
         /// </summary>
-        public static int FPDFAnnotGetNumberValue(global::PDFiumCore.FpdfAnnotationT annot, string key, ref float value)
+        public static int FPDFAnnotGetNumberValue(global::PDFiumZ.FpdfAnnotationT annot, string key, ref float value)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             fixed (float* __value2 = &value)
@@ -5810,7 +5810,7 @@ namespace PDFiumCore
         /// <para>mode is Normal, APs for all modes are cleared.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotSetAP(global::PDFiumCore.FpdfAnnotationT annot, int appearanceMode, ref ushort value)
+        public static int FPDFAnnotSetAP(global::PDFiumZ.FpdfAnnotationT annot, int appearanceMode, ref ushort value)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             fixed (ushort* __value2 = &value)
@@ -5838,7 +5838,7 @@ namespace PDFiumCore
         /// <para>buflen         - length of the buffer in bytes.</para>
         /// <para>Returns the length of the string value in bytes.</para>
         /// </summary>
-        public static uint FPDFAnnotGetAP(global::PDFiumCore.FpdfAnnotationT annot, int appearanceMode, ref ushort buffer, uint buflen)
+        public static uint FPDFAnnotGetAP(global::PDFiumZ.FpdfAnnotationT annot, int appearanceMode, ref ushort buffer, uint buflen)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             fixed (ushort* __buffer2 = &buffer)
@@ -5859,11 +5859,11 @@ namespace PDFiumCore
         /// <para>key    - the key to the requested dictionary entry, encoded in UTF-8.</para>
         /// <para>Returns a handle to the linked annotation object, or NULL on failure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfAnnotationT FPDFAnnotGetLinkedAnnot(global::PDFiumCore.FpdfAnnotationT annot, string key)
+        public static global::PDFiumZ.FpdfAnnotationT FPDFAnnotGetLinkedAnnot(global::PDFiumZ.FpdfAnnotationT annot, string key)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotGetLinkedAnnot(__arg0, key);
-            var __result0 = global::PDFiumCore.FpdfAnnotationT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfAnnotationT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -5873,7 +5873,7 @@ namespace PDFiumCore
         /// <para>annot    - handle to an annotation.</para>
         /// <para>Returns the annotation flags.</para>
         /// </summary>
-        public static int FPDFAnnotGetFlags(global::PDFiumCore.FpdfAnnotationT annot)
+        public static int FPDFAnnotGetFlags(global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotGetFlags(__arg0);
@@ -5887,7 +5887,7 @@ namespace PDFiumCore
         /// <para>flags      - the flag values to be set.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotSetFlags(global::PDFiumCore.FpdfAnnotationT annot, int flags)
+        public static int FPDFAnnotSetFlags(global::PDFiumZ.FpdfAnnotationT annot, int flags)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotSetFlags(__arg0, flags);
@@ -5902,7 +5902,7 @@ namespace PDFiumCore
         /// <para>annot       -   handle to an interactive form annotation.</para>
         /// <para>Returns the annotation flags specific to interactive forms.</para>
         /// </summary>
-        public static int FPDFAnnotGetFormFieldFlags(global::PDFiumCore.FpdfFormHandleT handle, global::PDFiumCore.FpdfAnnotationT annot)
+        public static int FPDFAnnotGetFormFieldFlags(global::PDFiumZ.FpdfFormHandleT handle, global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = handle is null ? __IntPtr.Zero : handle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -5919,7 +5919,7 @@ namespace PDFiumCore
         /// <para>flags        -   the form field flags to be set.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotSetFormFieldFlags(global::PDFiumCore.FpdfFormHandleT handle, global::PDFiumCore.FpdfAnnotationT annot, int flags)
+        public static int FPDFAnnotSetFormFieldFlags(global::PDFiumZ.FpdfFormHandleT handle, global::PDFiumZ.FpdfAnnotationT annot, int flags)
         {
             var __arg0 = handle is null ? __IntPtr.Zero : handle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -5939,13 +5939,13 @@ namespace PDFiumCore
         /// <para>Returns the interactive form annotation whose rectangle contains the given</para>
         /// <para>coordinates on the page. If there is no such annotation, return NULL.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfAnnotationT FPDFAnnotGetFormFieldAtPoint(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FS_POINTF_ point)
+        public static global::PDFiumZ.FpdfAnnotationT FPDFAnnotGetFormFieldAtPoint(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FS_POINTF_ point)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg2 = point is null ? __IntPtr.Zero : point.__Instance;
             var ___ret = __Internal.FPDFAnnotGetFormFieldAtPoint(__arg0, __arg1, __arg2);
-            var __result0 = global::PDFiumCore.FpdfAnnotationT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfAnnotationT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -5962,7 +5962,7 @@ namespace PDFiumCore
         /// <para>buflen      -   length of the buffer in bytes.</para>
         /// <para>Returns the length of the string value in bytes.</para>
         /// </summary>
-        public static uint FPDFAnnotGetFormFieldName(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfAnnotationT annot, ref ushort buffer, uint buflen)
+        public static uint FPDFAnnotGetFormFieldName(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfAnnotationT annot, ref ushort buffer, uint buflen)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -5988,7 +5988,7 @@ namespace PDFiumCore
         /// <para>buflen      -   length of the buffer in bytes.</para>
         /// <para>Returns the length of the string value in bytes.</para>
         /// </summary>
-        public static uint FPDFAnnotGetFormFieldAlternateName(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfAnnotationT annot, ref ushort buffer, uint buflen)
+        public static uint FPDFAnnotGetFormFieldAlternateName(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfAnnotationT annot, ref ushort buffer, uint buflen)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -6010,7 +6010,7 @@ namespace PDFiumCore
         /// <para>success. Returns -1 on error.</para>
         /// <para>See field types in fpdf_formfill.h.</para>
         /// </summary>
-        public static int FPDFAnnotGetFormFieldType(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfAnnotationT annot)
+        public static int FPDFAnnotGetFormFieldType(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -6031,7 +6031,7 @@ namespace PDFiumCore
         /// <para>buflen      -   length of the buffer in bytes.</para>
         /// <para>Returns the length of the string value in bytes.</para>
         /// </summary>
-        public static uint FPDFAnnotGetFormFieldValue(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfAnnotationT annot, ref ushort buffer, uint buflen)
+        public static uint FPDFAnnotGetFormFieldValue(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfAnnotationT annot, ref ushort buffer, uint buflen)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -6053,7 +6053,7 @@ namespace PDFiumCore
         /// <para>Returns the number of options in &quot;Opt&quot; dictionary on success. Return value</para>
         /// <para>will be -1 if annotation does not have an &quot;Opt&quot; dictionary or other error.</para>
         /// </summary>
-        public static int FPDFAnnotGetOptionCount(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfAnnotationT annot)
+        public static int FPDFAnnotGetOptionCount(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -6079,7 +6079,7 @@ namespace PDFiumCore
         /// <para>If |annot| does not have an &quot;Opt&quot; array, |index| is out of range or if any</para>
         /// <para>other error occurs, returns 0.</para>
         /// </summary>
-        public static uint FPDFAnnotGetOptionLabel(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfAnnotationT annot, int index, ref ushort buffer, uint buflen)
+        public static uint FPDFAnnotGetOptionLabel(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfAnnotationT annot, int index, ref ushort buffer, uint buflen)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -6102,7 +6102,7 @@ namespace PDFiumCore
         /// <para>Returns true if the option at |index| in |annot|'s &quot;Opt&quot; dictionary is</para>
         /// <para>selected, false otherwise.</para>
         /// </summary>
-        public static int FPDFAnnotIsOptionSelected(global::PDFiumCore.FpdfFormHandleT handle, global::PDFiumCore.FpdfAnnotationT annot, int index)
+        public static int FPDFAnnotIsOptionSelected(global::PDFiumZ.FpdfFormHandleT handle, global::PDFiumZ.FpdfAnnotationT annot, int index)
         {
             var __arg0 = handle is null ? __IntPtr.Zero : handle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -6122,7 +6122,7 @@ namespace PDFiumCore
         /// <para>Returns true if the font size was set in |value|, false on error or if</para>
         /// <para>|value| not provided.</para>
         /// </summary>
-        public static int FPDFAnnotGetFontSize(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfAnnotationT annot, ref float value)
+        public static int FPDFAnnotGetFontSize(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfAnnotationT annot, ref float value)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -6147,7 +6147,7 @@ namespace PDFiumCore
         /// <para>Currently supported subtypes: freetext.</para>
         /// <para>The range for the color components is 0 to 255.</para>
         /// </summary>
-        public static int FPDFAnnotSetFontColor(global::PDFiumCore.FpdfFormHandleT handle, global::PDFiumCore.FpdfAnnotationT annot, uint R, uint G, uint B)
+        public static int FPDFAnnotSetFontColor(global::PDFiumZ.FpdfFormHandleT handle, global::PDFiumZ.FpdfAnnotationT annot, uint R, uint G, uint B)
         {
             var __arg0 = handle is null ? __IntPtr.Zero : handle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -6165,7 +6165,7 @@ namespace PDFiumCore
         /// <para>Returns true if the font color was set, false on error or if the font</para>
         /// <para>color was not provided.</para>
         /// </summary>
-        public static int FPDFAnnotGetFontColor(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfAnnotationT annot, ref uint R, ref uint G, ref uint B)
+        public static int FPDFAnnotGetFontColor(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfAnnotationT annot, ref uint R, ref uint G, ref uint B)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -6194,7 +6194,7 @@ namespace PDFiumCore
         /// <para>annot   - handle to an annotation.</para>
         /// <para>Returns true if |annot| is a form widget and is checked, false otherwise.</para>
         /// </summary>
-        public static int FPDFAnnotIsChecked(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfAnnotationT annot)
+        public static int FPDFAnnotIsChecked(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -6214,7 +6214,7 @@ namespace PDFiumCore
         /// <para>Returns true if list of annotation subtype is set successfully, false</para>
         /// <para>otherwise.</para>
         /// </summary>
-        public static int FPDFAnnotSetFocusableSubtypes(global::PDFiumCore.FpdfFormHandleT hHandle, ref int subtypes, ulong count)
+        public static int FPDFAnnotSetFocusableSubtypes(global::PDFiumZ.FpdfFormHandleT hHandle, ref int subtypes, ulong count)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             fixed (int* __subtypes1 = &subtypes)
@@ -6234,7 +6234,7 @@ namespace PDFiumCore
         /// <para>Returns the count of focusable annotation subtypes or -1 on error.</para>
         /// <para>Note : Annotations of type FPDF_ANNOT_WIDGET are by default focusable.</para>
         /// </summary>
-        public static int FPDFAnnotGetFocusableSubtypesCount(global::PDFiumCore.FpdfFormHandleT hHandle)
+        public static int FPDFAnnotGetFocusableSubtypesCount(global::PDFiumZ.FpdfFormHandleT hHandle)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var ___ret = __Internal.FPDFAnnotGetFocusableSubtypesCount(__arg0);
@@ -6255,7 +6255,7 @@ namespace PDFiumCore
         /// <para>false otherwise.</para>
         /// <para>Note : Annotations of type FPDF_ANNOT_WIDGET are by default focusable.</para>
         /// </summary>
-        public static int FPDFAnnotGetFocusableSubtypes(global::PDFiumCore.FpdfFormHandleT hHandle, ref int subtypes, ulong count)
+        public static int FPDFAnnotGetFocusableSubtypes(global::PDFiumZ.FpdfFormHandleT hHandle, ref int subtypes, ulong count)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             fixed (int* __subtypes1 = &subtypes)
@@ -6273,11 +6273,11 @@ namespace PDFiumCore
         /// <para>Returns FPDF_LINK from the FPDF_ANNOTATION and NULL on failure,</para>
         /// <para>if the input annot is NULL or input annot's subtype is not link.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfLinkT FPDFAnnotGetLink(global::PDFiumCore.FpdfAnnotationT annot)
+        public static global::PDFiumZ.FpdfLinkT FPDFAnnotGetLink(global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotGetLink(__arg0);
-            var __result0 = global::PDFiumCore.FpdfLinkT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfLinkT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -6292,7 +6292,7 @@ namespace PDFiumCore
         /// <para>annot   - handle to an annotation.</para>
         /// <para>Returns number of controls in its control group or -1 on error.</para>
         /// </summary>
-        public static int FPDFAnnotGetFormControlCount(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfAnnotationT annot)
+        public static int FPDFAnnotGetFormControlCount(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -6311,7 +6311,7 @@ namespace PDFiumCore
         /// <para>annot   - handle to an annotation.</para>
         /// <para>Returns index of a given |annot| in its control group or -1 on error.</para>
         /// </summary>
-        public static int FPDFAnnotGetFormControlIndex(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfAnnotationT annot)
+        public static int FPDFAnnotGetFormControlIndex(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -6333,7 +6333,7 @@ namespace PDFiumCore
         /// <para>buflen      -   length of the buffer in bytes.</para>
         /// <para>Returns the length of the string value in bytes.</para>
         /// </summary>
-        public static uint FPDFAnnotGetFormFieldExportValue(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfAnnotationT annot, ref ushort buffer, uint buflen)
+        public static uint FPDFAnnotGetFormFieldExportValue(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfAnnotationT annot, ref ushort buffer, uint buflen)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -6352,7 +6352,7 @@ namespace PDFiumCore
         /// <para>uri    - the URI to be set, encoded in 7-bit ASCII.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFAnnotSetURI(global::PDFiumCore.FpdfAnnotationT annot, string uri)
+        public static int FPDFAnnotSetURI(global::PDFiumZ.FpdfAnnotationT annot, string uri)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotSetURI(__arg0, uri);
@@ -6365,11 +6365,11 @@ namespace PDFiumCore
         /// <para>annot - handle to a file annotation.</para>
         /// <para>Returns the handle to the attachment object, or NULL on failure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfAttachmentT FPDFAnnotGetFileAttachment(global::PDFiumCore.FpdfAnnotationT annot)
+        public static global::PDFiumZ.FpdfAttachmentT FPDFAnnotGetFileAttachment(global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             var ___ret = __Internal.FPDFAnnotGetFileAttachment(__arg0);
-            var __result0 = global::PDFiumCore.FpdfAttachmentT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfAttachmentT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -6380,14 +6380,14 @@ namespace PDFiumCore
         /// <para>name     - name of the new attachment.</para>
         /// <para>Returns a handle to the new attachment object, or NULL on failure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfAttachmentT FPDFAnnotAddFileAttachment(global::PDFiumCore.FpdfAnnotationT annot, ref ushort name)
+        public static global::PDFiumZ.FpdfAttachmentT FPDFAnnotAddFileAttachment(global::PDFiumZ.FpdfAnnotationT annot, ref ushort name)
         {
             var __arg0 = annot is null ? __IntPtr.Zero : annot.__Instance;
             fixed (ushort* __name1 = &name)
             {
                 var __arg1 = __name1;
                 var ___ret = __Internal.FPDFAnnotAddFileAttachment(__arg0, __arg1);
-                var __result0 = global::PDFiumCore.FpdfAttachmentT.__GetOrCreateInstance(___ret, false);
+                var __result0 = global::PDFiumZ.FpdfAttachmentT.__GetOrCreateInstance(___ret, false);
                 return __result0;
             }
         }
@@ -6421,15 +6421,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.IPDF_JsPlatform> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.IPDF_JsPlatform>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.IPDF_JsPlatform> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.IPDF_JsPlatform>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.IPDF_JsPlatform managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.IPDF_JsPlatform managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.IPDF_JsPlatform managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.IPDF_JsPlatform managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -6484,17 +6484,17 @@ namespace PDFiumCore
 
         public IPDF_JsPlatform()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.IPDF_JsPlatform.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.IPDF_JsPlatform.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public IPDF_JsPlatform(global::PDFiumCore.IPDF_JsPlatform _0)
+        public IPDF_JsPlatform(global::PDFiumZ.IPDF_JsPlatform _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.IPDF_JsPlatform.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.IPDF_JsPlatform.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.IPDF_JsPlatform.__Internal*) __Instance) = *((global::PDFiumCore.IPDF_JsPlatform.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.IPDF_JsPlatform.__Internal*) __Instance) = *((global::PDFiumZ.IPDF_JsPlatform.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -6528,12 +6528,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_int_int AppAlert
+        public global::PDFiumZ.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_int_int AppAlert
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->app_alert;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_int_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_int_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_int_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_int_int));
             }
 
             set
@@ -6542,12 +6542,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr_int AppBeep
+        public global::PDFiumZ.Delegates.Action___IntPtr_int AppBeep
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->app_beep;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr_int));
             }
 
             set
@@ -6556,12 +6556,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_int___IntPtr_int AppResponse
+        public global::PDFiumZ.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_int___IntPtr_int AppResponse
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->app_response;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_int___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_int___IntPtr_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_int___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_int___IntPtr_int));
             }
 
             set
@@ -6570,12 +6570,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_int Doc_getFilePath
+        public global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_int Doc_getFilePath
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->Doc_getFilePath;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_int));
             }
 
             set
@@ -6584,12 +6584,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int_int_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr Doc_mail
+        public global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int_int_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr Doc_mail
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->Doc_mail;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int_int_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int_int_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int_int_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int_int_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr));
             }
 
             set
@@ -6598,12 +6598,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr_int_int_int_int_int_int_int_int Doc_print
+        public global::PDFiumZ.Delegates.Action___IntPtr_int_int_int_int_int_int_int_int Doc_print
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->Doc_print;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr_int_int_int_int_int_int_int_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr_int_int_int_int_int_int_int_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr_int_int_int_int_int_int_int_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr_int_int_int_int_int_int_int_int));
             }
 
             set
@@ -6612,12 +6612,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int_ushortPtr Doc_submitForm
+        public global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int_ushortPtr Doc_submitForm
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->Doc_submitForm;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int_ushortPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int_ushortPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int_ushortPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int_ushortPtr));
             }
 
             set
@@ -6626,12 +6626,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr_int Doc_gotoPage
+        public global::PDFiumZ.Delegates.Action___IntPtr_int Doc_gotoPage
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->Doc_gotoPage;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr_int));
             }
 
             set
@@ -6640,12 +6640,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_int Field_browse
+        public global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_int Field_browse
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->Field_browse;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_int));
             }
 
             set
@@ -6714,15 +6714,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_SYSTEMTIME> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_SYSTEMTIME>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_SYSTEMTIME> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_SYSTEMTIME>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FPDF_SYSTEMTIME managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FPDF_SYSTEMTIME managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FPDF_SYSTEMTIME managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FPDF_SYSTEMTIME managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -6777,17 +6777,17 @@ namespace PDFiumCore
 
         public FPDF_SYSTEMTIME()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_SYSTEMTIME.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_SYSTEMTIME.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FPDF_SYSTEMTIME(global::PDFiumCore.FPDF_SYSTEMTIME _0)
+        public FPDF_SYSTEMTIME(global::PDFiumZ.FPDF_SYSTEMTIME _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_SYSTEMTIME.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_SYSTEMTIME.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FPDF_SYSTEMTIME.__Internal*) __Instance) = *((global::PDFiumCore.FPDF_SYSTEMTIME.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FPDF_SYSTEMTIME.__Internal*) __Instance) = *((global::PDFiumZ.FPDF_SYSTEMTIME.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -6960,15 +6960,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_FORMFILLINFO> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_FORMFILLINFO>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_FORMFILLINFO> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_FORMFILLINFO>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FPDF_FORMFILLINFO managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FPDF_FORMFILLINFO managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FPDF_FORMFILLINFO managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FPDF_FORMFILLINFO managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -7023,18 +7023,18 @@ namespace PDFiumCore
 
         public FPDF_FORMFILLINFO()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_FORMFILLINFO.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_FORMFILLINFO.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            global::System.Runtime.CompilerServices.Unsafe.InitBlock((void*)__Instance, 0, (uint)sizeof(global::PDFiumCore.FPDF_FORMFILLINFO.__Internal));
+            global::System.Runtime.CompilerServices.Unsafe.InitBlock((void*)__Instance, 0, (uint)sizeof(global::PDFiumZ.FPDF_FORMFILLINFO.__Internal));
         }
 
-        public FPDF_FORMFILLINFO(global::PDFiumCore.FPDF_FORMFILLINFO _0)
+        public FPDF_FORMFILLINFO(global::PDFiumZ.FPDF_FORMFILLINFO _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_FORMFILLINFO.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_FORMFILLINFO.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FPDF_FORMFILLINFO.__Internal*) __Instance) = *((global::PDFiumCore.FPDF_FORMFILLINFO.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FPDF_FORMFILLINFO.__Internal*) __Instance) = *((global::PDFiumZ.FPDF_FORMFILLINFO.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -7068,12 +7068,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr Release
+        public global::PDFiumZ.Delegates.Action___IntPtr Release
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->Release;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr));
             }
 
             set
@@ -7082,12 +7082,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_double_double_double_double FFI_Invalidate
+        public global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_double_double_double_double FFI_Invalidate
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_Invalidate;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_double_double_double_double) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_double_double_double_double));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_double_double_double_double) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_double_double_double_double));
             }
 
             set
@@ -7096,12 +7096,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_double_double_double_double FFI_OutputSelectedRect
+        public global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_double_double_double_double FFI_OutputSelectedRect
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_OutputSelectedRect;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_double_double_double_double) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_double_double_double_double));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_double_double_double_double) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_double_double_double_double));
             }
 
             set
@@ -7110,12 +7110,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr_int FFI_SetCursor
+        public global::PDFiumZ.Delegates.Action___IntPtr_int FFI_SetCursor
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_SetCursor;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr_int));
             }
 
             set
@@ -7124,12 +7124,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr_int_PDFiumCore_TimerCallback FFI_SetTimer
+        public global::PDFiumZ.Delegates.Func_int___IntPtr_int_PDFiumZ_TimerCallback FFI_SetTimer
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_SetTimer;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr_int_PDFiumCore_TimerCallback) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr_int_PDFiumCore_TimerCallback));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr_int_PDFiumZ_TimerCallback) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr_int_PDFiumZ_TimerCallback));
             }
 
             set
@@ -7138,12 +7138,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr_int FFI_KillTimer
+        public global::PDFiumZ.Delegates.Action___IntPtr_int FFI_KillTimer
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_KillTimer;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr_int));
             }
 
             set
@@ -7152,12 +7152,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_PDFiumCore__FPDF_SYSTEMTIME___Internal___IntPtr FFI_GetLocalTime
+        public global::PDFiumZ.Delegates.Func_PDFiumZ__FPDF_SYSTEMTIME___Internal___IntPtr FFI_GetLocalTime
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_GetLocalTime;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_PDFiumCore__FPDF_SYSTEMTIME___Internal___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_PDFiumCore__FPDF_SYSTEMTIME___Internal___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_PDFiumZ__FPDF_SYSTEMTIME___Internal___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_PDFiumZ__FPDF_SYSTEMTIME___Internal___IntPtr));
             }
 
             set
@@ -7166,12 +7166,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr FFI_OnChange
+        public global::PDFiumZ.Delegates.Action___IntPtr FFI_OnChange
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_OnChange;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr));
             }
 
             set
@@ -7180,12 +7180,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func___IntPtr___IntPtr___IntPtr_int FFI_GetPage
+        public global::PDFiumZ.Delegates.Func___IntPtr___IntPtr___IntPtr_int FFI_GetPage
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_GetPage;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func___IntPtr___IntPtr___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func___IntPtr___IntPtr___IntPtr_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func___IntPtr___IntPtr___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func___IntPtr___IntPtr___IntPtr_int));
             }
 
             set
@@ -7194,12 +7194,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func___IntPtr___IntPtr___IntPtr FFI_GetCurrentPage
+        public global::PDFiumZ.Delegates.Func___IntPtr___IntPtr___IntPtr FFI_GetCurrentPage
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_GetCurrentPage;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func___IntPtr___IntPtr___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func___IntPtr___IntPtr___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func___IntPtr___IntPtr___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func___IntPtr___IntPtr___IntPtr));
             }
 
             set
@@ -7208,12 +7208,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr FFI_GetRotation
+        public global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr FFI_GetRotation
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_GetRotation;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr));
             }
 
             set
@@ -7222,12 +7222,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr_string8 FFI_ExecuteNamedAction
+        public global::PDFiumZ.Delegates.Action___IntPtr_string8 FFI_ExecuteNamedAction
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_ExecuteNamedAction;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr_string8) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr_string8));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr_string8) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr_string8));
             }
 
             set
@@ -7236,12 +7236,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr_ushortPtr_uint_int FFI_SetTextFieldFocus
+        public global::PDFiumZ.Delegates.Action___IntPtr_ushortPtr_uint_int FFI_SetTextFieldFocus
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_SetTextFieldFocus;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr_ushortPtr_uint_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr_ushortPtr_uint_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr_ushortPtr_uint_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr_ushortPtr_uint_int));
             }
 
             set
@@ -7250,12 +7250,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr_string8 FFI_DoURIAction
+        public global::PDFiumZ.Delegates.Action___IntPtr_string8 FFI_DoURIAction
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_DoURIAction;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr_string8) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr_string8));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr_string8) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr_string8));
             }
 
             set
@@ -7264,12 +7264,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr_int_int_floatPtr_int FFI_DoGoToAction
+        public global::PDFiumZ.Delegates.Action___IntPtr_int_int_floatPtr_int FFI_DoGoToAction
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_DoGoToAction;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr_int_int_floatPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr_int_int_floatPtr_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr_int_int_floatPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr_int_int_floatPtr_int));
             }
 
             set
@@ -7278,11 +7278,11 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.IPDF_JsPlatform MPJsPlatform
+        public global::PDFiumZ.IPDF_JsPlatform MPJsPlatform
         {
             get
             {
-                var __result0 = global::PDFiumCore.IPDF_JsPlatform.__GetOrCreateInstance(((__Internal*)__Instance)->m_pJsPlatform, false);
+                var __result0 = global::PDFiumZ.IPDF_JsPlatform.__GetOrCreateInstance(((__Internal*)__Instance)->m_pJsPlatform, false);
                 return __result0;
             }
 
@@ -7305,12 +7305,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int_double_double_double_double FFI_DisplayCaret
+        public global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int_double_double_double_double FFI_DisplayCaret
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_DisplayCaret;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int_double_double_double_double) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int_double_double_double_double));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int_double_double_double_double) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int_double_double_double_double));
             }
 
             set
@@ -7319,12 +7319,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr FFI_GetCurrentPageIndex
+        public global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr FFI_GetCurrentPageIndex
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_GetCurrentPageIndex;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr));
             }
 
             set
@@ -7333,12 +7333,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int FFI_SetCurrentPage
+        public global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int FFI_SetCurrentPage
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_SetCurrentPage;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int));
             }
 
             set
@@ -7347,12 +7347,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_ushortPtr FFI_GotoURL
+        public global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_ushortPtr FFI_GotoURL
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_GotoURL;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_ushortPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_ushortPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_ushortPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_ushortPtr));
             }
 
             set
@@ -7361,12 +7361,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_doublePtr_doublePtr_doublePtr_doublePtr FFI_GetPageViewRect
+        public global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_doublePtr_doublePtr_doublePtr_doublePtr FFI_GetPageViewRect
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_GetPageViewRect;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_doublePtr_doublePtr_doublePtr_doublePtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_doublePtr_doublePtr_doublePtr_doublePtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_doublePtr_doublePtr_doublePtr_doublePtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_doublePtr_doublePtr_doublePtr_doublePtr));
             }
 
             set
@@ -7375,12 +7375,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr_int_uint FFI_PageEvent
+        public global::PDFiumZ.Delegates.Action___IntPtr_int_uint FFI_PageEvent
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_PageEvent;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr_int_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr_int_uint));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr_int_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr_int_uint));
             }
 
             set
@@ -7389,12 +7389,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr___IntPtr_int_float_float FFI_PopupMenu
+        public global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr___IntPtr_int_float_float FFI_PopupMenu
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_PopupMenu;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr___IntPtr_int_float_float) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr___IntPtr_int_float_float));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr___IntPtr_int_float_float) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr___IntPtr_int_float_float));
             }
 
             set
@@ -7403,12 +7403,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func___IntPtr___IntPtr_int_ushortPtr_string8 FFI_OpenFile
+        public global::PDFiumZ.Delegates.Func___IntPtr___IntPtr_int_ushortPtr_string8 FFI_OpenFile
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_OpenFile;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func___IntPtr___IntPtr_int_ushortPtr_string8) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func___IntPtr___IntPtr_int_ushortPtr_string8));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func___IntPtr___IntPtr_int_ushortPtr_string8) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func___IntPtr___IntPtr_int_ushortPtr_string8));
             }
 
             set
@@ -7417,12 +7417,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr FFI_EmailTo
+        public global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr FFI_EmailTo
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_EmailTo;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr));
             }
 
             set
@@ -7431,12 +7431,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int_ushortPtr FFI_UploadTo
+        public global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int_ushortPtr FFI_UploadTo
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_UploadTo;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int_ushortPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int_ushortPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int_ushortPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int_ushortPtr));
             }
 
             set
@@ -7445,12 +7445,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_int FFI_GetPlatform
+        public global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_int FFI_GetPlatform
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_GetPlatform;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_int));
             }
 
             set
@@ -7459,12 +7459,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_int FFI_GetLanguage
+        public global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_int FFI_GetLanguage
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_GetLanguage;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_int));
             }
 
             set
@@ -7473,12 +7473,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func___IntPtr___IntPtr_ushortPtr FFI_DownloadFromURL
+        public global::PDFiumZ.Delegates.Func___IntPtr___IntPtr_ushortPtr FFI_DownloadFromURL
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_DownloadFromURL;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func___IntPtr___IntPtr_ushortPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func___IntPtr___IntPtr_ushortPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func___IntPtr___IntPtr_ushortPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func___IntPtr___IntPtr_ushortPtr));
             }
 
             set
@@ -7487,12 +7487,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr___IntPtr FFI_PostRequestURL
+        public global::PDFiumZ.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr___IntPtr FFI_PostRequestURL
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_PostRequestURL;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr_ushortPtr___IntPtr));
             }
 
             set
@@ -7501,12 +7501,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr FFI_PutRequestURL
+        public global::PDFiumZ.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr FFI_PutRequestURL
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_PutRequestURL;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr_ushortPtr_ushortPtr_ushortPtr));
             }
 
             set
@@ -7515,12 +7515,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int FFI_OnFocusChange
+        public global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int FFI_OnFocusChange
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_OnFocusChange;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr___IntPtr_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr___IntPtr_int));
             }
 
             set
@@ -7529,12 +7529,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr_string8_int FFI_DoURIActionWithKeyboardModifier
+        public global::PDFiumZ.Delegates.Action___IntPtr_string8_int FFI_DoURIActionWithKeyboardModifier
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->FFI_DoURIActionWithKeyboardModifier;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr_string8_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr_string8_int));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr_string8_int) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr_string8_int));
             }
 
             set
@@ -7682,12 +7682,12 @@ namespace PDFiumCore
         /// <para>Handle to the form fill module, or NULL on failure.</para>
         /// <para>Comments: This function should be called before any form fill operation. The FPDF_FORMFILLINFO passed in via |formInfo| must remain valid until the returned FPDF_FORMHANDLE is closed.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfFormHandleT FPDFDOC_InitFormFillEnvironment(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FPDF_FORMFILLINFO formInfo)
+        public static global::PDFiumZ.FpdfFormHandleT FPDFDOC_InitFormFillEnvironment(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FPDF_FORMFILLINFO formInfo)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = formInfo is null ? __IntPtr.Zero : formInfo.__Instance;
             var ___ret = __Internal.FPDFDOC_InitFormFillEnvironment(__arg0, __arg1);
-            var __result0 = global::PDFiumCore.FpdfFormHandleT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfFormHandleT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -7700,7 +7700,7 @@ namespace PDFiumCore
         /// <para>None.</para>
         /// <para>Comments: This function is a no-op when |hHandle| is null.</para>
         /// </summary>
-        public static void FPDFDOC_ExitFormFillEnvironment(global::PDFiumCore.FpdfFormHandleT hHandle)
+        public static void FPDFDOC_ExitFormFillEnvironment(global::PDFiumZ.FpdfFormHandleT hHandle)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             __Internal.FPDFDOC_ExitFormFillEnvironment(__arg0);
@@ -7716,7 +7716,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>None.</para>
         /// </summary>
-        public static void FORM_OnAfterLoadPage(global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FpdfFormHandleT hHandle)
+        public static void FORM_OnAfterLoadPage(global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FpdfFormHandleT hHandle)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg1 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
@@ -7733,7 +7733,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>None.</para>
         /// </summary>
-        public static void FORM_OnBeforeClosePage(global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FpdfFormHandleT hHandle)
+        public static void FORM_OnBeforeClosePage(global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FpdfFormHandleT hHandle)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg1 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
@@ -7750,7 +7750,7 @@ namespace PDFiumCore
         /// <para>None.</para>
         /// <para>Comments: If there is document-level JavaScript action embedded in the document, this method will execute the JavaScript action. Otherwise, the method will do nothing.</para>
         /// </summary>
-        public static void FORM_DoDocumentJSAction(global::PDFiumCore.FpdfFormHandleT hHandle)
+        public static void FORM_DoDocumentJSAction(global::PDFiumZ.FpdfFormHandleT hHandle)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             __Internal.FORM_DoDocumentJSAction(__arg0);
@@ -7766,7 +7766,7 @@ namespace PDFiumCore
         /// <para>None.</para>
         /// <para>Comments: This method will do nothing if there are no open-actions embedded in the document.</para>
         /// </summary>
-        public static void FORM_DoDocumentOpenAction(global::PDFiumCore.FpdfFormHandleT hHandle)
+        public static void FORM_DoDocumentOpenAction(global::PDFiumZ.FpdfFormHandleT hHandle)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             __Internal.FORM_DoDocumentOpenAction(__arg0);
@@ -7783,7 +7783,7 @@ namespace PDFiumCore
         /// <para>None.</para>
         /// <para>Comments: This method will do nothing if there is no document additional-action corresponding to the specified |aaType|.</para>
         /// </summary>
-        public static void FORM_DoDocumentAAction(global::PDFiumCore.FpdfFormHandleT hHandle, int aaType)
+        public static void FORM_DoDocumentAAction(global::PDFiumZ.FpdfFormHandleT hHandle, int aaType)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             __Internal.FORM_DoDocumentAAction(__arg0, aaType);
@@ -7801,7 +7801,7 @@ namespace PDFiumCore
         /// <para>None.</para>
         /// <para>Comments: This method will do nothing if no additional-action corresponding to the specified |aaType| exists.</para>
         /// </summary>
-        public static void FORM_DoPageAAction(global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FpdfFormHandleT hHandle, int aaType)
+        public static void FORM_DoPageAAction(global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FpdfFormHandleT hHandle, int aaType)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg1 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
@@ -7820,7 +7820,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>True indicates success; otherwise false.</para>
         /// </summary>
-        public static int FORM_OnMouseMove(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, int modifier, double page_x, double page_y)
+        public static int FORM_OnMouseMove(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, int modifier, double page_x, double page_y)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -7842,7 +7842,7 @@ namespace PDFiumCore
         /// <para>True indicates success; otherwise false.</para>
         /// <para>Comments: For |delta_x| and |delta_y|, the caller must normalize platform-specific wheel deltas. e.g. On Windows, a delta value of 240 for a WM_MOUSEWHEEL event normalizes to 2, since Windows defines WHEEL_DELTA as 120.</para>
         /// </summary>
-        public static int FORM_OnMouseWheel(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, int modifier, global::PDFiumCore.FS_POINTF_ page_coord, int delta_x, int delta_y)
+        public static int FORM_OnMouseWheel(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, int modifier, global::PDFiumZ.FS_POINTF_ page_coord, int delta_x, int delta_y)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -7865,7 +7865,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>True if there is an annotation at the given point and it has focus.</para>
         /// </summary>
-        public static int FORM_OnFocus(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, int modifier, double page_x, double page_y)
+        public static int FORM_OnFocus(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, int modifier, double page_x, double page_y)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -7886,7 +7886,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>True indicates success; otherwise false.</para>
         /// </summary>
-        public static int FORM_OnLButtonDown(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, int modifier, double page_x, double page_y)
+        public static int FORM_OnLButtonDown(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, int modifier, double page_x, double page_y)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -7899,7 +7899,7 @@ namespace PDFiumCore
         /// <para>Same as above, execpt for the right mouse button.</para>
         /// <para>Comments: At the present time, has no effect except in XFA builds, but is included for the sake of symmetry.</para>
         /// </summary>
-        public static int FORM_OnRButtonDown(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, int modifier, double page_x, double page_y)
+        public static int FORM_OnRButtonDown(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, int modifier, double page_x, double page_y)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -7920,7 +7920,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>True indicates success; otherwise false.</para>
         /// </summary>
-        public static int FORM_OnLButtonUp(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, int modifier, double page_x, double page_y)
+        public static int FORM_OnLButtonUp(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, int modifier, double page_x, double page_y)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -7933,7 +7933,7 @@ namespace PDFiumCore
         /// <para>Same as above, execpt for the right mouse button.</para>
         /// <para>Comments: At the present time, has no effect except in XFA builds, but is included for the sake of symmetry.</para>
         /// </summary>
-        public static int FORM_OnRButtonUp(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, int modifier, double page_x, double page_y)
+        public static int FORM_OnRButtonUp(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, int modifier, double page_x, double page_y)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -7954,7 +7954,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>True indicates success; otherwise false.</para>
         /// </summary>
-        public static int FORM_OnLButtonDoubleClick(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, int modifier, double page_x, double page_y)
+        public static int FORM_OnLButtonDoubleClick(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, int modifier, double page_x, double page_y)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -7973,7 +7973,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>True indicates success; otherwise false.</para>
         /// </summary>
-        public static int FORM_OnKeyDown(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, int nKeyCode, int modifier)
+        public static int FORM_OnKeyDown(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, int nKeyCode, int modifier)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -7993,7 +7993,7 @@ namespace PDFiumCore
         /// <para>True indicates success; otherwise false.</para>
         /// <para>Comments: Currently unimplemented and always returns false. PDFium reserves this API and may implement it in the future on an as-needed basis.</para>
         /// </summary>
-        public static int FORM_OnKeyUp(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, int nKeyCode, int modifier)
+        public static int FORM_OnKeyUp(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, int nKeyCode, int modifier)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8013,7 +8013,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>True indicates success; otherwise false.</para>
         /// </summary>
-        public static int FORM_OnChar(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, int nChar, int modifier)
+        public static int FORM_OnChar(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, int nChar, int modifier)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8033,7 +8033,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>Length in bytes for the text in the focused field.</para>
         /// </summary>
-        public static uint FORM_GetFocusedText(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, __IntPtr buffer, uint buflen)
+        public static uint FORM_GetFocusedText(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, __IntPtr buffer, uint buflen)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8054,7 +8054,7 @@ namespace PDFiumCore
         /// <para>Length in bytes of selected text in form text field or form combobox</para>
         /// <para>text field.</para>
         /// </summary>
-        public static uint FORM_GetSelectedText(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, __IntPtr buffer, uint buflen)
+        public static uint FORM_GetSelectedText(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, __IntPtr buffer, uint buflen)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8077,7 +8077,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>None.</para>
         /// </summary>
-        public static void FORM_ReplaceAndKeepSelection(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, ref ushort wsText)
+        public static void FORM_ReplaceAndKeepSelection(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, ref ushort wsText)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8103,7 +8103,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>None.</para>
         /// </summary>
-        public static void FORM_ReplaceSelection(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, ref ushort wsText)
+        public static void FORM_ReplaceSelection(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, ref ushort wsText)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8124,7 +8124,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>Whether the operation succeeded or not.</para>
         /// </summary>
-        public static int FORM_SelectAllText(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page)
+        public static int FORM_SelectAllText(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8142,7 +8142,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>True if it is possible to undo.</para>
         /// </summary>
-        public static int FORM_CanUndo(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page)
+        public static int FORM_CanUndo(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8160,7 +8160,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>True if it is possible to redo.</para>
         /// </summary>
-        public static int FORM_CanRedo(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page)
+        public static int FORM_CanRedo(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8177,7 +8177,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>True if the undo operation succeeded.</para>
         /// </summary>
-        public static int FORM_Undo(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page)
+        public static int FORM_Undo(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8194,7 +8194,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>True if the redo operation succeeded.</para>
         /// </summary>
-        public static int FORM_Redo(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page)
+        public static int FORM_Redo(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8212,7 +8212,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>True indicates success; otherwise false.</para>
         /// </summary>
-        public static int FORM_ForceToKillFocus(global::PDFiumCore.FpdfFormHandleT hHandle)
+        public static int FORM_ForceToKillFocus(global::PDFiumZ.FpdfFormHandleT hHandle)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var ___ret = __Internal.FORM_ForceToKillFocus(__arg0);
@@ -8231,7 +8231,7 @@ namespace PDFiumCore
         /// <para>return false and leave the out parameters unmodified.</para>
         /// <para>Comments: Not currently supported for XFA forms - will report no focused annotation. Must call FPDFPage_CloseAnnot() when the annotation returned in |annot| by this function is no longer needed. This will return true and set |page_index| to -1 and |annot| to NULL, if there is no focused annotation.</para>
         /// </summary>
-        public static int FORM_GetFocusedAnnot(global::PDFiumCore.FpdfFormHandleT handle, ref int page_index, global::PDFiumCore.FpdfAnnotationT annot)
+        public static int FORM_GetFocusedAnnot(global::PDFiumZ.FpdfFormHandleT handle, ref int page_index, global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = handle is null ? __IntPtr.Zero : handle.__Instance;
             fixed (int* __page_index1 = &page_index)
@@ -8254,7 +8254,7 @@ namespace PDFiumCore
         /// <para>True indicates success; otherwise false.</para>
         /// <para>Comments: |annot| can't be NULL. To kill focus, use FORM_ForceToKillFocus() instead.</para>
         /// </summary>
-        public static int FORM_SetFocusedAnnot(global::PDFiumCore.FpdfFormHandleT handle, global::PDFiumCore.FpdfAnnotationT annot)
+        public static int FORM_SetFocusedAnnot(global::PDFiumZ.FpdfFormHandleT handle, global::PDFiumZ.FpdfAnnotationT annot)
         {
             var __arg0 = handle is null ? __IntPtr.Zero : handle.__Instance;
             var __arg1 = annot is null ? __IntPtr.Zero : annot.__Instance;
@@ -8274,7 +8274,7 @@ namespace PDFiumCore
         /// <para>Return the type of the form field; -1 indicates no field.</para>
         /// <para>See field types above.</para>
         /// </summary>
-        public static int FPDFPageHasFormFieldAtPoint(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, double page_x, double page_y)
+        public static int FPDFPageHasFormFieldAtPoint(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, double page_x, double page_y)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8294,7 +8294,7 @@ namespace PDFiumCore
         /// <para>Return the z-order of the form field; -1 indicates no field.</para>
         /// <para>Higher numbers are closer to the front.</para>
         /// </summary>
-        public static int FPDFPageFormFieldZOrderAtPoint(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, double page_x, double page_y)
+        public static int FPDFPageFormFieldZOrderAtPoint(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, double page_x, double page_y)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8315,7 +8315,7 @@ namespace PDFiumCore
         /// <para>None.</para>
         /// <para>Comments: When the parameter fieldType is set to FPDF_FORMFIELD_UNKNOWN, the highlight color will be applied to all the form fields in the document. Please refresh the client window to show the highlight immediately if necessary.</para>
         /// </summary>
-        public static void FPDF_SetFormFieldHighlightColor(global::PDFiumCore.FpdfFormHandleT hHandle, int fieldType, uint color)
+        public static void FPDF_SetFormFieldHighlightColor(global::PDFiumZ.FpdfFormHandleT hHandle, int fieldType, uint color)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             __Internal.FPDF_SetFormFieldHighlightColor(__arg0, fieldType, color);
@@ -8332,7 +8332,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>None.</para>
         /// </summary>
-        public static void FPDF_SetFormFieldHighlightAlpha(global::PDFiumCore.FpdfFormHandleT hHandle, byte alpha)
+        public static void FPDF_SetFormFieldHighlightAlpha(global::PDFiumZ.FpdfFormHandleT hHandle, byte alpha)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             __Internal.FPDF_SetFormFieldHighlightAlpha(__arg0, alpha);
@@ -8347,7 +8347,7 @@ namespace PDFiumCore
         /// <para>None.</para>
         /// <para>Comments: Please refresh the client window to remove the highlight immediately if necessary.</para>
         /// </summary>
-        public static void FPDF_RemoveFormFieldHighlight(global::PDFiumCore.FpdfFormHandleT hHandle)
+        public static void FPDF_RemoveFormFieldHighlight(global::PDFiumZ.FpdfFormHandleT hHandle)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             __Internal.FPDF_RemoveFormFieldHighlight(__arg0);
@@ -8371,7 +8371,7 @@ namespace PDFiumCore
         /// <para>None.</para>
         /// <para>Comments: This function is designed to render annotations that are user-interactive, which are widget annotations (for FormFields) and popup annotations. With the FPDF_ANNOT flag, this function will render a popup annotation when users mouse-hover on a non-widget annotation. Regardless of FPDF_ANNOT flag, this function will always render widget annotations for FormFields. In order to implement the FormFill functions, implementation should call this function after rendering functions, such as FPDF_RenderPageBitmap() or FPDF_RenderPageBitmap_Start(), have finished rendering the page contents.</para>
         /// </summary>
-        public static void FPDF_FFLDraw(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfBitmapT bitmap, global::PDFiumCore.FpdfPageT page, int start_x, int start_y, int size_x, int size_y, int rotate, int flags)
+        public static void FPDF_FFLDraw(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfBitmapT bitmap, global::PDFiumZ.FpdfPageT page, int start_x, int start_y, int size_x, int size_y, int rotate, int flags)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = bitmap is null ? __IntPtr.Zero : bitmap.__Instance;
@@ -8388,7 +8388,7 @@ namespace PDFiumCore
         /// <para>Integer value representing one of the FORMTYPE_ values.</para>
         /// <para>Comments: If |document| is NULL, then the return value is FORMTYPE_NONE.</para>
         /// </summary>
-        public static int FPDF_GetFormType(global::PDFiumCore.FpdfDocumentT document)
+        public static int FPDF_GetFormType(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_GetFormType(__arg0);
@@ -8409,7 +8409,7 @@ namespace PDFiumCore
         /// <para>FALSE if the operation failed or widget is not a supported type.</para>
         /// <para>Comments: Intended for use with listbox/combobox widget types. Comboboxes have at most a single value selected at a time which cannot be deselected. Deselect on a combobox is a no-op that returns false. Default implementation is a no-op that will return false for other types. Not currently supported for XFA forms - will return false.</para>
         /// </summary>
-        public static int FORM_SetIndexSelected(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, int index, int selected)
+        public static int FORM_SetIndexSelected(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, int index, int selected)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8431,7 +8431,7 @@ namespace PDFiumCore
         /// <para>supported type.</para>
         /// <para>Comments: Intended for use with listbox/combobox widget types. Default implementation is a no-op that will return false for other types. Not currently supported for XFA forms - will return false.</para>
         /// </summary>
-        public static int FORM_IsIndexSelected(global::PDFiumCore.FpdfFormHandleT hHandle, global::PDFiumCore.FpdfPageT page, int index)
+        public static int FORM_IsIndexSelected(global::PDFiumZ.FpdfFormHandleT hHandle, global::PDFiumZ.FpdfPageT page, int index)
         {
             var __arg0 = hHandle is null ? __IntPtr.Zero : hHandle.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -8449,7 +8449,7 @@ namespace PDFiumCore
         /// <para>TRUE upon success, otherwise FALSE. If XFA support is not built</para>
         /// <para>into PDFium, performs no action and always returns FALSE.</para>
         /// </summary>
-        public static int FPDF_LoadXFA(global::PDFiumCore.FpdfDocumentT document)
+        public static int FPDF_LoadXFA(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_LoadXFA(__arg0);
@@ -8504,7 +8504,7 @@ namespace PDFiumCore
         /// <para>document - handle to a document.</para>
         /// <para>Returns the number of embedded files in |document|.</para>
         /// </summary>
-        public static int FPDFDocGetAttachmentCount(global::PDFiumCore.FpdfDocumentT document)
+        public static int FPDFDocGetAttachmentCount(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDFDocGetAttachmentCount(__arg0);
@@ -8521,14 +8521,14 @@ namespace PDFiumCore
         /// <para>name     - name of the new attachment.</para>
         /// <para>Returns a handle to the new attachment object, or NULL on failure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfAttachmentT FPDFDocAddAttachment(global::PDFiumCore.FpdfDocumentT document, ref ushort name)
+        public static global::PDFiumZ.FpdfAttachmentT FPDFDocAddAttachment(global::PDFiumZ.FpdfDocumentT document, ref ushort name)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             fixed (ushort* __name1 = &name)
             {
                 var __arg1 = __name1;
                 var ___ret = __Internal.FPDFDocAddAttachment(__arg0, __arg1);
-                var __result0 = global::PDFiumCore.FpdfAttachmentT.__GetOrCreateInstance(___ret, false);
+                var __result0 = global::PDFiumZ.FpdfAttachmentT.__GetOrCreateInstance(___ret, false);
                 return __result0;
             }
         }
@@ -8541,11 +8541,11 @@ namespace PDFiumCore
         /// <para>index    - the index of the requested embedded file.</para>
         /// <para>Returns the handle to the attachment object, or NULL on failure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfAttachmentT FPDFDocGetAttachment(global::PDFiumCore.FpdfDocumentT document, int index)
+        public static global::PDFiumZ.FpdfAttachmentT FPDFDocGetAttachment(global::PDFiumZ.FpdfDocumentT document, int index)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDFDocGetAttachment(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfAttachmentT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfAttachmentT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -8559,7 +8559,7 @@ namespace PDFiumCore
         /// <para>index    - the index of the embedded file to be deleted.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFDocDeleteAttachment(global::PDFiumCore.FpdfDocumentT document, int index)
+        public static int FPDFDocDeleteAttachment(global::PDFiumZ.FpdfDocumentT document, int index)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDFDocDeleteAttachment(__arg0, index);
@@ -8576,7 +8576,7 @@ namespace PDFiumCore
         /// <para>buflen     - length of the buffer in bytes.</para>
         /// <para>Returns the length of the file name in bytes.</para>
         /// </summary>
-        public static uint FPDFAttachmentGetName(global::PDFiumCore.FpdfAttachmentT attachment, ref ushort buffer, uint buflen)
+        public static uint FPDFAttachmentGetName(global::PDFiumZ.FpdfAttachmentT attachment, ref ushort buffer, uint buflen)
         {
             var __arg0 = attachment is null ? __IntPtr.Zero : attachment.__Instance;
             fixed (ushort* __buffer1 = &buffer)
@@ -8594,7 +8594,7 @@ namespace PDFiumCore
         /// <para>key        - the key to look for, encoded in UTF-8.</para>
         /// <para>Returns true if |key| exists.</para>
         /// </summary>
-        public static int FPDFAttachmentHasKey(global::PDFiumCore.FpdfAttachmentT attachment, string key)
+        public static int FPDFAttachmentHasKey(global::PDFiumZ.FpdfAttachmentT attachment, string key)
         {
             var __arg0 = attachment is null ? __IntPtr.Zero : attachment.__Instance;
             var ___ret = __Internal.FPDFAttachmentHasKey(__arg0, key);
@@ -8609,7 +8609,7 @@ namespace PDFiumCore
         /// <para>key        - the key to look for, encoded in UTF-8.</para>
         /// <para>Returns the type of the dictionary value.</para>
         /// </summary>
-        public static int FPDFAttachmentGetValueType(global::PDFiumCore.FpdfAttachmentT attachment, string key)
+        public static int FPDFAttachmentGetValueType(global::PDFiumZ.FpdfAttachmentT attachment, string key)
         {
             var __arg0 = attachment is null ? __IntPtr.Zero : attachment.__Instance;
             var ___ret = __Internal.FPDFAttachmentGetValueType(__arg0, key);
@@ -8626,7 +8626,7 @@ namespace PDFiumCore
         /// <para>value      - the string value to be set, encoded in UTF-16LE.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFAttachmentSetStringValue(global::PDFiumCore.FpdfAttachmentT attachment, string key, ref ushort value)
+        public static int FPDFAttachmentSetStringValue(global::PDFiumZ.FpdfAttachmentT attachment, string key, ref ushort value)
         {
             var __arg0 = attachment is null ? __IntPtr.Zero : attachment.__Instance;
             fixed (ushort* __value2 = &value)
@@ -8653,7 +8653,7 @@ namespace PDFiumCore
         /// <para>buflen     - length of the buffer in bytes.</para>
         /// <para>Returns the length of the dictionary value string in bytes.</para>
         /// </summary>
-        public static uint FPDFAttachmentGetStringValue(global::PDFiumCore.FpdfAttachmentT attachment, string key, ref ushort buffer, uint buflen)
+        public static uint FPDFAttachmentGetStringValue(global::PDFiumZ.FpdfAttachmentT attachment, string key, ref ushort buffer, uint buflen)
         {
             var __arg0 = attachment is null ? __IntPtr.Zero : attachment.__Instance;
             fixed (ushort* __buffer2 = &buffer)
@@ -8675,7 +8675,7 @@ namespace PDFiumCore
         /// <para>len        - length of file data in bytes.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFAttachmentSetFile(global::PDFiumCore.FpdfAttachmentT attachment, global::PDFiumCore.FpdfDocumentT document, __IntPtr contents, uint len)
+        public static int FPDFAttachmentSetFile(global::PDFiumZ.FpdfAttachmentT attachment, global::PDFiumZ.FpdfDocumentT document, __IntPtr contents, uint len)
         {
             var __arg0 = attachment is null ? __IntPtr.Zero : attachment.__Instance;
             var __arg1 = document is null ? __IntPtr.Zero : document.__Instance;
@@ -8700,7 +8700,7 @@ namespace PDFiumCore
         /// <para>size to contain the file data of |attachment|.</para>
         /// <para>Returns true on success, false otherwise.</para>
         /// </summary>
-        public static int FPDFAttachmentGetFile(global::PDFiumCore.FpdfAttachmentT attachment, __IntPtr buffer, uint buflen, ref uint out_buflen)
+        public static int FPDFAttachmentGetFile(global::PDFiumZ.FpdfAttachmentT attachment, __IntPtr buffer, uint buflen, ref uint out_buflen)
         {
             var __arg0 = attachment is null ? __IntPtr.Zero : attachment.__Instance;
             fixed (uint* __out_buflen3 = &out_buflen)
@@ -8723,7 +8723,7 @@ namespace PDFiumCore
         /// <para>buflen     - length of the buffer in bytes.</para>
         /// <para>Returns the length of the MIME type string in bytes.</para>
         /// </summary>
-        public static uint FPDFAttachmentGetSubtype(global::PDFiumCore.FpdfAttachmentT attachment, ref ushort buffer, uint buflen)
+        public static uint FPDFAttachmentGetSubtype(global::PDFiumZ.FpdfAttachmentT attachment, ref ushort buffer, uint buflen)
         {
             var __arg0 = attachment is null ? __IntPtr.Zero : attachment.__Instance;
             fixed (ushort* __buffer1 = &buffer)
@@ -8754,7 +8754,7 @@ namespace PDFiumCore
         /// <para>document - handle to a document.</para>
         /// <para>Returns |true| iff |document| is a tagged PDF.</para>
         /// </summary>
-        public static int FPDFCatalogIsTagged(global::PDFiumCore.FpdfDocumentT document)
+        public static int FPDFCatalogIsTagged(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDFCatalogIsTagged(__arg0);
@@ -8768,7 +8768,7 @@ namespace PDFiumCore
         /// <para>language - the language to set to.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFCatalogSetLanguage(global::PDFiumCore.FpdfDocumentT document, string language)
+        public static int FPDFCatalogSetLanguage(global::PDFiumZ.FpdfDocumentT document, string language)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDFCatalogSetLanguage(__arg0, language);
@@ -8790,15 +8790,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FX_FILEAVAIL> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FX_FILEAVAIL>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FX_FILEAVAIL> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FX_FILEAVAIL>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FX_FILEAVAIL managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FX_FILEAVAIL managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FX_FILEAVAIL managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FX_FILEAVAIL managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -8853,17 +8853,17 @@ namespace PDFiumCore
 
         public FX_FILEAVAIL()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FX_FILEAVAIL.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FX_FILEAVAIL.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FX_FILEAVAIL(global::PDFiumCore.FX_FILEAVAIL _0)
+        public FX_FILEAVAIL(global::PDFiumZ.FX_FILEAVAIL _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FX_FILEAVAIL.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FX_FILEAVAIL.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FX_FILEAVAIL.__Internal*) __Instance) = *((global::PDFiumCore.FX_FILEAVAIL.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FX_FILEAVAIL.__Internal*) __Instance) = *((global::PDFiumZ.FX_FILEAVAIL.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -8897,12 +8897,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr_ulong_ulong IsDataAvail
+        public global::PDFiumZ.Delegates.Func_int___IntPtr_ulong_ulong IsDataAvail
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->IsDataAvail;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr_ulong_ulong) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr_ulong_ulong));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr_ulong_ulong) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr_ulong_ulong));
             }
 
             set
@@ -8926,15 +8926,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FX_DOWNLOADHINTS> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FX_DOWNLOADHINTS>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FX_DOWNLOADHINTS> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FX_DOWNLOADHINTS>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FX_DOWNLOADHINTS managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FX_DOWNLOADHINTS managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FX_DOWNLOADHINTS managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FX_DOWNLOADHINTS managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -8989,17 +8989,17 @@ namespace PDFiumCore
 
         public FX_DOWNLOADHINTS()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FX_DOWNLOADHINTS.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FX_DOWNLOADHINTS.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FX_DOWNLOADHINTS(global::PDFiumCore.FX_DOWNLOADHINTS _0)
+        public FX_DOWNLOADHINTS(global::PDFiumZ.FX_DOWNLOADHINTS _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FX_DOWNLOADHINTS.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FX_DOWNLOADHINTS.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FX_DOWNLOADHINTS.__Internal*) __Instance) = *((global::PDFiumCore.FX_DOWNLOADHINTS.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FX_DOWNLOADHINTS.__Internal*) __Instance) = *((global::PDFiumZ.FX_DOWNLOADHINTS.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -9033,12 +9033,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr_ulong_ulong AddSegment
+        public global::PDFiumZ.Delegates.Action___IntPtr_ulong_ulong AddSegment
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->AddSegment;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr_ulong_ulong) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr_ulong_ulong));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr_ulong_ulong) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr_ulong_ulong));
             }
 
             set
@@ -9084,12 +9084,12 @@ namespace PDFiumCore
         /// <para>Returns a handle to the document availability provider, or NULL on error.</para>
         /// <para>FPDFAvail_Destroy() must be called when done with the availability provider.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfAvailT FPDFAvailCreate(global::PDFiumCore.FX_FILEAVAIL file_avail, global::PDFiumCore.FPDF_FILEACCESS file)
+        public static global::PDFiumZ.FpdfAvailT FPDFAvailCreate(global::PDFiumZ.FX_FILEAVAIL file_avail, global::PDFiumZ.FPDF_FILEACCESS file)
         {
             var __arg0 = file_avail is null ? __IntPtr.Zero : file_avail.__Instance;
             var __arg1 = file is null ? __IntPtr.Zero : file.__Instance;
             var ___ret = __Internal.FPDFAvailCreate(__arg0, __arg1);
-            var __result0 = global::PDFiumCore.FpdfAvailT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfAvailT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -9097,7 +9097,7 @@ namespace PDFiumCore
         /// <para>Destroy the |avail| document availability provider.</para>
         /// <para>avail - handle to document availability provider to be destroyed.</para>
         /// </summary>
-        public static void FPDFAvailDestroy(global::PDFiumCore.FpdfAvailT avail)
+        public static void FPDFAvailDestroy(global::PDFiumZ.FpdfAvailT avail)
         {
             var __arg0 = avail is null ? __IntPtr.Zero : avail.__Instance;
             __Internal.FPDFAvailDestroy(__arg0);
@@ -9118,7 +9118,7 @@ namespace PDFiumCore
         /// <para>Once all data is available, call FPDFAvail_GetDocument() to get a document</para>
         /// <para>handle.</para>
         /// </summary>
-        public static int FPDFAvailIsDocAvail(global::PDFiumCore.FpdfAvailT avail, global::PDFiumCore.FX_DOWNLOADHINTS hints)
+        public static int FPDFAvailIsDocAvail(global::PDFiumZ.FpdfAvailT avail, global::PDFiumZ.FX_DOWNLOADHINTS hints)
         {
             var __arg0 = avail is null ? __IntPtr.Zero : avail.__Instance;
             var __arg1 = hints is null ? __IntPtr.Zero : hints.__Instance;
@@ -9136,11 +9136,11 @@ namespace PDFiumCore
         /// <para>See the comments for FPDF_LoadDocument() regarding the encoding for</para>
         /// <para>|password|.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfDocumentT FPDFAvailGetDocument(global::PDFiumCore.FpdfAvailT avail, string password)
+        public static global::PDFiumZ.FpdfDocumentT FPDFAvailGetDocument(global::PDFiumZ.FpdfAvailT avail, string password)
         {
             var __arg0 = avail is null ? __IntPtr.Zero : avail.__Instance;
             var ___ret = __Internal.FPDFAvailGetDocument(__arg0, password);
-            var __result0 = global::PDFiumCore.FpdfDocumentT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfDocumentT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -9152,7 +9152,7 @@ namespace PDFiumCore
         /// <para>however, some PDFs might make another page the first available page.</para>
         /// <para>For non-linearized PDFs, this function will always return zero.</para>
         /// </summary>
-        public static int FPDFAvailGetFirstPageNum(global::PDFiumCore.FpdfDocumentT doc)
+        public static int FPDFAvailGetFirstPageNum(global::PDFiumZ.FpdfDocumentT doc)
         {
             var __arg0 = doc is null ? __IntPtr.Zero : doc.__Instance;
             var ___ret = __Internal.FPDFAvailGetFirstPageNum(__arg0);
@@ -9178,7 +9178,7 @@ namespace PDFiumCore
         /// <para>if hints is nullptr, the function just check current availability of</para>
         /// <para>specified page.</para>
         /// </summary>
-        public static int FPDFAvailIsPageAvail(global::PDFiumCore.FpdfAvailT avail, int page_index, global::PDFiumCore.FX_DOWNLOADHINTS hints)
+        public static int FPDFAvailIsPageAvail(global::PDFiumZ.FpdfAvailT avail, int page_index, global::PDFiumZ.FX_DOWNLOADHINTS hints)
         {
             var __arg0 = avail is null ? __IntPtr.Zero : avail.__Instance;
             var __arg2 = hints is null ? __IntPtr.Zero : hints.__Instance;
@@ -9205,7 +9205,7 @@ namespace PDFiumCore
         /// <para>Applications can then perform page loading. It is recommend to call</para>
         /// <para>FPDFDOC_InitFormFillEnvironment() when |PDF_FORM_AVAIL| is returned.</para>
         /// </summary>
-        public static int FPDFAvailIsFormAvail(global::PDFiumCore.FpdfAvailT avail, global::PDFiumCore.FX_DOWNLOADHINTS hints)
+        public static int FPDFAvailIsFormAvail(global::PDFiumZ.FpdfAvailT avail, global::PDFiumZ.FX_DOWNLOADHINTS hints)
         {
             var __arg0 = avail is null ? __IntPtr.Zero : avail.__Instance;
             var __arg1 = hints is null ? __IntPtr.Zero : hints.__Instance;
@@ -9225,7 +9225,7 @@ namespace PDFiumCore
         /// <para>|PDF_LINEARIZATION_UNKNOWN| as there is insufficient information to determine</para>
         /// <para>if the PDF is linearlized.</para>
         /// </summary>
-        public static int FPDFAvailIsLinearized(global::PDFiumCore.FpdfAvailT avail)
+        public static int FPDFAvailIsLinearized(global::PDFiumZ.FpdfAvailT avail)
         {
             var __arg0 = avail is null ? __IntPtr.Zero : avail.__Instance;
             var ___ret = __Internal.FPDFAvailIsLinearized(__arg0);
@@ -9316,7 +9316,7 @@ namespace PDFiumCore
             internal static extern __IntPtr FPDF_GetPageAAction(__IntPtr page, int aa_type);
 
             [SuppressUnmanagedCodeSecurity, DllImport("pdfium", EntryPoint = "FPDF_GetFileIdentifier", CallingConvention = __CallingConvention.Cdecl)]
-            internal static extern uint FPDF_GetFileIdentifier(__IntPtr document, global::PDFiumCore.FPDF_FILEIDTYPE id_type, __IntPtr buffer, uint buflen);
+            internal static extern uint FPDF_GetFileIdentifier(__IntPtr document, global::PDFiumZ.FPDF_FILEIDTYPE id_type, __IntPtr buffer, uint buflen);
 
             [SuppressUnmanagedCodeSecurity, DllImport("pdfium", EntryPoint = "FPDF_GetMetaText", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern uint FPDF_GetMetaText(__IntPtr document, [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CppSharp.Runtime.UTF8Marshaller))] string tag, __IntPtr buffer, uint buflen);
@@ -9335,12 +9335,12 @@ namespace PDFiumCore
         /// <para>Note that another name for the bookmarks is the document outline, as</para>
         /// <para>described in ISO 32000-1:2008, section 12.3.3.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfBookmarkT FPDFBookmarkGetFirstChild(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FpdfBookmarkT bookmark)
+        public static global::PDFiumZ.FpdfBookmarkT FPDFBookmarkGetFirstChild(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FpdfBookmarkT bookmark)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = bookmark is null ? __IntPtr.Zero : bookmark.__Instance;
             var ___ret = __Internal.FPDFBookmarkGetFirstChild(__arg0, __arg1);
-            var __result0 = global::PDFiumCore.FpdfBookmarkT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfBookmarkT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -9353,12 +9353,12 @@ namespace PDFiumCore
         /// <para>Note that the caller is responsible for handling circular bookmark</para>
         /// <para>references, as may arise from malformed documents.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfBookmarkT FPDFBookmarkGetNextSibling(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FpdfBookmarkT bookmark)
+        public static global::PDFiumZ.FpdfBookmarkT FPDFBookmarkGetNextSibling(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FpdfBookmarkT bookmark)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = bookmark is null ? __IntPtr.Zero : bookmark.__Instance;
             var ___ret = __Internal.FPDFBookmarkGetNextSibling(__arg0, __arg1);
-            var __result0 = global::PDFiumCore.FpdfBookmarkT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfBookmarkT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -9374,7 +9374,7 @@ namespace PDFiumCore
         /// <para>string is terminated by a UTF16 NUL character. If |buflen| is less than the</para>
         /// <para>required length, or |buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDFBookmarkGetTitle(global::PDFiumCore.FpdfBookmarkT bookmark, __IntPtr buffer, uint buflen)
+        public static uint FPDFBookmarkGetTitle(global::PDFiumZ.FpdfBookmarkT bookmark, __IntPtr buffer, uint buflen)
         {
             var __arg0 = bookmark is null ? __IntPtr.Zero : bookmark.__Instance;
             var ___ret = __Internal.FPDFBookmarkGetTitle(__arg0, buffer, buflen);
@@ -9391,7 +9391,7 @@ namespace PDFiumCore
         /// <para>default (closed state). Please refer to PDF 32000-1:2008, Table 153.</para>
         /// <para>Returns 0 if the bookmark has no children or is invalid.</para>
         /// </summary>
-        public static int FPDFBookmarkGetCount(global::PDFiumCore.FpdfBookmarkT bookmark)
+        public static int FPDFBookmarkGetCount(global::PDFiumZ.FpdfBookmarkT bookmark)
         {
             var __arg0 = bookmark is null ? __IntPtr.Zero : bookmark.__Instance;
             var ___ret = __Internal.FPDFBookmarkGetCount(__arg0);
@@ -9406,14 +9406,14 @@ namespace PDFiumCore
         /// <para>FPDFBookmark_Find() will always return the first bookmark found even if</para>
         /// <para>multiple bookmarks have the same |title|.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfBookmarkT FPDFBookmarkFind(global::PDFiumCore.FpdfDocumentT document, ref ushort title)
+        public static global::PDFiumZ.FpdfBookmarkT FPDFBookmarkFind(global::PDFiumZ.FpdfDocumentT document, ref ushort title)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             fixed (ushort* __title1 = &title)
             {
                 var __arg1 = __title1;
                 var ___ret = __Internal.FPDFBookmarkFind(__arg0, __arg1);
-                var __result0 = global::PDFiumCore.FpdfBookmarkT.__GetOrCreateInstance(___ret, false);
+                var __result0 = global::PDFiumZ.FpdfBookmarkT.__GetOrCreateInstance(___ret, false);
                 return __result0;
             }
         }
@@ -9425,12 +9425,12 @@ namespace PDFiumCore
         /// <para>Returns the handle to the destination data, or NULL if no destination is</para>
         /// <para>associated with |bookmark|.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfDestT FPDFBookmarkGetDest(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FpdfBookmarkT bookmark)
+        public static global::PDFiumZ.FpdfDestT FPDFBookmarkGetDest(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FpdfBookmarkT bookmark)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = bookmark is null ? __IntPtr.Zero : bookmark.__Instance;
             var ___ret = __Internal.FPDFBookmarkGetDest(__arg0, __arg1);
-            var __result0 = global::PDFiumCore.FpdfDestT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfDestT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -9444,11 +9444,11 @@ namespace PDFiumCore
         /// <para>If this function returns NULL, FPDFBookmark_GetDest() should be called to get</para>
         /// <para>the |bookmark| destination data.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfActionT FPDFBookmarkGetAction(global::PDFiumCore.FpdfBookmarkT bookmark)
+        public static global::PDFiumZ.FpdfActionT FPDFBookmarkGetAction(global::PDFiumZ.FpdfBookmarkT bookmark)
         {
             var __arg0 = bookmark is null ? __IntPtr.Zero : bookmark.__Instance;
             var ___ret = __Internal.FPDFBookmarkGetAction(__arg0);
-            var __result0 = global::PDFiumCore.FpdfActionT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfActionT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -9462,7 +9462,7 @@ namespace PDFiumCore
         /// <para>PDFACTION_URI</para>
         /// <para>PDFACTION_LAUNCH</para>
         /// </summary>
-        public static uint FPDFActionGetType(global::PDFiumCore.FpdfActionT action)
+        public static uint FPDFActionGetType(global::PDFiumZ.FpdfActionT action)
         {
             var __arg0 = action is null ? __IntPtr.Zero : action.__Instance;
             var ___ret = __Internal.FPDFActionGetType(__arg0);
@@ -9480,12 +9480,12 @@ namespace PDFiumCore
         /// <para>FPDFAction_GetFilePath(), then load the document at that path, then pass</para>
         /// <para>the document handle from that document as |document| to FPDFAction_GetDest().</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfDestT FPDFActionGetDest(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FpdfActionT action)
+        public static global::PDFiumZ.FpdfDestT FPDFActionGetDest(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FpdfActionT action)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = action is null ? __IntPtr.Zero : action.__Instance;
             var ___ret = __Internal.FPDFActionGetDest(__arg0, __arg1);
-            var __result0 = global::PDFiumCore.FpdfDestT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfDestT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -9502,7 +9502,7 @@ namespace PDFiumCore
         /// <para>If |buflen| is less than the returned length, or |buffer| is NULL, |buffer|</para>
         /// <para>will not be modified.</para>
         /// </summary>
-        public static uint FPDFActionGetFilePath(global::PDFiumCore.FpdfActionT action, __IntPtr buffer, uint buflen)
+        public static uint FPDFActionGetFilePath(global::PDFiumZ.FpdfActionT action, __IntPtr buffer, uint buflen)
         {
             var __arg0 = action is null ? __IntPtr.Zero : action.__Instance;
             var ___ret = __Internal.FPDFActionGetFilePath(__arg0, buffer, buflen);
@@ -9529,7 +9529,7 @@ namespace PDFiumCore
         /// <para>used UTF-8. As of this writing, this API reverted back to its original</para>
         /// <para>behavior prior to commit d609e84cee.</para>
         /// </summary>
-        public static uint FPDFActionGetURIPath(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FpdfActionT action, __IntPtr buffer, uint buflen)
+        public static uint FPDFActionGetURIPath(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FpdfActionT action, __IntPtr buffer, uint buflen)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = action is null ? __IntPtr.Zero : action.__Instance;
@@ -9543,7 +9543,7 @@ namespace PDFiumCore
         /// <para>dest     - handle to the destination.</para>
         /// <para>Returns the 0-based page index containing |dest|. Returns -1 on error.</para>
         /// </summary>
-        public static int FPDFDestGetDestPageIndex(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FpdfDestT dest)
+        public static int FPDFDestGetDestPageIndex(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FpdfDestT dest)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = dest is null ? __IntPtr.Zero : dest.__Instance;
@@ -9561,7 +9561,7 @@ namespace PDFiumCore
         /// <para>Returns one of the PDFDEST_VIEW_* constants, PDFDEST_VIEW_UNKNOWN_MODE if</para>
         /// <para>|dest| does not specify a view.</para>
         /// </summary>
-        public static uint FPDFDestGetView(global::PDFiumCore.FpdfDestT dest, ref uint pNumParams, ref float pParams)
+        public static uint FPDFDestGetView(global::PDFiumZ.FpdfDestT dest, ref uint pNumParams, ref float pParams)
         {
             var __arg0 = dest is null ? __IntPtr.Zero : dest.__Instance;
             fixed (uint* __pNumParams1 = &pNumParams)
@@ -9590,7 +9590,7 @@ namespace PDFiumCore
         /// <para>Note the [x, y, zoom] values are only set if the corresponding hasXVal,</para>
         /// <para>hasYVal or hasZoomVal flags are true.</para>
         /// </summary>
-        public static int FPDFDestGetLocationInPage(global::PDFiumCore.FpdfDestT dest, ref int hasXVal, ref int hasYVal, ref int hasZoomVal, ref float x, ref float y, ref float zoom)
+        public static int FPDFDestGetLocationInPage(global::PDFiumZ.FpdfDestT dest, ref int hasXVal, ref int hasYVal, ref int hasZoomVal, ref float x, ref float y, ref float zoom)
         {
             var __arg0 = dest is null ? __IntPtr.Zero : dest.__Instance;
             fixed (int* __hasXVal1 = &hasXVal)
@@ -9630,11 +9630,11 @@ namespace PDFiumCore
         /// <para>You can convert coordinates from screen coordinates to page coordinates using</para>
         /// <para>FPDF_DeviceToPage().</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfLinkT FPDFLinkGetLinkAtPoint(global::PDFiumCore.FpdfPageT page, double x, double y)
+        public static global::PDFiumZ.FpdfLinkT FPDFLinkGetLinkAtPoint(global::PDFiumZ.FpdfPageT page, double x, double y)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFLinkGetLinkAtPoint(__arg0, x, y);
-            var __result0 = global::PDFiumCore.FpdfLinkT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfLinkT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -9648,7 +9648,7 @@ namespace PDFiumCore
         /// <para>You can convert coordinates from screen coordinates to page coordinates using</para>
         /// <para>FPDF_DeviceToPage().</para>
         /// </summary>
-        public static int FPDFLinkGetLinkZOrderAtPoint(global::PDFiumCore.FpdfPageT page, double x, double y)
+        public static int FPDFLinkGetLinkZOrderAtPoint(global::PDFiumZ.FpdfPageT page, double x, double y)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFLinkGetLinkZOrderAtPoint(__arg0, x, y);
@@ -9663,12 +9663,12 @@ namespace PDFiumCore
         /// <para>associated with the link. In this case, you should call FPDFLink_GetAction()</para>
         /// <para>to retrieve the action associated with |link|.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfDestT FPDFLinkGetDest(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FpdfLinkT link)
+        public static global::PDFiumZ.FpdfDestT FPDFLinkGetDest(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FpdfLinkT link)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = link is null ? __IntPtr.Zero : link.__Instance;
             var ___ret = __Internal.FPDFLinkGetDest(__arg0, __arg1);
-            var __result0 = global::PDFiumCore.FpdfDestT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfDestT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -9679,11 +9679,11 @@ namespace PDFiumCore
         /// <para>If this function returns a valid handle, it is valid as long as |link| is</para>
         /// <para>valid.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfActionT FPDFLinkGetAction(global::PDFiumCore.FpdfLinkT link)
+        public static global::PDFiumZ.FpdfActionT FPDFLinkGetAction(global::PDFiumZ.FpdfLinkT link)
         {
             var __arg0 = link is null ? __IntPtr.Zero : link.__Instance;
             var ___ret = __Internal.FPDFLinkGetAction(__arg0);
-            var __result0 = global::PDFiumCore.FpdfActionT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfActionT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -9695,7 +9695,7 @@ namespace PDFiumCore
         /// <para>link_annot - the link handle for |startPos|.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFLinkEnumerate(global::PDFiumCore.FpdfPageT page, ref int start_pos, global::PDFiumCore.FpdfLinkT link_annot)
+        public static int FPDFLinkEnumerate(global::PDFiumZ.FpdfPageT page, ref int start_pos, global::PDFiumZ.FpdfLinkT link_annot)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             fixed (int* __start_pos1 = &start_pos)
@@ -9716,12 +9716,12 @@ namespace PDFiumCore
         /// <para>Returns FPDF_ANNOTATION from the FPDF_LINK and NULL on failure,</para>
         /// <para>if the input link annot or page is NULL.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfAnnotationT FPDFLinkGetAnnot(global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FpdfLinkT link_annot)
+        public static global::PDFiumZ.FpdfAnnotationT FPDFLinkGetAnnot(global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FpdfLinkT link_annot)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg1 = link_annot is null ? __IntPtr.Zero : link_annot.__Instance;
             var ___ret = __Internal.FPDFLinkGetAnnot(__arg0, __arg1);
-            var __result0 = global::PDFiumCore.FpdfAnnotationT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfAnnotationT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -9731,7 +9731,7 @@ namespace PDFiumCore
         /// <para>rect       - the annotation rectangle.</para>
         /// <para>Returns true on success.</para>
         /// </summary>
-        public static int FPDFLinkGetAnnotRect(global::PDFiumCore.FpdfLinkT link_annot, global::PDFiumCore.FS_RECTF_ rect)
+        public static int FPDFLinkGetAnnotRect(global::PDFiumZ.FpdfLinkT link_annot, global::PDFiumZ.FS_RECTF_ rect)
         {
             var __arg0 = link_annot is null ? __IntPtr.Zero : link_annot.__Instance;
             var __arg1 = rect is null ? __IntPtr.Zero : rect.__Instance;
@@ -9744,7 +9744,7 @@ namespace PDFiumCore
         /// <para>link_annot - handle to the link annotation.</para>
         /// <para>Returns the count of quadrilateral points.</para>
         /// </summary>
-        public static int FPDFLinkCountQuadPoints(global::PDFiumCore.FpdfLinkT link_annot)
+        public static int FPDFLinkCountQuadPoints(global::PDFiumZ.FpdfLinkT link_annot)
         {
             var __arg0 = link_annot is null ? __IntPtr.Zero : link_annot.__Instance;
             var ___ret = __Internal.FPDFLinkCountQuadPoints(__arg0);
@@ -9758,7 +9758,7 @@ namespace PDFiumCore
         /// <para>quad_points - receives the quadrilateral points.</para>
         /// <para>Returns true on success.</para>
         /// </summary>
-        public static int FPDFLinkGetQuadPoints(global::PDFiumCore.FpdfLinkT link_annot, int quad_index, global::PDFiumCore.FS_QUADPOINTSF quad_points)
+        public static int FPDFLinkGetQuadPoints(global::PDFiumZ.FpdfLinkT link_annot, int quad_index, global::PDFiumZ.FS_QUADPOINTSF quad_points)
         {
             var __arg0 = link_annot is null ? __IntPtr.Zero : link_annot.__Instance;
             var __arg2 = quad_points is null ? __IntPtr.Zero : quad_points.__Instance;
@@ -9777,11 +9777,11 @@ namespace PDFiumCore
         /// <para>If this function returns a valid handle, it is valid as long as |page| is</para>
         /// <para>valid.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfActionT FPDF_GetPageAAction(global::PDFiumCore.FpdfPageT page, int aa_type)
+        public static global::PDFiumZ.FpdfActionT FPDF_GetPageAAction(global::PDFiumZ.FpdfPageT page, int aa_type)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDF_GetPageAAction(__arg0, aa_type);
-            var __result0 = global::PDFiumCore.FpdfActionT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfActionT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -9798,7 +9798,7 @@ namespace PDFiumCore
         /// <para>terminator.  If |buflen| is less than the returned length, or |buffer| is</para>
         /// <para>NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDF_GetFileIdentifier(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FPDF_FILEIDTYPE id_type, __IntPtr buffer, uint buflen)
+        public static uint FPDF_GetFileIdentifier(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FPDF_FILEIDTYPE id_type, __IntPtr buffer, uint buflen)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_GetFileIdentifier(__arg0, id_type, buffer, buflen);
@@ -9824,7 +9824,7 @@ namespace PDFiumCore
         /// <para>it must have returned PDF_FORM_AVAIL or PDF_FORM_NOTEXIST. Before that, there</para>
         /// <para>is no guarantee the metadata has been loaded.</para>
         /// </summary>
-        public static uint FPDF_GetMetaText(global::PDFiumCore.FpdfDocumentT document, string tag, __IntPtr buffer, uint buflen)
+        public static uint FPDF_GetMetaText(global::PDFiumZ.FpdfDocumentT document, string tag, __IntPtr buffer, uint buflen)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_GetMetaText(__arg0, tag, buffer, buflen);
@@ -9842,7 +9842,7 @@ namespace PDFiumCore
         /// <para>bytes of zeros indicating the end of the string.  If |buflen| is less than</para>
         /// <para>the returned length, or |buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDF_GetPageLabel(global::PDFiumCore.FpdfDocumentT document, int page_index, __IntPtr buffer, uint buflen)
+        public static uint FPDF_GetPageLabel(global::PDFiumZ.FpdfDocumentT document, int page_index, __IntPtr buffer, uint buflen)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_GetPageLabel(__arg0, page_index, buffer, buflen);
@@ -9869,15 +9869,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_IMAGEOBJ_METADATA> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_IMAGEOBJ_METADATA>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_IMAGEOBJ_METADATA> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_IMAGEOBJ_METADATA>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FPDF_IMAGEOBJ_METADATA managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FPDF_IMAGEOBJ_METADATA managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FPDF_IMAGEOBJ_METADATA managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FPDF_IMAGEOBJ_METADATA managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -9932,17 +9932,17 @@ namespace PDFiumCore
 
         public FPDF_IMAGEOBJ_METADATA()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_IMAGEOBJ_METADATA.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_IMAGEOBJ_METADATA.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FPDF_IMAGEOBJ_METADATA(global::PDFiumCore.FPDF_IMAGEOBJ_METADATA _0)
+        public FPDF_IMAGEOBJ_METADATA(global::PDFiumZ.FPDF_IMAGEOBJ_METADATA _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_IMAGEOBJ_METADATA.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_IMAGEOBJ_METADATA.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FPDF_IMAGEOBJ_METADATA.__Internal*) __Instance) = *((global::PDFiumCore.FPDF_IMAGEOBJ_METADATA.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FPDF_IMAGEOBJ_METADATA.__Internal*) __Instance) = *((global::PDFiumZ.FPDF_IMAGEOBJ_METADATA.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -10345,10 +10345,10 @@ namespace PDFiumCore
             internal static extern __IntPtr FPDFPageObjCreateTextObj(__IntPtr document, __IntPtr font, float font_size);
 
             [SuppressUnmanagedCodeSecurity, DllImport("pdfium", EntryPoint = "FPDFTextObj_GetTextRenderMode", CallingConvention = __CallingConvention.Cdecl)]
-            internal static extern global::PDFiumCore.FPDF_TEXT_RENDERMODE FPDFTextObjGetTextRenderMode(__IntPtr text);
+            internal static extern global::PDFiumZ.FPDF_TEXT_RENDERMODE FPDFTextObjGetTextRenderMode(__IntPtr text);
 
             [SuppressUnmanagedCodeSecurity, DllImport("pdfium", EntryPoint = "FPDFTextObj_SetTextRenderMode", CallingConvention = __CallingConvention.Cdecl)]
-            internal static extern int FPDFTextObjSetTextRenderMode(__IntPtr text, global::PDFiumCore.FPDF_TEXT_RENDERMODE render_mode);
+            internal static extern int FPDFTextObjSetTextRenderMode(__IntPtr text, global::PDFiumZ.FPDF_TEXT_RENDERMODE render_mode);
 
             [SuppressUnmanagedCodeSecurity, DllImport("pdfium", EntryPoint = "FPDFTextObj_GetText", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern uint FPDFTextObjGetText(__IntPtr text_object, __IntPtr text_page, ushort* buffer, uint length);
@@ -10412,10 +10412,10 @@ namespace PDFiumCore
         /// <para>Create a new PDF document.</para>
         /// <para>Returns a handle to a new document, or NULL on failure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfDocumentT FPDF_CreateNewDocument()
+        public static global::PDFiumZ.FpdfDocumentT FPDF_CreateNewDocument()
         {
             var ___ret = __Internal.FPDF_CreateNewDocument();
-            var __result0 = global::PDFiumCore.FpdfDocumentT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfDocumentT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -10431,11 +10431,11 @@ namespace PDFiumCore
         /// <para>The page should be closed with FPDF_ClosePage() when finished as</para>
         /// <para>with any other page in the document.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPageT FPDFPageNew(global::PDFiumCore.FpdfDocumentT document, int page_index, double width, double height)
+        public static global::PDFiumZ.FpdfPageT FPDFPageNew(global::PDFiumZ.FpdfDocumentT document, int page_index, double width, double height)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDFPageNew(__arg0, page_index, width, height);
-            var __result0 = global::PDFiumCore.FpdfPageT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPageT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -10444,7 +10444,7 @@ namespace PDFiumCore
         /// <para>document   - handle to document.</para>
         /// <para>page_index - the index of the page to delete.</para>
         /// </summary>
-        public static void FPDFPageDelete(global::PDFiumCore.FpdfDocumentT document, int page_index)
+        public static void FPDFPageDelete(global::PDFiumZ.FpdfDocumentT document, int page_index)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             __Internal.FPDFPageDelete(__arg0, page_index);
@@ -10473,7 +10473,7 @@ namespace PDFiumCore
         /// <para>Move(doc, [2, 2], 2, 0); // returns false</para>
         /// <para>// Returned false because [2, 2] contains duplicates.</para>
         /// </summary>
-        public static int FPDF_MovePages(global::PDFiumCore.FpdfDocumentT document, ref int page_indices, uint page_indices_len, int dest_page_index)
+        public static int FPDF_MovePages(global::PDFiumZ.FpdfDocumentT document, ref int page_indices, uint page_indices_len, int dest_page_index)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             fixed (int* __page_indices1 = &page_indices)
@@ -10493,7 +10493,7 @@ namespace PDFiumCore
         /// <para>2 - Rotated 180 degrees clockwise.</para>
         /// <para>3 - Rotated 270 degrees clockwise.</para>
         /// </summary>
-        public static int FPDFPageGetRotation(global::PDFiumCore.FpdfPageT page)
+        public static int FPDFPageGetRotation(global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFPageGetRotation(__arg0);
@@ -10509,7 +10509,7 @@ namespace PDFiumCore
         /// <para>2 - Rotated 180 degrees clockwise.</para>
         /// <para>3 - Rotated 270 degrees clockwise.</para>
         /// </summary>
-        public static void FPDFPageSetRotation(global::PDFiumCore.FpdfPageT page, int rotate)
+        public static void FPDFPageSetRotation(global::PDFiumZ.FpdfPageT page, int rotate)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             __Internal.FPDFPageSetRotation(__arg0, rotate);
@@ -10521,7 +10521,7 @@ namespace PDFiumCore
         /// <para>page_object - handle to a page object. The |page_object| will be</para>
         /// <para>automatically freed.</para>
         /// </summary>
-        public static void FPDFPageInsertObject(global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FpdfPageobjectT page_object)
+        public static void FPDFPageInsertObject(global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FpdfPageobjectT page_object)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg1 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
@@ -10541,7 +10541,7 @@ namespace PDFiumCore
         /// <para>will fail and return false.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFPageInsertObjectAtIndex(global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FpdfPageobjectT page_object, ulong index)
+        public static int FPDFPageInsertObjectAtIndex(global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FpdfPageobjectT page_object, ulong index)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg1 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
@@ -10560,7 +10560,7 @@ namespace PDFiumCore
         /// <para>Note that when removing a |page_object| of type FPDF_PAGEOBJ_TEXT, all</para>
         /// <para>FPDF_TEXTPAGE handles for |page| are no longer valid.</para>
         /// </summary>
-        public static int FPDFPageRemoveObject(global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FpdfPageobjectT page_object)
+        public static int FPDFPageRemoveObject(global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FpdfPageobjectT page_object)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg1 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
@@ -10573,7 +10573,7 @@ namespace PDFiumCore
         /// <para>page - handle to a page.</para>
         /// <para>Returns the number of objects in |page|.</para>
         /// </summary>
-        public static int FPDFPageCountObjects(global::PDFiumCore.FpdfPageT page)
+        public static int FPDFPageCountObjects(global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFPageCountObjects(__arg0);
@@ -10586,11 +10586,11 @@ namespace PDFiumCore
         /// <para>index - the index of a page object.</para>
         /// <para>Returns the handle to the page object, or NULL on failed.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPageobjectT FPDFPageGetObject(global::PDFiumCore.FpdfPageT page, int index)
+        public static global::PDFiumZ.FpdfPageobjectT FPDFPageGetObject(global::PDFiumZ.FpdfPageT page, int index)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFPageGetObject(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -10599,7 +10599,7 @@ namespace PDFiumCore
         /// <para>page - handle to a page.</para>
         /// <para>Returns TRUE if |page| contains transparency.</para>
         /// </summary>
-        public static int FPDFPageHasTransparency(global::PDFiumCore.FpdfPageT page)
+        public static int FPDFPageHasTransparency(global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFPageHasTransparency(__arg0);
@@ -10613,7 +10613,7 @@ namespace PDFiumCore
         /// <para>Before you save the page to a file, or reload the page, you must call</para>
         /// <para>|FPDFPage_GenerateContent| or any changes to |page| will be lost.</para>
         /// </summary>
-        public static int FPDFPageGenerateContent(global::PDFiumCore.FpdfPageT page)
+        public static int FPDFPageGenerateContent(global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFPageGenerateContent(__arg0);
@@ -10628,7 +10628,7 @@ namespace PDFiumCore
         /// <para>FPDFPage_InsertObject() or to an annotation through FPDFAnnot_AppendObject().</para>
         /// <para>page_object - handle to a page object.</para>
         /// </summary>
-        public static void FPDFPageObjDestroy(global::PDFiumCore.FpdfPageobjectT page_object)
+        public static void FPDFPageObjDestroy(global::PDFiumZ.FpdfPageobjectT page_object)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             __Internal.FPDFPageObjDestroy(__arg0);
@@ -10639,7 +10639,7 @@ namespace PDFiumCore
         /// <para>page_object - handle to a page object.</para>
         /// <para>Returns TRUE if |page_object| contains transparency.</para>
         /// </summary>
-        public static int FPDFPageObjHasTransparency(global::PDFiumCore.FpdfPageobjectT page_object)
+        public static int FPDFPageObjHasTransparency(global::PDFiumZ.FpdfPageobjectT page_object)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjHasTransparency(__arg0);
@@ -10652,7 +10652,7 @@ namespace PDFiumCore
         /// <para>Returns one of the FPDF_PAGEOBJ_* values on success, FPDF_PAGEOBJ_UNKNOWN on</para>
         /// <para>error.</para>
         /// </summary>
-        public static int FPDFPageObjGetType(global::PDFiumCore.FpdfPageobjectT page_object)
+        public static int FPDFPageObjGetType(global::PDFiumZ.FpdfPageobjectT page_object)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjGetType(__arg0);
@@ -10671,7 +10671,7 @@ namespace PDFiumCore
         /// <para>internally.</para>
         /// <para>Returns TRUE if the operation succeeded, FALSE if it failed.</para>
         /// </summary>
-        public static int FPDFPageObjGetIsActive(global::PDFiumCore.FpdfPageobjectT page_object, ref int active)
+        public static int FPDFPageObjGetIsActive(global::PDFiumZ.FpdfPageobjectT page_object, ref int active)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             fixed (int* __active1 = &active)
@@ -10693,7 +10693,7 @@ namespace PDFiumCore
         /// <para>When |active| is false, this makes the |page_object| be treated as if it</para>
         /// <para>wasn't in the document even though it is still held internally.</para>
         /// </summary>
-        public static int FPDFPageObjSetIsActive(global::PDFiumCore.FpdfPageobjectT page_object, int active)
+        public static int FPDFPageObjSetIsActive(global::PDFiumZ.FpdfPageobjectT page_object, int active)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjSetIsActive(__arg0, active);
@@ -10714,7 +10714,7 @@ namespace PDFiumCore
         /// <para>|b d f|</para>
         /// <para>and can be used to scale, rotate, shear and translate the |page_object|.</para>
         /// </summary>
-        public static void FPDFPageObjTransform(global::PDFiumCore.FpdfPageobjectT page_object, double a, double b, double c, double d, double e, double f)
+        public static void FPDFPageObjTransform(global::PDFiumZ.FpdfPageobjectT page_object, double a, double b, double c, double d, double e, double f)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             __Internal.FPDFPageObjTransform(__arg0, a, b, c, d, e, f);
@@ -10731,7 +10731,7 @@ namespace PDFiumCore
         /// <para>unnecessary double to float conversions, and only uses 1 parameter for the</para>
         /// <para>matrix. It also returns whether the operation succeeded or not.</para>
         /// </summary>
-        public static int FPDFPageObjTransformF(global::PDFiumCore.FpdfPageobjectT page_object, global::PDFiumCore.FS_MATRIX_ matrix)
+        public static int FPDFPageObjTransformF(global::PDFiumZ.FpdfPageobjectT page_object, global::PDFiumZ.FS_MATRIX_ matrix)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var __arg1 = matrix is null ? __IntPtr.Zero : matrix.__Instance;
@@ -10754,7 +10754,7 @@ namespace PDFiumCore
         /// <para>form that contains it.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFPageObjGetMatrix(global::PDFiumCore.FpdfPageobjectT page_object, global::PDFiumCore.FS_MATRIX_ matrix)
+        public static int FPDFPageObjGetMatrix(global::PDFiumZ.FpdfPageobjectT page_object, global::PDFiumZ.FS_MATRIX_ matrix)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var __arg1 = matrix is null ? __IntPtr.Zero : matrix.__Instance;
@@ -10773,7 +10773,7 @@ namespace PDFiumCore
         /// <para>and can be used to scale, rotate, shear and translate the page object.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFPageObjSetMatrix(global::PDFiumCore.FpdfPageobjectT page_object, global::PDFiumCore.FS_MATRIX_ matrix)
+        public static int FPDFPageObjSetMatrix(global::PDFiumZ.FpdfPageobjectT page_object, global::PDFiumZ.FS_MATRIX_ matrix)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var __arg1 = matrix is null ? __IntPtr.Zero : matrix.__Instance;
@@ -10795,7 +10795,7 @@ namespace PDFiumCore
         /// <para>|b d f|</para>
         /// <para>and can be used to scale, rotate, shear and translate the |page| annotations.</para>
         /// </summary>
-        public static void FPDFPageTransformAnnots(global::PDFiumCore.FpdfPageT page, double a, double b, double c, double d, double e, double f)
+        public static void FPDFPageTransformAnnots(global::PDFiumZ.FpdfPageT page, double a, double b, double c, double d, double e, double f)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             __Internal.FPDFPageTransformAnnots(__arg0, a, b, c, d, e, f);
@@ -10806,11 +10806,11 @@ namespace PDFiumCore
         /// <para>document - handle to a document.</para>
         /// <para>Returns a handle to a new image object.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPageobjectT FPDFPageObjNewImageObj(global::PDFiumCore.FpdfDocumentT document)
+        public static global::PDFiumZ.FpdfPageobjectT FPDFPageObjNewImageObj(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDFPageObjNewImageObj(__arg0);
-            var __result0 = global::PDFiumCore.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -10820,7 +10820,7 @@ namespace PDFiumCore
         /// <para>page_object - handle to a page object.</para>
         /// <para>Returns the page object's marked content ID, or -1 on error.</para>
         /// </summary>
-        public static int FPDFPageObjGetMarkedContentID(global::PDFiumCore.FpdfPageobjectT page_object)
+        public static int FPDFPageObjGetMarkedContentID(global::PDFiumZ.FpdfPageobjectT page_object)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjGetMarkedContentID(__arg0);
@@ -10834,7 +10834,7 @@ namespace PDFiumCore
         /// <para>Returns the number of content marks in |page_object|, or -1 in case of</para>
         /// <para>failure.</para>
         /// </summary>
-        public static int FPDFPageObjCountMarks(global::PDFiumCore.FpdfPageobjectT page_object)
+        public static int FPDFPageObjCountMarks(global::PDFiumZ.FpdfPageobjectT page_object)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjCountMarks(__arg0);
@@ -10851,11 +10851,11 @@ namespace PDFiumCore
         /// <para>invalid if the page object is destroyed, either directly or indirectly by</para>
         /// <para>unloading the page.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPageobjectmarkT FPDFPageObjGetMark(global::PDFiumCore.FpdfPageobjectT page_object, uint index)
+        public static global::PDFiumZ.FpdfPageobjectmarkT FPDFPageObjGetMark(global::PDFiumZ.FpdfPageobjectT page_object, uint index)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjGetMark(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfPageobjectmarkT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPageobjectmarkT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -10869,11 +10869,11 @@ namespace PDFiumCore
         /// <para>invalid if the page object is destroyed, either directly or indirectly by</para>
         /// <para>unloading the page.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPageobjectmarkT FPDFPageObjAddMark(global::PDFiumCore.FpdfPageobjectT page_object, string name)
+        public static global::PDFiumZ.FpdfPageobjectmarkT FPDFPageObjAddMark(global::PDFiumZ.FpdfPageobjectT page_object, string name)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjAddMark(__arg0, name);
-            var __result0 = global::PDFiumCore.FpdfPageobjectmarkT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPageobjectmarkT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -10885,7 +10885,7 @@ namespace PDFiumCore
         /// <para>mark        - handle to a content mark in that object to remove.</para>
         /// <para>Returns TRUE if the operation succeeded, FALSE if it failed.</para>
         /// </summary>
-        public static int FPDFPageObjRemoveMark(global::PDFiumCore.FpdfPageobjectT page_object, global::PDFiumCore.FpdfPageobjectmarkT mark)
+        public static int FPDFPageObjRemoveMark(global::PDFiumZ.FpdfPageobjectT page_object, global::PDFiumZ.FpdfPageobjectmarkT mark)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var __arg1 = mark is null ? __IntPtr.Zero : mark.__Instance;
@@ -10907,7 +10907,7 @@ namespace PDFiumCore
         /// <para>Not filled if FALSE is returned.</para>
         /// <para>Returns TRUE if the operation succeeded, FALSE if it failed.</para>
         /// </summary>
-        public static int FPDFPageObjMarkGetName(global::PDFiumCore.FpdfPageobjectmarkT mark, ref ushort buffer, uint buflen, ref uint out_buflen)
+        public static int FPDFPageObjMarkGetName(global::PDFiumZ.FpdfPageobjectmarkT mark, ref ushort buffer, uint buflen, ref uint out_buflen)
         {
             var __arg0 = mark is null ? __IntPtr.Zero : mark.__Instance;
             fixed (ushort* __buffer1 = &buffer)
@@ -10929,7 +10929,7 @@ namespace PDFiumCore
         /// <para>Returns the number of key/value pair parameters |mark|, or -1 in case of</para>
         /// <para>failure.</para>
         /// </summary>
-        public static int FPDFPageObjMarkCountParams(global::PDFiumCore.FpdfPageobjectmarkT mark)
+        public static int FPDFPageObjMarkCountParams(global::PDFiumZ.FpdfPageobjectmarkT mark)
         {
             var __arg0 = mark is null ? __IntPtr.Zero : mark.__Instance;
             var ___ret = __Internal.FPDFPageObjMarkCountParams(__arg0);
@@ -10951,7 +10951,7 @@ namespace PDFiumCore
         /// <para>Not filled if FALSE is returned.</para>
         /// <para>Returns TRUE if the operation was successful, FALSE otherwise.</para>
         /// </summary>
-        public static int FPDFPageObjMarkGetParamKey(global::PDFiumCore.FpdfPageobjectmarkT mark, uint index, ref ushort buffer, uint buflen, ref uint out_buflen)
+        public static int FPDFPageObjMarkGetParamKey(global::PDFiumZ.FpdfPageobjectmarkT mark, uint index, ref ushort buffer, uint buflen, ref uint out_buflen)
         {
             var __arg0 = mark is null ? __IntPtr.Zero : mark.__Instance;
             fixed (ushort* __buffer2 = &buffer)
@@ -10973,7 +10973,7 @@ namespace PDFiumCore
         /// <para>key    - string key of the property.</para>
         /// <para>Returns the type of the value, or FPDF_OBJECT_UNKNOWN in case of failure.</para>
         /// </summary>
-        public static int FPDFPageObjMarkGetParamValueType(global::PDFiumCore.FpdfPageobjectmarkT mark, string key)
+        public static int FPDFPageObjMarkGetParamValueType(global::PDFiumZ.FpdfPageobjectmarkT mark, string key)
         {
             var __arg0 = mark is null ? __IntPtr.Zero : mark.__Instance;
             var ___ret = __Internal.FPDFPageObjMarkGetParamValueType(__arg0, key);
@@ -10991,7 +10991,7 @@ namespace PDFiumCore
         /// <para>false is returned.</para>
         /// <para>Returns TRUE if the key maps to a number value, FALSE otherwise.</para>
         /// </summary>
-        public static int FPDFPageObjMarkGetParamIntValue(global::PDFiumCore.FpdfPageobjectmarkT mark, string key, ref int out_value)
+        public static int FPDFPageObjMarkGetParamIntValue(global::PDFiumZ.FpdfPageobjectmarkT mark, string key, ref int out_value)
         {
             var __arg0 = mark is null ? __IntPtr.Zero : mark.__Instance;
             fixed (int* __out_value2 = &out_value)
@@ -11013,7 +11013,7 @@ namespace PDFiumCore
         /// <para>false is returned.</para>
         /// <para>Returns TRUE if the key maps to a number value, FALSE otherwise.</para>
         /// </summary>
-        public static int FPDFPageObjMarkGetParamFloatValue(global::PDFiumCore.FpdfPageobjectmarkT mark, string key, ref float out_value)
+        public static int FPDFPageObjMarkGetParamFloatValue(global::PDFiumZ.FpdfPageobjectmarkT mark, string key, ref float out_value)
         {
             var __arg0 = mark is null ? __IntPtr.Zero : mark.__Instance;
             fixed (float* __out_value2 = &out_value)
@@ -11039,7 +11039,7 @@ namespace PDFiumCore
         /// <para>Not filled if FALSE is returned.</para>
         /// <para>Returns TRUE if the key maps to a string/blob value, FALSE otherwise.</para>
         /// </summary>
-        public static int FPDFPageObjMarkGetParamStringValue(global::PDFiumCore.FpdfPageobjectmarkT mark, string key, ref ushort buffer, uint buflen, ref uint out_buflen)
+        public static int FPDFPageObjMarkGetParamStringValue(global::PDFiumZ.FpdfPageobjectmarkT mark, string key, ref ushort buffer, uint buflen, ref uint out_buflen)
         {
             var __arg0 = mark is null ? __IntPtr.Zero : mark.__Instance;
             fixed (ushort* __buffer2 = &buffer)
@@ -11069,7 +11069,7 @@ namespace PDFiumCore
         /// <para>Not filled if FALSE is returned.</para>
         /// <para>Returns TRUE if the key maps to a string/blob value, FALSE otherwise.</para>
         /// </summary>
-        public static int FPDFPageObjMarkGetParamBlobValue(global::PDFiumCore.FpdfPageobjectmarkT mark, string key, byte* buffer, uint buflen, ref uint out_buflen)
+        public static int FPDFPageObjMarkGetParamBlobValue(global::PDFiumZ.FpdfPageobjectmarkT mark, string key, byte* buffer, uint buflen, ref uint out_buflen)
         {
             var __arg0 = mark is null ? __IntPtr.Zero : mark.__Instance;
             fixed (uint* __out_buflen4 = &out_buflen)
@@ -11092,7 +11092,7 @@ namespace PDFiumCore
         /// <para>value       - int value to set.</para>
         /// <para>Returns TRUE if the operation succeeded, FALSE otherwise.</para>
         /// </summary>
-        public static int FPDFPageObjMarkSetIntParam(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FpdfPageobjectT page_object, global::PDFiumCore.FpdfPageobjectmarkT mark, string key, int value)
+        public static int FPDFPageObjMarkSetIntParam(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FpdfPageobjectT page_object, global::PDFiumZ.FpdfPageobjectmarkT mark, string key, int value)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
@@ -11113,7 +11113,7 @@ namespace PDFiumCore
         /// <para>value       - float value to set.</para>
         /// <para>Returns TRUE if the operation succeeded, FALSE otherwise.</para>
         /// </summary>
-        public static int FPDFPageObjMarkSetFloatParam(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FpdfPageobjectT page_object, global::PDFiumCore.FpdfPageobjectmarkT mark, string key, float value)
+        public static int FPDFPageObjMarkSetFloatParam(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FpdfPageobjectT page_object, global::PDFiumZ.FpdfPageobjectmarkT mark, string key, float value)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
@@ -11134,7 +11134,7 @@ namespace PDFiumCore
         /// <para>value       - string value to set.</para>
         /// <para>Returns TRUE if the operation succeeded, FALSE otherwise.</para>
         /// </summary>
-        public static int FPDFPageObjMarkSetStringParam(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FpdfPageobjectT page_object, global::PDFiumCore.FpdfPageobjectmarkT mark, string key, string value)
+        public static int FPDFPageObjMarkSetStringParam(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FpdfPageobjectT page_object, global::PDFiumZ.FpdfPageobjectmarkT mark, string key, string value)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
@@ -11156,7 +11156,7 @@ namespace PDFiumCore
         /// <para>value_len   - size in bytes of |value|.</para>
         /// <para>Returns TRUE if the operation succeeded, FALSE otherwise.</para>
         /// </summary>
-        public static int FPDFPageObjMarkSetBlobParam(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FpdfPageobjectT page_object, global::PDFiumCore.FpdfPageobjectmarkT mark, string key, byte* value, uint value_len)
+        public static int FPDFPageObjMarkSetBlobParam(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FpdfPageobjectT page_object, global::PDFiumZ.FpdfPageobjectmarkT mark, string key, byte* value, uint value_len)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
@@ -11173,7 +11173,7 @@ namespace PDFiumCore
         /// <para>key         - string key of the property.</para>
         /// <para>Returns TRUE if the operation succeeded, FALSE otherwise.</para>
         /// </summary>
-        public static int FPDFPageObjMarkRemoveParam(global::PDFiumCore.FpdfPageobjectT page_object, global::PDFiumCore.FpdfPageobjectmarkT mark, string key)
+        public static int FPDFPageObjMarkRemoveParam(global::PDFiumZ.FpdfPageobjectT page_object, global::PDFiumZ.FpdfPageobjectmarkT mark, string key)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var __arg1 = mark is null ? __IntPtr.Zero : mark.__Instance;
@@ -11194,7 +11194,7 @@ namespace PDFiumCore
         /// <para>to clear the image cache. If the image is not previously shared, or NULL is a</para>
         /// <para>valid |pages| value.</para>
         /// </summary>
-        public static int FPDFImageObjLoadJpegFile(global::PDFiumCore.FpdfPageT pages, int count, global::PDFiumCore.FpdfPageobjectT image_object, global::PDFiumCore.FPDF_FILEACCESS file_access)
+        public static int FPDFImageObjLoadJpegFile(global::PDFiumZ.FpdfPageT pages, int count, global::PDFiumZ.FpdfPageobjectT image_object, global::PDFiumZ.FPDF_FILEACCESS file_access)
         {
             var ____arg0 = pages is null ? __IntPtr.Zero : pages.__Instance;
             var __arg0 = new __IntPtr(&____arg0);
@@ -11219,7 +11219,7 @@ namespace PDFiumCore
         /// <para>content is copied to the file. This allows |file_access| and its associated</para>
         /// <para>data to be deleted after this function returns.</para>
         /// </summary>
-        public static int FPDFImageObjLoadJpegFileInline(global::PDFiumCore.FpdfPageT pages, int count, global::PDFiumCore.FpdfPageobjectT image_object, global::PDFiumCore.FPDF_FILEACCESS file_access)
+        public static int FPDFImageObjLoadJpegFileInline(global::PDFiumZ.FpdfPageT pages, int count, global::PDFiumZ.FpdfPageobjectT image_object, global::PDFiumZ.FPDF_FILEACCESS file_access)
         {
             var ____arg0 = pages is null ? __IntPtr.Zero : pages.__Instance;
             var __arg0 = new __IntPtr(&____arg0);
@@ -11245,7 +11245,7 @@ namespace PDFiumCore
         /// <para>and can be used to scale, rotate, shear and translate the |image_object|.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFImageObjSetMatrix(global::PDFiumCore.FpdfPageobjectT image_object, double a, double b, double c, double d, double e, double f)
+        public static int FPDFImageObjSetMatrix(global::PDFiumZ.FpdfPageobjectT image_object, double a, double b, double c, double d, double e, double f)
         {
             var __arg0 = image_object is null ? __IntPtr.Zero : image_object.__Instance;
             var ___ret = __Internal.FPDFImageObjSetMatrix(__arg0, a, b, c, d, e, f);
@@ -11260,7 +11260,7 @@ namespace PDFiumCore
         /// <para>bitmap       - handle of the bitmap.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFImageObjSetBitmap(global::PDFiumCore.FpdfPageT pages, int count, global::PDFiumCore.FpdfPageobjectT image_object, global::PDFiumCore.FpdfBitmapT bitmap)
+        public static int FPDFImageObjSetBitmap(global::PDFiumZ.FpdfPageT pages, int count, global::PDFiumZ.FpdfPageobjectT image_object, global::PDFiumZ.FpdfBitmapT bitmap)
         {
             var ____arg0 = pages is null ? __IntPtr.Zero : pages.__Instance;
             var __arg0 = new __IntPtr(&____arg0);
@@ -11279,11 +11279,11 @@ namespace PDFiumCore
         /// <para>image_object - handle to an image object.</para>
         /// <para>Returns the bitmap.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfBitmapT FPDFImageObjGetBitmap(global::PDFiumCore.FpdfPageobjectT image_object)
+        public static global::PDFiumZ.FpdfBitmapT FPDFImageObjGetBitmap(global::PDFiumZ.FpdfPageobjectT image_object)
         {
             var __arg0 = image_object is null ? __IntPtr.Zero : image_object.__Instance;
             var ___ret = __Internal.FPDFImageObjGetBitmap(__arg0);
-            var __result0 = global::PDFiumCore.FpdfBitmapT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfBitmapT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -11300,13 +11300,13 @@ namespace PDFiumCore
         /// <para>image_object - handle to an image object.</para>
         /// <para>Returns the bitmap or NULL on failure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfBitmapT FPDFImageObjGetRenderedBitmap(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FpdfPageobjectT image_object)
+        public static global::PDFiumZ.FpdfBitmapT FPDFImageObjGetRenderedBitmap(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FpdfPageobjectT image_object)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg2 = image_object is null ? __IntPtr.Zero : image_object.__Instance;
             var ___ret = __Internal.FPDFImageObjGetRenderedBitmap(__arg0, __arg1, __arg2);
-            var __result0 = global::PDFiumCore.FpdfBitmapT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfBitmapT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -11320,7 +11320,7 @@ namespace PDFiumCore
         /// <para>buflen       - length of the buffer in bytes.</para>
         /// <para>Returns the length of the decoded image data.</para>
         /// </summary>
-        public static uint FPDFImageObjGetImageDataDecoded(global::PDFiumCore.FpdfPageobjectT image_object, __IntPtr buffer, uint buflen)
+        public static uint FPDFImageObjGetImageDataDecoded(global::PDFiumZ.FpdfPageobjectT image_object, __IntPtr buffer, uint buflen)
         {
             var __arg0 = image_object is null ? __IntPtr.Zero : image_object.__Instance;
             var ___ret = __Internal.FPDFImageObjGetImageDataDecoded(__arg0, buffer, buflen);
@@ -11336,7 +11336,7 @@ namespace PDFiumCore
         /// <para>buflen       - length of the buffer in bytes.</para>
         /// <para>Returns the length of the raw image data.</para>
         /// </summary>
-        public static uint FPDFImageObjGetImageDataRaw(global::PDFiumCore.FpdfPageobjectT image_object, __IntPtr buffer, uint buflen)
+        public static uint FPDFImageObjGetImageDataRaw(global::PDFiumZ.FpdfPageobjectT image_object, __IntPtr buffer, uint buflen)
         {
             var __arg0 = image_object is null ? __IntPtr.Zero : image_object.__Instance;
             var ___ret = __Internal.FPDFImageObjGetImageDataRaw(__arg0, buffer, buflen);
@@ -11348,7 +11348,7 @@ namespace PDFiumCore
         /// <para>image_object - handle to an image object.</para>
         /// <para>Returns the number of |image_object|'s filters.</para>
         /// </summary>
-        public static int FPDFImageObjGetImageFilterCount(global::PDFiumCore.FpdfPageobjectT image_object)
+        public static int FPDFImageObjGetImageFilterCount(global::PDFiumZ.FpdfPageobjectT image_object)
         {
             var __arg0 = image_object is null ? __IntPtr.Zero : image_object.__Instance;
             var ___ret = __Internal.FPDFImageObjGetImageFilterCount(__arg0);
@@ -11366,7 +11366,7 @@ namespace PDFiumCore
         /// <para>buflen       - length of the buffer.</para>
         /// <para>Returns the length of the filter string.</para>
         /// </summary>
-        public static uint FPDFImageObjGetImageFilter(global::PDFiumCore.FpdfPageobjectT image_object, int index, __IntPtr buffer, uint buflen)
+        public static uint FPDFImageObjGetImageFilter(global::PDFiumZ.FpdfPageobjectT image_object, int index, __IntPtr buffer, uint buflen)
         {
             var __arg0 = image_object is null ? __IntPtr.Zero : image_object.__Instance;
             var ___ret = __Internal.FPDFImageObjGetImageFilter(__arg0, index, buffer, buflen);
@@ -11384,7 +11384,7 @@ namespace PDFiumCore
         /// <para>metadata     - receives the image metadata; must not be NULL.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFImageObjGetImageMetadata(global::PDFiumCore.FpdfPageobjectT image_object, global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FPDF_IMAGEOBJ_METADATA metadata)
+        public static int FPDFImageObjGetImageMetadata(global::PDFiumZ.FpdfPageobjectT image_object, global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FPDF_IMAGEOBJ_METADATA metadata)
         {
             var __arg0 = image_object is null ? __IntPtr.Zero : image_object.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -11401,7 +11401,7 @@ namespace PDFiumCore
         /// <para>height       - receives the image height in pixels; must not be NULL.</para>
         /// <para>Returns true if successful.</para>
         /// </summary>
-        public static int FPDFImageObjGetImagePixelSize(global::PDFiumCore.FpdfPageobjectT image_object, ref uint width, ref uint height)
+        public static int FPDFImageObjGetImagePixelSize(global::PDFiumZ.FpdfPageobjectT image_object, ref uint width, ref uint height)
         {
             var __arg0 = image_object is null ? __IntPtr.Zero : image_object.__Instance;
             fixed (uint* __width1 = &width)
@@ -11434,7 +11434,7 @@ namespace PDFiumCore
         /// <para>Returns true if |out_buflen| is not null and an ICC profile exists for the</para>
         /// <para>given |image_object|.</para>
         /// </summary>
-        public static int FPDFImageObjGetIccProfileDataDecoded(global::PDFiumCore.FpdfPageobjectT image_object, global::PDFiumCore.FpdfPageT page, byte* buffer, ulong buflen, ref ulong out_buflen)
+        public static int FPDFImageObjGetIccProfileDataDecoded(global::PDFiumZ.FpdfPageobjectT image_object, global::PDFiumZ.FpdfPageT page, byte* buffer, ulong buflen, ref ulong out_buflen)
         {
             var __arg0 = image_object is null ? __IntPtr.Zero : image_object.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -11452,10 +11452,10 @@ namespace PDFiumCore
         /// <para>y - initial vertical position.</para>
         /// <para>Returns a handle to a new path object.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPageobjectT FPDFPageObjCreateNewPath(float x, float y)
+        public static global::PDFiumZ.FpdfPageobjectT FPDFPageObjCreateNewPath(float x, float y)
         {
             var ___ret = __Internal.FPDFPageObjCreateNewPath(x, y);
-            var __result0 = global::PDFiumCore.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -11467,10 +11467,10 @@ namespace PDFiumCore
         /// <para>h - height of the rectangle.</para>
         /// <para>Returns a handle to the new path object.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPageobjectT FPDFPageObjCreateNewRect(float x, float y, float w, float h)
+        public static global::PDFiumZ.FpdfPageobjectT FPDFPageObjCreateNewRect(float x, float y, float w, float h)
         {
             var ___ret = __Internal.FPDFPageObjCreateNewRect(x, y, w, h);
-            var __result0 = global::PDFiumCore.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -11483,7 +11483,7 @@ namespace PDFiumCore
         /// <para>top          - pointer where the top coordinate will be stored</para>
         /// <para>On success, returns TRUE and fills in the 4 coordinates.</para>
         /// </summary>
-        public static int FPDFPageObjGetBounds(global::PDFiumCore.FpdfPageobjectT page_object, ref float left, ref float bottom, ref float right, ref float top)
+        public static int FPDFPageObjGetBounds(global::PDFiumZ.FpdfPageobjectT page_object, ref float left, ref float bottom, ref float right, ref float top)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             fixed (float* __left1 = &left)
@@ -11519,7 +11519,7 @@ namespace PDFiumCore
         /// <para>Currently only works the following |page_object| types: FPDF_PAGEOBJ_TEXT and</para>
         /// <para>FPDF_PAGEOBJ_IMAGE.</para>
         /// </summary>
-        public static int FPDFPageObjGetRotatedBounds(global::PDFiumCore.FpdfPageobjectT page_object, global::PDFiumCore.FS_QUADPOINTSF quad_points)
+        public static int FPDFPageObjGetRotatedBounds(global::PDFiumZ.FpdfPageobjectT page_object, global::PDFiumZ.FS_QUADPOINTSF quad_points)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var __arg1 = quad_points is null ? __IntPtr.Zero : quad_points.__Instance;
@@ -11535,7 +11535,7 @@ namespace PDFiumCore
         /// <para>Difference, Exclusion, HardLight, Hue, Lighten, Luminosity, Multiply, Normal,</para>
         /// <para>Overlay, Saturation, Screen, SoftLight</para>
         /// </summary>
-        public static void FPDFPageObjSetBlendMode(global::PDFiumCore.FpdfPageobjectT page_object, string blend_mode)
+        public static void FPDFPageObjSetBlendMode(global::PDFiumZ.FpdfPageobjectT page_object, string blend_mode)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             __Internal.FPDFPageObjSetBlendMode(__arg0, blend_mode);
@@ -11550,7 +11550,7 @@ namespace PDFiumCore
         /// <para>A            - the stroke alpha for the object.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFPageObjSetStrokeColor(global::PDFiumCore.FpdfPageobjectT page_object, uint R, uint G, uint B, uint A)
+        public static int FPDFPageObjSetStrokeColor(global::PDFiumZ.FpdfPageobjectT page_object, uint R, uint G, uint B, uint A)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjSetStrokeColor(__arg0, R, G, B, A);
@@ -11566,7 +11566,7 @@ namespace PDFiumCore
         /// <para>A            - the stroke alpha of the object.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFPageObjGetStrokeColor(global::PDFiumCore.FpdfPageobjectT page_object, ref uint R, ref uint G, ref uint B, ref uint A)
+        public static int FPDFPageObjGetStrokeColor(global::PDFiumZ.FpdfPageobjectT page_object, ref uint R, ref uint G, ref uint B, ref uint A)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             fixed (uint* __R1 = &R)
@@ -11595,7 +11595,7 @@ namespace PDFiumCore
         /// <para>width  - the width of the stroke.</para>
         /// <para>Returns TRUE on success</para>
         /// </summary>
-        public static int FPDFPageObjSetStrokeWidth(global::PDFiumCore.FpdfPageobjectT page_object, float width)
+        public static int FPDFPageObjSetStrokeWidth(global::PDFiumZ.FpdfPageobjectT page_object, float width)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjSetStrokeWidth(__arg0, width);
@@ -11608,7 +11608,7 @@ namespace PDFiumCore
         /// <para>width  - the width of the stroke.</para>
         /// <para>Returns TRUE on success</para>
         /// </summary>
-        public static int FPDFPageObjGetStrokeWidth(global::PDFiumCore.FpdfPageobjectT page_object, ref float width)
+        public static int FPDFPageObjGetStrokeWidth(global::PDFiumZ.FpdfPageobjectT page_object, ref float width)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             fixed (float* __width1 = &width)
@@ -11626,7 +11626,7 @@ namespace PDFiumCore
         /// <para>Line join can be one of following: FPDF_LINEJOIN_MITER, FPDF_LINEJOIN_ROUND,</para>
         /// <para>FPDF_LINEJOIN_BEVEL</para>
         /// </summary>
-        public static int FPDFPageObjGetLineJoin(global::PDFiumCore.FpdfPageobjectT page_object)
+        public static int FPDFPageObjGetLineJoin(global::PDFiumZ.FpdfPageobjectT page_object)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjGetLineJoin(__arg0);
@@ -11640,7 +11640,7 @@ namespace PDFiumCore
         /// <para>Line join can be one of following: FPDF_LINEJOIN_MITER, FPDF_LINEJOIN_ROUND,</para>
         /// <para>FPDF_LINEJOIN_BEVEL</para>
         /// </summary>
-        public static int FPDFPageObjSetLineJoin(global::PDFiumCore.FpdfPageobjectT page_object, int line_join)
+        public static int FPDFPageObjSetLineJoin(global::PDFiumZ.FpdfPageobjectT page_object, int line_join)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjSetLineJoin(__arg0, line_join);
@@ -11654,7 +11654,7 @@ namespace PDFiumCore
         /// <para>Line cap can be one of following: FPDF_LINECAP_BUTT, FPDF_LINECAP_ROUND,</para>
         /// <para>FPDF_LINECAP_PROJECTING_SQUARE</para>
         /// </summary>
-        public static int FPDFPageObjGetLineCap(global::PDFiumCore.FpdfPageobjectT page_object)
+        public static int FPDFPageObjGetLineCap(global::PDFiumZ.FpdfPageobjectT page_object)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjGetLineCap(__arg0);
@@ -11668,7 +11668,7 @@ namespace PDFiumCore
         /// <para>Line cap can be one of following: FPDF_LINECAP_BUTT, FPDF_LINECAP_ROUND,</para>
         /// <para>FPDF_LINECAP_PROJECTING_SQUARE</para>
         /// </summary>
-        public static int FPDFPageObjSetLineCap(global::PDFiumCore.FpdfPageobjectT page_object, int line_cap)
+        public static int FPDFPageObjSetLineCap(global::PDFiumZ.FpdfPageobjectT page_object, int line_cap)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjSetLineCap(__arg0, line_cap);
@@ -11684,7 +11684,7 @@ namespace PDFiumCore
         /// <para>A            - the fill alpha for the object.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFPageObjSetFillColor(global::PDFiumCore.FpdfPageobjectT page_object, uint R, uint G, uint B, uint A)
+        public static int FPDFPageObjSetFillColor(global::PDFiumZ.FpdfPageobjectT page_object, uint R, uint G, uint B, uint A)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjSetFillColor(__arg0, R, G, B, A);
@@ -11700,7 +11700,7 @@ namespace PDFiumCore
         /// <para>A            - the fill alpha of the object.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFPageObjGetFillColor(global::PDFiumCore.FpdfPageobjectT page_object, ref uint R, ref uint G, ref uint B, ref uint A)
+        public static int FPDFPageObjGetFillColor(global::PDFiumZ.FpdfPageobjectT page_object, ref uint R, ref uint G, ref uint B, ref uint A)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             fixed (uint* __R1 = &R)
@@ -11730,7 +11730,7 @@ namespace PDFiumCore
         /// <para>phase - pointer where the dashing phase will be stored.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFPageObjGetDashPhase(global::PDFiumCore.FpdfPageobjectT page_object, ref float phase)
+        public static int FPDFPageObjGetDashPhase(global::PDFiumZ.FpdfPageobjectT page_object, ref float phase)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             fixed (float* __phase1 = &phase)
@@ -11748,7 +11748,7 @@ namespace PDFiumCore
         /// <para>phase - line dash phase.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFPageObjSetDashPhase(global::PDFiumCore.FpdfPageobjectT page_object, float phase)
+        public static int FPDFPageObjSetDashPhase(global::PDFiumZ.FpdfPageobjectT page_object, float phase)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjSetDashPhase(__arg0, phase);
@@ -11761,7 +11761,7 @@ namespace PDFiumCore
         /// <para>page_object - handle to a page object.</para>
         /// <para>Returns the line dash array size or -1 on failure.</para>
         /// </summary>
-        public static int FPDFPageObjGetDashCount(global::PDFiumCore.FpdfPageobjectT page_object)
+        public static int FPDFPageObjGetDashCount(global::PDFiumZ.FpdfPageobjectT page_object)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjGetDashCount(__arg0);
@@ -11776,7 +11776,7 @@ namespace PDFiumCore
         /// <para>dash_count - number of elements in |dash_array|.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFPageObjGetDashArray(global::PDFiumCore.FpdfPageobjectT page_object, ref float dash_array, ulong dash_count)
+        public static int FPDFPageObjGetDashArray(global::PDFiumZ.FpdfPageobjectT page_object, ref float dash_array, ulong dash_count)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             fixed (float* __dash_array1 = &dash_array)
@@ -11796,7 +11796,7 @@ namespace PDFiumCore
         /// <para>phase - the line dash phase.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFPageObjSetDashArray(global::PDFiumCore.FpdfPageobjectT page_object, ref float dash_array, ulong dash_count, float phase)
+        public static int FPDFPageObjSetDashArray(global::PDFiumZ.FpdfPageobjectT page_object, ref float dash_array, ulong dash_count, float phase)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             fixed (float* __dash_array1 = &dash_array)
@@ -11814,7 +11814,7 @@ namespace PDFiumCore
         /// <para>FPDFPath_LineTo() or FPDFPath_BezierTo().</para>
         /// <para>Returns the number of objects in |path| or -1 on failure.</para>
         /// </summary>
-        public static int FPDFPathCountSegments(global::PDFiumCore.FpdfPageobjectT path)
+        public static int FPDFPathCountSegments(global::PDFiumZ.FpdfPageobjectT path)
         {
             var __arg0 = path is null ? __IntPtr.Zero : path.__Instance;
             var ___ret = __Internal.FPDFPathCountSegments(__arg0);
@@ -11827,11 +11827,11 @@ namespace PDFiumCore
         /// <para>index - the index of a segment.</para>
         /// <para>Returns the handle to the segment, or NULL on faiure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPathsegmentT FPDFPathGetPathSegment(global::PDFiumCore.FpdfPageobjectT path, int index)
+        public static global::PDFiumZ.FpdfPathsegmentT FPDFPathGetPathSegment(global::PDFiumZ.FpdfPageobjectT path, int index)
         {
             var __arg0 = path is null ? __IntPtr.Zero : path.__Instance;
             var ___ret = __Internal.FPDFPathGetPathSegment(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfPathsegmentT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPathsegmentT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -11842,7 +11842,7 @@ namespace PDFiumCore
         /// <para>y      - the vertical position of the segment.</para>
         /// <para>Returns TRUE on success, otherwise |x| and |y| is not set.</para>
         /// </summary>
-        public static int FPDFPathSegmentGetPoint(global::PDFiumCore.FpdfPathsegmentT segment, ref float x, ref float y)
+        public static int FPDFPathSegmentGetPoint(global::PDFiumZ.FpdfPathsegmentT segment, ref float x, ref float y)
         {
             var __arg0 = segment is null ? __IntPtr.Zero : segment.__Instance;
             fixed (float* __x1 = &x)
@@ -11863,7 +11863,7 @@ namespace PDFiumCore
         /// <para>Returns one of the FPDF_SEGMENT_* values on success,</para>
         /// <para>FPDF_SEGMENT_UNKNOWN on error.</para>
         /// </summary>
-        public static int FPDFPathSegmentGetType(global::PDFiumCore.FpdfPathsegmentT segment)
+        public static int FPDFPathSegmentGetType(global::PDFiumZ.FpdfPathsegmentT segment)
         {
             var __arg0 = segment is null ? __IntPtr.Zero : segment.__Instance;
             var ___ret = __Internal.FPDFPathSegmentGetType(__arg0);
@@ -11875,7 +11875,7 @@ namespace PDFiumCore
         /// <para>segment - handle to a segment.</para>
         /// <para>Returns close flag for non-NULL segment, FALSE otherwise.</para>
         /// </summary>
-        public static int FPDFPathSegmentGetClose(global::PDFiumCore.FpdfPathsegmentT segment)
+        public static int FPDFPathSegmentGetClose(global::PDFiumZ.FpdfPathsegmentT segment)
         {
             var __arg0 = segment is null ? __IntPtr.Zero : segment.__Instance;
             var ___ret = __Internal.FPDFPathSegmentGetClose(__arg0);
@@ -11891,7 +11891,7 @@ namespace PDFiumCore
         /// <para>new one.</para>
         /// <para>Returns TRUE on success</para>
         /// </summary>
-        public static int FPDFPathMoveTo(global::PDFiumCore.FpdfPageobjectT path, float x, float y)
+        public static int FPDFPathMoveTo(global::PDFiumZ.FpdfPageobjectT path, float x, float y)
         {
             var __arg0 = path is null ? __IntPtr.Zero : path.__Instance;
             var ___ret = __Internal.FPDFPathMoveTo(__arg0, x, y);
@@ -11906,7 +11906,7 @@ namespace PDFiumCore
         /// <para>The path's current point is changed to (x, y).</para>
         /// <para>Returns TRUE on success</para>
         /// </summary>
-        public static int FPDFPathLineTo(global::PDFiumCore.FpdfPageobjectT path, float x, float y)
+        public static int FPDFPathLineTo(global::PDFiumZ.FpdfPageobjectT path, float x, float y)
         {
             var __arg0 = path is null ? __IntPtr.Zero : path.__Instance;
             var ___ret = __Internal.FPDFPathLineTo(__arg0, x, y);
@@ -11924,7 +11924,7 @@ namespace PDFiumCore
         /// <para>y3     - the vertical position of the ending point of the Bezier curve.</para>
         /// <para>Returns TRUE on success</para>
         /// </summary>
-        public static int FPDFPathBezierTo(global::PDFiumCore.FpdfPageobjectT path, float x1, float y1, float x2, float y2, float x3, float y3)
+        public static int FPDFPathBezierTo(global::PDFiumZ.FpdfPageobjectT path, float x1, float y1, float x2, float y2, float x3, float y3)
         {
             var __arg0 = path is null ? __IntPtr.Zero : path.__Instance;
             var ___ret = __Internal.FPDFPathBezierTo(__arg0, x1, y1, x2, y2, x3, y3);
@@ -11938,7 +11938,7 @@ namespace PDFiumCore
         /// <para>subpath, thus terminating the current subpath.</para>
         /// <para>Returns TRUE on success</para>
         /// </summary>
-        public static int FPDFPathClose(global::PDFiumCore.FpdfPageobjectT path)
+        public static int FPDFPathClose(global::PDFiumZ.FpdfPageobjectT path)
         {
             var __arg0 = path is null ? __IntPtr.Zero : path.__Instance;
             var ___ret = __Internal.FPDFPathClose(__arg0);
@@ -11952,7 +11952,7 @@ namespace PDFiumCore
         /// <para>stroke   - a boolean specifying if the path should be stroked or not.</para>
         /// <para>Returns TRUE on success</para>
         /// </summary>
-        public static int FPDFPathSetDrawMode(global::PDFiumCore.FpdfPageobjectT path, int fillmode, int stroke)
+        public static int FPDFPathSetDrawMode(global::PDFiumZ.FpdfPageobjectT path, int fillmode, int stroke)
         {
             var __arg0 = path is null ? __IntPtr.Zero : path.__Instance;
             var ___ret = __Internal.FPDFPathSetDrawMode(__arg0, fillmode, stroke);
@@ -11966,7 +11966,7 @@ namespace PDFiumCore
         /// <para>stroke   - a boolean specifying if the path is stroked or not.</para>
         /// <para>Returns TRUE on success</para>
         /// </summary>
-        public static int FPDFPathGetDrawMode(global::PDFiumCore.FpdfPageobjectT path, ref int fillmode, ref int stroke)
+        public static int FPDFPathGetDrawMode(global::PDFiumZ.FpdfPageobjectT path, ref int fillmode, ref int stroke)
         {
             var __arg0 = path is null ? __IntPtr.Zero : path.__Instance;
             fixed (int* __fillmode1 = &fillmode)
@@ -11988,11 +11988,11 @@ namespace PDFiumCore
         /// <para>font_size  - the font size for the new text object.</para>
         /// <para>Returns a handle to a new text object, or NULL on failure</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPageobjectT FPDFPageObjNewTextObj(global::PDFiumCore.FpdfDocumentT document, string font, float font_size)
+        public static global::PDFiumZ.FpdfPageobjectT FPDFPageObjNewTextObj(global::PDFiumZ.FpdfDocumentT document, string font, float font_size)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDFPageObjNewTextObj(__arg0, font, font_size);
-            var __result0 = global::PDFiumCore.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -12002,7 +12002,7 @@ namespace PDFiumCore
         /// <para>text         - the UTF-16LE encoded string containing the text to be added.</para>
         /// <para>Returns TRUE on success</para>
         /// </summary>
-        public static int FPDFTextSetText(global::PDFiumCore.FpdfPageobjectT text_object, ref ushort text)
+        public static int FPDFTextSetText(global::PDFiumZ.FpdfPageobjectT text_object, ref ushort text)
         {
             var __arg0 = text_object is null ? __IntPtr.Zero : text_object.__Instance;
             fixed (ushort* __text1 = &text)
@@ -12022,7 +12022,7 @@ namespace PDFiumCore
         /// <para>count        - number of elements in |charcodes|.</para>
         /// <para>Returns TRUE on success</para>
         /// </summary>
-        public static int FPDFTextSetCharcodes(global::PDFiumCore.FpdfPageobjectT text_object, ref uint charcodes, ulong count)
+        public static int FPDFTextSetCharcodes(global::PDFiumZ.FpdfPageobjectT text_object, ref uint charcodes, ulong count)
         {
             var __arg0 = text_object is null ? __IntPtr.Zero : text_object.__Instance;
             fixed (uint* __charcodes1 = &charcodes)
@@ -12045,11 +12045,11 @@ namespace PDFiumCore
         /// <para>The loaded font can be closed using FPDFFont_Close().</para>
         /// <para>Returns NULL on failure</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfFontT FPDFTextLoadFont(global::PDFiumCore.FpdfDocumentT document, byte* data, uint size, int font_type, int cid)
+        public static global::PDFiumZ.FpdfFontT FPDFTextLoadFont(global::PDFiumZ.FpdfDocumentT document, byte* data, uint size, int font_type, int cid)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDFTextLoadFont(__arg0, data, size, font_type, cid);
-            var __result0 = global::PDFiumCore.FpdfFontT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfFontT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -12063,11 +12063,11 @@ namespace PDFiumCore
         /// <para>The loaded font can be closed using FPDFFont_Close().</para>
         /// <para>Returns NULL on failure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfFontT FPDFTextLoadStandardFont(global::PDFiumCore.FpdfDocumentT document, string font)
+        public static global::PDFiumZ.FpdfFontT FPDFTextLoadStandardFont(global::PDFiumZ.FpdfDocumentT document, string font)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDFTextLoadStandardFont(__arg0, font);
-            var __result0 = global::PDFiumCore.FpdfFontT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfFontT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -12086,11 +12086,11 @@ namespace PDFiumCore
         /// <para>The loaded font can be closed using FPDFFont_Close().</para>
         /// <para>Returns NULL on failure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfFontT FPDFTextLoadCidType2Font(global::PDFiumCore.FpdfDocumentT document, byte* font_data, uint font_data_size, string to_unicode_cmap, byte* cid_to_gid_map_data, uint cid_to_gid_map_data_size)
+        public static global::PDFiumZ.FpdfFontT FPDFTextLoadCidType2Font(global::PDFiumZ.FpdfDocumentT document, byte* font_data, uint font_data_size, string to_unicode_cmap, byte* cid_to_gid_map_data, uint cid_to_gid_map_data_size)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDFTextLoadCidType2Font(__arg0, font_data, font_data_size, to_unicode_cmap, cid_to_gid_map_data, cid_to_gid_map_data_size);
-            var __result0 = global::PDFiumCore.FpdfFontT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfFontT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -12101,7 +12101,7 @@ namespace PDFiumCore
         /// <para>(about 1/72 inch)</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFTextObjGetFontSize(global::PDFiumCore.FpdfPageobjectT text, ref float size)
+        public static int FPDFTextObjGetFontSize(global::PDFiumZ.FpdfPageobjectT text, ref float size)
         {
             var __arg0 = text is null ? __IntPtr.Zero : text.__Instance;
             fixed (float* __size1 = &size)
@@ -12116,7 +12116,7 @@ namespace PDFiumCore
         /// <para>Close a loaded PDF font.</para>
         /// <para>font   - Handle to the loaded font.</para>
         /// </summary>
-        public static void FPDFFontClose(global::PDFiumCore.FpdfFontT font)
+        public static void FPDFFontClose(global::PDFiumZ.FpdfFontT font)
         {
             var __arg0 = font is null ? __IntPtr.Zero : font.__Instance;
             __Internal.FPDFFontClose(__arg0);
@@ -12129,12 +12129,12 @@ namespace PDFiumCore
         /// <para>font_size  - the font size for the new text object.</para>
         /// <para>Returns a handle to a new text object, or NULL on failure</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPageobjectT FPDFPageObjCreateTextObj(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FpdfFontT font, float font_size)
+        public static global::PDFiumZ.FpdfPageobjectT FPDFPageObjCreateTextObj(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FpdfFontT font, float font_size)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = font is null ? __IntPtr.Zero : font.__Instance;
             var ___ret = __Internal.FPDFPageObjCreateTextObj(__arg0, __arg1, font_size);
-            var __result0 = global::PDFiumCore.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -12144,7 +12144,7 @@ namespace PDFiumCore
         /// <para>Returns one of the known FPDF_TEXT_RENDERMODE enum values on success,</para>
         /// <para>FPDF_TEXTRENDERMODE_UNKNOWN on error.</para>
         /// </summary>
-        public static global::PDFiumCore.FPDF_TEXT_RENDERMODE FPDFTextObjGetTextRenderMode(global::PDFiumCore.FpdfPageobjectT text)
+        public static global::PDFiumZ.FPDF_TEXT_RENDERMODE FPDFTextObjGetTextRenderMode(global::PDFiumZ.FpdfPageobjectT text)
         {
             var __arg0 = text is null ? __IntPtr.Zero : text.__Instance;
             var ___ret = __Internal.FPDFTextObjGetTextRenderMode(__arg0);
@@ -12159,7 +12159,7 @@ namespace PDFiumCore
         /// <para>FPDF_TEXTRENDERMODE_UNKNOWN).</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDFTextObjSetTextRenderMode(global::PDFiumCore.FpdfPageobjectT text, global::PDFiumCore.FPDF_TEXT_RENDERMODE render_mode)
+        public static int FPDFTextObjSetTextRenderMode(global::PDFiumZ.FpdfPageobjectT text, global::PDFiumZ.FPDF_TEXT_RENDERMODE render_mode)
         {
             var __arg0 = text is null ? __IntPtr.Zero : text.__Instance;
             var ___ret = __Internal.FPDFTextObjSetTextRenderMode(__arg0, render_mode);
@@ -12178,7 +12178,7 @@ namespace PDFiumCore
         /// <para>If |length| is less than the returned length, or |buffer| is NULL, |buffer|</para>
         /// <para>will not be modified.</para>
         /// </summary>
-        public static uint FPDFTextObjGetText(global::PDFiumCore.FpdfPageobjectT text_object, global::PDFiumCore.FpdfTextpageT text_page, ref ushort buffer, uint length)
+        public static uint FPDFTextObjGetText(global::PDFiumZ.FpdfPageobjectT text_object, global::PDFiumZ.FpdfTextpageT text_page, ref ushort buffer, uint length)
         {
             var __arg0 = text_object is null ? __IntPtr.Zero : text_object.__Instance;
             var __arg1 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
@@ -12203,13 +12203,13 @@ namespace PDFiumCore
         /// <para>scale       - the scaling factor, which must be greater than 0.</para>
         /// <para>Returns the bitmap or NULL on failure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfBitmapT FPDFTextObjGetRenderedBitmap(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FpdfPageobjectT text_object, float scale)
+        public static global::PDFiumZ.FpdfBitmapT FPDFTextObjGetRenderedBitmap(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FpdfPageobjectT text_object, float scale)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg2 = text_object is null ? __IntPtr.Zero : text_object.__Instance;
             var ___ret = __Internal.FPDFTextObjGetRenderedBitmap(__arg0, __arg1, __arg2, scale);
-            var __result0 = global::PDFiumCore.FpdfBitmapT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfBitmapT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -12219,11 +12219,11 @@ namespace PDFiumCore
         /// <para>text - the handle to the text object.</para>
         /// <para>Returns a handle to the font object held by |text| which retains ownership.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfFontT FPDFTextObjGetFont(global::PDFiumCore.FpdfPageobjectT text)
+        public static global::PDFiumZ.FpdfFontT FPDFTextObjGetFont(global::PDFiumZ.FpdfPageobjectT text)
         {
             var __arg0 = text is null ? __IntPtr.Zero : text.__Instance;
             var ___ret = __Internal.FPDFTextObjGetFont(__arg0);
-            var __result0 = global::PDFiumCore.FpdfFontT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfFontT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -12240,7 +12240,7 @@ namespace PDFiumCore
         /// <para>If |length| is less than the returned length, or |buffer| is NULL, |buffer|</para>
         /// <para>will not be modified.</para>
         /// </summary>
-        public static ulong FPDFFontGetBaseFontName(global::PDFiumCore.FpdfFontT font, sbyte* buffer, ulong length)
+        public static ulong FPDFFontGetBaseFontName(global::PDFiumZ.FpdfFontT font, sbyte* buffer, ulong length)
         {
             var __arg0 = font is null ? __IntPtr.Zero : font.__Instance;
             var ___ret = __Internal.FPDFFontGetBaseFontName(__arg0, buffer, length);
@@ -12259,7 +12259,7 @@ namespace PDFiumCore
         /// <para>If |length| is less than the returned length, or |buffer| is NULL, |buffer|</para>
         /// <para>will not be modified.</para>
         /// </summary>
-        public static ulong FPDFFontGetFamilyName(global::PDFiumCore.FpdfFontT font, sbyte* buffer, ulong length)
+        public static ulong FPDFFontGetFamilyName(global::PDFiumZ.FpdfFontT font, sbyte* buffer, ulong length)
         {
             var __arg0 = font is null ? __IntPtr.Zero : font.__Instance;
             var ___ret = __Internal.FPDFFontGetFamilyName(__arg0, buffer, length);
@@ -12283,7 +12283,7 @@ namespace PDFiumCore
         /// <para>If the font is not embedded, then this API will instead return the data for</para>
         /// <para>the substitution font it is using.</para>
         /// </summary>
-        public static int FPDFFontGetFontData(global::PDFiumCore.FpdfFontT font, byte* buffer, ulong buflen, ref ulong out_buflen)
+        public static int FPDFFontGetFontData(global::PDFiumZ.FpdfFontT font, byte* buffer, ulong buflen, ref ulong out_buflen)
         {
             var __arg0 = font is null ? __IntPtr.Zero : font.__Instance;
             fixed (ulong* __out_buflen3 = &out_buflen)
@@ -12300,7 +12300,7 @@ namespace PDFiumCore
         /// <para>font - the handle to the font object.</para>
         /// <para>Returns 1 if the font is embedded, 0 if it not, and -1 on failure.</para>
         /// </summary>
-        public static int FPDFFontGetIsEmbedded(global::PDFiumCore.FpdfFontT font)
+        public static int FPDFFontGetIsEmbedded(global::PDFiumZ.FpdfFontT font)
         {
             var __arg0 = font is null ? __IntPtr.Zero : font.__Instance;
             var ___ret = __Internal.FPDFFontGetIsEmbedded(__arg0);
@@ -12314,7 +12314,7 @@ namespace PDFiumCore
         /// <para>Returns the bit flags specifying various characteristics of the font as</para>
         /// <para>defined in ISO 32000-1:2008, table 123, -1 on failure.</para>
         /// </summary>
-        public static int FPDFFontGetFlags(global::PDFiumCore.FpdfFontT font)
+        public static int FPDFFontGetFlags(global::PDFiumZ.FpdfFontT font)
         {
             var __arg0 = font is null ? __IntPtr.Zero : font.__Instance;
             var ___ret = __Internal.FPDFFontGetFlags(__arg0);
@@ -12328,7 +12328,7 @@ namespace PDFiumCore
         /// <para>Returns the font weight, -1 on failure.</para>
         /// <para>Typical values are 400 (normal) and 700 (bold).</para>
         /// </summary>
-        public static int FPDFFontGetWeight(global::PDFiumCore.FpdfFontT font)
+        public static int FPDFFontGetWeight(global::PDFiumZ.FpdfFontT font)
         {
             var __arg0 = font is null ? __IntPtr.Zero : font.__Instance;
             var ___ret = __Internal.FPDFFontGetWeight(__arg0);
@@ -12344,7 +12344,7 @@ namespace PDFiumCore
         /// <para>from vertical. For a font that slopes to the right, this will be negative.</para>
         /// <para>Returns TRUE on success; |angle| unmodified on failure.</para>
         /// </summary>
-        public static int FPDFFontGetItalicAngle(global::PDFiumCore.FpdfFontT font, ref int angle)
+        public static int FPDFFontGetItalicAngle(global::PDFiumZ.FpdfFontT font, ref int angle)
         {
             var __arg0 = font is null ? __IntPtr.Zero : font.__Instance;
             fixed (int* __angle1 = &angle)
@@ -12365,7 +12365,7 @@ namespace PDFiumCore
         /// <para>glyphs of the |font|. One point is 1/72 inch (around 0.3528 mm).</para>
         /// <para>Returns TRUE on success; |ascent| unmodified on failure.</para>
         /// </summary>
-        public static int FPDFFontGetAscent(global::PDFiumCore.FpdfFontT font, float font_size, ref float ascent)
+        public static int FPDFFontGetAscent(global::PDFiumZ.FpdfFontT font, float font_size, ref float ascent)
         {
             var __arg0 = font is null ? __IntPtr.Zero : font.__Instance;
             fixed (float* __ascent2 = &ascent)
@@ -12386,7 +12386,7 @@ namespace PDFiumCore
         /// <para>glyphs of the |font|. One point is 1/72 inch (around 0.3528 mm).</para>
         /// <para>Returns TRUE on success; |descent| unmodified on failure.</para>
         /// </summary>
-        public static int FPDFFontGetDescent(global::PDFiumCore.FpdfFontT font, float font_size, ref float descent)
+        public static int FPDFFontGetDescent(global::PDFiumZ.FpdfFontT font, float font_size, ref float descent)
         {
             var __arg0 = font is null ? __IntPtr.Zero : font.__Instance;
             fixed (float* __descent2 = &descent)
@@ -12408,7 +12408,7 @@ namespace PDFiumCore
         /// <para>glyph. This will be the vertical distance for vertical writing.</para>
         /// <para>Returns TRUE on success; |width| unmodified on failure.</para>
         /// </summary>
-        public static int FPDFFontGetGlyphWidth(global::PDFiumCore.FpdfFontT font, uint glyph, float font_size, ref float width)
+        public static int FPDFFontGetGlyphWidth(global::PDFiumZ.FpdfFontT font, uint glyph, float font_size, ref float width)
         {
             var __arg0 = font is null ? __IntPtr.Zero : font.__Instance;
             fixed (float* __width3 = &width)
@@ -12427,11 +12427,11 @@ namespace PDFiumCore
         /// <para>font_size  - the size of the font.</para>
         /// <para>Returns the handle to the segment, or NULL on faiure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfGlyphpathT FPDFFontGetGlyphPath(global::PDFiumCore.FpdfFontT font, uint glyph, float font_size)
+        public static global::PDFiumZ.FpdfGlyphpathT FPDFFontGetGlyphPath(global::PDFiumZ.FpdfFontT font, uint glyph, float font_size)
         {
             var __arg0 = font is null ? __IntPtr.Zero : font.__Instance;
             var ___ret = __Internal.FPDFFontGetGlyphPath(__arg0, glyph, font_size);
-            var __result0 = global::PDFiumCore.FpdfGlyphpathT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfGlyphpathT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -12441,7 +12441,7 @@ namespace PDFiumCore
         /// <para>glyphpath - handle to a glyph path.</para>
         /// <para>Returns the number of objects in |glyphpath| or -1 on failure.</para>
         /// </summary>
-        public static int FPDFGlyphPathCountGlyphSegments(global::PDFiumCore.FpdfGlyphpathT glyphpath)
+        public static int FPDFGlyphPathCountGlyphSegments(global::PDFiumZ.FpdfGlyphpathT glyphpath)
         {
             var __arg0 = glyphpath is null ? __IntPtr.Zero : glyphpath.__Instance;
             var ___ret = __Internal.FPDFGlyphPathCountGlyphSegments(__arg0);
@@ -12455,11 +12455,11 @@ namespace PDFiumCore
         /// <para>index      - the index of a segment.</para>
         /// <para>Returns the handle to the segment, or NULL on faiure.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPathsegmentT FPDFGlyphPathGetGlyphPathSegment(global::PDFiumCore.FpdfGlyphpathT glyphpath, int index)
+        public static global::PDFiumZ.FpdfPathsegmentT FPDFGlyphPathGetGlyphPathSegment(global::PDFiumZ.FpdfGlyphpathT glyphpath, int index)
         {
             var __arg0 = glyphpath is null ? __IntPtr.Zero : glyphpath.__Instance;
             var ___ret = __Internal.FPDFGlyphPathGetGlyphPathSegment(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfPathsegmentT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPathsegmentT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -12468,7 +12468,7 @@ namespace PDFiumCore
         /// <para>form_object - handle to a form object.</para>
         /// <para>Returns the number of objects in |form_object| on success, -1 on error.</para>
         /// </summary>
-        public static int FPDFFormObjCountObjects(global::PDFiumCore.FpdfPageobjectT form_object)
+        public static int FPDFFormObjCountObjects(global::PDFiumZ.FpdfPageobjectT form_object)
         {
             var __arg0 = form_object is null ? __IntPtr.Zero : form_object.__Instance;
             var ___ret = __Internal.FPDFFormObjCountObjects(__arg0);
@@ -12481,11 +12481,11 @@ namespace PDFiumCore
         /// <para>index       - the 0-based index of a page object.</para>
         /// <para>Returns the handle to the page object, or NULL on error.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPageobjectT FPDFFormObjGetObject(global::PDFiumCore.FpdfPageobjectT form_object, uint index)
+        public static global::PDFiumZ.FpdfPageobjectT FPDFFormObjGetObject(global::PDFiumZ.FpdfPageobjectT form_object, uint index)
         {
             var __arg0 = form_object is null ? __IntPtr.Zero : form_object.__Instance;
             var ___ret = __Internal.FPDFFormObjGetObject(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -12498,7 +12498,7 @@ namespace PDFiumCore
         /// <para>Ownership of the removed |page_object| is transferred to the caller.</para>
         /// <para>Call FPDFPageObj_Destroy() on the removed page_object to free it.</para>
         /// </summary>
-        public static int FPDFFormObjRemoveObject(global::PDFiumCore.FpdfPageobjectT form_object, global::PDFiumCore.FpdfPageobjectT page_object)
+        public static int FPDFFormObjRemoveObject(global::PDFiumZ.FpdfPageobjectT form_object, global::PDFiumZ.FpdfPageobjectT page_object)
         {
             var __arg0 = form_object is null ? __IntPtr.Zero : form_object.__Instance;
             var __arg1 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
@@ -12523,7 +12523,7 @@ namespace PDFiumCore
         /// <para>Currently, all failures return |FLATTEN_FAIL| with no indication of the</para>
         /// <para>cause.</para>
         /// </summary>
-        public static int FPDFPageFlatten(global::PDFiumCore.FpdfPageT page, int nFlag)
+        public static int FPDFPageFlatten(global::PDFiumZ.FpdfPageT page, int nFlag)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFPageFlatten(__arg0, nFlag);
@@ -12744,7 +12744,7 @@ namespace PDFiumCore
         /// <para>document - handle to a document.</para>
         /// <para>Returns the number of JavaScript actions in |document| or -1 on error.</para>
         /// </summary>
-        public static int FPDFDocGetJavaScriptActionCount(global::PDFiumCore.FpdfDocumentT document)
+        public static int FPDFDocGetJavaScriptActionCount(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDFDocGetJavaScriptActionCount(__arg0);
@@ -12760,16 +12760,16 @@ namespace PDFiumCore
         /// <para>Caller owns the returned handle and must close it with</para>
         /// <para>FPDFDoc_CloseJavaScriptAction().</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfJavascriptActionT FPDFDocGetJavaScriptAction(global::PDFiumCore.FpdfDocumentT document, int index)
+        public static global::PDFiumZ.FpdfJavascriptActionT FPDFDocGetJavaScriptAction(global::PDFiumZ.FpdfDocumentT document, int index)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDFDocGetJavaScriptAction(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfJavascriptActionT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfJavascriptActionT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
         /// <summary>javascript - Handle to a JavaScript action.</summary>
-        public static void FPDFDocCloseJavaScriptAction(global::PDFiumCore.FpdfJavascriptActionT javascript)
+        public static void FPDFDocCloseJavaScriptAction(global::PDFiumZ.FpdfJavascriptActionT javascript)
         {
             var __arg0 = javascript is null ? __IntPtr.Zero : javascript.__Instance;
             __Internal.FPDFDocCloseJavaScriptAction(__arg0);
@@ -12785,7 +12785,7 @@ namespace PDFiumCore
         /// <para>buflen     - length of the buffer in bytes.</para>
         /// <para>Returns the length of the JavaScript action name in bytes.</para>
         /// </summary>
-        public static uint FPDFJavaScriptActionGetName(global::PDFiumCore.FpdfJavascriptActionT javascript, ref ushort buffer, uint buflen)
+        public static uint FPDFJavaScriptActionGetName(global::PDFiumZ.FpdfJavascriptActionT javascript, ref ushort buffer, uint buflen)
         {
             var __arg0 = javascript is null ? __IntPtr.Zero : javascript.__Instance;
             fixed (ushort* __buffer1 = &buffer)
@@ -12806,7 +12806,7 @@ namespace PDFiumCore
         /// <para>buflen     - length of the buffer in bytes.</para>
         /// <para>Returns the length of the JavaScript action name in bytes.</para>
         /// </summary>
-        public static uint FPDFJavaScriptActionGetScript(global::PDFiumCore.FpdfJavascriptActionT javascript, ref ushort buffer, uint buflen)
+        public static uint FPDFJavaScriptActionGetScript(global::PDFiumZ.FpdfJavascriptActionT javascript, ref ushort buffer, uint buflen)
         {
             var __arg0 = javascript is null ? __IntPtr.Zero : javascript.__Instance;
             fixed (ushort* __buffer1 = &buffer)
@@ -12858,7 +12858,7 @@ namespace PDFiumCore
         /// <para>Returns TRUE on success. Returns FALSE if any pages in |page_indices| is</para>
         /// <para>invalid.</para>
         /// </summary>
-        public static int FPDF_ImportPagesByIndex(global::PDFiumCore.FpdfDocumentT dest_doc, global::PDFiumCore.FpdfDocumentT src_doc, ref int page_indices, uint length, int index)
+        public static int FPDF_ImportPagesByIndex(global::PDFiumZ.FpdfDocumentT dest_doc, global::PDFiumZ.FpdfDocumentT src_doc, ref int page_indices, uint length, int index)
         {
             var __arg0 = dest_doc is null ? __IntPtr.Zero : dest_doc.__Instance;
             var __arg1 = src_doc is null ? __IntPtr.Zero : src_doc.__Instance;
@@ -12881,7 +12881,7 @@ namespace PDFiumCore
         /// <para>Returns TRUE on success. Returns FALSE if any pages in |pagerange| is</para>
         /// <para>invalid or if |pagerange| cannot be read.</para>
         /// </summary>
-        public static int FPDF_ImportPages(global::PDFiumCore.FpdfDocumentT dest_doc, global::PDFiumCore.FpdfDocumentT src_doc, string pagerange, int index)
+        public static int FPDF_ImportPages(global::PDFiumZ.FpdfDocumentT dest_doc, global::PDFiumZ.FpdfDocumentT src_doc, string pagerange, int index)
         {
             var __arg0 = dest_doc is null ? __IntPtr.Zero : dest_doc.__Instance;
             var __arg1 = src_doc is null ? __IntPtr.Zero : src_doc.__Instance;
@@ -12904,11 +12904,11 @@ namespace PDFiumCore
         /// <para>Comments:</para>
         /// <para>number of pages per page = num_pages_on_x_axis * num_pages_on_y_axis</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfDocumentT FPDF_ImportNPagesToOne(global::PDFiumCore.FpdfDocumentT src_doc, float output_width, float output_height, ulong num_pages_on_x_axis, ulong num_pages_on_y_axis)
+        public static global::PDFiumZ.FpdfDocumentT FPDF_ImportNPagesToOne(global::PDFiumZ.FpdfDocumentT src_doc, float output_width, float output_height, ulong num_pages_on_x_axis, ulong num_pages_on_y_axis)
         {
             var __arg0 = src_doc is null ? __IntPtr.Zero : src_doc.__Instance;
             var ___ret = __Internal.FPDF_ImportNPagesToOne(__arg0, output_width, output_height, num_pages_on_x_axis, num_pages_on_y_axis);
-            var __result0 = global::PDFiumCore.FpdfDocumentT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfDocumentT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -12919,12 +12919,12 @@ namespace PDFiumCore
         /// <para>Returns a handle on success, or NULL on failure. Caller owns the newly</para>
         /// <para>created object.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfXobjectT FPDF_NewXObjectFromPage(global::PDFiumCore.FpdfDocumentT dest_doc, global::PDFiumCore.FpdfDocumentT src_doc, int src_page_index)
+        public static global::PDFiumZ.FpdfXobjectT FPDF_NewXObjectFromPage(global::PDFiumZ.FpdfDocumentT dest_doc, global::PDFiumZ.FpdfDocumentT src_doc, int src_page_index)
         {
             var __arg0 = dest_doc is null ? __IntPtr.Zero : dest_doc.__Instance;
             var __arg1 = src_doc is null ? __IntPtr.Zero : src_doc.__Instance;
             var ___ret = __Internal.FPDF_NewXObjectFromPage(__arg0, __arg1, src_page_index);
-            var __result0 = global::PDFiumCore.FpdfXobjectT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfXobjectT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -12933,7 +12933,7 @@ namespace PDFiumCore
         /// <para>Close an FPDF_XOBJECT handle created by FPDF_NewXObjectFromPage().</para>
         /// <para>FPDF_PAGEOBJECTs created from the FPDF_XOBJECT handle are not affected.</para>
         /// </summary>
-        public static void FPDF_CloseXObject(global::PDFiumCore.FpdfXobjectT xobject)
+        public static void FPDF_CloseXObject(global::PDFiumZ.FpdfXobjectT xobject)
         {
             var __arg0 = xobject is null ? __IntPtr.Zero : xobject.__Instance;
             __Internal.FPDF_CloseXObject(__arg0);
@@ -12945,11 +12945,11 @@ namespace PDFiumCore
         /// <para>Returns a new form object on success, or NULL on failure. Caller owns the</para>
         /// <para>newly created object.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPageobjectT FPDF_NewFormObjectFromXObject(global::PDFiumCore.FpdfXobjectT xobject)
+        public static global::PDFiumZ.FpdfPageobjectT FPDF_NewFormObjectFromXObject(global::PDFiumZ.FpdfXobjectT xobject)
         {
             var __arg0 = xobject is null ? __IntPtr.Zero : xobject.__Instance;
             var ___ret = __Internal.FPDF_NewFormObjectFromXObject(__arg0);
-            var __result0 = global::PDFiumCore.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -12959,7 +12959,7 @@ namespace PDFiumCore
         /// <para>src_doc  - Document to read the viewer preferences from.</para>
         /// <para>Returns TRUE on success.</para>
         /// </summary>
-        public static int FPDF_CopyViewerPreferences(global::PDFiumCore.FpdfDocumentT dest_doc, global::PDFiumCore.FpdfDocumentT src_doc)
+        public static int FPDF_CopyViewerPreferences(global::PDFiumZ.FpdfDocumentT dest_doc, global::PDFiumZ.FpdfDocumentT src_doc)
         {
             var __arg0 = dest_doc is null ? __IntPtr.Zero : dest_doc.__Instance;
             var __arg1 = src_doc is null ? __IntPtr.Zero : src_doc.__Instance;
@@ -12983,15 +12983,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.IFSDK_PAUSE> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.IFSDK_PAUSE>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.IFSDK_PAUSE> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.IFSDK_PAUSE>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.IFSDK_PAUSE managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.IFSDK_PAUSE managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.IFSDK_PAUSE managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.IFSDK_PAUSE managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -13046,17 +13046,17 @@ namespace PDFiumCore
 
         public IFSDK_PAUSE()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.IFSDK_PAUSE.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.IFSDK_PAUSE.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public IFSDK_PAUSE(global::PDFiumCore.IFSDK_PAUSE _0)
+        public IFSDK_PAUSE(global::PDFiumZ.IFSDK_PAUSE _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.IFSDK_PAUSE.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.IFSDK_PAUSE.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.IFSDK_PAUSE.__Internal*) __Instance) = *((global::PDFiumCore.IFSDK_PAUSE.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.IFSDK_PAUSE.__Internal*) __Instance) = *((global::PDFiumZ.IFSDK_PAUSE.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -13090,12 +13090,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr NeedToPauseNow
+        public global::PDFiumZ.Delegates.Func_int___IntPtr NeedToPauseNow
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->NeedToPauseNow;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr));
             }
 
             set
@@ -13154,7 +13154,7 @@ namespace PDFiumCore
         /// <para>Rendering Status. See flags for progressive process status for the</para>
         /// <para>details.</para>
         /// </summary>
-        public static int FPDF_RenderPageBitmapWithColorSchemeStart(global::PDFiumCore.FpdfBitmapT bitmap, global::PDFiumCore.FpdfPageT page, int start_x, int start_y, int size_x, int size_y, int rotate, int flags, global::PDFiumCore.FPDF_COLORSCHEME_ color_scheme, global::PDFiumCore.IFSDK_PAUSE pause)
+        public static int FPDF_RenderPageBitmapWithColorSchemeStart(global::PDFiumZ.FpdfBitmapT bitmap, global::PDFiumZ.FpdfPageT page, int start_x, int start_y, int size_x, int size_y, int rotate, int flags, global::PDFiumZ.FPDF_COLORSCHEME_ color_scheme, global::PDFiumZ.IFSDK_PAUSE pause)
         {
             var __arg0 = bitmap is null ? __IntPtr.Zero : bitmap.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -13182,7 +13182,7 @@ namespace PDFiumCore
         /// <para>Rendering Status. See flags for progressive process status for the</para>
         /// <para>details.</para>
         /// </summary>
-        public static int FPDF_RenderPageBitmapStart(global::PDFiumCore.FpdfBitmapT bitmap, global::PDFiumCore.FpdfPageT page, int start_x, int start_y, int size_x, int size_y, int rotate, int flags, global::PDFiumCore.IFSDK_PAUSE pause)
+        public static int FPDF_RenderPageBitmapStart(global::PDFiumZ.FpdfBitmapT bitmap, global::PDFiumZ.FpdfPageT page, int start_x, int start_y, int size_x, int size_y, int rotate, int flags, global::PDFiumZ.IFSDK_PAUSE pause)
         {
             var __arg0 = bitmap is null ? __IntPtr.Zero : bitmap.__Instance;
             var __arg1 = page is null ? __IntPtr.Zero : page.__Instance;
@@ -13201,7 +13201,7 @@ namespace PDFiumCore
         /// <para>The rendering status. See flags for progressive process status for</para>
         /// <para>the details.</para>
         /// </summary>
-        public static int FPDF_RenderPageContinue(global::PDFiumCore.FpdfPageT page, global::PDFiumCore.IFSDK_PAUSE pause)
+        public static int FPDF_RenderPageContinue(global::PDFiumZ.FpdfPageT page, global::PDFiumZ.IFSDK_PAUSE pause)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg1 = pause is null ? __IntPtr.Zero : pause.__Instance;
@@ -13219,7 +13219,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>None.</para>
         /// </summary>
-        public static void FPDF_RenderPageClose(global::PDFiumCore.FpdfPageT page)
+        public static void FPDF_RenderPageClose(global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             __Internal.FPDF_RenderPageClose(__arg0);
@@ -13240,15 +13240,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_FILEWRITE_> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_FILEWRITE_>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_FILEWRITE_> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_FILEWRITE_>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FPDF_FILEWRITE_ managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FPDF_FILEWRITE_ managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FPDF_FILEWRITE_ managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FPDF_FILEWRITE_ managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -13303,17 +13303,17 @@ namespace PDFiumCore
 
         public FPDF_FILEWRITE_()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_FILEWRITE_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_FILEWRITE_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FPDF_FILEWRITE_(global::PDFiumCore.FPDF_FILEWRITE_ _0)
+        public FPDF_FILEWRITE_(global::PDFiumZ.FPDF_FILEWRITE_ _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_FILEWRITE_.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_FILEWRITE_.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FPDF_FILEWRITE_.__Internal*) __Instance) = *((global::PDFiumCore.FPDF_FILEWRITE_.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FPDF_FILEWRITE_.__Internal*) __Instance) = *((global::PDFiumZ.FPDF_FILEWRITE_.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -13347,12 +13347,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_uint WriteBlock
+        public global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_uint WriteBlock
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->WriteBlock;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr_uint));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr_uint));
             }
 
             set
@@ -13383,7 +13383,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>TRUE for succeed, FALSE for failed.</para>
         /// </summary>
-        public static int FPDF_SaveAsCopy(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FPDF_FILEWRITE_ pFileWrite, uint flags)
+        public static int FPDF_SaveAsCopy(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FPDF_FILEWRITE_ pFileWrite, uint flags)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = pFileWrite is null ? __IntPtr.Zero : pFileWrite.__Instance;
@@ -13403,7 +13403,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>TRUE if succeed, FALSE if failed.</para>
         /// </summary>
-        public static int FPDF_SaveWithVersion(global::PDFiumCore.FpdfDocumentT document, global::PDFiumCore.FPDF_FILEWRITE_ pFileWrite, uint flags, int fileVersion)
+        public static int FPDF_SaveWithVersion(global::PDFiumZ.FpdfDocumentT document, global::PDFiumZ.FPDF_FILEWRITE_ pFileWrite, uint flags, int fileVersion)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var __arg1 = pFileWrite is null ? __IntPtr.Zero : pFileWrite.__Instance;
@@ -13429,7 +13429,7 @@ namespace PDFiumCore
         /// <para>nTextIndex - index of the text returned from FPDFText_GetText().</para>
         /// <para>Returns the index of the character in internal character list. -1 for error.</para>
         /// </summary>
-        public static int FPDFTextGetCharIndexFromTextIndex(global::PDFiumCore.FpdfTextpageT text_page, int nTextIndex)
+        public static int FPDFTextGetCharIndexFromTextIndex(global::PDFiumZ.FpdfTextpageT text_page, int nTextIndex)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var ___ret = __Internal.FPDFTextGetCharIndexFromTextIndex(__arg0, nTextIndex);
@@ -13442,7 +13442,7 @@ namespace PDFiumCore
         /// <para>nCharIndex - index of the character in internal character list.</para>
         /// <para>Returns the index of the text returned from FPDFText_GetText(). -1 for error.</para>
         /// </summary>
-        public static int FPDFTextGetTextIndexFromCharIndex(global::PDFiumCore.FpdfTextpageT text_page, int nCharIndex)
+        public static int FPDFTextGetTextIndexFromCharIndex(global::PDFiumZ.FpdfTextpageT text_page, int nCharIndex)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var ___ret = __Internal.FPDFTextGetTextIndexFromCharIndex(__arg0, nCharIndex);
@@ -13487,7 +13487,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>Total number of signatures in the document on success, -1 on error.</para>
         /// </summary>
-        public static int FPDF_GetSignatureCount(global::PDFiumCore.FpdfDocumentT document)
+        public static int FPDF_GetSignatureCount(global::PDFiumZ.FpdfDocumentT document)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_GetSignatureCount(__arg0);
@@ -13505,11 +13505,11 @@ namespace PDFiumCore
         /// <para>does not take ownership of the returned FPDF_SIGNATURE. Instead, it</para>
         /// <para>remains valid until FPDF_CloseDocument() is called for the document.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfSignatureT FPDF_GetSignatureObject(global::PDFiumCore.FpdfDocumentT document, int index)
+        public static global::PDFiumZ.FpdfSignatureT FPDF_GetSignatureObject(global::PDFiumZ.FpdfDocumentT document, int index)
         {
             var __arg0 = document is null ? __IntPtr.Zero : document.__Instance;
             var ___ret = __Internal.FPDF_GetSignatureObject(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfSignatureT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfSignatureT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -13526,7 +13526,7 @@ namespace PDFiumCore
         /// <para>a DER-encoded PKCS#7 binary. If |length| is less than the returned length, or</para>
         /// <para>|buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDFSignatureObjGetContents(global::PDFiumCore.FpdfSignatureT signature, __IntPtr buffer, uint length)
+        public static uint FPDFSignatureObjGetContents(global::PDFiumZ.FpdfSignatureT signature, __IntPtr buffer, uint length)
         {
             var __arg0 = signature is null ? __IntPtr.Zero : signature.__Instance;
             var ___ret = __Internal.FPDFSignatureObjGetContents(__arg0, buffer, length);
@@ -13548,7 +13548,7 @@ namespace PDFiumCore
         /// <para>calculation. If |length| is less than the returned length, or</para>
         /// <para>|buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDFSignatureObjGetByteRange(global::PDFiumCore.FpdfSignatureT signature, ref int buffer, uint length)
+        public static uint FPDFSignatureObjGetByteRange(global::PDFiumZ.FpdfSignatureT signature, ref int buffer, uint length)
         {
             var __arg0 = signature is null ? __IntPtr.Zero : signature.__Instance;
             fixed (int* __buffer1 = &buffer)
@@ -13572,7 +13572,7 @@ namespace PDFiumCore
         /// <para>The |buffer| is always encoded in 7-bit ASCII. If |length| is less than the</para>
         /// <para>returned length, or |buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDFSignatureObjGetSubFilter(global::PDFiumCore.FpdfSignatureT signature, sbyte* buffer, uint length)
+        public static uint FPDFSignatureObjGetSubFilter(global::PDFiumZ.FpdfSignatureT signature, sbyte* buffer, uint length)
         {
             var __arg0 = signature is null ? __IntPtr.Zero : signature.__Instance;
             var ___ret = __Internal.FPDFSignatureObjGetSubFilter(__arg0, buffer, length);
@@ -13592,7 +13592,7 @@ namespace PDFiumCore
         /// <para>string is terminated by a UTF16 NUL character. If |length| is less than the</para>
         /// <para>returned length, or |buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDFSignatureObjGetReason(global::PDFiumCore.FpdfSignatureT signature, __IntPtr buffer, uint length)
+        public static uint FPDFSignatureObjGetReason(global::PDFiumZ.FpdfSignatureT signature, __IntPtr buffer, uint length)
         {
             var __arg0 = signature is null ? __IntPtr.Zero : signature.__Instance;
             var ___ret = __Internal.FPDFSignatureObjGetReason(__arg0, buffer, length);
@@ -13616,7 +13616,7 @@ namespace PDFiumCore
         /// <para>only when the time of signing is not available in the (PKCS#7 binary)</para>
         /// <para>signature.</para>
         /// </summary>
-        public static uint FPDFSignatureObjGetTime(global::PDFiumCore.FpdfSignatureT signature, sbyte* buffer, uint length)
+        public static uint FPDFSignatureObjGetTime(global::PDFiumZ.FpdfSignatureT signature, sbyte* buffer, uint length)
         {
             var __arg0 = signature is null ? __IntPtr.Zero : signature.__Instance;
             var ___ret = __Internal.FPDFSignatureObjGetTime(__arg0, buffer, length);
@@ -13631,7 +13631,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>Returns the permission (1, 2 or 3) on success, 0 on error.</para>
         /// </summary>
-        public static uint FPDFSignatureObjGetDocMDPPermission(global::PDFiumCore.FpdfSignatureT signature)
+        public static uint FPDFSignatureObjGetDocMDPPermission(global::PDFiumZ.FpdfSignatureT signature)
         {
             var __arg0 = signature is null ? __IntPtr.Zero : signature.__Instance;
             var ___ret = __Internal.FPDFSignatureObjGetDocMDPPermission(__arg0);
@@ -13747,11 +13747,11 @@ namespace PDFiumCore
         /// <para>returned handle and must use FPDF_StructTree_Close() to release it.</para>
         /// <para>The handle should be released before |page| gets released.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfStructtreeT FPDF_StructTreeGetForPage(global::PDFiumCore.FpdfPageT page)
+        public static global::PDFiumZ.FpdfStructtreeT FPDF_StructTreeGetForPage(global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDF_StructTreeGetForPage(__arg0);
-            var __result0 = global::PDFiumCore.FpdfStructtreeT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfStructtreeT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -13763,7 +13763,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>None.</para>
         /// </summary>
-        public static void FPDF_StructTreeClose(global::PDFiumCore.FpdfStructtreeT struct_tree)
+        public static void FPDF_StructTreeClose(global::PDFiumZ.FpdfStructtreeT struct_tree)
         {
             var __arg0 = struct_tree is null ? __IntPtr.Zero : struct_tree.__Instance;
             __Internal.FPDF_StructTreeClose(__arg0);
@@ -13777,7 +13777,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The number of children, or -1 on error.</para>
         /// </summary>
-        public static int FPDF_StructTreeCountChildren(global::PDFiumCore.FpdfStructtreeT struct_tree)
+        public static int FPDF_StructTreeCountChildren(global::PDFiumZ.FpdfStructtreeT struct_tree)
         {
             var __arg0 = struct_tree is null ? __IntPtr.Zero : struct_tree.__Instance;
             var ___ret = __Internal.FPDF_StructTreeCountChildren(__arg0);
@@ -13796,11 +13796,11 @@ namespace PDFiumCore
         /// <para>remains valid.</para>
         /// <para>Comments: The |index| must be less than the FPDF_StructTree_CountChildren() return value.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfStructelementT FPDF_StructTreeGetChildAtIndex(global::PDFiumCore.FpdfStructtreeT struct_tree, int index)
+        public static global::PDFiumZ.FpdfStructelementT FPDF_StructTreeGetChildAtIndex(global::PDFiumZ.FpdfStructtreeT struct_tree, int index)
         {
             var __arg0 = struct_tree is null ? __IntPtr.Zero : struct_tree.__Instance;
             var ___ret = __Internal.FPDF_StructTreeGetChildAtIndex(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfStructelementT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfStructelementT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -13817,7 +13817,7 @@ namespace PDFiumCore
         /// <para>|buffer| and |buflen| parameters.</para>
         /// <para>Comments: Regardless of the platform, the |buffer| is always in UTF-16LE encoding. The string is terminated by a UTF16 NUL character. If |buflen| is less than the required length, or |buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDF_StructElementGetAltText(global::PDFiumCore.FpdfStructelementT struct_element, __IntPtr buffer, uint buflen)
+        public static uint FPDF_StructElementGetAltText(global::PDFiumZ.FpdfStructelementT struct_element, __IntPtr buffer, uint buflen)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetAltText(__arg0, buffer, buflen);
@@ -13837,7 +13837,7 @@ namespace PDFiumCore
         /// <para>|buffer| and |buflen| parameters.</para>
         /// <para>Comments: Regardless of the platform, the |buffer| is always in UTF-16LE encoding. The string is terminated by a UTF16 NUL character. If |buflen| is less than the required length, or |buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDF_StructElementGetActualText(global::PDFiumCore.FpdfStructelementT struct_element, __IntPtr buffer, uint buflen)
+        public static uint FPDF_StructElementGetActualText(global::PDFiumZ.FpdfStructelementT struct_element, __IntPtr buffer, uint buflen)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetActualText(__arg0, buffer, buflen);
@@ -13857,7 +13857,7 @@ namespace PDFiumCore
         /// <para>|buffer| and |buflen| parameters.</para>
         /// <para>Comments: Regardless of the platform, the |buffer| is always in UTF-16LE encoding. The string is terminated by a UTF16 NUL character. If |buflen| is less than the required length, or |buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDF_StructElementGetID(global::PDFiumCore.FpdfStructelementT struct_element, __IntPtr buffer, uint buflen)
+        public static uint FPDF_StructElementGetID(global::PDFiumZ.FpdfStructelementT struct_element, __IntPtr buffer, uint buflen)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetID(__arg0, buffer, buflen);
@@ -13877,7 +13877,7 @@ namespace PDFiumCore
         /// <para>|buffer| and |buflen| parameters.</para>
         /// <para>Comments: Regardless of the platform, the |buffer| is always in UTF-16LE encoding. The string is terminated by a UTF16 NUL character. If |buflen| is less than the required length, or |buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDF_StructElementGetLang(global::PDFiumCore.FpdfStructelementT struct_element, __IntPtr buffer, uint buflen)
+        public static uint FPDF_StructElementGetLang(global::PDFiumZ.FpdfStructelementT struct_element, __IntPtr buffer, uint buflen)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetLang(__arg0, buffer, buflen);
@@ -13898,7 +13898,7 @@ namespace PDFiumCore
         /// <para>regardless of the |buffer| and |buflen| parameters.</para>
         /// <para>Comments: Regardless of the platform, the |buffer| is always in UTF-16LE encoding. The string is terminated by a UTF16 NUL character. If |buflen| is less than the required length, or |buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDF_StructElementGetStringAttribute(global::PDFiumCore.FpdfStructelementT struct_element, string attr_name, __IntPtr buffer, uint buflen)
+        public static uint FPDF_StructElementGetStringAttribute(global::PDFiumZ.FpdfStructelementT struct_element, string attr_name, __IntPtr buffer, uint buflen)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetStringAttribute(__arg0, attr_name, buffer, buflen);
@@ -13915,7 +13915,7 @@ namespace PDFiumCore
         /// <para>-1.</para>
         /// <para>Comments: FPDF_StructElement_GetMarkedContentIdAtIndex() may be able to extract more marked content IDs out of |struct_element|. This API may be deprecated in the future.</para>
         /// </summary>
-        public static int FPDF_StructElementGetMarkedContentID(global::PDFiumCore.FpdfStructelementT struct_element)
+        public static int FPDF_StructElementGetMarkedContentID(global::PDFiumZ.FpdfStructelementT struct_element)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetMarkedContentID(__arg0);
@@ -13935,7 +13935,7 @@ namespace PDFiumCore
         /// <para>|buffer| and |buflen| parameters.</para>
         /// <para>Comments: Regardless of the platform, the |buffer| is always in UTF-16LE encoding. The string is terminated by a UTF16 NUL character. If |buflen| is less than the required length, or |buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDF_StructElementGetType(global::PDFiumCore.FpdfStructelementT struct_element, __IntPtr buffer, uint buflen)
+        public static uint FPDF_StructElementGetType(global::PDFiumZ.FpdfStructelementT struct_element, __IntPtr buffer, uint buflen)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetType(__arg0, buffer, buflen);
@@ -13955,7 +13955,7 @@ namespace PDFiumCore
         /// <para>|buffer| and |buflen| parameters.</para>
         /// <para>Comments: Regardless of the platform, the |buffer| is always in UTF-16LE encoding. The string is terminated by a UTF16 NUL character. If |buflen| is less than the required length, or |buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDF_StructElementGetObjType(global::PDFiumCore.FpdfStructelementT struct_element, __IntPtr buffer, uint buflen)
+        public static uint FPDF_StructElementGetObjType(global::PDFiumZ.FpdfStructelementT struct_element, __IntPtr buffer, uint buflen)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetObjType(__arg0, buffer, buflen);
@@ -13975,7 +13975,7 @@ namespace PDFiumCore
         /// <para>|buffer| and |buflen| parameters.</para>
         /// <para>Comments: Regardless of the platform, the |buffer| is always in UTF-16LE encoding. The string is terminated by a UTF16 NUL character. If |buflen| is less than the required length, or |buffer| is NULL, |buffer| will not be modified.</para>
         /// </summary>
-        public static uint FPDF_StructElementGetTitle(global::PDFiumCore.FpdfStructelementT struct_element, __IntPtr buffer, uint buflen)
+        public static uint FPDF_StructElementGetTitle(global::PDFiumZ.FpdfStructelementT struct_element, __IntPtr buffer, uint buflen)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetTitle(__arg0, buffer, buflen);
@@ -13990,7 +13990,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The number of children, or -1 on error.</para>
         /// </summary>
-        public static int FPDF_StructElementCountChildren(global::PDFiumCore.FpdfStructelementT struct_element)
+        public static int FPDF_StructElementCountChildren(global::PDFiumZ.FpdfStructelementT struct_element)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementCountChildren(__arg0);
@@ -14007,11 +14007,11 @@ namespace PDFiumCore
         /// <para>The child at the n-th index or NULL on error.</para>
         /// <para>Comments: If the child exists but is not an element, then this function will return NULL. This will also return NULL for out of bounds indices. The |index| must be less than the FPDF_StructElement_CountChildren() return value.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfStructelementT FPDF_StructElementGetChildAtIndex(global::PDFiumCore.FpdfStructelementT struct_element, int index)
+        public static global::PDFiumZ.FpdfStructelementT FPDF_StructElementGetChildAtIndex(global::PDFiumZ.FpdfStructelementT struct_element, int index)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetChildAtIndex(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfStructelementT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfStructelementT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -14025,7 +14025,7 @@ namespace PDFiumCore
         /// <para>The marked content ID of the child. If no ID exists, returns -1.</para>
         /// <para>Comments: If the child exists but is not a stream or object, then this function will return -1. This will also return -1 for out of bounds indices. Compared to FPDF_StructElement_GetMarkedContentIdAtIndex, it is scoped to the current page. The |index| must be less than the FPDF_StructElement_CountChildren() return value.</para>
         /// </summary>
-        public static int FPDF_StructElementGetChildMarkedContentID(global::PDFiumCore.FpdfStructelementT struct_element, int index)
+        public static int FPDF_StructElementGetChildMarkedContentID(global::PDFiumZ.FpdfStructelementT struct_element, int index)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetChildMarkedContentID(__arg0, index);
@@ -14041,11 +14041,11 @@ namespace PDFiumCore
         /// <para>The parent structure element or NULL on error.</para>
         /// <para>Comments: If structure element is StructTreeRoot, then this function will return NULL.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfStructelementT FPDF_StructElementGetParent(global::PDFiumCore.FpdfStructelementT struct_element)
+        public static global::PDFiumZ.FpdfStructelementT FPDF_StructElementGetParent(global::PDFiumZ.FpdfStructelementT struct_element)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetParent(__arg0);
-            var __result0 = global::PDFiumCore.FpdfStructelementT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfStructelementT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -14057,7 +14057,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The number of attributes, or -1 on error.</para>
         /// </summary>
-        public static int FPDF_StructElementGetAttributeCount(global::PDFiumCore.FpdfStructelementT struct_element)
+        public static int FPDF_StructElementGetAttributeCount(global::PDFiumZ.FpdfStructelementT struct_element)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetAttributeCount(__arg0);
@@ -14074,11 +14074,11 @@ namespace PDFiumCore
         /// <para>The attribute object at the n-th index or NULL on error.</para>
         /// <para>Comments: If the attribute object exists but is not a dict, then this function will return NULL. This will also return NULL for out of bounds indices. The caller does not own the handle. The handle remains valid as long as |struct_element| remains valid. The |index| must be less than the FPDF_StructElement_GetAttributeCount() return value.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfStructelementAttrT FPDF_StructElementGetAttributeAtIndex(global::PDFiumCore.FpdfStructelementT struct_element, int index)
+        public static global::PDFiumZ.FpdfStructelementAttrT FPDF_StructElementGetAttributeAtIndex(global::PDFiumZ.FpdfStructelementT struct_element, int index)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetAttributeAtIndex(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfStructelementAttrT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfStructelementAttrT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -14090,7 +14090,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The number of attributes, or -1 on error.</para>
         /// </summary>
-        public static int FPDF_StructElementAttrGetCount(global::PDFiumCore.FpdfStructelementAttrT struct_attribute)
+        public static int FPDF_StructElementAttrGetCount(global::PDFiumZ.FpdfStructelementAttrT struct_attribute)
         {
             var __arg0 = struct_attribute is null ? __IntPtr.Zero : struct_attribute.__Instance;
             var ___ret = __Internal.FPDF_StructElementAttrGetCount(__arg0);
@@ -14109,7 +14109,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>TRUE if the operation was successful, FALSE otherwise.</para>
         /// </summary>
-        public static int FPDF_StructElementAttrGetName(global::PDFiumCore.FpdfStructelementAttrT struct_attribute, int index, __IntPtr buffer, uint buflen, ref uint out_buflen)
+        public static int FPDF_StructElementAttrGetName(global::PDFiumZ.FpdfStructelementAttrT struct_attribute, int index, __IntPtr buffer, uint buflen, ref uint out_buflen)
         {
             var __arg0 = struct_attribute is null ? __IntPtr.Zero : struct_attribute.__Instance;
             fixed (uint* __out_buflen4 = &out_buflen)
@@ -14133,11 +14133,11 @@ namespace PDFiumCore
         /// <para>The handle remains valid as long as |struct_attribute| remains</para>
         /// <para>valid.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfStructelementAttrValueT FPDF_StructElementAttrGetValue(global::PDFiumCore.FpdfStructelementAttrT struct_attribute, string name)
+        public static global::PDFiumZ.FpdfStructelementAttrValueT FPDF_StructElementAttrGetValue(global::PDFiumZ.FpdfStructelementAttrT struct_attribute, string name)
         {
             var __arg0 = struct_attribute is null ? __IntPtr.Zero : struct_attribute.__Instance;
             var ___ret = __Internal.FPDF_StructElementAttrGetValue(__arg0, name);
-            var __result0 = global::PDFiumCore.FpdfStructelementAttrValueT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfStructelementAttrValueT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -14151,7 +14151,7 @@ namespace PDFiumCore
         /// <para>failure. Note that this will never return FPDF_OBJECT_REFERENCE, as</para>
         /// <para>references are always dereferenced.</para>
         /// </summary>
-        public static int FPDF_StructElementAttrGetType(global::PDFiumCore.FpdfStructelementAttrValueT value)
+        public static int FPDF_StructElementAttrGetType(global::PDFiumZ.FpdfStructelementAttrValueT value)
         {
             var __arg0 = value is null ? __IntPtr.Zero : value.__Instance;
             var ___ret = __Internal.FPDF_StructElementAttrGetType(__arg0);
@@ -14170,7 +14170,7 @@ namespace PDFiumCore
         /// <para>Returns TRUE if the attribute maps to a boolean value, FALSE</para>
         /// <para>otherwise.</para>
         /// </summary>
-        public static int FPDF_StructElementAttrGetBooleanValue(global::PDFiumCore.FpdfStructelementAttrValueT value, ref int out_value)
+        public static int FPDF_StructElementAttrGetBooleanValue(global::PDFiumZ.FpdfStructelementAttrValueT value, ref int out_value)
         {
             var __arg0 = value is null ? __IntPtr.Zero : value.__Instance;
             fixed (int* __out_value1 = &out_value)
@@ -14193,7 +14193,7 @@ namespace PDFiumCore
         /// <para>Returns TRUE if the attribute maps to a number value, FALSE</para>
         /// <para>otherwise.</para>
         /// </summary>
-        public static int FPDF_StructElementAttrGetNumberValue(global::PDFiumCore.FpdfStructelementAttrValueT value, ref float out_value)
+        public static int FPDF_StructElementAttrGetNumberValue(global::PDFiumZ.FpdfStructelementAttrValueT value, ref float out_value)
         {
             var __arg0 = value is null ? __IntPtr.Zero : value.__Instance;
             fixed (float* __out_value1 = &out_value)
@@ -14218,7 +14218,7 @@ namespace PDFiumCore
         /// <para>Returns TRUE if the attribute maps to a string value, FALSE</para>
         /// <para>otherwise.</para>
         /// </summary>
-        public static int FPDF_StructElementAttrGetStringValue(global::PDFiumCore.FpdfStructelementAttrValueT value, __IntPtr buffer, uint buflen, ref uint out_buflen)
+        public static int FPDF_StructElementAttrGetStringValue(global::PDFiumZ.FpdfStructelementAttrValueT value, __IntPtr buffer, uint buflen, ref uint out_buflen)
         {
             var __arg0 = value is null ? __IntPtr.Zero : value.__Instance;
             fixed (uint* __out_buflen3 = &out_buflen)
@@ -14241,7 +14241,7 @@ namespace PDFiumCore
         /// <para>Returns TRUE if the attribute maps to a string value, FALSE</para>
         /// <para>otherwise.</para>
         /// </summary>
-        public static int FPDF_StructElementAttrGetBlobValue(global::PDFiumCore.FpdfStructelementAttrValueT value, __IntPtr buffer, uint buflen, ref uint out_buflen)
+        public static int FPDF_StructElementAttrGetBlobValue(global::PDFiumZ.FpdfStructelementAttrValueT value, __IntPtr buffer, uint buflen, ref uint out_buflen)
         {
             var __arg0 = value is null ? __IntPtr.Zero : value.__Instance;
             fixed (uint* __out_buflen3 = &out_buflen)
@@ -14260,7 +14260,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The number of children, or -1 on error.</para>
         /// </summary>
-        public static int FPDF_StructElementAttrCountChildren(global::PDFiumCore.FpdfStructelementAttrValueT value)
+        public static int FPDF_StructElementAttrCountChildren(global::PDFiumZ.FpdfStructelementAttrValueT value)
         {
             var __arg0 = value is null ? __IntPtr.Zero : value.__Instance;
             var ___ret = __Internal.FPDF_StructElementAttrCountChildren(__arg0);
@@ -14277,11 +14277,11 @@ namespace PDFiumCore
         /// <para>The child at the n-th index or NULL on error.</para>
         /// <para>Comments: The |index| must be less than the FPDF_StructElement_Attr_CountChildren() return value.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfStructelementAttrValueT FPDF_StructElementAttrGetChildAtIndex(global::PDFiumCore.FpdfStructelementAttrValueT value, int index)
+        public static global::PDFiumZ.FpdfStructelementAttrValueT FPDF_StructElementAttrGetChildAtIndex(global::PDFiumZ.FpdfStructelementAttrValueT value, int index)
         {
             var __arg0 = value is null ? __IntPtr.Zero : value.__Instance;
             var ___ret = __Internal.FPDF_StructElementAttrGetChildAtIndex(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfStructelementAttrValueT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfStructelementAttrValueT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -14293,7 +14293,7 @@ namespace PDFiumCore
         /// <para>Return value:</para>
         /// <para>The count of marked content ids or -1 if none exists.</para>
         /// </summary>
-        public static int FPDF_StructElementGetMarkedContentIdCount(global::PDFiumCore.FpdfStructelementT struct_element)
+        public static int FPDF_StructElementGetMarkedContentIdCount(global::PDFiumZ.FpdfStructelementT struct_element)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetMarkedContentIdCount(__arg0);
@@ -14311,7 +14311,7 @@ namespace PDFiumCore
         /// <para>-1.</para>
         /// <para>Comments: The |index| must be less than the FPDF_StructElement_GetMarkedContentIdCount() return value. This will likely supersede FPDF_StructElement_GetMarkedContentID().</para>
         /// </summary>
-        public static int FPDF_StructElementGetMarkedContentIdAtIndex(global::PDFiumCore.FpdfStructelementT struct_element, int index)
+        public static int FPDF_StructElementGetMarkedContentIdAtIndex(global::PDFiumZ.FpdfStructelementT struct_element, int index)
         {
             var __arg0 = struct_element is null ? __IntPtr.Zero : struct_element.__Instance;
             var ___ret = __Internal.FPDF_StructElementGetMarkedContentIdAtIndex(__arg0, index);
@@ -14340,15 +14340,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_SYSFONTINFO> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_SYSFONTINFO>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_SYSFONTINFO> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_SYSFONTINFO>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FPDF_SYSFONTINFO managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FPDF_SYSFONTINFO managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FPDF_SYSFONTINFO managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FPDF_SYSFONTINFO managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -14403,17 +14403,17 @@ namespace PDFiumCore
 
         public FPDF_SYSFONTINFO()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_SYSFONTINFO.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_SYSFONTINFO.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FPDF_SYSFONTINFO(global::PDFiumCore.FPDF_SYSFONTINFO _0)
+        public FPDF_SYSFONTINFO(global::PDFiumZ.FPDF_SYSFONTINFO _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_SYSFONTINFO.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_SYSFONTINFO.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FPDF_SYSFONTINFO.__Internal*) __Instance) = *((global::PDFiumCore.FPDF_SYSFONTINFO.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FPDF_SYSFONTINFO.__Internal*) __Instance) = *((global::PDFiumZ.FPDF_SYSFONTINFO.__Internal*) _0.__Instance);
         }
 
         public void Dispose()
@@ -14447,12 +14447,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr Release
+        public global::PDFiumZ.Delegates.Action___IntPtr Release
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->Release;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr));
             }
 
             set
@@ -14461,12 +14461,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr___IntPtr EnumFonts
+        public global::PDFiumZ.Delegates.Action___IntPtr___IntPtr EnumFonts
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->EnumFonts;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr___IntPtr));
             }
 
             set
@@ -14475,12 +14475,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func___IntPtr___IntPtr_int_int_int_int_string8_intPtr MapFont
+        public global::PDFiumZ.Delegates.Func___IntPtr___IntPtr_int_int_int_int_string8_intPtr MapFont
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->MapFont;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func___IntPtr___IntPtr_int_int_int_int_string8_intPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func___IntPtr___IntPtr_int_int_int_int_string8_intPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func___IntPtr___IntPtr_int_int_int_int_string8_intPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func___IntPtr___IntPtr_int_int_int_int_string8_intPtr));
             }
 
             set
@@ -14489,12 +14489,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func___IntPtr___IntPtr_string8 GetFont
+        public global::PDFiumZ.Delegates.Func___IntPtr___IntPtr_string8 GetFont
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->GetFont;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func___IntPtr___IntPtr_string8) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func___IntPtr___IntPtr_string8));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func___IntPtr___IntPtr_string8) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func___IntPtr___IntPtr_string8));
             }
 
             set
@@ -14503,12 +14503,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_uint___IntPtr___IntPtr_uint_bytePtr_uint GetFontData
+        public global::PDFiumZ.Delegates.Func_uint___IntPtr___IntPtr_uint_bytePtr_uint GetFontData
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->GetFontData;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_uint___IntPtr___IntPtr_uint_bytePtr_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_uint___IntPtr___IntPtr_uint_bytePtr_uint));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_uint___IntPtr___IntPtr_uint_bytePtr_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_uint___IntPtr___IntPtr_uint_bytePtr_uint));
             }
 
             set
@@ -14517,12 +14517,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_uint___IntPtr___IntPtr_sbytePtr_uint GetFaceName
+        public global::PDFiumZ.Delegates.Func_uint___IntPtr___IntPtr_sbytePtr_uint GetFaceName
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->GetFaceName;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_uint___IntPtr___IntPtr_sbytePtr_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_uint___IntPtr___IntPtr_sbytePtr_uint));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_uint___IntPtr___IntPtr_sbytePtr_uint) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_uint___IntPtr___IntPtr_sbytePtr_uint));
             }
 
             set
@@ -14531,12 +14531,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr GetFontCharset
+        public global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr GetFontCharset
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->GetFontCharset;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Func_int___IntPtr___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Func_int___IntPtr___IntPtr));
             }
 
             set
@@ -14545,12 +14545,12 @@ namespace PDFiumCore
             }
         }
 
-        public global::PDFiumCore.Delegates.Action___IntPtr___IntPtr DeleteFont
+        public global::PDFiumZ.Delegates.Action___IntPtr___IntPtr DeleteFont
         {
             get
             {
                 var __ptr0 = ((__Internal*)__Instance)->DeleteFont;
-                return __ptr0 == IntPtr.Zero? null : (global::PDFiumCore.Delegates.Action___IntPtr___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumCore.Delegates.Action___IntPtr___IntPtr));
+                return __ptr0 == IntPtr.Zero? null : (global::PDFiumZ.Delegates.Action___IntPtr___IntPtr) Marshal.GetDelegateForFunctionPointer(__ptr0, typeof(global::PDFiumZ.Delegates.Action___IntPtr___IntPtr));
             }
 
             set
@@ -14574,15 +14574,15 @@ namespace PDFiumCore
 
         public __IntPtr __Instance { get; protected set; }
 
-        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_CharsetFontMap> NativeToManagedMap =
-            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumCore.FPDF_CharsetFontMap>();
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_CharsetFontMap> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::PDFiumZ.FPDF_CharsetFontMap>();
 
-        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumCore.FPDF_CharsetFontMap managed)
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::PDFiumZ.FPDF_CharsetFontMap managed)
         {
             NativeToManagedMap[native] = managed;
         }
 
-        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumCore.FPDF_CharsetFontMap managed)
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::PDFiumZ.FPDF_CharsetFontMap managed)
         {
     
             return NativeToManagedMap.TryGetValue(native, out managed);
@@ -14638,17 +14638,17 @@ namespace PDFiumCore
 
         public FPDF_CharsetFontMap()
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_CharsetFontMap.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_CharsetFontMap.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
         }
 
-        public FPDF_CharsetFontMap(global::PDFiumCore.FPDF_CharsetFontMap _0)
+        public FPDF_CharsetFontMap(global::PDFiumZ.FPDF_CharsetFontMap _0)
         {
-            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumCore.FPDF_CharsetFontMap.__Internal));
+            __Instance = Marshal.AllocHGlobal(sizeof(global::PDFiumZ.FPDF_CharsetFontMap.__Internal));
             __ownsNativeInstance = true;
             __RecordNativeToManagedMapping(__Instance, this);
-            *((global::PDFiumCore.FPDF_CharsetFontMap.__Internal*) __Instance) = *((global::PDFiumCore.FPDF_CharsetFontMap.__Internal*) _0.__Instance);
+            *((global::PDFiumZ.FPDF_CharsetFontMap.__Internal*) __Instance) = *((global::PDFiumZ.FPDF_CharsetFontMap.__Internal*) _0.__Instance);
             if (_0.__fontname_OwnsNativeMemory)
                 this.Fontname = _0.Fontname;
         }
@@ -14752,10 +14752,10 @@ namespace PDFiumCore
         /// <para>longer experimental, this API will be marked as deprecated.</para>
         /// <para>See https://crbug.com/348468114</para>
         /// </summary>
-        public static global::PDFiumCore.FPDF_CharsetFontMap FPDF_GetDefaultTTFMap()
+        public static global::PDFiumZ.FPDF_CharsetFontMap FPDF_GetDefaultTTFMap()
         {
             var ___ret = __Internal.FPDF_GetDefaultTTFMap();
-            var __result0 = global::PDFiumCore.FPDF_CharsetFontMap.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FPDF_CharsetFontMap.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -14783,10 +14783,10 @@ namespace PDFiumCore
         /// <para>A pointer to the entry, if it is in the map, or NULL if the index is out</para>
         /// <para>of bounds.</para>
         /// </summary>
-        public static global::PDFiumCore.FPDF_CharsetFontMap FPDF_GetDefaultTTFMapEntry(ulong index)
+        public static global::PDFiumZ.FPDF_CharsetFontMap FPDF_GetDefaultTTFMapEntry(ulong index)
         {
             var ___ret = __Internal.FPDF_GetDefaultTTFMapEntry(index);
-            var __result0 = global::PDFiumCore.FPDF_CharsetFontMap.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FPDF_CharsetFontMap.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -14816,7 +14816,7 @@ namespace PDFiumCore
         /// <para>Comments: Platform support implementation should implement required methods of FFDF_SYSFONTINFO interface, then call this function during PDFium initialization process.</para>
         /// <para>Call this with NULL to tell PDFium to stop using a previously set |FPDF_SYSFONTINFO|.</para>
         /// </summary>
-        public static void FPDF_SetSystemFontInfo(global::PDFiumCore.FPDF_SYSFONTINFO font_info)
+        public static void FPDF_SetSystemFontInfo(global::PDFiumZ.FPDF_SYSFONTINFO font_info)
         {
             var __arg0 = font_info is null ? __IntPtr.Zero : font_info.__Instance;
             __Internal.FPDF_SetSystemFontInfo(__arg0);
@@ -14834,10 +14834,10 @@ namespace PDFiumCore
         /// <para>returned pointer.</para>
         /// <para>Comments: For some platforms, PDFium implements a default version of system font info interface. The default implementation can be passed to FPDF_SetSystemFontInfo().</para>
         /// </summary>
-        public static global::PDFiumCore.FPDF_SYSFONTINFO FPDF_GetDefaultSystemFontInfo()
+        public static global::PDFiumZ.FPDF_SYSFONTINFO FPDF_GetDefaultSystemFontInfo()
         {
             var ___ret = __Internal.FPDF_GetDefaultSystemFontInfo();
-            var __result0 = global::PDFiumCore.FPDF_SYSFONTINFO.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FPDF_SYSFONTINFO.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -14850,7 +14850,7 @@ namespace PDFiumCore
         /// <para>None</para>
         /// <para>Comments: This function should be called on the output from FPDF_GetDefaultSystemFontInfo() once it is no longer needed.</para>
         /// </summary>
-        public static void FPDF_FreeDefaultSystemFontInfo(global::PDFiumCore.FPDF_SYSFONTINFO font_info)
+        public static void FPDF_FreeDefaultSystemFontInfo(global::PDFiumZ.FPDF_SYSFONTINFO font_info)
         {
             var __arg0 = font_info is null ? __IntPtr.Zero : font_info.__Instance;
             __Internal.FPDF_FreeDefaultSystemFontInfo(__arg0);
@@ -14980,11 +14980,11 @@ namespace PDFiumCore
         /// <para>NULL if something goes wrong.</para>
         /// <para>Comments: Application must call FPDFText_ClosePage to release the text page information.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfTextpageT FPDFTextLoadPage(global::PDFiumCore.FpdfPageT page)
+        public static global::PDFiumZ.FpdfTextpageT FPDFTextLoadPage(global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFTextLoadPage(__arg0);
-            var __result0 = global::PDFiumCore.FpdfTextpageT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfTextpageT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -14997,7 +14997,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>None.</para>
         /// </summary>
-        public static void FPDFTextClosePage(global::PDFiumCore.FpdfTextpageT text_page)
+        public static void FPDFTextClosePage(global::PDFiumZ.FpdfTextpageT text_page)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             __Internal.FPDFTextClosePage(__arg0);
@@ -15014,7 +15014,7 @@ namespace PDFiumCore
         /// <para>characters, are also counted.</para>
         /// <para>Comments: Characters in a page form a &quot;stream&quot;, inside the stream, each character has an index. We will use the index parameters in many of FPDFTEXT functions. The first character in the page has an index value of zero.</para>
         /// </summary>
-        public static int FPDFTextCountChars(global::PDFiumCore.FpdfTextpageT text_page)
+        public static int FPDFTextCountChars(global::PDFiumZ.FpdfTextpageT text_page)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var ___ret = __Internal.FPDFTextCountChars(__arg0);
@@ -15033,7 +15033,7 @@ namespace PDFiumCore
         /// <para>convert to Unicode,</para>
         /// <para>the return value will be zero.</para>
         /// </summary>
-        public static uint FPDFTextGetUnicode(global::PDFiumCore.FpdfTextpageT text_page, int index)
+        public static uint FPDFTextGetUnicode(global::PDFiumZ.FpdfTextpageT text_page, int index)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var ___ret = __Internal.FPDFTextGetUnicode(__arg0, index);
@@ -15051,11 +15051,11 @@ namespace PDFiumCore
         /// <para>error. The returned text object, if non-null, is of type</para>
         /// <para>|FPDF_PAGEOBJ_TEXT|. The caller does not own the returned object.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPageobjectT FPDFTextGetTextObject(global::PDFiumCore.FpdfTextpageT text_page, int index)
+        public static global::PDFiumZ.FpdfPageobjectT FPDFTextGetTextObject(global::PDFiumZ.FpdfTextpageT text_page, int index)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var ___ret = __Internal.FPDFTextGetTextObject(__arg0, index);
-            var __result0 = global::PDFiumCore.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPageobjectT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -15070,7 +15070,7 @@ namespace PDFiumCore
         /// <para>0 if the character is not generated by PDFium.</para>
         /// <para>-1 if there was an error.</para>
         /// </summary>
-        public static int FPDFTextIsGenerated(global::PDFiumCore.FpdfTextpageT text_page, int index)
+        public static int FPDFTextIsGenerated(global::PDFiumZ.FpdfTextpageT text_page, int index)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var ___ret = __Internal.FPDFTextIsGenerated(__arg0, index);
@@ -15088,7 +15088,7 @@ namespace PDFiumCore
         /// <para>0 if the character is not a hyphen.</para>
         /// <para>-1 if there was an error.</para>
         /// </summary>
-        public static int FPDFTextIsHyphen(global::PDFiumCore.FpdfTextpageT text_page, int index)
+        public static int FPDFTextIsHyphen(global::PDFiumZ.FpdfTextpageT text_page, int index)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var ___ret = __Internal.FPDFTextIsHyphen(__arg0, index);
@@ -15106,7 +15106,7 @@ namespace PDFiumCore
         /// <para>0 if the character has no known unicode mapping issues.</para>
         /// <para>-1 if there was an error.</para>
         /// </summary>
-        public static int FPDFTextHasUnicodeMapError(global::PDFiumCore.FpdfTextpageT text_page, int index)
+        public static int FPDFTextHasUnicodeMapError(global::PDFiumZ.FpdfTextpageT text_page, int index)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var ___ret = __Internal.FPDFTextHasUnicodeMapError(__arg0, index);
@@ -15124,7 +15124,7 @@ namespace PDFiumCore
         /// <para>1/72 inch). This is the typographic size of the font (so called</para>
         /// <para>&quot;em size&quot;).</para>
         /// </summary>
-        public static double FPDFTextGetFontSize(global::PDFiumCore.FpdfTextpageT text_page, int index)
+        public static double FPDFTextGetFontSize(global::PDFiumZ.FpdfTextpageT text_page, int index)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var ___ret = __Internal.FPDFTextGetFontSize(__arg0, index);
@@ -15147,7 +15147,7 @@ namespace PDFiumCore
         /// <para>set to the font flags. |buffer| is in UTF-8 encoding. Return 0 on</para>
         /// <para>failure.</para>
         /// </summary>
-        public static uint FPDFTextGetFontInfo(global::PDFiumCore.FpdfTextpageT text_page, int index, __IntPtr buffer, uint buflen, ref int flags)
+        public static uint FPDFTextGetFontInfo(global::PDFiumZ.FpdfTextpageT text_page, int index, __IntPtr buffer, uint buflen, ref int flags)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             fixed (int* __flags4 = &flags)
@@ -15169,7 +15169,7 @@ namespace PDFiumCore
         /// <para>|text_page| is invalid, if |index| is out of bounds, or if the</para>
         /// <para>character's text object is undefined, return -1.</para>
         /// </summary>
-        public static int FPDFTextGetFontWeight(global::PDFiumCore.FpdfTextpageT text_page, int index)
+        public static int FPDFTextGetFontWeight(global::PDFiumZ.FpdfTextpageT text_page, int index)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var ___ret = __Internal.FPDFTextGetFontWeight(__arg0, index);
@@ -15190,7 +15190,7 @@ namespace PDFiumCore
         /// <para>Whether the call succeeded. If false, |R|, |G|, |B| and |A| are</para>
         /// <para>unchanged.</para>
         /// </summary>
-        public static int FPDFTextGetFillColor(global::PDFiumCore.FpdfTextpageT text_page, int index, ref uint R, ref uint G, ref uint B, ref uint A)
+        public static int FPDFTextGetFillColor(global::PDFiumZ.FpdfTextpageT text_page, int index, ref uint R, ref uint G, ref uint B, ref uint A)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             fixed (uint* __R2 = &R)
@@ -15227,7 +15227,7 @@ namespace PDFiumCore
         /// <para>Whether the call succeeded. If false, |R|, |G|, |B| and |A| are</para>
         /// <para>unchanged.</para>
         /// </summary>
-        public static int FPDFTextGetStrokeColor(global::PDFiumCore.FpdfTextpageT text_page, int index, ref uint R, ref uint G, ref uint B, ref uint A)
+        public static int FPDFTextGetStrokeColor(global::PDFiumZ.FpdfTextpageT text_page, int index, ref uint R, ref uint G, ref uint B, ref uint A)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             fixed (uint* __R2 = &R)
@@ -15261,7 +15261,7 @@ namespace PDFiumCore
         /// <para>greater or equal to 0. If |text_page| is invalid, or if |index| is</para>
         /// <para>out of bounds, then return -1.</para>
         /// </summary>
-        public static float FPDFTextGetCharAngle(global::PDFiumCore.FpdfTextpageT text_page, int index)
+        public static float FPDFTextGetCharAngle(global::PDFiumZ.FpdfTextpageT text_page, int index)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var ___ret = __Internal.FPDFTextGetCharAngle(__arg0, index);
@@ -15284,7 +15284,7 @@ namespace PDFiumCore
         /// <para>then return FALSE, and the out parameters remain unmodified.</para>
         /// <para>Comments: All positions are measured in PDF &quot;user space&quot;.</para>
         /// </summary>
-        public static int FPDFTextGetCharBox(global::PDFiumCore.FpdfTextpageT text_page, int index, ref double left, ref double right, ref double bottom, ref double top)
+        public static int FPDFTextGetCharBox(global::PDFiumZ.FpdfTextpageT text_page, int index, ref double left, ref double right, ref double bottom, ref double top)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             fixed (double* __left2 = &left)
@@ -15322,7 +15322,7 @@ namespace PDFiumCore
         /// <para>|rect| out parameter remains unmodified.</para>
         /// <para>Comments: All positions are measured in PDF &quot;user space&quot;.</para>
         /// </summary>
-        public static int FPDFTextGetLooseCharBox(global::PDFiumCore.FpdfTextpageT text_page, int index, global::PDFiumCore.FS_RECTF_ rect)
+        public static int FPDFTextGetLooseCharBox(global::PDFiumZ.FpdfTextpageT text_page, int index, global::PDFiumZ.FS_RECTF_ rect)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var __arg2 = rect is null ? __IntPtr.Zero : rect.__Instance;
@@ -15342,7 +15342,7 @@ namespace PDFiumCore
         /// <para>invalid, or if |index| is out of bounds, or if |matrix| is NULL,</para>
         /// <para>then return FALSE, and |matrix| remains unmodified.</para>
         /// </summary>
-        public static int FPDFTextGetMatrix(global::PDFiumCore.FpdfTextpageT text_page, int index, global::PDFiumCore.FS_MATRIX_ matrix)
+        public static int FPDFTextGetMatrix(global::PDFiumZ.FpdfTextpageT text_page, int index, global::PDFiumZ.FS_MATRIX_ matrix)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var __arg2 = matrix is null ? __IntPtr.Zero : matrix.__Instance;
@@ -15362,7 +15362,7 @@ namespace PDFiumCore
         /// <para>Whether the call succeeded. If false, x and y are unchanged.</para>
         /// <para>Comments: All positions are measured in PDF &quot;user space&quot;.</para>
         /// </summary>
-        public static int FPDFTextGetCharOrigin(global::PDFiumCore.FpdfTextpageT text_page, int index, ref double x, ref double y)
+        public static int FPDFTextGetCharOrigin(global::PDFiumZ.FpdfTextpageT text_page, int index, ref double x, ref double y)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             fixed (double* __x2 = &x)
@@ -15392,7 +15392,7 @@ namespace PDFiumCore
         /// <para>If there is no character at or nearby the point, return value will</para>
         /// <para>be -1. If an error occurs, -3 will be returned.</para>
         /// </summary>
-        public static int FPDFTextGetCharIndexAtPos(global::PDFiumCore.FpdfTextpageT text_page, double x, double y, double xTolerance, double yTolerance)
+        public static int FPDFTextGetCharIndexAtPos(global::PDFiumZ.FpdfTextpageT text_page, double x, double y, double xTolerance, double yTolerance)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var ___ret = __Internal.FPDFTextGetCharIndexAtPos(__arg0, x, y, xTolerance, yTolerance);
@@ -15412,7 +15412,7 @@ namespace PDFiumCore
         /// <para>trailing terminator.</para>
         /// <para>Comments: This function ignores characters without UCS-2 representations. It considers all characters on the page, even those that are not visible when the page has a cropbox. To filter out the characters outside of the cropbox, use FPDF_GetPageBoundingBox() and FPDFText_GetCharBox().</para>
         /// </summary>
-        public static int FPDFTextGetText(global::PDFiumCore.FpdfTextpageT text_page, int start_index, int count, ref ushort result)
+        public static int FPDFTextGetText(global::PDFiumZ.FpdfTextpageT text_page, int start_index, int count, ref ushort result)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             fixed (ushort* __result3 = &result)
@@ -15436,7 +15436,7 @@ namespace PDFiumCore
         /// <para>start_index.</para>
         /// <para>Comments: This function, along with FPDFText_GetRect can be used by applications to detect the position on the page for a text segment, so proper areas can be highlighted. The FPDFText_* functions will automatically merge small character boxes into bigger one if those characters are on the same line and use same font settings.</para>
         /// </summary>
-        public static int FPDFTextCountRects(global::PDFiumCore.FpdfTextpageT text_page, int start_index, int count)
+        public static int FPDFTextCountRects(global::PDFiumZ.FpdfTextpageT text_page, int start_index, int count)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var ___ret = __Internal.FPDFTextCountRects(__arg0, start_index, count);
@@ -15461,7 +15461,7 @@ namespace PDFiumCore
         /// <para>|rect_index| is out of bounds, then return FALSE and set the out</para>
         /// <para>parameters to 0.</para>
         /// </summary>
-        public static int FPDFTextGetRect(global::PDFiumCore.FpdfTextpageT text_page, int rect_index, ref double left, ref double top, ref double right, ref double bottom)
+        public static int FPDFTextGetRect(global::PDFiumZ.FpdfTextpageT text_page, int rect_index, ref double left, ref double top, ref double right, ref double bottom)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             fixed (double* __left2 = &left)
@@ -15507,7 +15507,7 @@ namespace PDFiumCore
         /// <para>If the buffer is too small, as much text as will fit is copied into</para>
         /// <para>it. May return a split surrogate in that case.</para>
         /// </summary>
-        public static int FPDFTextGetBoundedText(global::PDFiumCore.FpdfTextpageT text_page, double left, double top, double right, double bottom, ref ushort buffer, int buflen)
+        public static int FPDFTextGetBoundedText(global::PDFiumZ.FpdfTextpageT text_page, double left, double top, double right, double bottom, ref ushort buffer, int buflen)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             fixed (ushort* __buffer5 = &buffer)
@@ -15530,14 +15530,14 @@ namespace PDFiumCore
         /// <para>A handle for the search context. FPDFText_FindClose must be called</para>
         /// <para>to release this handle.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfSchhandleT FPDFTextFindStart(global::PDFiumCore.FpdfTextpageT text_page, ref ushort findwhat, uint flags, int start_index)
+        public static global::PDFiumZ.FpdfSchhandleT FPDFTextFindStart(global::PDFiumZ.FpdfTextpageT text_page, ref ushort findwhat, uint flags, int start_index)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             fixed (ushort* __findwhat1 = &findwhat)
             {
                 var __arg1 = __findwhat1;
                 var ___ret = __Internal.FPDFTextFindStart(__arg0, __arg1, flags, start_index);
-                var __result0 = global::PDFiumCore.FpdfSchhandleT.__GetOrCreateInstance(___ret, false);
+                var __result0 = global::PDFiumZ.FpdfSchhandleT.__GetOrCreateInstance(___ret, false);
                 return __result0;
             }
         }
@@ -15550,7 +15550,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>Whether a match is found.</para>
         /// </summary>
-        public static int FPDFTextFindNext(global::PDFiumCore.FpdfSchhandleT handle)
+        public static int FPDFTextFindNext(global::PDFiumZ.FpdfSchhandleT handle)
         {
             var __arg0 = handle is null ? __IntPtr.Zero : handle.__Instance;
             var ___ret = __Internal.FPDFTextFindNext(__arg0);
@@ -15565,7 +15565,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>Whether a match is found.</para>
         /// </summary>
-        public static int FPDFTextFindPrev(global::PDFiumCore.FpdfSchhandleT handle)
+        public static int FPDFTextFindPrev(global::PDFiumZ.FpdfSchhandleT handle)
         {
             var __arg0 = handle is null ? __IntPtr.Zero : handle.__Instance;
             var ___ret = __Internal.FPDFTextFindPrev(__arg0);
@@ -15580,7 +15580,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>Index for the starting character.</para>
         /// </summary>
-        public static int FPDFTextGetSchResultIndex(global::PDFiumCore.FpdfSchhandleT handle)
+        public static int FPDFTextGetSchResultIndex(global::PDFiumZ.FpdfSchhandleT handle)
         {
             var __arg0 = handle is null ? __IntPtr.Zero : handle.__Instance;
             var ___ret = __Internal.FPDFTextGetSchResultIndex(__arg0);
@@ -15595,7 +15595,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>Number of matched characters.</para>
         /// </summary>
-        public static int FPDFTextGetSchCount(global::PDFiumCore.FpdfSchhandleT handle)
+        public static int FPDFTextGetSchCount(global::PDFiumZ.FpdfSchhandleT handle)
         {
             var __arg0 = handle is null ? __IntPtr.Zero : handle.__Instance;
             var ___ret = __Internal.FPDFTextGetSchCount(__arg0);
@@ -15610,7 +15610,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>None.</para>
         /// </summary>
-        public static void FPDFTextFindClose(global::PDFiumCore.FpdfSchhandleT handle)
+        public static void FPDFTextFindClose(global::PDFiumZ.FpdfSchhandleT handle)
         {
             var __arg0 = handle is null ? __IntPtr.Zero : handle.__Instance;
             __Internal.FPDFTextFindClose(__arg0);
@@ -15627,11 +15627,11 @@ namespace PDFiumCore
         /// <para>Comments: Weblinks are those links implicitly embedded in PDF pages. PDF also has a type of annotation called &quot;link&quot; (FPDFTEXT doesn't deal with that kind of link). FPDFTEXT weblink feature is useful for automatically detecting links in the page contents. For example, things like &quot;https://www.example.com&quot; will be detected, so applications can allow user to click on those characters to activate the link, even the PDF doesn't come with link annotations.</para>
         /// <para>FPDFLink_CloseWebLinks must be called to release resources.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPagelinkT FPDFLinkLoadWebLinks(global::PDFiumCore.FpdfTextpageT text_page)
+        public static global::PDFiumZ.FpdfPagelinkT FPDFLinkLoadWebLinks(global::PDFiumZ.FpdfTextpageT text_page)
         {
             var __arg0 = text_page is null ? __IntPtr.Zero : text_page.__Instance;
             var ___ret = __Internal.FPDFLinkLoadWebLinks(__arg0);
-            var __result0 = global::PDFiumCore.FpdfPagelinkT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPagelinkT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -15643,7 +15643,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>Number of detected web links.</para>
         /// </summary>
-        public static int FPDFLinkCountWebLinks(global::PDFiumCore.FpdfPagelinkT link_page)
+        public static int FPDFLinkCountWebLinks(global::PDFiumZ.FpdfPagelinkT link_page)
         {
             var __arg0 = link_page is null ? __IntPtr.Zero : link_page.__Instance;
             var ___ret = __Internal.FPDFLinkCountWebLinks(__arg0);
@@ -15669,7 +15669,7 @@ namespace PDFiumCore
         /// <para>If |link_index| does not correspond to a valid link, then the result</para>
         /// <para>is an empty string.</para>
         /// </summary>
-        public static int FPDFLinkGetURL(global::PDFiumCore.FpdfPagelinkT link_page, int link_index, ref ushort buffer, int buflen)
+        public static int FPDFLinkGetURL(global::PDFiumZ.FpdfPagelinkT link_page, int link_index, ref ushort buffer, int buflen)
         {
             var __arg0 = link_page is null ? __IntPtr.Zero : link_page.__Instance;
             fixed (ushort* __buffer2 = &buffer)
@@ -15690,7 +15690,7 @@ namespace PDFiumCore
         /// <para>Number of rectangular areas for the link.  If |link_index| does</para>
         /// <para>not correspond to a valid link, then 0 is returned.</para>
         /// </summary>
-        public static int FPDFLinkCountRects(global::PDFiumCore.FpdfPagelinkT link_page, int link_index)
+        public static int FPDFLinkCountRects(global::PDFiumZ.FpdfPagelinkT link_page, int link_index)
         {
             var __arg0 = link_page is null ? __IntPtr.Zero : link_page.__Instance;
             var ___ret = __Internal.FPDFLinkCountRects(__arg0, link_index);
@@ -15714,7 +15714,7 @@ namespace PDFiumCore
         /// <para>correspond to a valid link, then return FALSE, and the out</para>
         /// <para>parameters remain unmodified.</para>
         /// </summary>
-        public static int FPDFLinkGetRect(global::PDFiumCore.FpdfPagelinkT link_page, int link_index, int rect_index, ref double left, ref double top, ref double right, ref double bottom)
+        public static int FPDFLinkGetRect(global::PDFiumZ.FpdfPagelinkT link_page, int link_index, int rect_index, ref double left, ref double top, ref double right, ref double bottom)
         {
             var __arg0 = link_page is null ? __IntPtr.Zero : link_page.__Instance;
             fixed (double* __left3 = &left)
@@ -15751,7 +15751,7 @@ namespace PDFiumCore
         /// <para>not correspond to a valid link, then return FALSE and the out</para>
         /// <para>parameters remain unmodified.</para>
         /// </summary>
-        public static int FPDFLinkGetTextRange(global::PDFiumCore.FpdfPagelinkT link_page, int link_index, ref int start_char_index, ref int char_count)
+        public static int FPDFLinkGetTextRange(global::PDFiumZ.FpdfPagelinkT link_page, int link_index, ref int start_char_index, ref int char_count)
         {
             var __arg0 = link_page is null ? __IntPtr.Zero : link_page.__Instance;
             fixed (int* __start_char_index2 = &start_char_index)
@@ -15774,7 +15774,7 @@ namespace PDFiumCore
         /// <para>Return Value:</para>
         /// <para>None.</para>
         /// </summary>
-        public static void FPDFLinkCloseWebLinks(global::PDFiumCore.FpdfPagelinkT link_page)
+        public static void FPDFLinkCloseWebLinks(global::PDFiumZ.FpdfPagelinkT link_page)
         {
             var __arg0 = link_page is null ? __IntPtr.Zero : link_page.__Instance;
             __Internal.FPDFLinkCloseWebLinks(__arg0);
@@ -15806,7 +15806,7 @@ namespace PDFiumCore
         /// <para>buffer  - buffer for holding the decoded image data.</para>
         /// <para>buflen  - length of the buffer in bytes.</para>
         /// </summary>
-        public static uint FPDFPageGetDecodedThumbnailData(global::PDFiumCore.FpdfPageT page, __IntPtr buffer, uint buflen)
+        public static uint FPDFPageGetDecodedThumbnailData(global::PDFiumZ.FpdfPageT page, __IntPtr buffer, uint buflen)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFPageGetDecodedThumbnailData(__arg0, buffer, buflen);
@@ -15824,7 +15824,7 @@ namespace PDFiumCore
         /// <para>buffer  - buffer for holding the raw image data.</para>
         /// <para>buflen  - length of the buffer in bytes.</para>
         /// </summary>
-        public static uint FPDFPageGetRawThumbnailData(global::PDFiumCore.FpdfPageT page, __IntPtr buffer, uint buflen)
+        public static uint FPDFPageGetRawThumbnailData(global::PDFiumZ.FpdfPageT page, __IntPtr buffer, uint buflen)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFPageGetRawThumbnailData(__arg0, buffer, buflen);
@@ -15837,11 +15837,11 @@ namespace PDFiumCore
         /// <para>if unable to access the thumbnail's stream.</para>
         /// <para>page - handle to a page.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfBitmapT FPDFPageGetThumbnailAsBitmap(global::PDFiumCore.FpdfPageT page)
+        public static global::PDFiumZ.FpdfBitmapT FPDFPageGetThumbnailAsBitmap(global::PDFiumZ.FpdfPageT page)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var ___ret = __Internal.FPDFPageGetThumbnailAsBitmap(__arg0);
-            var __result0 = global::PDFiumCore.FpdfBitmapT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfBitmapT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
     }
@@ -15916,7 +15916,7 @@ namespace PDFiumCore
         /// <para>right  - The right of the rectangle.</para>
         /// <para>top    - The top of the rectangle.</para>
         /// </summary>
-        public static void FPDFPageSetMediaBox(global::PDFiumCore.FpdfPageT page, float left, float bottom, float right, float top)
+        public static void FPDFPageSetMediaBox(global::PDFiumZ.FpdfPageT page, float left, float bottom, float right, float top)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             __Internal.FPDFPageSetMediaBox(__arg0, left, bottom, right, top);
@@ -15930,7 +15930,7 @@ namespace PDFiumCore
         /// <para>right  - The right of the rectangle.</para>
         /// <para>top    - The top of the rectangle.</para>
         /// </summary>
-        public static void FPDFPageSetCropBox(global::PDFiumCore.FpdfPageT page, float left, float bottom, float right, float top)
+        public static void FPDFPageSetCropBox(global::PDFiumZ.FpdfPageT page, float left, float bottom, float right, float top)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             __Internal.FPDFPageSetCropBox(__arg0, left, bottom, right, top);
@@ -15944,7 +15944,7 @@ namespace PDFiumCore
         /// <para>right  - The right of the rectangle.</para>
         /// <para>top    - The top of the rectangle.</para>
         /// </summary>
-        public static void FPDFPageSetBleedBox(global::PDFiumCore.FpdfPageT page, float left, float bottom, float right, float top)
+        public static void FPDFPageSetBleedBox(global::PDFiumZ.FpdfPageT page, float left, float bottom, float right, float top)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             __Internal.FPDFPageSetBleedBox(__arg0, left, bottom, right, top);
@@ -15958,7 +15958,7 @@ namespace PDFiumCore
         /// <para>right  - The right of the rectangle.</para>
         /// <para>top    - The top of the rectangle.</para>
         /// </summary>
-        public static void FPDFPageSetTrimBox(global::PDFiumCore.FpdfPageT page, float left, float bottom, float right, float top)
+        public static void FPDFPageSetTrimBox(global::PDFiumZ.FpdfPageT page, float left, float bottom, float right, float top)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             __Internal.FPDFPageSetTrimBox(__arg0, left, bottom, right, top);
@@ -15972,7 +15972,7 @@ namespace PDFiumCore
         /// <para>right  - The right of the rectangle.</para>
         /// <para>top    - The top of the rectangle.</para>
         /// </summary>
-        public static void FPDFPageSetArtBox(global::PDFiumCore.FpdfPageT page, float left, float bottom, float right, float top)
+        public static void FPDFPageSetArtBox(global::PDFiumZ.FpdfPageT page, float left, float bottom, float right, float top)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             __Internal.FPDFPageSetArtBox(__arg0, left, bottom, right, top);
@@ -15988,7 +15988,7 @@ namespace PDFiumCore
         /// <para>On success, return true and write to the out parameters. Otherwise return</para>
         /// <para>false and leave the out parameters unmodified.</para>
         /// </summary>
-        public static int FPDFPageGetMediaBox(global::PDFiumCore.FpdfPageT page, ref float left, ref float bottom, ref float right, ref float top)
+        public static int FPDFPageGetMediaBox(global::PDFiumZ.FpdfPageT page, ref float left, ref float bottom, ref float right, ref float top)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             fixed (float* __left1 = &left)
@@ -16021,7 +16021,7 @@ namespace PDFiumCore
         /// <para>On success, return true and write to the out parameters. Otherwise return</para>
         /// <para>false and leave the out parameters unmodified.</para>
         /// </summary>
-        public static int FPDFPageGetCropBox(global::PDFiumCore.FpdfPageT page, ref float left, ref float bottom, ref float right, ref float top)
+        public static int FPDFPageGetCropBox(global::PDFiumZ.FpdfPageT page, ref float left, ref float bottom, ref float right, ref float top)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             fixed (float* __left1 = &left)
@@ -16054,7 +16054,7 @@ namespace PDFiumCore
         /// <para>On success, return true and write to the out parameters. Otherwise return</para>
         /// <para>false and leave the out parameters unmodified.</para>
         /// </summary>
-        public static int FPDFPageGetBleedBox(global::PDFiumCore.FpdfPageT page, ref float left, ref float bottom, ref float right, ref float top)
+        public static int FPDFPageGetBleedBox(global::PDFiumZ.FpdfPageT page, ref float left, ref float bottom, ref float right, ref float top)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             fixed (float* __left1 = &left)
@@ -16087,7 +16087,7 @@ namespace PDFiumCore
         /// <para>On success, return true and write to the out parameters. Otherwise return</para>
         /// <para>false and leave the out parameters unmodified.</para>
         /// </summary>
-        public static int FPDFPageGetTrimBox(global::PDFiumCore.FpdfPageT page, ref float left, ref float bottom, ref float right, ref float top)
+        public static int FPDFPageGetTrimBox(global::PDFiumZ.FpdfPageT page, ref float left, ref float bottom, ref float right, ref float top)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             fixed (float* __left1 = &left)
@@ -16120,7 +16120,7 @@ namespace PDFiumCore
         /// <para>On success, return true and write to the out parameters. Otherwise return</para>
         /// <para>false and leave the out parameters unmodified.</para>
         /// </summary>
-        public static int FPDFPageGetArtBox(global::PDFiumCore.FpdfPageT page, ref float left, ref float bottom, ref float right, ref float top)
+        public static int FPDFPageGetArtBox(global::PDFiumZ.FpdfPageT page, ref float left, ref float bottom, ref float right, ref float top)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             fixed (float* __left1 = &left)
@@ -16155,7 +16155,7 @@ namespace PDFiumCore
         /// <para>matrix      - Transform matrix.</para>
         /// <para>clipRect    - Clipping rectangle.</para>
         /// </summary>
-        public static int FPDFPageTransFormWithClip(global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FS_MATRIX_ matrix, global::PDFiumCore.FS_RECTF_ clipRect)
+        public static int FPDFPageTransFormWithClip(global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FS_MATRIX_ matrix, global::PDFiumZ.FS_RECTF_ clipRect)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg1 = matrix is null ? __IntPtr.Zero : matrix.__Instance;
@@ -16175,7 +16175,7 @@ namespace PDFiumCore
         /// <para>e  - The coefficient &quot;e&quot; of the matrix.</para>
         /// <para>f  - The coefficient &quot;f&quot; of the matrix.</para>
         /// </summary>
-        public static void FPDFPageObjTransformClipPath(global::PDFiumCore.FpdfPageobjectT page_object, double a, double b, double c, double d, double e, double f)
+        public static void FPDFPageObjTransformClipPath(global::PDFiumZ.FpdfPageobjectT page_object, double a, double b, double c, double d, double e, double f)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             __Internal.FPDFPageObjTransformClipPath(__arg0, a, b, c, d, e, f);
@@ -16190,11 +16190,11 @@ namespace PDFiumCore
         /// <para>take ownership of the returned FPDF_CLIPPATH. Instead, it remains valid until</para>
         /// <para>FPDF_ClosePage() is called for the page containing |page_object|.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfClippathT FPDFPageObjGetClipPath(global::PDFiumCore.FpdfPageobjectT page_object)
+        public static global::PDFiumZ.FpdfClippathT FPDFPageObjGetClipPath(global::PDFiumZ.FpdfPageobjectT page_object)
         {
             var __arg0 = page_object is null ? __IntPtr.Zero : page_object.__Instance;
             var ___ret = __Internal.FPDFPageObjGetClipPath(__arg0);
-            var __result0 = global::PDFiumCore.FpdfClippathT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfClippathT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -16204,7 +16204,7 @@ namespace PDFiumCore
         /// <para>clip_path - handle to a clip_path.</para>
         /// <para>Returns the number of objects in |clip_path| or -1 on failure.</para>
         /// </summary>
-        public static int FPDFClipPathCountPaths(global::PDFiumCore.FpdfClippathT clip_path)
+        public static int FPDFClipPathCountPaths(global::PDFiumZ.FpdfClippathT clip_path)
         {
             var __arg0 = clip_path is null ? __IntPtr.Zero : clip_path.__Instance;
             var ___ret = __Internal.FPDFClipPathCountPaths(__arg0);
@@ -16218,7 +16218,7 @@ namespace PDFiumCore
         /// <para>path_index - index into the array of paths of the clip path.</para>
         /// <para>Returns the number of segments or -1 on failure.</para>
         /// </summary>
-        public static int FPDFClipPathCountPathSegments(global::PDFiumCore.FpdfClippathT clip_path, int path_index)
+        public static int FPDFClipPathCountPathSegments(global::PDFiumZ.FpdfClippathT clip_path, int path_index)
         {
             var __arg0 = clip_path is null ? __IntPtr.Zero : clip_path.__Instance;
             var ___ret = __Internal.FPDFClipPathCountPathSegments(__arg0, path_index);
@@ -16235,11 +16235,11 @@ namespace PDFiumCore
         /// <para>take ownership of the returned FPDF_PATHSEGMENT. Instead, it remains valid</para>
         /// <para>until FPDF_ClosePage() is called for the page containing |clip_path|.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfPathsegmentT FPDFClipPathGetPathSegment(global::PDFiumCore.FpdfClippathT clip_path, int path_index, int segment_index)
+        public static global::PDFiumZ.FpdfPathsegmentT FPDFClipPathGetPathSegment(global::PDFiumZ.FpdfClippathT clip_path, int path_index, int segment_index)
         {
             var __arg0 = clip_path is null ? __IntPtr.Zero : clip_path.__Instance;
             var ___ret = __Internal.FPDFClipPathGetPathSegment(__arg0, path_index, segment_index);
-            var __result0 = global::PDFiumCore.FpdfPathsegmentT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfPathsegmentT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -16252,10 +16252,10 @@ namespace PDFiumCore
         /// <para>right  - The right of the clip box.</para>
         /// <para>top    - The top of the clip box.</para>
         /// </summary>
-        public static global::PDFiumCore.FpdfClippathT FPDF_CreateClipPath(float left, float bottom, float right, float top)
+        public static global::PDFiumZ.FpdfClippathT FPDF_CreateClipPath(float left, float bottom, float right, float top)
         {
             var ___ret = __Internal.FPDF_CreateClipPath(left, bottom, right, top);
-            var __result0 = global::PDFiumCore.FpdfClippathT.__GetOrCreateInstance(___ret, false);
+            var __result0 = global::PDFiumZ.FpdfClippathT.__GetOrCreateInstance(___ret, false);
             return __result0;
         }
 
@@ -16263,7 +16263,7 @@ namespace PDFiumCore
         /// <para>Destroy the clip path.</para>
         /// <para>clipPath - A handle to the clip path. It will be invalid after this call.</para>
         /// </summary>
-        public static void FPDF_DestroyClipPath(global::PDFiumCore.FpdfClippathT clipPath)
+        public static void FPDF_DestroyClipPath(global::PDFiumZ.FpdfClippathT clipPath)
         {
             var __arg0 = clipPath is null ? __IntPtr.Zero : clipPath.__Instance;
             __Internal.FPDF_DestroyClipPath(__arg0);
@@ -16277,7 +16277,7 @@ namespace PDFiumCore
         /// <para>page        - A page handle.</para>
         /// <para>clipPath    - A handle to the clip path. (Does not take ownership.)</para>
         /// </summary>
-        public static void FPDFPageInsertClipPath(global::PDFiumCore.FpdfPageT page, global::PDFiumCore.FpdfClippathT clipPath)
+        public static void FPDFPageInsertClipPath(global::PDFiumZ.FpdfPageT page, global::PDFiumZ.FpdfClippathT clipPath)
         {
             var __arg0 = page is null ? __IntPtr.Zero : page.__Instance;
             var __arg1 = clipPath is null ? __IntPtr.Zero : clipPath.__Instance;
@@ -16330,10 +16330,10 @@ namespace PDFiumCore
         public unsafe delegate void Action___IntPtr___IntPtr_double_double_double_double(__IntPtr pThis, __IntPtr page, double left, double top, double right, double bottom);
 
         [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(__CallingConvention.Cdecl)]
-        public unsafe delegate int Func_int___IntPtr_int_PDFiumCore_TimerCallback(__IntPtr pThis, int uElapse, global::PDFiumCore.TimerCallback lpTimerFunc);
+        public unsafe delegate int Func_int___IntPtr_int_PDFiumZ_TimerCallback(__IntPtr pThis, int uElapse, global::PDFiumZ.TimerCallback lpTimerFunc);
 
         [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(__CallingConvention.Cdecl)]
-        public unsafe delegate global::PDFiumCore.FPDF_SYSTEMTIME.__Internal Func_PDFiumCore__FPDF_SYSTEMTIME___Internal___IntPtr(__IntPtr pThis);
+        public unsafe delegate global::PDFiumZ.FPDF_SYSTEMTIME.__Internal Func_PDFiumZ__FPDF_SYSTEMTIME___Internal___IntPtr(__IntPtr pThis);
 
         [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(__CallingConvention.Cdecl)]
         public unsafe delegate __IntPtr Func___IntPtr___IntPtr___IntPtr_int(__IntPtr pThis, __IntPtr document, int nPageIndex);

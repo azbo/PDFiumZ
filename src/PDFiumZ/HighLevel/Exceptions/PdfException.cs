@@ -1,6 +1,6 @@
 using System;
 
-namespace PDFiumCore.HighLevel;
+namespace PDFiumZ.HighLevel;
 
 /// <summary>
 /// Base exception for all PDFium-related errors.

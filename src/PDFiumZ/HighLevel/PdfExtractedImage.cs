@@ -1,6 +1,6 @@
 using System;
 
-namespace PDFiumCore.HighLevel;
+namespace PDFiumZ.HighLevel;
 
 /// <summary>
 /// Represents an image extracted from a PDF page.

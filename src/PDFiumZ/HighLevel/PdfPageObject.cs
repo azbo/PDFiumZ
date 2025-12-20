@@ -1,4 +1,4 @@
-namespace PDFiumCore.HighLevel;
+namespace PDFiumZ.HighLevel;
 
 /// <summary>
 /// Represents the type of a PDF page object.

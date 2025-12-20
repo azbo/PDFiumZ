@@ -1,7 +1,7 @@
 /output
-/src/PDFiumCore/PDFiumCore.xml
+/src/PDFiumZ/PDFiumZ.xml
 /artifacts/*
-/src/PDFiumCore/runtimes
-/src/PDFiumCoreBindingsGenerator/Properties/launchSettings.json
+/src/PDFiumZ/runtimes
+/src/PDFiumZBindingsGenerator/Properties/launchSettings.json
 .claude/
-/src/PDFiumCore/releases.json
+/src/PDFiumZ/releases.json

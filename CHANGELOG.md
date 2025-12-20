@@ -8,13 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
-- **Project renamed to PDFiumZ** - Package ID and assembly name changed from PDFiumCore to PDFiumZ
-- Namespaces remain as `PDFiumCore` and `PDFiumCore.HighLevel` for API compatibility
+- **Project renamed to PDFiumZ** - Package ID and assembly name changed from PDFiumZ to PDFiumZ
+- Namespaces remain as `PDFiumZ` and `PDFiumZ.HighLevel` for API compatibility
 - Updated package description and metadata
 - Reorganized documentation for clarity
 
 ### Added
-- **High-Level API** - New `PDFiumCore.HighLevel` namespace with modern, easy-to-use API
+- **High-Level API** - New `PDFiumZ.HighLevel` namespace with modern, easy-to-use API
   - `PdfDocument` - Document lifecycle management with factory methods (`Open`, `OpenFromMemory`)
   - `PdfPage` - Page operations with rendering and text extraction
   - `PdfImage` - Rendered page as bitmap with zero-copy buffer access
@@ -94,7 +94,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Target framework updated to .NET 10.0
 - Demo project migrated from ImageSharp to SkiaSharp
   - Zero-copy integration with PDFium bitmaps
-  - Extension methods in `PDFiumCore.SkiaSharp` namespace
+  - Extension methods in `PDFiumZ.SkiaSharp` namespace
   - Support for PNG and JPEG export
 
 ### Technical Details

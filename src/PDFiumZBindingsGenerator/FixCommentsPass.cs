@@ -8,7 +8,7 @@ using System.Xml.Linq;
 using CppSharp.AST;
 using CppSharp.Passes;
 
-namespace PDFiumCoreBindingsGenerator
+namespace PDFiumZBindingsGenerator
 {
     /// <summary>
     /// Pass that makes Xml Documentation Comments almost Xml Documentation Comments again.

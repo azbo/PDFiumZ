@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PDFiumCore
+namespace PDFiumZ
 {
     [Flags]
     public enum FPDFBitmapFormat

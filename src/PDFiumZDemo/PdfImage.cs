@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using PDFiumCore;
+using PDFiumZ;
 using SkiaSharp;
 using RectangleF = System.Drawing.RectangleF;
 
-namespace PDFiumCoreDemo
+namespace PDFiumZDemo
 {
     public unsafe class PdfImage : IDisposable
     {

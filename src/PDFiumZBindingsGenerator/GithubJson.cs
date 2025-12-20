@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace PDFiumCoreBindingsGenerator
+namespace PDFiumZBindingsGenerator
 {
     public class Author    {
         [JsonProperty("login")]

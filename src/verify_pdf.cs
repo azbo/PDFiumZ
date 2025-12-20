@@ -1,5 +1,5 @@
-using PDFiumCore;
-using PDFiumCore.HighLevel;
+using PDFiumZ;
+using PDFiumZ.HighLevel;
 
 PdfiumLibrary.Initialize();
 try
