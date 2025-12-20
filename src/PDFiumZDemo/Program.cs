@@ -23,6 +23,7 @@ namespace PDFiumZDemo
             DemoPageManipulation();
             DemoFormFields();
             DemoAnnotations();
+            DemoContentCreation();
 
             Console.WriteLine("\nDemo completed successfully!");
         }
@@ -545,6 +546,153 @@ namespace PDFiumZDemo
                 }
 
                 Console.WriteLine();
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates content creation (adding text, shapes, images to pages).
+        /// </summary>
+        static void DemoContentCreation()
+        {
+            Console.WriteLine("11. Content Creation");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                // Load document
+                using var document = PdfDocument.Open("pdf-sample.pdf");
+
+                // Insert a blank page at the beginning for our content
+                document.InsertBlankPage(0, 595, 842);  // A4 size
+                Console.WriteLine("   Created blank A4 page at beginning");
+
+                // Get the blank page
+                using var page = document.GetPage(0);
+
+                // 1. Add text with standard font
+                Console.WriteLine("\n   Adding text content...");
+
+                // Load Helvetica font
+                var helvetica = PdfFont.LoadStandardFont(document, PdfStandardFont.Helvetica);
+                Console.WriteLine("      Loaded Helvetica font");
+
+                // Load Times-Roman font
+                var times = PdfFont.LoadStandardFont(document, PdfStandardFont.TimesBold);
+                Console.WriteLine("      Loaded Times-Roman Bold font");
+
+                // Begin editing the page
+                using (var editor = page.BeginEdit())
+                {
+                    // Add title text
+                    var titleText = editor.AddText(
+                        "PDFiumZ Content Creation Demo",
+                        50,   // x position
+                        750,  // y position
+                        times,
+                        24    // font size
+                    );
+                    Console.WriteLine("      Added title text at (50, 750)");
+
+                    // Add body text
+                    var bodyText = editor.AddText(
+                        "This page was created programmatically using PDFiumZ content creation API.",
+                        50,
+                        700,
+                        helvetica,
+                        14
+                    );
+                    Console.WriteLine("      Added body text at (50, 700)");
+
+                    // Add more text
+                    editor.AddText(
+                        "Features demonstrated:",
+                        50,
+                        650,
+                        helvetica,
+                        14
+                    );
+
+                    editor.AddText(
+                        "- Text rendering with standard PDF fonts",
+                        70,
+                        620,
+                        helvetica,
+                        12
+                    );
+
+                    editor.AddText(
+                        "- Rectangle shapes with colors",
+                        70,
+                        600,
+                        helvetica,
+                        12
+                    );
+
+                    editor.AddText(
+                        "- Page content generation",
+                        70,
+                        580,
+                        helvetica,
+                        12
+                    );
+
+                    Console.WriteLine("      Added feature list");
+
+                    // 2. Add rectangles with different colors
+                    Console.WriteLine("\n   Adding shapes...");
+
+                    // Red rectangle (stroke only)
+                    var redRect = editor.AddRectangle(
+                        new PdfRectangle(50, 450, 150, 100),
+                        0xFFFF0000,  // Red stroke (ARGB)
+                        0            // No fill
+                    );
+                    Console.WriteLine("      Added red rectangle (stroke only)");
+
+                    // Blue rectangle (filled)
+                    var blueRect = editor.AddRectangle(
+                        new PdfRectangle(220, 450, 150, 100),
+                        0,           // No stroke
+                        0x800000FF   // Blue fill, 50% opacity (ARGB)
+                    );
+                    Console.WriteLine("      Added blue rectangle (filled, 50% opacity)");
+
+                    // Green rectangle (stroke and fill)
+                    var greenRect = editor.AddRectangle(
+                        new PdfRectangle(390, 450, 150, 100),
+                        0xFF00FF00,  // Green stroke
+                        0x8000FF00   // Green fill, 50% opacity
+                    );
+                    Console.WriteLine("      Added green rectangle (stroke + fill)");
+
+                    // Add labels for rectangles
+                    editor.AddText("Stroke only", 80, 520, helvetica, 10);
+                    editor.AddText("Fill only", 260, 520, helvetica, 10);
+                    editor.AddText("Stroke + Fill", 415, 520, helvetica, 10);
+
+                    Console.WriteLine("      Added rectangle labels");
+
+                    // Regenerate page content to persist changes
+                    Console.WriteLine("\n   Generating page content...");
+                    editor.GenerateContent();
+                }
+
+                // Dispose fonts
+                helvetica.Dispose();
+                times.Dispose();
+
+                // Save document with new content
+                Console.WriteLine("   Saving document...");
+                document.SaveToFile("output-with-content.pdf");
+                Console.WriteLine("      Saved: output-with-content.pdf");
+
+                Console.WriteLine("\n   Content creation complete!");
+                Console.WriteLine("   Open output-with-content.pdf to see the created content.\n");
             }
             finally
             {
