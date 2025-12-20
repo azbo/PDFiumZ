@@ -51,6 +51,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - CreationDate, ModificationDate - Timestamp information in PDF format
   - `PdfDocument.Metadata` - Property to access document metadata with lazy loading
 
+- **Page Labels**
+  - `GetPageLabel(index)` - Get custom page label for specific page
+  - `GetAllPageLabels()` - Get all page labels as dictionary
+  - Supports custom page numbering (e.g., "i", "ii", "iii" for Roman numerals)
+  - Returns numeric page number (1-based) if no custom label defined
+
+- **Hyperlink Support**
+  - `PdfLink` - Hyperlink class with destination access
+  - `PdfLinkDestination` - Link destination (internal page or external URI)
+  - `PdfLinkDestinationType` - Enum for destination types (InternalPage, ExternalUri, Unknown)
+  - `PdfPage.GetLinkAtPoint(x, y)` - Detect link at specific coordinate
+
 - **Demo Application Updates**
   - Added comprehensive examples for all high-level API features
   - Demonstrates rendering, text extraction, and page manipulation

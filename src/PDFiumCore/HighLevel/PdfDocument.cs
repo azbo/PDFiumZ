@@ -191,6 +191,69 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
+    /// Gets the page label for the specified page index.
+    /// Page labels allow custom page numbering (e.g., "i", "ii", "iii" for front matter).
+    /// Returns the numeric page number if no custom label is defined.
+    /// </summary>
+    /// <param name="index">Zero-based page index.</param>
+    /// <returns>The page label string.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    public unsafe string GetPageLabel(int index)
+    {
+        ThrowIfDisposed();
+        if (index < 0 || index >= PageCount)
+            throw new ArgumentOutOfRangeException(nameof(index),
+                $"Page index {index} is out of range (0-{PageCount - 1}).");
+
+        // Get required buffer size (in bytes, including null terminator)
+        var bufferSize = fpdf_doc.FPDF_GetPageLabel(_handle!, index, IntPtr.Zero, 0);
+
+        if (bufferSize <= 2) // 2 bytes = just null terminator for UTF-16
+        {
+            // No custom label, return numeric page number (1-based)
+            return (index + 1).ToString();
+        }
+
+        // Allocate buffer (UTF-16, so divide by 2 for ushort count)
+        var buffer = new ushort[bufferSize / 2];
+
+        fixed (ushort* pBuffer = buffer)
+        {
+            var bytesWritten = fpdf_doc.FPDF_GetPageLabel(
+                _handle!, index, (IntPtr)pBuffer, bufferSize);
+
+            if (bytesWritten <= 2)
+            {
+                // Failed to get label, return numeric page number
+                return (index + 1).ToString();
+            }
+
+            // Convert UTF-16 to string (bytesWritten includes null terminator)
+            return new string((char*)pBuffer, 0, (int)(bytesWritten / 2) - 1);
+        }
+    }
+
+    /// <summary>
+    /// Gets all page labels as a dictionary mapping page index to label.
+    /// Useful for generating table of contents or navigation.
+    /// </summary>
+    /// <returns>Dictionary with page indices (0-based) as keys and labels as values.</returns>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    public Dictionary<int, string> GetAllPageLabels()
+    {
+        ThrowIfDisposed();
+
+        var labels = new Dictionary<int, string>();
+        for (int i = 0; i < PageCount; i++)
+        {
+            labels[i] = GetPageLabel(i);
+        }
+
+        return labels;
+    }
+
+    /// <summary>
     /// Inserts a new blank page at the specified index.
     /// </summary>
     /// <param name="index">Zero-based index where to insert (0 = beginning, PageCount = end).</param>
