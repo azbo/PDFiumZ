@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PDFiumZ.HighLevel;
 
@@ -142,6 +144,38 @@ public sealed unsafe class PdfPage : IDisposable
             fpdfview.FPDFBitmapDestroy(bitmap);
             throw;
         }
+    }
+
+    /// <summary>
+    /// Asynchronously renders the page to a bitmap image with default options.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a <see cref="PdfImage"/> with the rendered result.</returns>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    /// <exception cref="PdfRenderException">Rendering failed.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public Task<PdfImage> RenderToImageAsync(CancellationToken cancellationToken = default)
+    {
+        return RenderToImageAsync(RenderOptions.Default, cancellationToken);
+    }
+
+    /// <summary>
+    /// Asynchronously renders the page to a bitmap image with specified options.
+    /// </summary>
+    /// <param name="options">Rendering configuration.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a <see cref="PdfImage"/> with the rendered result.</returns>
+    /// <exception cref="ArgumentNullException">options is null.</exception>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    /// <exception cref="PdfRenderException">Rendering failed.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public Task<PdfImage> RenderToImageAsync(RenderOptions options, CancellationToken cancellationToken = default)
+    {
+        return Task.Run(() =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            return RenderToImage(options);
+        }, cancellationToken);
     }
 
     /// <summary>
