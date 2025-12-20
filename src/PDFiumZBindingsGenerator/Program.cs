@@ -66,7 +66,7 @@ namespace PDFiumZBindingsGenerator
 
 
             Console.WriteLine("Downloading PDFium release info...");
-            _httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0;");
+            _httpClient.DefaultRequestHeaders.Add("User-Agent", "PDFiumZBindingsGenerator/1.0");
             var json = await _httpClient.GetStringAsync(pdfiumReleaseGithubUrl);
 
             Console.WriteLine("Downloaded. Reading PDFium release info...");
