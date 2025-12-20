@@ -392,6 +392,84 @@
             Returns a string representation of the bookmark.
             </summary>
         </member>
+        <member name="T:PDFiumZ.HighLevel.PdfContentEditor">
+            <summary>
+            Provides methods for editing PDF page content by adding text, images, and shapes.
+            Must be disposed properly to free native resources.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfContentEditor.Page">
+            <summary>
+            Gets the page being edited.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.#ctor(PDFiumZ.HighLevel.PdfPage)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfContentEditor"/> class.
+            Internal constructor - created by PdfPage only.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.AddText(System.String,System.Double,System.Double,PDFiumZ.HighLevel.PdfFont,System.Double)">
+            <summary>
+            Adds text to the page at the specified position.
+            </summary>
+            <param name="text">The text to add.</param>
+            <param name="x">X coordinate in page units.</param>
+            <param name="y">Y coordinate in page units.</param>
+            <param name="font">The font to use.</param>
+            <param name="fontSize">Font size in points.</param>
+            <returns>The created text object handle for further manipulation if needed.</returns>
+            <exception cref="T:System.ArgumentNullException">text or font is null.</exception>
+            <exception cref="T:System.ObjectDisposedException">Editor has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create or add text object.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.AddImage(System.Byte[],System.Int32,System.Int32,PDFiumZ.HighLevel.PdfRectangle)">
+            <summary>
+            Adds an image to the page from raw bitmap data.
+            </summary>
+            <param name="imageData">Raw BGRA bitmap data (4 bytes per pixel).</param>
+            <param name="width">Image width in pixels.</param>
+            <param name="height">Image height in pixels.</param>
+            <param name="bounds">Position and size on the page.</param>
+            <returns>The created image object handle.</returns>
+            <exception cref="T:System.ArgumentNullException">imageData is null.</exception>
+            <exception cref="T:System.ArgumentException">imageData size doesn't match width*height*4.</exception>
+            <exception cref="T:System.ObjectDisposedException">Editor has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create or add image object.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.AddRectangle(PDFiumZ.HighLevel.PdfRectangle,System.UInt32,System.UInt32)">
+            <summary>
+            Adds a rectangle to the page.
+            </summary>
+            <param name="bounds">Rectangle position and size.</param>
+            <param name="strokeColor">Stroke color in ARGB format (0xAARRGGBB). Use 0 for no stroke.</param>
+            <param name="fillColor">Fill color in ARGB format (0xAARRGGBB). Use 0 for no fill.</param>
+            <returns>The created rectangle object handle.</returns>
+            <exception cref="T:System.ObjectDisposedException">Editor has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create or add rectangle object.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.RemoveObject(System.Int32)">
+            <summary>
+            Removes a page object at the specified index.
+            </summary>
+            <param name="index">Zero-based index of the object to remove.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Index is out of range.</exception>
+            <exception cref="T:System.ObjectDisposedException">Editor has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to remove object.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.GenerateContent">
+            <summary>
+            Regenerates the page content stream to persist all changes.
+            This must be called after all editing operations before saving the document.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">Editor has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to generate content.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.Dispose">
+            <summary>
+            Releases all resources used by the <see cref="T:PDFiumZ.HighLevel.PdfContentEditor"/>.
+            </summary>
+        </member>
         <member name="T:PDFiumZ.HighLevel.PdfDestination">
             <summary>
             Represents a destination in a PDF document (where a bookmark or link points to).
@@ -691,6 +769,117 @@
             <summary>
             Callback function invoked by PDFium to write data.
             </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfFont">
+            <summary>
+            Represents a PDF font that can be used for text rendering.
+            Must be disposed properly to free native resources.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfFont.Name">
+            <summary>
+            Gets the base font name.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFont.#ctor(PDFiumZ.FpdfFontT,PDFiumZ.HighLevel.PdfDocument,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfFont"/> class.
+            Internal constructor - use factory methods to create fonts.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFont.LoadStandardFont(PDFiumZ.HighLevel.PdfDocument,System.String)">
+            <summary>
+            Loads a standard PDF font (14 built-in fonts).
+            </summary>
+            <param name="document">The document to load the font into.</param>
+            <param name="fontName">Standard font name (e.g., "Helvetica", "Times-Roman", "Courier").</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfFont"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">document or fontName is null.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load the font.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFont.LoadStandardFont(PDFiumZ.HighLevel.PdfDocument,PDFiumZ.HighLevel.PdfStandardFont)">
+            <summary>
+            Loads a standard PDF font using the predefined enum values.
+            </summary>
+            <param name="document">The document to load the font into.</param>
+            <param name="font">The standard font to load.</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfFont"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">document is null.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load the font.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFont.LoadTrueTypeFont(PDFiumZ.HighLevel.PdfDocument,System.Byte[],System.Boolean)">
+            <summary>
+            Loads a TrueType font from byte data.
+            </summary>
+            <param name="document">The document to load the font into.</param>
+            <param name="fontData">The TrueType font file data.</param>
+            <param name="isCidFont">True if this is a CID font (for Asian languages), false for standard TrueType.</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfFont"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">document or fontData is null.</exception>
+            <exception cref="T:System.ArgumentException">fontData is empty.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load the font.</exception>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfFont.Handle">
+            <summary>
+            Gets the internal font handle.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFont.Dispose">
+            <summary>
+            Releases all resources used by the <see cref="T:PDFiumZ.HighLevel.PdfFont"/>.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFont.ToString">
+            <summary>
+            Returns a string representation of the font.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfStandardFont">
+            <summary>
+            Standard PDF fonts (14 built-in fonts that don't require embedding).
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStandardFont.Helvetica">
+            <summary>Helvetica (sans-serif, normal weight)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStandardFont.HelveticaBold">
+            <summary>Helvetica Bold</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStandardFont.HelveticaOblique">
+            <summary>Helvetica Oblique (italic)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStandardFont.HelveticaBoldOblique">
+            <summary>Helvetica Bold Oblique</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStandardFont.TimesRoman">
+            <summary>Times-Roman (serif, normal weight)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStandardFont.TimesBold">
+            <summary>Times Bold</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStandardFont.TimesItalic">
+            <summary>Times Italic</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStandardFont.TimesBoldItalic">
+            <summary>Times Bold Italic</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStandardFont.Courier">
+            <summary>Courier (monospace, normal weight)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStandardFont.CourierBold">
+            <summary>Courier Bold</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStandardFont.CourierOblique">
+            <summary>Courier Oblique</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStandardFont.CourierBoldOblique">
+            <summary>Courier Bold Oblique</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStandardFont.Symbol">
+            <summary>Symbol font</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfStandardFont.ZapfDingbats">
+            <summary>ZapfDingbats (decorative symbols)</summary>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfFormField">
             <summary>
@@ -1365,6 +1554,22 @@
             <exception cref="T:System.ArgumentNullException">annotation is null.</exception>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to remove annotation.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfPage.BeginEdit">
+            <summary>
+            Begins editing page content by creating a content editor.
+            The editor must be disposed after use.
+            </summary>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfContentEditor"/> instance for editing page content.</returns>
+            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfPage.GenerateContent">
+            <summary>
+            Regenerates the page content stream to persist all changes made through content editing.
+            This must be called after all editing operations and before saving the document.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to generate page content.</exception>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfPageObjectType">
             <summary>

@@ -561,7 +561,7 @@ public sealed class PdfDocument : IDisposable
         _disposed = true;
     }
 
-    private void ThrowIfDisposed()
+    internal void ThrowIfDisposed()
     {
         if (_disposed)
             throw new ObjectDisposedException(nameof(PdfDocument));

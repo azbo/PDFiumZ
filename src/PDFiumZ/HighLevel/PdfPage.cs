@@ -675,6 +675,39 @@ public sealed unsafe class PdfPage : IDisposable
 
     #endregion
 
+    #region Content Editing
+
+    /// <summary>
+    /// Begins editing page content by creating a content editor.
+    /// The editor must be disposed after use.
+    /// </summary>
+    /// <returns>A new <see cref="PdfContentEditor"/> instance for editing page content.</returns>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public PdfContentEditor BeginEdit()
+    {
+        ThrowIfDisposed();
+        return new PdfContentEditor(this);
+    }
+
+    /// <summary>
+    /// Regenerates the page content stream to persist all changes made through content editing.
+    /// This must be called after all editing operations and before saving the document.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to generate page content.</exception>
+    public void GenerateContent()
+    {
+        ThrowIfDisposed();
+
+        var result = fpdf_edit.FPDFPageGenerateContent(_handle!);
+        if (result == 0)
+        {
+            throw new PdfException("Failed to generate page content.");
+        }
+    }
+
+    #endregion
+
     internal void ThrowIfDisposed()
     {
         if (_disposed)
