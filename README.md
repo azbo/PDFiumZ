@@ -10,6 +10,77 @@ Bindings are generated from the binaries and header files created at [pdfium-bin
 
 The preferred way to use this project is to use the [Nuget Package](https://www.nuget.org/packages/PDFiumCore).  This will ensure all the proper bindings in the `*.deps.json` are generated and included for the targeted environments.
 
+#### High-Level API (Recommended)
+
+PDFiumCore now includes a high-level API (`PDFiumCore.HighLevel` namespace) that provides a modern, easy-to-use interface with automatic resource management:
+
+```csharp
+using PDFiumCore;
+using PDFiumCore.HighLevel;
+
+// Initialize library (call once at application start)
+PdfiumLibrary.Initialize();
+
+try
+{
+    // Open document with automatic resource management
+    using var document = PdfDocument.Open("sample.pdf");
+    Console.WriteLine($"Pages: {document.PageCount}");
+
+    // Render a page to image
+    using var page = document.GetPage(0);
+    using var image = page.RenderToImage();
+
+    // Save as PNG (requires PDFiumCore.SkiaSharp extension package)
+    image.SaveAsSkiaPng("output.png");
+
+    // Extract text
+    var text = page.ExtractText();
+    Console.WriteLine(text);
+
+    // Page manipulation
+    document.InsertBlankPage(0, 595, 842);  // Insert A4 page at beginning
+    document.DeletePage(2);                  // Delete page 2
+    document.MovePages(new[] { 0, 1 }, 3);  // Move pages to new position
+
+    // Import pages from another document
+    using var source = PdfDocument.Open("other.pdf");
+    document.ImportPages(source, "1,3,5-7");  // Import specific pages
+
+    // Save modified document
+    document.SaveToFile("modified.pdf");
+
+    // Navigate bookmarks
+    foreach (var bookmark in document.GetBookmarks())
+    {
+        Console.WriteLine($"{bookmark.Title} -> Page {bookmark.Destination?.PageIndex}");
+
+        // Recursively iterate children
+        foreach (var child in bookmark.GetAllDescendants())
+        {
+            Console.WriteLine($"  {child.Title}");
+        }
+    }
+}
+finally
+{
+    PdfiumLibrary.Shutdown();
+}
+```
+
+**Features:**
+- ✅ Modern C# API with `IDisposable` pattern
+- ✅ Fluent rendering options (`WithDpi()`, `WithScale()`, `WithTransparency()`)
+- ✅ Page manipulation (insert, delete, move, import)
+- ✅ Bookmark navigation with tree traversal
+- ✅ Text extraction
+- ✅ Document saving
+- ✅ Zero-copy image access via `Span<byte>`
+
+#### Low-Level API
+
+The low-level P/Invoke API is still available for advanced scenarios through the `fpdfview`, `fpdf_edit`, `fpdf_doc` classes.
+
 ### Build Requirements
 - .NET 8.0+
 
