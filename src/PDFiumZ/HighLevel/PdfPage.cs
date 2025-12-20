@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace PDFiumZ.HighLevel;
@@ -10,7 +11,7 @@ namespace PDFiumZ.HighLevel;
 /// </summary>
 public sealed unsafe class PdfPage : IDisposable
 {
-    private FpdfPageT? _handle;
+    internal FpdfPageT? _handle;
     private readonly int _index;
     internal readonly PdfDocument _document;
     private bool _disposed;
@@ -558,7 +559,123 @@ public sealed unsafe class PdfPage : IDisposable
         _disposed = true;
     }
 
-    private void ThrowIfDisposed()
+    #region Annotation Management
+
+    /// <summary>
+    /// Gets the number of annotations on this page.
+    /// </summary>
+    /// <returns>The number of annotations.</returns>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public int GetAnnotationCount()
+    {
+        ThrowIfDisposed();
+        return fpdf_annot.FPDFPageGetAnnotCount(_handle!);
+    }
+
+    /// <summary>
+    /// Gets an annotation by its index.
+    /// </summary>
+    /// <param name="index">The zero-based index of the annotation.</param>
+    /// <returns>The annotation at the specified index, or null if not found or unsupported type.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">index is negative.</exception>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public PdfAnnotation? GetAnnotation(int index)
+    {
+        if (index < 0)
+            throw new ArgumentOutOfRangeException(nameof(index), "Index must be non-negative.");
+
+        ThrowIfDisposed();
+
+        var handle = fpdf_annot.FPDFPageGetAnnot(_handle!, index);
+        if (handle is null || handle.__Instance == IntPtr.Zero)
+            return null;
+
+        // Get annotation type
+        var subtype = fpdf_annot.FPDFAnnotGetSubtype(handle);
+        var annotType = (PdfAnnotationType)subtype;
+
+        // Create appropriate annotation instance
+        return annotType switch
+        {
+            PdfAnnotationType.Highlight => new PdfHighlightAnnotation(handle, this, index),
+            PdfAnnotationType.Text => new PdfTextAnnotation(handle, this, index),
+            PdfAnnotationType.Stamp => new PdfStampAnnotation(handle, this, index),
+            // Add other annotation types as they are implemented
+            _ => new GenericAnnotation(handle, this, annotType, index)
+        };
+    }
+
+    /// <summary>
+    /// Gets all annotations on the page.
+    /// </summary>
+    /// <returns>An enumerable of all annotations on the page.</returns>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public IEnumerable<PdfAnnotation> GetAnnotations()
+    {
+        ThrowIfDisposed();
+
+        var count = GetAnnotationCount();
+        for (int i = 0; i < count; i++)
+        {
+            var annotation = GetAnnotation(i);
+            if (annotation is not null)
+                yield return annotation;
+        }
+    }
+
+    /// <summary>
+    /// Gets all annotations of a specific type.
+    /// </summary>
+    /// <typeparam name="T">The type of annotation to retrieve.</typeparam>
+    /// <returns>An enumerable of annotations of the specified type.</returns>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public IEnumerable<T> GetAnnotations<T>() where T : PdfAnnotation
+    {
+        return GetAnnotations().OfType<T>();
+    }
+
+    /// <summary>
+    /// Removes an annotation from the page by its index.
+    /// </summary>
+    /// <param name="index">The zero-based index of the annotation to remove.</param>
+    /// <exception cref="ArgumentOutOfRangeException">index is negative.</exception>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to remove annotation.</exception>
+    public void RemoveAnnotation(int index)
+    {
+        if (index < 0)
+            throw new ArgumentOutOfRangeException(nameof(index), "Index must be non-negative.");
+
+        ThrowIfDisposed();
+
+        var result = fpdf_annot.FPDFPageRemoveAnnot(_handle!, index);
+        if (result == 0)
+        {
+            throw new PdfException($"Failed to remove annotation at index {index}.");
+        }
+    }
+
+    /// <summary>
+    /// Removes the specified annotation from the page.
+    /// </summary>
+    /// <param name="annotation">The annotation to remove.</param>
+    /// <exception cref="ArgumentNullException">annotation is null.</exception>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to remove annotation.</exception>
+    public void RemoveAnnotation(PdfAnnotation annotation)
+    {
+        if (annotation is null)
+            throw new ArgumentNullException(nameof(annotation));
+
+        if (annotation.Index < 0)
+            throw new ArgumentException("Annotation is not added to a page.", nameof(annotation));
+
+        RemoveAnnotation(annotation.Index);
+    }
+
+    #endregion
+
+    internal void ThrowIfDisposed()
     {
         if (_disposed)
             throw new ObjectDisposedException(nameof(PdfPage));
