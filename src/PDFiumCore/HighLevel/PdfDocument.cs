@@ -374,6 +374,30 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
+    /// Creates a form handle for form field operations.
+    /// Internal method - used by PdfPage for form field access.
+    /// </summary>
+    internal FpdfFormHandleT? CreateFormHandle()
+    {
+        ThrowIfDisposed();
+
+        // Pass null for formInfo to create a basic form handle (read-only operations)
+        var formHandle = fpdf_formfill.FPDFDOC_InitFormFillEnvironment(_handle!, null);
+        return formHandle;
+    }
+
+    /// <summary>
+    /// Destroys a form handle created by CreateFormHandle.
+    /// </summary>
+    internal void DestroyFormHandle(FpdfFormHandleT? formHandle)
+    {
+        if (formHandle is not null && formHandle.__Instance != IntPtr.Zero)
+        {
+            fpdf_formfill.FPDFDOC_ExitFormFillEnvironment(formHandle);
+        }
+    }
+
+    /// <summary>
     /// Releases all resources used by the <see cref="PdfDocument"/>.
     /// </summary>
     public void Dispose()

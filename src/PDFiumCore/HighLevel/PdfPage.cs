@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace PDFiumCore.HighLevel;
@@ -11,7 +12,7 @@ public sealed unsafe class PdfPage : IDisposable
 {
     private FpdfPageT? _handle;
     private readonly int _index;
-    private readonly PdfDocument _document;
+    internal readonly PdfDocument _document;
     private bool _disposed;
 
     /// <summary>
@@ -177,6 +178,85 @@ public sealed unsafe class PdfPage : IDisposable
         finally
         {
             fpdf_text.FPDFTextClosePage(textPage);
+        }
+    }
+
+    /// <summary>
+    /// Gets the number of form field annotations on this page.
+    /// </summary>
+    /// <returns>The count of form field annotations.</returns>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public int GetFormFieldCount()
+    {
+        ThrowIfDisposed();
+        return fpdf_annot.FPDFPageGetAnnotCount(_handle!);
+    }
+
+    /// <summary>
+    /// Gets a form field annotation at the specified index.
+    /// Note: This returns form fields as well as other annotations. Check FieldType to verify it's a form field.
+    /// </summary>
+    /// <param name="index">Zero-based annotation index.</param>
+    /// <returns>A <see cref="PdfFormField"/> instance, or null if the annotation is not a form field.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public PdfFormField? GetFormField(int index)
+    {
+        ThrowIfDisposed();
+
+        var annotCount = GetFormFieldCount();
+        if (index < 0 || index >= annotCount)
+            throw new ArgumentOutOfRangeException(nameof(index),
+                $"Annotation index {index} is out of range (0-{annotCount - 1}).");
+
+        var annotHandle = fpdf_annot.FPDFPageGetAnnot(_handle!, index);
+        if (annotHandle is null || annotHandle.__Instance == IntPtr.Zero)
+            return null;
+
+        // Create form handle for this document
+        var formHandle = _document.CreateFormHandle();
+        if (formHandle is null || formHandle.__Instance == IntPtr.Zero)
+        {
+            fpdf_annot.FPDFPageCloseAnnot(annotHandle);
+            return null;
+        }
+
+        try
+        {
+            // Check if this is a form field
+            var fieldType = fpdf_annot.FPDFAnnotGetFormFieldType(formHandle, annotHandle);
+            if (fieldType < 0) // Not a form field
+            {
+                fpdf_annot.FPDFPageCloseAnnot(annotHandle);
+                _document.DestroyFormHandle(formHandle);
+                return null;
+            }
+
+            return new PdfFormField(annotHandle, formHandle, this, index);
+        }
+        catch
+        {
+            fpdf_annot.FPDFPageCloseAnnot(annotHandle);
+            _document.DestroyFormHandle(formHandle);
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Gets all form field annotations on this page.
+    /// </summary>
+    /// <returns>An enumerable of form fields.</returns>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public IEnumerable<PdfFormField> GetFormFields()
+    {
+        var count = GetFormFieldCount();
+        for (int i = 0; i < count; i++)
+        {
+            var field = GetFormField(i);
+            if (field != null)
+            {
+                yield return field;
+            }
         }
     }
 

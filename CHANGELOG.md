@@ -34,6 +34,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `GetBookmarks()` - Enumerate all root-level bookmarks
   - `FindBookmark()` - Search bookmarks by title
 
+- **Form Field Operations**
+  - `PdfFormField` - Form field annotation with read-only access
+    - Read field properties: Name, AlternateName, Value, FieldType, Flags
+    - Check checkbox/radio button state: IsChecked
+    - Access combo box/list box options: GetAllOptions(), GetOptionLabel(), IsOptionSelected()
+  - `PdfFormFieldType` - Enumeration of 7 standard field types (TextField, CheckBox, RadioButton, ComboBox, ListBox, PushButton, Signature)
+  - `GetFormFieldCount()` - Get count of form fields on page
+  - `GetFormField(index)` - Get specific form field
+  - `GetFormFields()` - Enumerate all form fields on page
+
 - **Demo Application Updates**
   - Added comprehensive examples for all high-level API features
   - Demonstrates rendering, text extraction, and page manipulation

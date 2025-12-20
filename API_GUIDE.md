@@ -8,6 +8,7 @@
 - [Text Extraction](#text-extraction)
 - [Bookmarks](#bookmarks)
 - [Page Manipulation](#page-manipulation)
+- [Form Fields](#form-fields)
 - [Saving Documents](#saving-documents)
 - [Best Practices](#best-practices)
 
@@ -373,6 +374,268 @@ for (int i = document.PageCount - 1; i >= 0; i -= 2)
     document.DeletePage(i);
 }
 ```
+
+## Form Fields
+
+### Reading Form Field Information
+
+```csharp
+using var document = PdfDocument.Open("form.pdf");
+using var page = document.GetPage(0);
+
+// Get form field count
+var fieldCount = page.GetFormFieldCount();
+Console.WriteLine($"Found {fieldCount} form field(s)");
+
+// Iterate through all form fields
+foreach (var field in page.GetFormFields())
+{
+    using (field)
+    {
+        Console.WriteLine($"Name: {field.Name}");
+        Console.WriteLine($"Type: {field.FieldType}");
+        Console.WriteLine($"Value: {field.Value}");
+    }
+}
+```
+
+### Form Field Types
+
+```csharp
+public enum PdfFormFieldType
+{
+    Unknown = -1,       // Unknown or invalid field
+    PushButton = 0,     // Action button
+    CheckBox = 1,       // Checkbox (toggle)
+    RadioButton = 2,    // Radio button (group selection)
+    ComboBox = 3,       // Dropdown list
+    ListBox = 4,        // List selection
+    TextField = 5,      // Text input (single/multi-line)
+    Signature = 6       // Digital signature field
+}
+```
+
+### Working with Text Fields
+
+```csharp
+foreach (var field in page.GetFormFields())
+{
+    using (field)
+    {
+        if (field.FieldType == PdfFormFieldType.TextField)
+        {
+            Console.WriteLine($"Text Field: {field.Name}");
+            Console.WriteLine($"Current Value: {field.Value}");
+
+            // Get alternate name (user-friendly label)
+            if (!string.IsNullOrEmpty(field.AlternateName))
+                Console.WriteLine($"Label: {field.AlternateName}");
+        }
+    }
+}
+```
+
+### Working with Checkboxes and Radio Buttons
+
+```csharp
+foreach (var field in page.GetFormFields())
+{
+    using (field)
+    {
+        if (field.FieldType == PdfFormFieldType.CheckBox)
+        {
+            Console.WriteLine($"Checkbox: {field.Name}");
+            Console.WriteLine($"Checked: {field.IsChecked}");
+        }
+
+        if (field.FieldType == PdfFormFieldType.RadioButton)
+        {
+            Console.WriteLine($"Radio: {field.Name}");
+            Console.WriteLine($"Selected: {field.IsChecked}");
+        }
+    }
+}
+```
+
+### Working with Combo Boxes and List Boxes
+
+```csharp
+foreach (var field in page.GetFormFields())
+{
+    using (field)
+    {
+        if (field.FieldType == PdfFormFieldType.ComboBox ||
+            field.FieldType == PdfFormFieldType.ListBox)
+        {
+            Console.WriteLine($"{field.FieldType}: {field.Name}");
+            Console.WriteLine($"Current Value: {field.Value}");
+
+            // Get available options
+            var options = field.GetAllOptions();
+            Console.WriteLine($"Available options: {string.Join(", ", options)}");
+
+            // Check individual option selection (list boxes can have multiple)
+            for (int i = 0; i < field.GetOptionCount(); i++)
+            {
+                var label = field.GetOptionLabel(i);
+                var selected = field.IsOptionSelected(i);
+                Console.WriteLine($"  {label}: {(selected ? "Selected" : "Not selected")}");
+            }
+        }
+    }
+}
+```
+
+### Accessing Field Properties
+
+```csharp
+using var field = page.GetFormField(0);
+
+// Basic properties
+string name = field.Name;                    // Unique field identifier
+string alternateName = field.AlternateName;  // User-friendly label
+string value = field.Value;                  // Current field value
+PdfFormFieldType type = field.FieldType;     // Field type
+int index = field.Index;                     // Index in page
+int flags = field.Flags;                     // Field flags (read-only, required, etc.)
+
+// State properties
+bool isChecked = field.IsChecked;            // For checkboxes/radio buttons
+
+// Dropdown/list properties
+int optionCount = field.GetOptionCount();
+string[] allOptions = field.GetAllOptions();
+```
+
+### Searching for Specific Fields
+
+```csharp
+using var document = PdfDocument.Open("form.pdf");
+
+// Search all pages for a specific field
+PdfFormField? FindField(string fieldName)
+{
+    for (int i = 0; i < document.PageCount; i++)
+    {
+        using var page = document.GetPage(i);
+        foreach (var field in page.GetFormFields())
+        {
+            if (field.Name == fieldName)
+                return field;
+            field.Dispose();
+        }
+    }
+    return null;
+}
+
+// Usage
+using var emailField = FindField("email");
+if (emailField != null)
+{
+    Console.WriteLine($"Email value: {emailField.Value}");
+}
+```
+
+### Extracting All Form Data
+
+```csharp
+using var document = PdfDocument.Open("form.pdf");
+var formData = new Dictionary<string, string>();
+
+for (int i = 0; i < document.PageCount; i++)
+{
+    using var page = document.GetPage(i);
+    foreach (var field in page.GetFormFields())
+    {
+        using (field)
+        {
+            // Store field name and value
+            formData[field.Name] = field.Value;
+
+            // For checkboxes, store checked state
+            if (field.FieldType == PdfFormFieldType.CheckBox ||
+                field.FieldType == PdfFormFieldType.RadioButton)
+            {
+                formData[field.Name] = field.IsChecked.ToString();
+            }
+        }
+    }
+}
+
+// Export to JSON, XML, or database
+foreach (var (name, value) in formData)
+{
+    Console.WriteLine($"{name} = {value}");
+}
+```
+
+### Form Field Report Generation
+
+```csharp
+using var document = PdfDocument.Open("form.pdf");
+
+Console.WriteLine("=== Form Fields Report ===\n");
+
+for (int pageNum = 0; pageNum < document.PageCount; pageNum++)
+{
+    using var page = document.GetPage(pageNum);
+    var fields = page.GetFormFields().ToList();
+
+    if (fields.Count > 0)
+    {
+        Console.WriteLine($"Page {pageNum + 1}:");
+
+        foreach (var field in fields)
+        {
+            using (field)
+            {
+                Console.WriteLine($"\n  Field: {field.Name}");
+                Console.WriteLine($"  Type: {field.FieldType}");
+
+                if (!string.IsNullOrEmpty(field.AlternateName))
+                    Console.WriteLine($"  Label: {field.AlternateName}");
+
+                if (!string.IsNullOrEmpty(field.Value))
+                    Console.WriteLine($"  Value: {field.Value}");
+
+                if (field.FieldType == PdfFormFieldType.CheckBox ||
+                    field.FieldType == PdfFormFieldType.RadioButton)
+                {
+                    Console.WriteLine($"  Checked: {field.IsChecked}");
+                }
+
+                if (field.FieldType == PdfFormFieldType.ComboBox ||
+                    field.FieldType == PdfFormFieldType.ListBox)
+                {
+                    var options = field.GetAllOptions();
+                    if (options.Length > 0)
+                    {
+                        Console.WriteLine($"  Options: {string.Join(", ", options)}");
+                    }
+                }
+            }
+        }
+        Console.WriteLine();
+    }
+}
+```
+
+### Limitations
+
+**Current Implementation:**
+- ✅ Read all form field properties
+- ✅ Access field values and states
+- ✅ Enumerate dropdown/listbox options
+- ✅ Check checkbox/radio button states
+- ✅ Support for all standard field types
+
+**Not Supported (requires interactive form environment):**
+- ❌ Modifying field values
+- ❌ Interactive form filling
+- ❌ Form submission
+- ❌ Field validation
+
+For interactive form filling, use the low-level `fpdf_annot` and `fpdf_formfill` APIs directly.
 
 ## Saving Documents
 
