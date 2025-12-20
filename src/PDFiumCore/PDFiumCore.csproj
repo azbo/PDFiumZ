@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Dtronix/PDFiumCore</PackageProjectUrl>
-    <Description>PDFiumCore is a wrapper for pinvoke bindings to allow for direct PDFium usage in all languages which support .NET 8.0+. Includes the runtime native binary files for Linux-x64, Osx-x64, Win-x86 &amp; Win-x64 targets.</Description>
+    <Description>PDFiumCore is a wrapper for pinvoke bindings to allow for direct PDFium usage in all languages which support .NET 10.0+. Includes the runtime native binary files for Linux-x64, Osx-x64, Win-x86 &amp; Win-x64 targets.</Description>
     <PackageTags>pinvoke dotnet interop pdf pdfium</PackageTags>
     <RepositoryUrl>https://github.com/Dtronix/PDFiumCore</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

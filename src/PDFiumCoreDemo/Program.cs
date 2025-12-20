@@ -1,7 +1,6 @@
 ﻿using System;
 using PDFiumCore;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Png;
+using SkiaSharp;
 
 namespace PDFiumCoreDemo
 {
@@ -71,7 +70,10 @@ namespace PDFiumCoreDemo
                 (int)pageWidth,
                 (int)pageHeight);
 
-            image.ImageData.SaveAsPng("output.png");
+            using (var fileStream = System.IO.File.OpenWrite("output.png"))
+            {
+                image.ImageData.Encode(fileStream, SKEncodedImageFormat.Png, 100);
+            }
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using PDFiumCore;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
+using SkiaSharp;
 using RectangleF = System.Drawing.RectangleF;
 
 namespace PDFiumCoreDemo
@@ -10,7 +9,6 @@ namespace PDFiumCoreDemo
     public unsafe class PdfImage : IDisposable
     {
         private readonly FpdfBitmapT _pdfBitmap;
-        private readonly UnmanagedMemoryManager<byte> _mgr;
 
         public int Width { get; }
 
@@ -18,11 +16,11 @@ namespace PDFiumCoreDemo
 
         public int Stride { get; }
 
-        public Image<Bgra32> ImageData { get; }
+        public SKBitmap ImageData { get; }
 
         internal PdfImage(
-            FpdfBitmapT pdfBitmap, 
-            int width, 
+            FpdfBitmapT pdfBitmap,
+            int width,
             int height)
         {
             _pdfBitmap = pdfBitmap;
@@ -30,9 +28,10 @@ namespace PDFiumCoreDemo
             Stride = fpdfview.FPDFBitmapGetStride(pdfBitmap);
             Height = height;
             Width = width;
-            _mgr = new UnmanagedMemoryManager<byte>((byte*)scan0, Stride * Height);
 
-            ImageData = Image.WrapMemory<Bgra32>(Configuration.Default, _mgr.Memory, width, height);
+            var info = new SKImageInfo(width, height, SKColorType.Bgra8888);
+            ImageData = new SKBitmap();
+            ImageData.InstallPixels(info, scan0, Stride);
         }
 
         public void Dispose()
