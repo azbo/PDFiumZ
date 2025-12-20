@@ -4,6 +4,7 @@
     <AssemblyName>PDFiumZ</AssemblyName>
     <PackageId>PDFiumZ</PackageId>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>$(NoWarn);CS8632;SYSLIB0003</NoWarn>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/azbo/PDFiumZ</PackageProjectUrl>
     <Description>PDFiumZ is a modern .NET 10.0+ wrapper for PDFium with a high-level API. Includes P/Invoke bindings and a fluent, easy-to-use API for PDF manipulation, rendering, text extraction, image extraction, form fields, bookmarks, and more. Supports Linux-x64, OSX-x64, Win-x86 &amp; Win-x64.</Description>
