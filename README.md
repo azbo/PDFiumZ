@@ -61,6 +61,27 @@ try
             Console.WriteLine($"  {child.Title}");
         }
     }
+
+    // Read form fields
+    using var formPage = document.GetPage(0);
+    foreach (var field in formPage.GetFormFields())
+    {
+        using (field)
+        {
+            Console.WriteLine($"Field: {field.Name}");
+            Console.WriteLine($"Type: {field.FieldType}");
+            Console.WriteLine($"Value: {field.Value}");
+
+            if (field.FieldType == PdfFormFieldType.CheckBox)
+                Console.WriteLine($"Checked: {field.IsChecked}");
+
+            if (field.FieldType == PdfFormFieldType.ComboBox)
+            {
+                var options = field.GetAllOptions();
+                Console.WriteLine($"Options: {string.Join(", ", options)}");
+            }
+        }
+    }
 }
 finally
 {
@@ -73,6 +94,7 @@ finally
 - ✅ Fluent rendering options (`WithDpi()`, `WithScale()`, `WithTransparency()`)
 - ✅ Page manipulation (insert, delete, move, import)
 - ✅ Bookmark navigation with tree traversal
+- ✅ Form field reading (all standard field types)
 - ✅ Text extraction
 - ✅ Document saving
 - ✅ Zero-copy image access via `Span<byte>`

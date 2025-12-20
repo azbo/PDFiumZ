@@ -2,6 +2,7 @@
 using PDFiumCore.HighLevel;
 using PDFiumCore.SkiaSharp;
 using System;
+using System.Linq;
 
 namespace PDFiumCoreDemo
 {
@@ -16,6 +17,7 @@ namespace PDFiumCoreDemo
             DemoAdvancedRendering();
             DemoTextExtraction();
             DemoPageManipulation();
+            DemoFormFields();
 
             Console.WriteLine("\nDemo completed successfully!");
         }
@@ -143,6 +145,74 @@ namespace PDFiumCoreDemo
                 // Save modified document
                 document.SaveToFile("output-modified.pdf");
                 Console.WriteLine($"   Saved: output-modified.pdf\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates form field reading (if PDF contains form fields).
+        /// </summary>
+        static void DemoFormFields()
+        {
+            Console.WriteLine("5. Form Field Reading");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                using var document = PdfDocument.Open("pdf-sample.pdf");
+                bool foundFormFields = false;
+
+                // Iterate through all pages looking for form fields
+                for (int pageNum = 0; pageNum < document.PageCount; pageNum++)
+                {
+                    using var page = document.GetPage(pageNum);
+                    var formFields = page.GetFormFields().ToList();
+
+                    if (formFields.Count > 0)
+                    {
+                        Console.WriteLine($"   Page {pageNum + 1}: Found {formFields.Count} form field(s)");
+                        foundFormFields = true;
+
+                        foreach (var field in formFields)
+                        {
+                            using (field)
+                            {
+                                Console.WriteLine($"      Type: {field.FieldType}");
+                                Console.WriteLine($"      Name: {field.Name}");
+
+                                if (!string.IsNullOrEmpty(field.AlternateName))
+                                    Console.WriteLine($"      Label: {field.AlternateName}");
+
+                                if (!string.IsNullOrEmpty(field.Value))
+                                    Console.WriteLine($"      Value: {field.Value}");
+
+                                if (field.FieldType == PdfFormFieldType.CheckBox || field.FieldType == PdfFormFieldType.RadioButton)
+                                    Console.WriteLine($"      Checked: {field.IsChecked}");
+
+                                if (field.FieldType == PdfFormFieldType.ComboBox || field.FieldType == PdfFormFieldType.ListBox)
+                                {
+                                    var options = field.GetAllOptions();
+                                    if (options.Length > 0)
+                                    {
+                                        Console.WriteLine($"      Options: {string.Join(", ", options)}");
+                                    }
+                                }
+
+                                Console.WriteLine();
+                            }
+                        }
+                    }
+                }
+
+                if (!foundFormFields)
+                {
+                    Console.WriteLine("   No form fields found in this PDF");
+                    Console.WriteLine("   (Note: pdf-sample.pdf is a simple document without forms)\n");
+                }
             }
             finally
             {
