@@ -2,6 +2,7 @@
 
 ## Table of Contents
 - [Getting Started](#getting-started)
+- [Development Plan](#development-plan)
 - [Document Management](#document-management)
 - [Page Operations](#page-operations)
 - [Rendering](#rendering)
@@ -12,6 +13,44 @@
 - [Form Fields](#form-fields)
 - [Saving Documents](#saving-documents)
 - [Best Practices](#best-practices)
+
+## Development Plan
+
+### 目标
+- 完善高层 API 的一致性（文件/内存/流三种输入输出对齐）
+- 强化资源生命周期与线程安全边界（尽量“用错就报错”，不 silent failure）
+- 把性能/内存开销控制在“高层封装可接受”的范围（减少不必要拷贝与分配）
+- 补齐自动化验证（单测 + CI 对齐目标框架）
+
+### 里程碑（按优先级）
+
+#### P0：正确性与易用性（1–2 周）
+- `OpenFromMemory` 生命周期：确保内存数据在文档关闭前始终有效（避免 GCHandle 过早释放导致潜在崩溃/读错）
+- `SaveToStream(Stream)`：补齐与 `SaveToFile` 对称的保存方式，支持写入任意可写流
+- 初始化体验：提供 `IDisposable` 作用域式初始化封装（例如 `using var _ = PdfiumLibrary.EnterScope();`），避免漏调用 `Shutdown`
+- 错误语义：把“需要密码/密码错误”等错误码映射为 `PdfPasswordException`（而不是泛化的加载失败）
+
+#### P1：API 能力扩展（2–4 周）
+- `OpenFromStream(Stream)`：支持从流加载（优先考虑零额外拷贝方案，其次退化为一次性读入）
+- 保存增强：支持保存到 byte[]（或 `MemoryStream` 便捷方法）以适配 Web/云函数场景
+- 文本能力：扩展 `ExtractText` 的范围/布局选项（例如指定区域、行/词边界、更多搜索选项）
+- 页面能力：补齐常用查询（页面裁剪框、旋转后尺寸、坐标转换工具方法）
+
+#### P2：性能与内存优化（4–6 周）
+- 保存写入：`PdfFileWriter` 回调写入使用 `ArrayPool<byte>`/分段写入以减少频繁分配
+- 文本读取：对小字符串场景用 `stackalloc`/复用缓冲策略减少 GC 压力（保持 API 返回 `string` 不变）
+- 渲染路径：为高频缩略图/预览场景提供复用 bitmap 的渲染入口（减少反复创建/销毁 bitmap）
+- 图片提取：批量提取时减少异常控制流（避免用 try/catch 做常态分支）
+
+#### P3：质量与工程化（持续）
+- 新增 `PDFiumZ.Tests`：覆盖打开/保存/渲染/文本/书签/表单字段的关键路径与异常路径
+- CI 对齐：将 GitHub Actions 使用的 .NET SDK 版本与项目目标框架保持一致，并增加 `dotnet test`
+- 基准：为渲染与文本提取提供可重复的基准项目（用于回归比较）
+
+### 验收标准（每个里程碑通用）
+- API 行为可预测：参数校验明确、异常类型稳定、资源释放无泄漏
+- 性能可量化：关键路径有基准数据，优化前后有对比
+- 回归可控：新增能力必须有对应测试覆盖（至少 Happy Path + 典型错误）
 
 ## Getting Started
 
