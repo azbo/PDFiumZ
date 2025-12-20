@@ -11,6 +11,9 @@ namespace PDFiumZDemo
     {
         static async Task Main(string[] args)
         {
+            // Create output directory for generated files
+            System.IO.Directory.CreateDirectory("output");
+
             // Demonstrate the new high-level API
             Console.WriteLine("=== PDFiumZ High-Level API Demo ===\n");
 
@@ -56,7 +59,7 @@ namespace PDFiumZDemo
                 Console.WriteLine($"   Rendered: {image.Width} x {image.Height} pixels");
 
                 // Save as PNG using SkiaSharp extension
-                image.SaveAsSkiaPng("output.png");
+                image.SaveAsSkiaPng("output/output.png");
                 Console.WriteLine("   Saved: output.png\n");
             }
             finally
@@ -88,7 +91,7 @@ namespace PDFiumZDemo
                 using var image = page.RenderToImage(options);
                 Console.WriteLine($"   High DPI: {image.Width} x {image.Height} pixels @ 150 DPI");
 
-                image.SaveAsSkiaPng("output-hires.png");
+                image.SaveAsSkiaPng("output/output-hires.png");
                 Console.WriteLine("   Saved: output-hires.png\n");
             }
             finally
@@ -198,7 +201,7 @@ namespace PDFiumZDemo
 
                         // Save extracted image
                         var filename = $"extracted-image-{imageIndex + 1}.png";
-                        extractedImage.Image.SaveAsSkiaPng(filename);
+                        extractedImage.Image.SaveAsSkiaPng($"output/{filename}");
                         Console.WriteLine($"      Saved: {filename}");
 
                         imageIndex++;
@@ -317,7 +320,7 @@ namespace PDFiumZDemo
                 }
 
                 // Save modified document (should have: original page, blank page)
-                document.SaveToFile("output-modified.pdf");
+                document.SaveToFile("output/output-modified.pdf");
                 Console.WriteLine($"   Saved: output-modified.pdf (original page + blank page)\n");
             }
             finally
@@ -458,7 +461,7 @@ namespace PDFiumZDemo
 
                 // Save document with annotations
                 Console.WriteLine("\n   Saving document with annotations...");
-                document.SaveToFile("output-with-annotations.pdf");
+                document.SaveToFile("output/output-with-annotations.pdf");
                 Console.WriteLine("      Saved: output-with-annotations.pdf");
 
                 // Dispose annotations before reading them back
@@ -544,7 +547,7 @@ namespace PDFiumZDemo
                     Console.WriteLine($"   Annotations after removal: {page.GetAnnotationCount()}");
 
                     // Save modified document
-                    document.SaveToFile("output-annotations-removed.pdf");
+                    document.SaveToFile("output/output-annotations-removed.pdf");
                     Console.WriteLine("   Saved: output-annotations-removed.pdf");
                 }
 
@@ -691,7 +694,7 @@ namespace PDFiumZDemo
 
                 // Save document with new content
                 Console.WriteLine("   Saving document...");
-                document.SaveToFile("output-with-content.pdf");
+                document.SaveToFile("output/output-with-content.pdf");
                 Console.WriteLine("      Saved: output-with-content.pdf");
 
                 Console.WriteLine("\n   Content creation complete!");
@@ -744,7 +747,7 @@ namespace PDFiumZDemo
                 // 4. Asynchronous document saving
                 Console.WriteLine("\n   Testing async document saving...");
                 stopwatch.Restart();
-                await document.SaveToFileAsync("output-async.pdf");
+                await document.SaveToFileAsync("output/output-async.pdf");
                 stopwatch.Stop();
 
                 Console.WriteLine($"      Saved document asynchronously in {stopwatch.ElapsedMilliseconds}ms");
@@ -788,9 +791,9 @@ namespace PDFiumZDemo
                 Console.WriteLine($"   Original: {document.PageCount} page(s)");
 
                 // Make a copy for testing batch operations
-                document.SaveToFile("batch-test.pdf");
+                document.SaveToFile("output/batch-test.pdf");
 
-                using var batchDoc = PdfDocument.Open("batch-test.pdf");
+                using var batchDoc = PdfDocument.Open("output/batch-test.pdf");
 
                 // 1. Get multiple pages at once
                 Console.WriteLine("\n   Testing GetPages (batch retrieval)...");
@@ -815,12 +818,14 @@ namespace PDFiumZDemo
                     batchDoc.InsertBlankPage(batchDoc.PageCount, 595, 842);
                 }
                 Console.WriteLine($"      Added 5 blank pages: {batchDoc.PageCount} total");
+                Console.WriteLine($"      Pages: [original content, blank, blank, blank, blank, blank]");
 
-                // Delete pages 1, 3, 5 (non-consecutive)
+                // Delete pages 2, 3, 5 (blank pages, keep original at index 0)
                 int originalCount = batchDoc.PageCount;
-                batchDoc.DeletePages(1, 3, 5);
-                Console.WriteLine($"      Deleted pages at indices 1, 3, 5");
+                batchDoc.DeletePages(2, 3, 5);
+                Console.WriteLine($"      Deleted pages at indices 2, 3, 5 (blank pages)");
                 Console.WriteLine($"      Result: {batchDoc.PageCount} pages (was {originalCount})");
+                Console.WriteLine($"      Remaining: [original content, blank, blank]");
 
                 // 3. Delete a range of consecutive pages
                 Console.WriteLine("\n   Testing DeletePages (range)...");
@@ -828,13 +833,14 @@ namespace PDFiumZDemo
 
                 if (batchDoc.PageCount >= 3)
                 {
-                    batchDoc.DeletePages(0, 2);  // Delete first 2 pages
-                    Console.WriteLine($"      Deleted pages 0-1 (first 2 pages)");
+                    batchDoc.DeletePages(1, 2);  // Delete last 2 blank pages (indices 1-2)
+                    Console.WriteLine($"      Deleted pages 1-2 (last 2 blank pages)");
                     Console.WriteLine($"      Result: {batchDoc.PageCount} pages (was {originalCount})");
+                    Console.WriteLine($"      Final: [original content page]");
                 }
 
                 // Save result
-                batchDoc.SaveToFile("batch-result.pdf");
+                batchDoc.SaveToFile("output/batch-result.pdf");
                 Console.WriteLine("\n   Saved batch operation result to: batch-result.pdf");
 
                 Console.WriteLine("\n   All batch operations completed successfully!\n");
