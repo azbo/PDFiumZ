@@ -128,6 +128,81 @@ try
             }
         }
     }
+
+    // Work with annotations
+    using var annotPage = document.GetPage(0);
+
+    // Create a highlight annotation
+    var highlightBounds = new PdfRectangle(100, 700, 200, 20);
+    var highlight = PdfHighlightAnnotation.Create(annotPage, highlightBounds, 0x80FFFF00); // Yellow, 50% opacity
+    highlight.SetQuadPoints(new[]
+    {
+        new PdfRectangle(100, 700, 200, 10),
+        new PdfRectangle(100, 710, 150, 10)
+    });
+
+    // Create a text annotation (sticky note)
+    var textAnnot = PdfTextAnnotation.Create(annotPage, 50, 650, "Important: Review this section");
+    textAnnot.Author = "Reviewer";
+
+    // Create stamp annotations
+    var draftStamp = PdfStampAnnotation.Create(
+        annotPage,
+        new PdfRectangle(350, 700, 120, 50),
+        PdfStampType.Draft);
+
+    var approvedStamp = PdfStampAnnotation.Create(
+        annotPage,
+        new PdfRectangle(350, 640, 120, 50),
+        PdfStampType.Approved);
+
+    // Save document with annotations
+    document.SaveToFile("annotated.pdf");
+
+    // Clean up annotations
+    highlight.Dispose();
+    textAnnot.Dispose();
+    draftStamp.Dispose();
+    approvedStamp.Dispose();
+
+    // Read annotations back
+    var annotCount = annotPage.GetAnnotationCount();
+    Console.WriteLine($"Total annotations: {annotCount}");
+
+    foreach (var annotation in annotPage.GetAnnotations())
+    {
+        using (annotation)
+        {
+            Console.WriteLine($"Type: {annotation.Type}, Bounds: {annotation.Bounds}");
+
+            if (annotation is PdfHighlightAnnotation h)
+            {
+                var quads = h.GetQuadPoints();
+                Console.WriteLine($"  Quad points: {quads.Length}");
+            }
+            else if (annotation is PdfTextAnnotation t)
+            {
+                Console.WriteLine($"  Contents: {t.Contents}");
+                Console.WriteLine($"  Author: {t.Author}");
+            }
+            else if (annotation is PdfStampAnnotation s)
+            {
+                Console.WriteLine($"  Stamp type: {s.StampType}");
+            }
+        }
+    }
+
+    // Filter annotations by type
+    var highlights = annotPage.GetAnnotations<PdfHighlightAnnotation>();
+    var textAnnotations = annotPage.GetAnnotations<PdfTextAnnotation>();
+    var stamps = annotPage.GetAnnotations<PdfStampAnnotation>();
+
+    // Remove an annotation
+    if (annotCount > 0)
+    {
+        annotPage.RemoveAnnotation(0);
+        document.SaveToFile("annotations-removed.pdf");
+    }
 }
 finally
 {
@@ -150,6 +225,7 @@ finally
 - ✅ Page object enumeration and type classification
 - ✅ Document saving
 - ✅ Zero-copy image access via `Span<byte>`
+- ✅ **Annotation support** (highlight, text notes, stamps)
 
 #### Low-Level API
 
@@ -172,3 +248,20 @@ The low-level P/Invoke API is still available for advanced scenarios through the
 
 ### License
 This project is released under [Apache-2.0 License](LICENSE), matching the PDFium project license.
+
+## Support the Project
+
+If you find PDFiumZ useful, you can support the project development:
+
+### WeChat Pay / Alipay
+<div align="center">
+  <img src="./docs/wechat-pay-qr.png" width="200" alt="WeChat Pay">
+  <img src="./docs/alipay-qr.png" width="200" alt="Alipay">
+</div>
+
+*Please add QR code images to `docs/` directory:*
+- `docs/wechat-pay-qr.png` - WeChat Pay QR code
+- `docs/alipay-qr.png` - Alipay QR code
+
+Thank you for your support! ❤️
+

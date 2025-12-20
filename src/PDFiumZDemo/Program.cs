@@ -22,6 +22,7 @@ namespace PDFiumZDemo
             DemoPageLabels();
             DemoPageManipulation();
             DemoFormFields();
+            DemoAnnotations();
 
             Console.WriteLine("\nDemo completed successfully!");
         }
@@ -382,6 +383,168 @@ namespace PDFiumZDemo
                     Console.WriteLine("   No form fields found in this PDF");
                     Console.WriteLine("   (Note: pdf-sample.pdf is a simple document without forms)\n");
                 }
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates annotation creation and management.
+        /// </summary>
+        static void DemoAnnotations()
+        {
+            Console.WriteLine("10. Annotation Management");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                // Load document and get first page
+                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var page = document.GetPage(0);
+
+                Console.WriteLine($"   Original annotations: {page.GetAnnotationCount()}");
+
+                // 1. Create a highlight annotation
+                Console.WriteLine("\n   Creating highlight annotation...");
+                var highlightBounds = new PdfRectangle(100, 700, 200, 20);
+                var highlight = PdfHighlightAnnotation.Create(page, highlightBounds, 0x80FFFF00); // Yellow, 50% opacity
+                Console.WriteLine($"      Created highlight at {highlightBounds}");
+                Console.WriteLine($"      Color: 0x{highlight.Color:X8} (ARGB)");
+
+                // Set multiple quad points for the highlight
+                var quads = new[]
+                {
+                    new PdfRectangle(100, 700, 200, 10),
+                    new PdfRectangle(100, 710, 150, 10)
+                };
+                highlight.SetQuadPoints(quads);
+                Console.WriteLine($"      Set {quads.Length} quad points");
+
+                // 2. Create a text annotation (sticky note)
+                Console.WriteLine("\n   Creating text annotation...");
+                var textAnnot = PdfTextAnnotation.Create(page, 50, 650, "This is a test comment");
+                textAnnot.Author = "PDFiumZ Demo";
+                Console.WriteLine($"      Created text annotation at (50, 650)");
+                Console.WriteLine($"      Contents: \"{textAnnot.Contents}\"");
+                Console.WriteLine($"      Author: \"{textAnnot.Author}\"");
+
+                // 3. Create stamp annotations with different types
+                Console.WriteLine("\n   Creating stamp annotations...");
+
+                var draftStamp = PdfStampAnnotation.Create(
+                    page,
+                    new PdfRectangle(350, 700, 120, 50),
+                    PdfStampType.Draft);
+                Console.WriteLine($"      Created DRAFT stamp at (350, 700)");
+
+                var approvedStamp = PdfStampAnnotation.Create(
+                    page,
+                    new PdfRectangle(350, 640, 120, 50),
+                    PdfStampType.Approved);
+                Console.WriteLine($"      Created APPROVED stamp at (350, 640)");
+
+                var confidentialStamp = PdfStampAnnotation.Create(
+                    page,
+                    new PdfRectangle(350, 580, 120, 50),
+                    PdfStampType.Confidential);
+                Console.WriteLine($"      Created CONFIDENTIAL stamp at (350, 580)");
+
+                // Save document with annotations
+                Console.WriteLine("\n   Saving document with annotations...");
+                document.SaveToFile("output-with-annotations.pdf");
+                Console.WriteLine("      Saved: output-with-annotations.pdf");
+
+                // Dispose annotations before reading them back
+                highlight.Dispose();
+                textAnnot.Dispose();
+                draftStamp.Dispose();
+                approvedStamp.Dispose();
+                confidentialStamp.Dispose();
+
+                Console.WriteLine($"\n   Total annotations now: {page.GetAnnotationCount()}");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+
+            // Now read the annotations back in a new session
+            Console.WriteLine("\n   --- Reading annotations from saved PDF ---");
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                using var document = PdfDocument.Open("output-with-annotations.pdf");
+                using var page = document.GetPage(0);
+
+                var annotCount = page.GetAnnotationCount();
+                Console.WriteLine($"   Found {annotCount} annotation(s)");
+
+                // Enumerate all annotations
+                int index = 0;
+                foreach (var annotation in page.GetAnnotations())
+                {
+                    using (annotation)
+                    {
+                        Console.WriteLine($"\n   Annotation {index + 1}:");
+                        Console.WriteLine($"      Type: {annotation.Type}");
+                        Console.WriteLine($"      Index: {annotation.Index}");
+                        Console.WriteLine($"      Bounds: {annotation.Bounds}");
+                        Console.WriteLine($"      Color: 0x{annotation.Color:X8}");
+
+                        // Type-specific information
+                        if (annotation is PdfHighlightAnnotation highlightAnnot)
+                        {
+                            var quadPoints = highlightAnnot.GetQuadPoints();
+                            Console.WriteLine($"      Quad points: {quadPoints.Length}");
+                        }
+                        else if (annotation is PdfTextAnnotation textAnnot)
+                        {
+                            Console.WriteLine($"      Contents: \"{textAnnot.Contents}\"");
+                            Console.WriteLine($"      Author: \"{textAnnot.Author}\"");
+                        }
+                        else if (annotation is PdfStampAnnotation stampAnnot)
+                        {
+                            Console.WriteLine($"      Stamp type: {stampAnnot.StampType}");
+                        }
+
+                        index++;
+                    }
+                }
+
+                // Test filtering by type
+                var highlights = page.GetAnnotations<PdfHighlightAnnotation>().ToList();
+                Console.WriteLine($"\n   Highlights: {highlights.Count}");
+                highlights.ForEach(h => h.Dispose());
+
+                var textAnnotations = page.GetAnnotations<PdfTextAnnotation>().ToList();
+                Console.WriteLine($"   Text annotations: {textAnnotations.Count}");
+                textAnnotations.ForEach(t => t.Dispose());
+
+                var stamps = page.GetAnnotations<PdfStampAnnotation>().ToList();
+                Console.WriteLine($"   Stamps: {stamps.Count}");
+                stamps.ForEach(s => s.Dispose());
+
+                // Test annotation removal
+                Console.WriteLine("\n   Testing annotation removal...");
+                Console.WriteLine($"   Annotations before removal: {page.GetAnnotationCount()}");
+
+                if (page.GetAnnotationCount() > 0)
+                {
+                    // Remove the first annotation
+                    page.RemoveAnnotation(0);
+                    Console.WriteLine($"   Removed annotation at index 0");
+                    Console.WriteLine($"   Annotations after removal: {page.GetAnnotationCount()}");
+
+                    // Save modified document
+                    document.SaveToFile("output-annotations-removed.pdf");
+                    Console.WriteLine("   Saved: output-annotations-removed.pdf");
+                }
+
+                Console.WriteLine();
             }
             finally
             {
