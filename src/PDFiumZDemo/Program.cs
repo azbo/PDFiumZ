@@ -3,12 +3,13 @@ using PDFiumZ.HighLevel;
 using PDFiumZ.SkiaSharp;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PDFiumZDemo
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             // Demonstrate the new high-level API
             Console.WriteLine("=== PDFiumZ High-Level API Demo ===\n");
@@ -24,6 +25,8 @@ namespace PDFiumZDemo
             DemoFormFields();
             DemoAnnotations();
             DemoContentCreation();
+            await DemoAsyncOperations();
+            DemoBatchOperations();
 
             Console.WriteLine("\nDemo completed successfully!");
         }
@@ -693,6 +696,148 @@ namespace PDFiumZDemo
 
                 Console.WriteLine("\n   Content creation complete!");
                 Console.WriteLine("   Open output-with-content.pdf to see the created content.\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates async API operations.
+        /// </summary>
+        static async Task DemoAsyncOperations()
+        {
+            Console.WriteLine("12. Async Operations");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                // 1. Asynchronous document loading
+                Console.WriteLine("\n   Testing async document loading...");
+                var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+                using var document = await PdfDocument.OpenAsync("pdf-sample.pdf");
+                stopwatch.Stop();
+
+                Console.WriteLine($"      Loaded {document.PageCount} pages asynchronously in {stopwatch.ElapsedMilliseconds}ms");
+
+                // 2. Asynchronous page rendering
+                Console.WriteLine("\n   Testing async page rendering...");
+                using var page = document.GetPage(0);
+
+                stopwatch.Restart();
+                using var image = await page.RenderToImageAsync();
+                stopwatch.Stop();
+
+                Console.WriteLine($"      Rendered {image.Width}x{image.Height} image asynchronously in {stopwatch.ElapsedMilliseconds}ms");
+
+                // 3. Asynchronous rendering with options
+                var options = RenderOptions.Default.WithDpi(150);
+                stopwatch.Restart();
+                using var hiresImage = await page.RenderToImageAsync(options);
+                stopwatch.Stop();
+
+                Console.WriteLine($"      Rendered {hiresImage.Width}x{hiresImage.Height} high-DPI image asynchronously in {stopwatch.ElapsedMilliseconds}ms");
+
+                // 4. Asynchronous document saving
+                Console.WriteLine("\n   Testing async document saving...");
+                stopwatch.Restart();
+                await document.SaveToFileAsync("output-async.pdf");
+                stopwatch.Stop();
+
+                Console.WriteLine($"      Saved document asynchronously in {stopwatch.ElapsedMilliseconds}ms");
+
+                // 5. Cancellation token support
+                Console.WriteLine("\n   Testing cancellation support...");
+                using var cts = new System.Threading.CancellationTokenSource();
+                cts.CancelAfter(100); // Cancel after 100ms
+
+                try
+                {
+                    // This might or might not be canceled depending on timing
+                    using var doc = await PdfDocument.OpenAsync("pdf-sample.pdf", cancellationToken: cts.Token);
+                    Console.WriteLine("      Operation completed before cancellation");
+                }
+                catch (OperationCanceledException)
+                {
+                    Console.WriteLine("      Operation was successfully canceled");
+                }
+
+                Console.WriteLine("\n   All async operations completed successfully!\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates batch operations.
+        /// </summary>
+        static void DemoBatchOperations()
+        {
+            Console.WriteLine("13. Batch Operations");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                using var document = PdfDocument.Open("pdf-sample.pdf");
+                Console.WriteLine($"   Original: {document.PageCount} page(s)");
+
+                // Make a copy for testing batch operations
+                document.SaveToFile("batch-test.pdf");
+
+                using var batchDoc = PdfDocument.Open("batch-test.pdf");
+
+                // 1. Get multiple pages at once
+                Console.WriteLine("\n   Testing GetPages (batch retrieval)...");
+                if (batchDoc.PageCount >= 3)
+                {
+                    var pages = batchDoc.GetPages(0, 3).ToList();
+                    Console.WriteLine($"      Retrieved {pages.Count} pages in batch");
+
+                    foreach (var p in pages)
+                    {
+                        Console.WriteLine($"         Page {p.Index}: {p.Width:F1} x {p.Height:F1} points");
+                        p.Dispose();
+                    }
+                }
+
+                // 2. Delete multiple pages by indices
+                Console.WriteLine("\n   Testing DeletePages (multiple indices)...");
+
+                // Add some blank pages for testing
+                for (int i = 0; i < 5; i++)
+                {
+                    batchDoc.InsertBlankPage(batchDoc.PageCount, 595, 842);
+                }
+                Console.WriteLine($"      Added 5 blank pages: {batchDoc.PageCount} total");
+
+                // Delete pages 1, 3, 5 (non-consecutive)
+                int originalCount = batchDoc.PageCount;
+                batchDoc.DeletePages(1, 3, 5);
+                Console.WriteLine($"      Deleted pages at indices 1, 3, 5");
+                Console.WriteLine($"      Result: {batchDoc.PageCount} pages (was {originalCount})");
+
+                // 3. Delete a range of consecutive pages
+                Console.WriteLine("\n   Testing DeletePages (range)...");
+                originalCount = batchDoc.PageCount;
+
+                if (batchDoc.PageCount >= 3)
+                {
+                    batchDoc.DeletePages(0, 2);  // Delete first 2 pages
+                    Console.WriteLine($"      Deleted pages 0-1 (first 2 pages)");
+                    Console.WriteLine($"      Result: {batchDoc.PageCount} pages (was {originalCount})");
+                }
+
+                // Save result
+                batchDoc.SaveToFile("batch-result.pdf");
+                Console.WriteLine("\n   Saved batch operation result to: batch-result.pdf");
+
+                Console.WriteLine("\n   All batch operations completed successfully!\n");
             }
             finally
             {
