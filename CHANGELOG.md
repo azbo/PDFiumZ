@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Project renamed to PDFiumZ** - Package ID and assembly name changed from PDFiumCore to PDFiumZ
+- Namespaces remain as `PDFiumCore` and `PDFiumCore.HighLevel` for API compatibility
+- Updated package description and metadata
+- Reorganized documentation for clarity
+
 ### Added
 - **High-Level API** - New `PDFiumCore.HighLevel` namespace with modern, easy-to-use API
   - `PdfDocument` - Document lifecycle management with factory methods (`Open`, `OpenFromMemory`)
