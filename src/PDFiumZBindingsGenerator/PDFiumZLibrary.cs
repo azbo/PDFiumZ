@@ -4,17 +4,17 @@ using CppSharp;
 using CppSharp.AST;
 using CppSharp.Generators;
 
-namespace PDFiumCoreBindingsGenerator
+namespace PDFiumZBindingsGenerator
 {
-    class PDFiumCoreLibrary : ILibrary
+    class PDFiumZLibrary : ILibrary
     {
         private readonly string _directoryName;
         private readonly string _exeLocation;
 
-        public PDFiumCoreLibrary(string directoryName)
+        public PDFiumZLibrary(string directoryName)
         {
             _directoryName = directoryName;
-            _exeLocation = Path.GetDirectoryName(typeof(PDFiumCoreLibrary).Assembly.Location);
+            _exeLocation = Path.GetDirectoryName(typeof(PDFiumZLibrary).Assembly.Location);
 
         }
 
@@ -45,7 +45,7 @@ namespace PDFiumCoreBindingsGenerator
                 return cls.QualifiedName == "FPDF_FORMFILLINFO";
             };
 
-            var module = options.AddModule("PDFiumCore");
+            var module = options.AddModule("PDFiumZ");
             module.SharedLibraryName = "pdfium";
 
             // Ensure that the win32 includes are ignored.

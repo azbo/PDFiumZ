@@ -1,17 +1,17 @@
-﻿using PDFiumCore;
-using PDFiumCore.HighLevel;
-using PDFiumCore.SkiaSharp;
+﻿using PDFiumZ;
+using PDFiumZ.HighLevel;
+using PDFiumZ.SkiaSharp;
 using System;
 using System.Linq;
 
-namespace PDFiumCoreDemo
+namespace PDFiumZDemo
 {
     class Program
     {
         static void Main(string[] args)
         {
             // Demonstrate the new high-level API
-            Console.WriteLine("=== PDFiumCore High-Level API Demo ===\n");
+            Console.WriteLine("=== PDFiumZ High-Level API Demo ===\n");
 
             DemoHighLevelAPI();
             DemoAdvancedRendering();

@@ -1,4 +1,4 @@
-# <img src="./src/PDFiumCore/icon.png" width="48"> PDFiumZ [![NuGet](https://img.shields.io/nuget/v/PDFiumZ.svg?maxAge=60)](https://www.nuget.org/packages/PDFiumZ)
+# <img src="./src/PDFiumZ/icon.png" width="48"> PDFiumZ [![NuGet](https://img.shields.io/nuget/v/PDFiumZ.svg?maxAge=60)](https://www.nuget.org/packages/PDFiumZ)
 
 PDFiumZ is a modern .NET 10.0+ wrapper for [PDFium](https://pdfium.googlesource.com/pdfium/) with a comprehensive high-level API. Built on [PDFium binaries](https://github.com/bblanchon/pdfium-binaries) with P/Invoke bindings. Supports Linux-x64, OSX-x64, Win-x64, Win-x86.
 
@@ -21,8 +21,8 @@ Install-Package PDFiumZ
 ## Quick Start
 
 ```csharp
-using PDFiumCore;
-using PDFiumCore.HighLevel;
+using PDFiumZ;
+using PDFiumZ.HighLevel;
 
 // Initialize library (call once at application start)
 PdfiumLibrary.Initialize();
@@ -54,8 +54,8 @@ finally
 PDFiumZ provides a modern, fluent API that makes PDF operations simple and intuitive:
 
 ```csharp
-using PDFiumCore;
-using PDFiumCore.HighLevel;
+using PDFiumZ;
+using PDFiumZ.HighLevel;
 
 // Initialize library (call once at application start)
 PdfiumLibrary.Initialize();
@@ -70,7 +70,7 @@ try
     using var page = document.GetPage(0);
     using var image = page.RenderToImage();
 
-    // Save as PNG (requires PDFiumCore.SkiaSharp extension package)
+    // Save as PNG (requires PDFiumZ.SkiaSharp extension package)
     image.SaveAsSkiaPng("output.png");
 
     // Extract text

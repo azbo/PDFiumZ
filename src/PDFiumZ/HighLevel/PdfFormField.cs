@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PDFiumCore.HighLevel;
+namespace PDFiumZ.HighLevel;
 
 /// <summary>
 /// Represents a form field annotation in a PDF page.

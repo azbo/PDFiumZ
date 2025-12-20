@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace PDFiumCore.HighLevel;
+namespace PDFiumZ.HighLevel;
 
 /// <summary>
 /// Represents a rendered PDF page as a bitmap.
@@ -78,7 +78,7 @@ public sealed unsafe class PdfImage : IDisposable
     /// <summary>
     /// Saves the image to a file in PNG format (requires extension method).
     /// Core library only provides raw buffer access.
-    /// Use PDFiumCore.SkiaSharp package for easy image export.
+    /// Use PDFiumZ.SkiaSharp package for easy image export.
     /// </summary>
     /// <param name="filePath">The file path to save to.</param>
     /// <exception cref="NotSupportedException">Always thrown - use extension package.</exception>
@@ -86,7 +86,7 @@ public sealed unsafe class PdfImage : IDisposable
     {
         throw new NotSupportedException(
             "Core library does not include image encoding. " +
-            "Install PDFiumCore.SkiaSharp package and use .SaveAsSkiaPng() extension.");
+            "Install PDFiumZ.SkiaSharp package and use .SaveAsSkiaPng() extension.");
     }
 
     /// <summary>

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PDFiumCoreDemo
+namespace PDFiumZDemo
 {
     /// <summary>
     /// A MemoryManager over a raw pointer

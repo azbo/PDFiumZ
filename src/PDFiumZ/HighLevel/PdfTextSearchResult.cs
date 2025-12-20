@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PDFiumCore.HighLevel;
+namespace PDFiumZ.HighLevel;
 
 /// <summary>
 /// Represents a single text search result with position and bounding rectangles.

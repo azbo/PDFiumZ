@@ -1,4 +1,4 @@
-# PDFiumCore High-Level API Guide
+# PDFiumZ High-Level API Guide
 
 ## Table of Contents
 - [Getting Started](#getting-started)
@@ -18,15 +18,15 @@
 ### Installation
 
 ```bash
-dotnet add package PDFiumCore
-dotnet add package PDFiumCore.SkiaSharp  # Optional: for image export
+dotnet add package PDFiumZ
+dotnet add package PDFiumZ.SkiaSharp  # Optional: for image export
 ```
 
 ### Basic Setup
 
 ```csharp
-using PDFiumCore;
-using PDFiumCore.HighLevel;
+using PDFiumZ;
+using PDFiumZ.HighLevel;
 
 // Initialize library (call once at application start)
 PdfiumLibrary.Initialize();
@@ -171,7 +171,7 @@ int bufferSize = image.Stride * image.Height;
 ### Saving Images (with SkiaSharp extension)
 
 ```csharp
-using PDFiumCore.SkiaSharp;
+using PDFiumZ.SkiaSharp;
 
 using var image = page.RenderToImage();
 
@@ -1010,7 +1010,7 @@ Exception
 
 ## Additional Resources
 
-- [Official Repository](https://github.com/Dtronix/PDFiumCore)
-- [NuGet Package](https://www.nuget.org/packages/PDFiumCore)
+- [Official Repository](https://github.com/Dtronix/PDFiumZ)
+- [NuGet Package](https://www.nuget.org/packages/PDFiumZ)
 - [PDFium Documentation](https://pdfium.googlesource.com/pdfium/)
-- [Report Issues](https://github.com/Dtronix/PDFiumCore/issues)
+- [Report Issues](https://github.com/Dtronix/PDFiumZ/issues)

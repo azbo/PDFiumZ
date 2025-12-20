@@ -10,7 +10,7 @@ using ICSharpCode.SharpZipLib.GZip;
 using ICSharpCode.SharpZipLib.Tar;
 using Newtonsoft.Json;
 
-namespace PDFiumCoreBindingsGenerator
+namespace PDFiumZBindingsGenerator
 {
     class Program
     {
@@ -57,8 +57,8 @@ namespace PDFiumCoreBindingsGenerator
             var pdfiumReleaseGithubUrl = "https://api.github.com/repos/bblanchon/pdfium-binaries/releases/"+ gitubReleaseId;
             var rootDir = GetRootDir();
             var solutionDir = Path.GetFullPath(Path.Combine(rootDir, "src"));
-            var pdfiumProjectDir = Path.GetFullPath(Path.Combine(solutionDir, "PDFiumCore"));
-            var destinationCsPath = Path.GetFullPath(Path.Combine(pdfiumProjectDir, "PDFiumCore.cs"));
+            var pdfiumProjectDir = Path.GetFullPath(Path.Combine(solutionDir, "PDFiumZ"));
+            var destinationCsPath = Path.GetFullPath(Path.Combine(pdfiumProjectDir, "PDFiumZ.cs"));
             var destinationLibraryPath = Path.GetFullPath(Path.Combine(rootDir, "artifacts/libraries"));
 
             var win64Info = new LibInfo("pdfium-win-x64", "bin/pdfium.dll", "win-x64/native/");
@@ -98,9 +98,9 @@ namespace PDFiumCoreBindingsGenerator
 
             if (buildBindings)
             {
-                var generatedCsPath = Path.GetFullPath(Path.Combine(win64Info.ExtractedLibBaseDirectory, "PDFiumCore.cs"));
+                var generatedCsPath = Path.GetFullPath(Path.Combine(win64Info.ExtractedLibBaseDirectory, "PDFiumZ.cs"));
                 // Build PDFium.cs from the windows x64 build header files.
-                ConsoleDriver.Run(new PDFiumCoreLibrary(win64Info.ExtractedLibBaseDirectory));
+                ConsoleDriver.Run(new PDFiumZLibrary(win64Info.ExtractedLibBaseDirectory));
 
                 if (Directory.Exists(Path.Combine(pdfiumProjectDir, "runtimes")))
                     Directory.Delete(Path.Combine(pdfiumProjectDir, "runtimes"), true);
@@ -140,8 +140,8 @@ namespace PDFiumCoreBindingsGenerator
             using (var stream = File.OpenWrite(Path.Combine(rootDir, "download_package.sh")))
             using (var writer = new StreamWriter(stream))
             {
-                writer.WriteLine("dotnet build src/PDFiumCoreBindingsGenerator/PDFiumCoreBindingsGenerator.csproj -c Release");
-                writer.Write("dotnet ./src/PDFiumCoreBindingsGenerator/bin/Release/net9.0/PDFiumCoreBindingsGenerator.dll ");
+                writer.WriteLine("dotnet build src/PDFiumZBindingsGenerator/PDFiumZBindingsGenerator.csproj -c Release");
+                writer.Write("dotnet ./src/PDFiumZBindingsGenerator/bin/Release/net9.0/PDFiumZBindingsGenerator.dll ");
                 writer.Write(releaseInfo.Id);
                 writer.WriteLine(" false");
             }
