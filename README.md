@@ -48,3 +48,9 @@ https://github.com/mono/CppSharp
 
 ### License
 Matching the PDFium project, this project is released under [Apache-2.0 License](LICENSE).
+
+### Sponsor / 赞助
+
+If this project helps you, consider buying me a coffee! 如果这个项目对你有帮助，请考虑支持一下！
+
+<img src="./src/PDFiumCore/收款.jpg" width="200">
