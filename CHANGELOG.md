@@ -69,6 +69,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Returns character indices, matched text, and bounding rectangles for each occurrence
   - Supports multi-line text matches with multiple bounding rectangles
 
+- **Image Extraction**
+  - `PdfExtractedImage` - Extracted image class with rendered bitmap and object index
+  - `PdfPageObject` - Page object information with type classification
+  - `PdfPageObjectType` - Enumeration of page object types (Text, Path, Image, Shading, Form)
+  - `PdfPage.ExtractImages()` - Extract all images from page
+  - `PdfPage.ExtractImage(index)` - Extract specific image by object index
+  - `PdfPage.GetPageObjectCount()` - Get count of page objects
+  - `PdfPage.GetPageObject(index)` - Get page object information
+  - Extracted images can be saved using SkiaSharp extension methods
+
 - **Demo Application Updates**
   - Added comprehensive examples for all high-level API features
   - Demonstrates rendering, text extraction, and page manipulation

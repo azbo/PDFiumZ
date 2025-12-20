@@ -17,6 +17,7 @@ namespace PDFiumCoreDemo
             DemoAdvancedRendering();
             DemoTextExtraction();
             DemoTextSearch();
+            DemoImageExtraction();
             DemoMetadata();
             DemoPageLabels();
             DemoPageManipulation();
@@ -160,11 +161,64 @@ namespace PDFiumCoreDemo
         }
 
         /// <summary>
+        /// Demonstrates image extraction from PDF pages.
+        /// </summary>
+        static void DemoImageExtraction()
+        {
+            Console.WriteLine("5. Image Extraction");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var page = document.GetPage(0);
+
+                // Get page object count
+                var objectCount = page.GetPageObjectCount();
+                Console.WriteLine($"   Page has {objectCount} object(s)");
+
+                // Extract all images
+                var images = page.ExtractImages();
+                Console.WriteLine($"   Found {images.Count} image(s)");
+
+                int imageIndex = 0;
+                foreach (var extractedImage in images)
+                {
+                    using (extractedImage)
+                    {
+                        Console.WriteLine($"\n   Image {imageIndex + 1}:");
+                        Console.WriteLine($"      Object index: {extractedImage.ObjectIndex}");
+                        Console.WriteLine($"      Dimensions: {extractedImage.Width} x {extractedImage.Height} pixels");
+
+                        // Save extracted image
+                        var filename = $"extracted-image-{imageIndex + 1}.png";
+                        extractedImage.Image.SaveAsSkiaPng(filename);
+                        Console.WriteLine($"      Saved: {filename}");
+
+                        imageIndex++;
+                    }
+                }
+
+                if (images.Count == 0)
+                {
+                    Console.WriteLine("   (Note: pdf-sample.pdf may not contain embedded images)");
+                }
+
+                Console.WriteLine();
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
         /// Demonstrates document metadata access.
         /// </summary>
         static void DemoMetadata()
         {
-            Console.WriteLine("5. Document Metadata");
+            Console.WriteLine("6. Document Metadata");
 
             PdfiumLibrary.Initialize();
 
@@ -193,7 +247,7 @@ namespace PDFiumCoreDemo
         /// </summary>
         static void DemoPageLabels()
         {
-            Console.WriteLine("6. Page Labels");
+            Console.WriteLine("7. Page Labels");
 
             PdfiumLibrary.Initialize();
 
@@ -229,7 +283,7 @@ namespace PDFiumCoreDemo
         /// </summary>
         static void DemoPageManipulation()
         {
-            Console.WriteLine("7. Page Manipulation");
+            Console.WriteLine("8. Page Manipulation");
 
             PdfiumLibrary.Initialize();
 
@@ -272,7 +326,7 @@ namespace PDFiumCoreDemo
         /// </summary>
         static void DemoFormFields()
         {
-            Console.WriteLine("8. Form Field Reading");
+            Console.WriteLine("9. Form Field Reading");
 
             PdfiumLibrary.Initialize();
 

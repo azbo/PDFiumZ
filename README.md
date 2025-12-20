@@ -107,6 +107,8 @@ finally
 - ✅ Hyperlink support (detect links at coordinates)
 - ✅ Text extraction
 - ✅ Text search with position information (case-sensitive, whole-word options)
+- ✅ Image extraction from PDF pages
+- ✅ Page object enumeration and type classification
 - ✅ Document saving
 - ✅ Zero-copy image access via `Span<byte>`
 

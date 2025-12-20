@@ -403,6 +403,146 @@ public sealed unsafe class PdfPage : IDisposable
     }
 
     /// <summary>
+    /// Gets the number of page objects (images, text, paths, etc.) on this page.
+    /// </summary>
+    /// <returns>The count of page objects.</returns>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public int GetPageObjectCount()
+    {
+        ThrowIfDisposed();
+        return fpdf_edit.FPDFPageCountObjects(_handle!);
+    }
+
+    /// <summary>
+    /// Gets information about a page object at the specified index.
+    /// </summary>
+    /// <param name="index">Zero-based object index.</param>
+    /// <returns>A <see cref="PdfPageObject"/> with object information.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to get page object.</exception>
+    public PdfPageObject GetPageObject(int index)
+    {
+        ThrowIfDisposed();
+
+        var objectCount = GetPageObjectCount();
+        if (index < 0 || index >= objectCount)
+            throw new ArgumentOutOfRangeException(nameof(index),
+                $"Object index {index} is out of range (0-{objectCount - 1}).");
+
+        var objectHandle = fpdf_edit.FPDFPageGetObject(_handle!, index);
+        if (objectHandle is null || objectHandle.__Instance == IntPtr.Zero)
+            throw new PdfException($"Failed to get page object at index {index}.");
+
+        var objectType = (PdfPageObjectType)fpdf_edit.FPDFPageObjGetType(objectHandle);
+
+        return new PdfPageObject(index, objectType);
+    }
+
+    /// <summary>
+    /// Extracts all images from the page.
+    /// </summary>
+    /// <returns>A list of extracted images.</returns>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public IReadOnlyList<PdfExtractedImage> ExtractImages()
+    {
+        ThrowIfDisposed();
+
+        var images = new List<PdfExtractedImage>();
+        var objectCount = GetPageObjectCount();
+
+        for (int i = 0; i < objectCount; i++)
+        {
+            try
+            {
+                var objectHandle = fpdf_edit.FPDFPageGetObject(_handle!, i);
+                if (objectHandle is null || objectHandle.__Instance == IntPtr.Zero)
+                    continue;
+
+                var objectType = fpdf_edit.FPDFPageObjGetType(objectHandle);
+                if (objectType != 3) // FPDF_PAGEOBJ_IMAGE = 3
+                    continue;
+
+                // Get rendered bitmap for this image object
+                var bitmapHandle = fpdf_edit.FPDFImageObjGetRenderedBitmap(
+                    _document._handle!, _handle!, objectHandle);
+
+                if (bitmapHandle is null || bitmapHandle.__Instance == IntPtr.Zero)
+                    continue;
+
+                // Get bitmap dimensions
+                var width = fpdfview.FPDFBitmapGetWidth(bitmapHandle);
+                var height = fpdfview.FPDFBitmapGetHeight(bitmapHandle);
+
+                if (width <= 0 || height <= 0)
+                {
+                    fpdfview.FPDFBitmapDestroy(bitmapHandle);
+                    continue;
+                }
+
+                // Wrap in managed objects
+                var pdfImage = new PdfImage(bitmapHandle, width, height);
+                var extractedImage = new PdfExtractedImage(i, pdfImage);
+
+                images.Add(extractedImage);
+            }
+            catch
+            {
+                // Skip objects that fail to extract
+                continue;
+            }
+        }
+
+        return images;
+    }
+
+    /// <summary>
+    /// Extracts a specific image object from the page.
+    /// </summary>
+    /// <param name="objectIndex">Zero-based page object index.</param>
+    /// <returns>The extracted image, or null if the object is not an image.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public PdfExtractedImage? ExtractImage(int objectIndex)
+    {
+        ThrowIfDisposed();
+
+        var objectCount = GetPageObjectCount();
+        if (objectIndex < 0 || objectIndex >= objectCount)
+            throw new ArgumentOutOfRangeException(nameof(objectIndex),
+                $"Object index {objectIndex} is out of range (0-{objectCount - 1}).");
+
+        var objectHandle = fpdf_edit.FPDFPageGetObject(_handle!, objectIndex);
+        if (objectHandle is null || objectHandle.__Instance == IntPtr.Zero)
+            return null;
+
+        var objectType = fpdf_edit.FPDFPageObjGetType(objectHandle);
+        if (objectType != 3) // FPDF_PAGEOBJ_IMAGE = 3
+            return null;
+
+        // Get rendered bitmap for this image object
+        var bitmapHandle = fpdf_edit.FPDFImageObjGetRenderedBitmap(
+            _document._handle!, _handle!, objectHandle);
+
+        if (bitmapHandle is null || bitmapHandle.__Instance == IntPtr.Zero)
+            return null;
+
+        // Get bitmap dimensions
+        var width = fpdfview.FPDFBitmapGetWidth(bitmapHandle);
+        var height = fpdfview.FPDFBitmapGetHeight(bitmapHandle);
+
+        if (width <= 0 || height <= 0)
+        {
+            fpdfview.FPDFBitmapDestroy(bitmapHandle);
+            return null;
+        }
+
+        // Wrap in managed objects
+        var pdfImage = new PdfImage(bitmapHandle, width, height);
+        return new PdfExtractedImage(objectIndex, pdfImage);
+    }
+
+    /// <summary>
     /// Releases all resources used by the <see cref="PdfPage"/>.
     /// </summary>
     public void Dispose()
