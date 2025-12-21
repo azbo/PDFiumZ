@@ -593,6 +593,13 @@
             </summary>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
         </member>
+        <member name="P:PDFiumZ.HighLevel.PdfDocument.Security">
+            <summary>
+            Gets the security and encryption information for this document.
+            Includes encryption status, security handler version, and permission flags.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
+        </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocument.#ctor(PDFiumZ.FpdfDocumentT,System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> class.
@@ -1890,6 +1897,69 @@
             Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfPageObject"/> class.
             </summary>
         </member>
+        <member name="T:PDFiumZ.HighLevel.PdfPermissions">
+            <summary>
+            PDF document permission flags as defined in PDF Reference 1.7, Table 3.20.
+            These flags control what operations are allowed on an encrypted PDF.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfPermissions.None">
+            <summary>
+            No permissions (fully restricted).
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfPermissions.Print">
+            <summary>
+            Print the document (security handlers revision 2).
+            Bit 3 (0x4).
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfPermissions.ModifyContents">
+            <summary>
+            Modify the contents of the document by operations other than those controlled
+            by ModifyAnnotations, FillForms, and AssembleDocument. Bit 4 (0x8).
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfPermissions.CopyContent">
+            <summary>
+            Copy or otherwise extract text and graphics from the document. Bit 5 (0x10).
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfPermissions.ModifyAnnotations">
+            <summary>
+            Add or modify text annotations, fill in interactive form fields. Bit 6 (0x20).
+            If ModifyContents is also set, create or modify interactive form fields.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfPermissions.FillForms">
+            <summary>
+            Fill in existing interactive form fields (including signature fields). Bit 9 (0x100).
+            Security handlers revision 3 or greater.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfPermissions.ExtractAccessibility">
+            <summary>
+            Extract text and graphics (in support of accessibility to users with disabilities
+            or for other purposes). Bit 10 (0x200). Security handlers revision 3 or greater.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfPermissions.AssembleDocument">
+            <summary>
+            Assemble the document (insert, rotate, or delete pages and create bookmarks or thumbnail images).
+            Bit 11 (0x400). Security handlers revision 3 or greater.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfPermissions.PrintHighQuality">
+            <summary>
+            Print the document to a representation from which a faithful digital copy could be generated.
+            Bit 12 (0x800). Security handlers revision 3 or greater.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfPermissions.All">
+            <summary>
+            All permissions enabled.
+            </summary>
+        </member>
         <member name="T:PDFiumZ.HighLevel.PdfRectangle">
             <summary>
             Represents a rectangle in PDF coordinate space.
@@ -1957,6 +2027,93 @@
         <member name="F:PDFiumZ.HighLevel.PdfRotation.Rotate270">
             <summary>
             Rotated 270 degrees clockwise (or 90 degrees counter-clockwise).
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfSecurityInfo">
+            <summary>
+            Contains security and encryption information about a PDF document.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfSecurityInfo.IsEncrypted">
+            <summary>
+            Gets whether the document is encrypted (password-protected).
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfSecurityInfo.SecurityHandlerRevision">
+            <summary>
+            Gets the security handler revision number.
+            Returns -1 if the document is not encrypted.
+            Common values: 2 (40-bit RC4), 3 (128-bit RC4), 4 (128-bit AES), 5 (256-bit AES).
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfSecurityInfo.Permissions">
+            <summary>
+            Gets the document permissions (what operations are allowed).
+            For unencrypted documents, this returns All permissions.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfSecurityInfo.UserPermissions">
+            <summary>
+            Gets the user permissions specifically.
+            This may differ from Permissions if the document was opened with owner password.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfSecurityInfo.CanPrint">
+            <summary>
+            Gets whether printing is allowed.
+            For unencrypted documents, always returns true.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfSecurityInfo.CanPrintHighQuality">
+            <summary>
+            Gets whether high-quality printing is allowed.
+            For unencrypted documents, always returns true.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfSecurityInfo.CanModifyContents">
+            <summary>
+            Gets whether modifying the document contents is allowed.
+            For unencrypted documents, always returns true.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfSecurityInfo.CanCopyContent">
+            <summary>
+            Gets whether copying content (text and graphics) is allowed.
+            For unencrypted documents, always returns true.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfSecurityInfo.CanModifyAnnotations">
+            <summary>
+            Gets whether adding or modifying annotations is allowed.
+            For unencrypted documents, always returns true.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfSecurityInfo.CanFillForms">
+            <summary>
+            Gets whether filling form fields is allowed.
+            For unencrypted documents, always returns true.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfSecurityInfo.CanExtractForAccessibility">
+            <summary>
+            Gets whether extracting content for accessibility purposes is allowed.
+            For unencrypted documents, always returns true.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfSecurityInfo.CanAssembleDocument">
+            <summary>
+            Gets whether assembling the document (rotating, inserting pages) is allowed.
+            For unencrypted documents, always returns true.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfSecurityInfo.EncryptionMethod">
+            <summary>
+            Gets the encryption method description based on security handler revision.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfSecurityInfo.ToString">
+            <summary>
+            Returns a string representation of the security information.
             </summary>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfSquareAnnotation">
