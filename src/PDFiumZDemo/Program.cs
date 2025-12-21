@@ -19,6 +19,7 @@ namespace PDFiumZDemo
 
             DemoCreateNewDocument();  // NEW: Test CreateNew + CreatePage
             DemoWatermark();  // NEW: Test AddTextWatermark
+            DemoMergeAndSplit();  // NEW: Test Merge + Split
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
@@ -69,6 +70,84 @@ namespace PDFiumZDemo
                 // Save the new document
                 document.SaveToFile("output/new-document.pdf");
                 Console.WriteLine("   Saved: new-document.pdf\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates PDF merge and split operations.
+        /// </summary>
+        static void DemoMergeAndSplit()
+        {
+            Console.WriteLine("0.6. Merge and Split PDFs");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                // First, create 3 simple PDF documents for testing
+                Console.WriteLine("   Creating test documents...");
+
+                using (var doc1 = PdfDocument.CreateNew())
+                {
+                    doc1.CreatePage(595, 842).Dispose(); // A4 page
+                    doc1.SaveToFile("output/test-doc1.pdf");
+                }
+
+                using (var doc2 = PdfDocument.CreateNew())
+                {
+                    doc2.CreatePage(595, 842).Dispose();
+                    doc2.CreatePage(595, 842).Dispose(); // 2 pages
+                    doc2.SaveToFile("output/test-doc2.pdf");
+                }
+
+                using (var doc3 = PdfDocument.CreateNew())
+                {
+                    doc3.CreatePage(595, 842).Dispose();
+                    doc3.CreatePage(595, 842).Dispose();
+                    doc3.CreatePage(595, 842).Dispose(); // 3 pages
+                    doc3.SaveToFile("output/test-doc3.pdf");
+                }
+
+                Console.WriteLine("   Created: test-doc1.pdf (1 page), test-doc2.pdf (2 pages), test-doc3.pdf (3 pages)");
+
+                // Test Merge: combine all 3 documents
+                Console.WriteLine("\n   Testing Merge...");
+                using (var merged = PdfDocument.Merge(
+                    "output/test-doc1.pdf",
+                    "output/test-doc2.pdf",
+                    "output/test-doc3.pdf"))
+                {
+                    Console.WriteLine($"   Merged document has {merged.PageCount} pages (expected: 6)");
+                    merged.SaveToFile("output/merged.pdf");
+                    Console.WriteLine("   Saved: merged.pdf");
+                }
+
+                // Test Split: extract first 3 pages from merged document
+                Console.WriteLine("\n   Testing Split...");
+                using (var mergedDoc = PdfDocument.Open("output/merged.pdf"))
+                {
+                    Console.WriteLine($"   Source document has {mergedDoc.PageCount} pages");
+
+                    using (var split1 = mergedDoc.Split(0, 3))
+                    {
+                        Console.WriteLine($"   Split 1: pages 0-2 → {split1.PageCount} pages");
+                        split1.SaveToFile("output/split-first3.pdf");
+                        Console.WriteLine("   Saved: split-first3.pdf");
+                    }
+
+                    using (var split2 = mergedDoc.Split(3, 3))
+                    {
+                        Console.WriteLine($"   Split 2: pages 3-5 → {split2.PageCount} pages");
+                        split2.SaveToFile("output/split-last3.pdf");
+                        Console.WriteLine("   Saved: split-last3.pdf");
+                    }
+                }
+
+                Console.WriteLine("\n   Merge and Split operations completed successfully!\n");
             }
             finally
             {

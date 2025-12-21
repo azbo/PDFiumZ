@@ -604,6 +604,30 @@
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create document.</exception>
             <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
         </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.Merge(System.String[])">
+            <summary>
+            Merges multiple PDF documents into a single document.
+            </summary>
+            <param name="filePaths">Paths to PDF files to merge.</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> containing all pages from the source documents.</returns>
+            <exception cref="T:System.ArgumentNullException">filePaths is null.</exception>
+            <exception cref="T:System.ArgumentException">filePaths is empty or contains null/empty strings.</exception>
+            <exception cref="T:System.IO.FileNotFoundException">One or more files do not exist.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfLoadException">Failed to load one or more PDF documents.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to merge documents.</exception>
+            <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.Split(System.Int32,System.Int32)">
+            <summary>
+            Splits this document by extracting a range of pages into a new document.
+            </summary>
+            <param name="startIndex">Zero-based index of the first page to extract.</param>
+            <param name="pageCount">Number of pages to extract.</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> containing the extracted pages.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">startIndex or pageCount is invalid.</exception>
+            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to split document.</exception>
+        </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocument.GetPage(System.Int32)">
             <summary>
             Gets a page by zero-based index.
