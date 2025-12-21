@@ -796,6 +796,23 @@
             Adds a text watermark to a single page.
             </summary>
         </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.RotateAllPages(PDFiumZ.HighLevel.PdfRotation)">
+            <summary>
+            Rotates all pages in the document by the specified angle.
+            </summary>
+            <param name="rotation">The rotation angle to apply to all pages.</param>
+            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.RotatePages(PDFiumZ.HighLevel.PdfRotation,System.Int32[])">
+            <summary>
+            Rotates specific pages in the document.
+            </summary>
+            <param name="rotation">The rotation angle to apply.</param>
+            <param name="pageIndices">Zero-based indices of pages to rotate.</param>
+            <exception cref="T:System.ArgumentNullException">pageIndices is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">One or more page indices are out of range.</exception>
+            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
+        </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocument.FlattenForm(System.Boolean)">
             <summary>
             Flattens all form fields and annotations in the document, converting them to static content.
@@ -1506,8 +1523,16 @@
         </member>
         <member name="P:PDFiumZ.HighLevel.PdfPage.Rotation">
             <summary>
-            Gets the page rotation (0, 90, 180, 270 degrees).
+            Gets or sets the page rotation.
             </summary>
+            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
+            <exception cref="T:System.ArgumentException">Invalid rotation value.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfPage.Rotate(PDFiumZ.HighLevel.PdfRotation)">
+            <summary>
+            Rotates the page by the specified angle.
+            </summary>
+            <param name="rotation">The rotation angle to apply.</param>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
         </member>
         <member name="P:PDFiumZ.HighLevel.PdfPage.Size">
@@ -1825,6 +1850,31 @@
         <member name="P:PDFiumZ.HighLevel.PdfRectangle.Bottom">
             <summary>
             Gets the bottom edge coordinate.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfRotation">
+            <summary>
+            Specifies the rotation angle for a PDF page.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfRotation.None">
+            <summary>
+            No rotation (0 degrees).
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfRotation.Rotate90">
+            <summary>
+            Rotated 90 degrees clockwise.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfRotation.Rotate180">
+            <summary>
+            Rotated 180 degrees clockwise.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfRotation.Rotate270">
+            <summary>
+            Rotated 270 degrees clockwise (or 90 degrees counter-clockwise).
             </summary>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfStampAnnotation">

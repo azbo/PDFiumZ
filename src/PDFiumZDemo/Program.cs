@@ -20,6 +20,7 @@ namespace PDFiumZDemo
             DemoCreateNewDocument();  // NEW: Test CreateNew + CreatePage
             DemoWatermark();  // NEW: Test AddTextWatermark
             DemoMergeAndSplit();  // NEW: Test Merge + Split
+            DemoRotatePages();  // NEW: Test page rotation
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
@@ -148,6 +149,77 @@ namespace PDFiumZDemo
                 }
 
                 Console.WriteLine("\n   Merge and Split operations completed successfully!\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates page rotation functionality.
+        /// </summary>
+        static void DemoRotatePages()
+        {
+            Console.WriteLine("0.7. Rotate PDF Pages");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                // Create a test document with 4 pages
+                Console.WriteLine("   Creating test document with 4 pages...");
+                using var document = PdfDocument.CreateNew();
+
+                for (int i = 0; i < 4; i++)
+                {
+                    document.CreatePage(595, 842).Dispose(); // A4 pages
+                }
+                Console.WriteLine($"   Created document with {document.PageCount} pages");
+
+                // Test 1: Rotate individual pages
+                Console.WriteLine("\n   Test 1: Rotating individual pages...");
+                document.RotatePages(PdfRotation.Rotate90, 0);      // First page: 90°
+                Console.WriteLine("      Page 0: Rotated 90° clockwise");
+
+                document.RotatePages(PdfRotation.Rotate180, 1);     // Second page: 180°
+                Console.WriteLine("      Page 1: Rotated 180°");
+
+                document.RotatePages(PdfRotation.Rotate270, 2);     // Third page: 270°
+                Console.WriteLine("      Page 2: Rotated 270° clockwise");
+
+                // Save individual rotation result
+                document.SaveToFile("output/rotated-individual.pdf");
+                Console.WriteLine("   Saved: rotated-individual.pdf");
+
+                // Test 2: Rotate all pages
+                Console.WriteLine("\n   Test 2: Rotating all pages...");
+                using var document2 = PdfDocument.CreateNew();
+                for (int i = 0; i < 3; i++)
+                {
+                    document2.CreatePage(595, 842).Dispose();
+                }
+
+                document2.RotateAllPages(PdfRotation.Rotate90);
+                Console.WriteLine($"      Rotated all {document2.PageCount} pages by 90°");
+
+                // Save batch rotation result
+                document2.SaveToFile("output/rotated-all.pdf");
+                Console.WriteLine("   Saved: rotated-all.pdf");
+
+                // Test 3: Read rotation
+                Console.WriteLine("\n   Test 3: Reading page rotation...");
+                using var page0 = document.GetPage(0);
+                using var page1 = document.GetPage(1);
+                using var page2 = document.GetPage(2);
+                using var page3 = document.GetPage(3);
+
+                Console.WriteLine($"      Page 0 rotation: {page0.Rotation}");
+                Console.WriteLine($"      Page 1 rotation: {page1.Rotation}");
+                Console.WriteLine($"      Page 2 rotation: {page2.Rotation}");
+                Console.WriteLine($"      Page 3 rotation: {page3.Rotation} (no rotation)");
+
+                Console.WriteLine("\n   Page rotation operations completed successfully!\n");
             }
             finally
             {
