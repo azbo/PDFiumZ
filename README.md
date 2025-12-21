@@ -116,6 +116,38 @@ page.Rotation = PdfRotation.Rotate270;
 document.SaveToFile("rotated.pdf");
 ```
 
+### Check PDF Security and Permissions
+
+```csharp
+using var document = PdfDocument.Open("document.pdf");
+
+// Get security information
+var security = document.Security;
+
+// Check if document is encrypted
+if (security.IsEncrypted)
+{
+    Console.WriteLine($"Encryption: {security.EncryptionMethod}");
+    Console.WriteLine($"Security Handler: Revision {security.SecurityHandlerRevision}");
+}
+else
+{
+    Console.WriteLine("Document is not encrypted");
+}
+
+// Check permissions
+Console.WriteLine($"Can print: {security.CanPrint}");
+Console.WriteLine($"Can modify: {security.CanModifyContents}");
+Console.WriteLine($"Can copy: {security.CanCopyContent}");
+Console.WriteLine($"Can fill forms: {security.CanFillForms}");
+
+// Get raw permission flags
+var permissions = document.Permissions;
+Console.WriteLine($"Permission flags: 0x{permissions:X8}");
+```
+
+**Note**: PDFiumZ can read PDF security information but does not support encrypting or password-protecting PDFs. For encryption, use external tools.
+
 ## Features
 
 ### High-Level API (Recommended)
