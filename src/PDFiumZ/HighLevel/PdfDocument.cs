@@ -117,6 +117,29 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
+    /// Gets the security and encryption information for this document.
+    /// Includes encryption status, security handler version, and permission flags.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    public PdfSecurityInfo Security
+    {
+        get
+        {
+            ThrowIfDisposed();
+
+            // Get security handler revision (-1 if not encrypted)
+            var revision = fpdfview.FPDF_GetSecurityHandlerRevision(_handle!);
+            var isEncrypted = revision >= 0;
+
+            // Get permissions
+            var permissions = fpdfview.FPDF_GetDocPermissions(_handle!);
+            var userPermissions = fpdfview.FPDF_GetDocUserPermissions(_handle!);
+
+            return new PdfSecurityInfo(isEncrypted, revision, permissions, userPermissions);
+        }
+    }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="PdfDocument"/> class.
     /// Internal constructor - factory methods only.
     /// </summary>
