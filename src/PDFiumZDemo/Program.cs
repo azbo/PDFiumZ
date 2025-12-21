@@ -17,6 +17,7 @@ namespace PDFiumZDemo
             // Demonstrate the new high-level API
             Console.WriteLine("=== PDFiumZ High-Level API Demo ===\n");
 
+            DemoCreateNewDocument();  // NEW: Test CreateNew + CreatePage
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
@@ -32,6 +33,46 @@ namespace PDFiumZDemo
             DemoBatchOperations();
 
             Console.WriteLine("\nDemo completed successfully!");
+        }
+
+        /// <summary>
+        /// Demonstrates creating a new PDF document from scratch.
+        /// </summary>
+        static void DemoCreateNewDocument()
+        {
+            Console.WriteLine("0. Create New PDF Document (From Scratch)");
+
+            // Initialize PDFium library
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                // Create a new empty PDF document
+                using var document = PdfDocument.CreateNew();
+                Console.WriteLine("   Created new empty document");
+
+                // Create an A4 page (595 x 842 points)
+                using var page1 = document.CreatePage(595, 842);
+                Console.WriteLine($"   Created page 1: {page1.Width:F1} x {page1.Height:F1} points (A4)");
+
+                // Create a Letter size page (612 x 792 points)
+                using var page2 = document.CreatePage(612, 792);
+                Console.WriteLine($"   Created page 2: {page2.Width:F1} x {page2.Height:F1} points (Letter)");
+
+                // Create a custom size page
+                using var page3 = document.CreatePage(800, 600);
+                Console.WriteLine($"   Created page 3: {page3.Width:F1} x {page3.Height:F1} points (Custom)");
+
+                Console.WriteLine($"   Total pages: {document.PageCount}");
+
+                // Save the new document
+                document.SaveToFile("output/new-document.pdf");
+                Console.WriteLine("   Saved: new-document.pdf\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
         }
 
         /// <summary>

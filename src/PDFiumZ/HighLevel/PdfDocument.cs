@@ -236,6 +236,23 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
+    /// Creates a new empty PDF document.
+    /// </summary>
+    /// <returns>A new <see cref="PdfDocument"/> instance.</returns>
+    /// <exception cref="PdfException">Failed to create document.</exception>
+    /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
+    public static PdfDocument CreateNew()
+    {
+        EnsureLibraryInitialized();
+
+        var handle = fpdf_edit.FPDF_CreateNewDocument();
+        if (handle is null || handle.__Instance == IntPtr.Zero)
+            throw new PdfException("Failed to create new PDF document.");
+
+        return new PdfDocument(handle, null);
+    }
+
+    /// <summary>
     /// Gets a page by zero-based index.
     /// </summary>
     /// <param name="index">Zero-based page index.</param>
@@ -286,6 +303,40 @@ public sealed class PdfDocument : IDisposable
         {
             yield return GetPage(i);
         }
+    }
+
+    /// <summary>
+    /// Creates a new blank page and adds it to the document.
+    /// </summary>
+    /// <param name="width">Page width in points (1/72 inch).</param>
+    /// <param name="height">Page height in points (1/72 inch).</param>
+    /// <returns>The newly created <see cref="PdfPage"/> instance that must be disposed.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Width or height is not positive.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to create page.</exception>
+    /// <remarks>
+    /// Common page sizes:
+    /// - Letter: 612 x 792 points (8.5" x 11")
+    /// - A4: 595 x 842 points (210mm x 297mm)
+    /// - Legal: 612 x 1008 points (8.5" x 14")
+    /// </remarks>
+    public PdfPage CreatePage(double width, double height)
+    {
+        ThrowIfDisposed();
+
+        if (width <= 0)
+            throw new ArgumentOutOfRangeException(nameof(width), "Width must be positive.");
+        if (height <= 0)
+            throw new ArgumentOutOfRangeException(nameof(height), "Height must be positive.");
+
+        // Create page at the end of the document
+        var pageIndex = PageCount;
+        var pageHandle = fpdf_edit.FPDFPageNew(_handle!, pageIndex, width, height);
+
+        if (pageHandle is null || pageHandle.__Instance == IntPtr.Zero)
+            throw new PdfException($"Failed to create new page with dimensions {width}x{height}.");
+
+        return new PdfPage(pageHandle, pageIndex, this);
     }
 
     /// <summary>

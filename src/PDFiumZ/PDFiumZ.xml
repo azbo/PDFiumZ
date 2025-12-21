@@ -596,6 +596,14 @@
             <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
             <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
         </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.CreateNew">
+            <summary>
+            Creates a new empty PDF document.
+            </summary>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> instance.</returns>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create document.</exception>
+            <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
+        </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocument.GetPage(System.Int32)">
             <summary>
             Gets a page by zero-based index.
@@ -616,6 +624,23 @@
             <exception cref="T:System.ArgumentOutOfRangeException">startIndex or count is invalid.</exception>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load one or more pages.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.CreatePage(System.Double,System.Double)">
+            <summary>
+            Creates a new blank page and adds it to the document.
+            </summary>
+            <param name="width">Page width in points (1/72 inch).</param>
+            <param name="height">Page height in points (1/72 inch).</param>
+            <returns>The newly created <see cref="T:PDFiumZ.HighLevel.PdfPage"/> instance that must be disposed.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Width or height is not positive.</exception>
+            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create page.</exception>
+            <remarks>
+            Common page sizes:
+            - Letter: 612 x 792 points (8.5" x 11")
+            - A4: 595 x 842 points (210mm x 297mm)
+            - Legal: 612 x 1008 points (8.5" x 14")
+            </remarks>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocument.GetPageLabel(System.Int32)">
             <summary>
