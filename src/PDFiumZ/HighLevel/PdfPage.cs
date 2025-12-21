@@ -50,16 +50,36 @@ public sealed unsafe class PdfPage : IDisposable
     }
 
     /// <summary>
-    /// Gets the page rotation (0, 90, 180, 270 degrees).
+    /// Gets or sets the page rotation.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    public int Rotation
+    /// <exception cref="ArgumentException">Invalid rotation value.</exception>
+    public PdfRotation Rotation
     {
         get
         {
             ThrowIfDisposed();
-            return fpdf_edit.FPDFPageGetRotation(_handle!);
+            var rotation = fpdf_edit.FPDFPageGetRotation(_handle!);
+            return (PdfRotation)rotation;
         }
+        set
+        {
+            ThrowIfDisposed();
+            if (!Enum.IsDefined(typeof(PdfRotation), value))
+                throw new ArgumentException($"Invalid rotation value: {value}", nameof(value));
+
+            fpdf_edit.FPDFPageSetRotation(_handle!, (int)value);
+        }
+    }
+
+    /// <summary>
+    /// Rotates the page by the specified angle.
+    /// </summary>
+    /// <param name="rotation">The rotation angle to apply.</param>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public void Rotate(PdfRotation rotation)
+    {
+        Rotation = rotation;
     }
 
     /// <summary>

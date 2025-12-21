@@ -900,6 +900,48 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
+    /// Rotates all pages in the document by the specified angle.
+    /// </summary>
+    /// <param name="rotation">The rotation angle to apply to all pages.</param>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    public void RotateAllPages(PdfRotation rotation)
+    {
+        ThrowIfDisposed();
+
+        for (int i = 0; i < PageCount; i++)
+        {
+            using var page = GetPage(i);
+            page.Rotation = rotation;
+        }
+    }
+
+    /// <summary>
+    /// Rotates specific pages in the document.
+    /// </summary>
+    /// <param name="rotation">The rotation angle to apply.</param>
+    /// <param name="pageIndices">Zero-based indices of pages to rotate.</param>
+    /// <exception cref="ArgumentNullException">pageIndices is null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">One or more page indices are out of range.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    public void RotatePages(PdfRotation rotation, params int[] pageIndices)
+    {
+        if (pageIndices is null)
+            throw new ArgumentNullException(nameof(pageIndices));
+
+        ThrowIfDisposed();
+
+        foreach (var index in pageIndices)
+        {
+            if (index < 0 || index >= PageCount)
+                throw new ArgumentOutOfRangeException(nameof(pageIndices),
+                    $"Page index {index} is out of range (0-{PageCount - 1}).");
+
+            using var page = GetPage(index);
+            page.Rotation = rotation;
+        }
+    }
+
+    /// <summary>
     /// Flattens all form fields and annotations in the document, converting them to static content.
     /// This operation is irreversible and makes the form non-interactive.
     /// </summary>
