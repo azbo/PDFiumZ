@@ -7,11 +7,202 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [145.1.0] - 2025-12-21
+
+### Added
+
+#### Document Creation & Manipulation (Round 1)
+- **Create PDF from Scratch**: New `PdfDocument.CreateNew()` method to create empty PDF documents
+- **Create Blank Pages**: New `CreatePage(width, height)` method to add blank pages with custom dimensions
+- **PDF Merging**: New `PdfDocument.Merge()` static method to combine multiple PDF documents
+  - Supports merging 2 or more documents in a single operation
+  - Preserves all page content, annotations, and metadata
+  - Example: `var merged = PdfDocument.Merge("doc1.pdf", "doc2.pdf", "doc3.pdf");`
+- **PDF Splitting**: New `Split(startIndex, pageCount)` method to extract page ranges into new documents
+  - Extract specific page ranges from large documents
+  - Creates independent documents with selected pages
+  - Example: `var split = document.Split(0, 10); // First 10 pages`
+- **Text Watermarks**: New `AddTextWatermark()` method with comprehensive customization:
+  - Position options: Center, TopLeft, TopRight, BottomLeft, BottomRight, TopCenter, BottomCenter, LeftCenter, RightCenter
+  - Opacity control: 0.0 (transparent) to 1.0 (opaque)
+  - Rotation angle in degrees (e.g., 45° for diagonal watermarks)
+  - Font size customization (default: 48 points)
+  - Color customization in ARGB format
+  - Example: `document.AddTextWatermark("CONFIDENTIAL", WatermarkPosition.Center, new WatermarkOptions { Opacity = 0.3, Rotation = 45 });`
+
+#### Extended Annotation Support (Round 2)
+- **Line Annotations**: `PdfLineAnnotation.Create()` for drawing lines
+  - Specify start and end points (x1, y1, x2, y2)
+  - Custom line color and width
+  - Example: `PdfLineAnnotation.Create(page, 50, 550, 250, 550, 0xFFFF0000, 2.0);`
+- **Rectangle Annotations**: `PdfSquareAnnotation.Create()` with borders and fills
+  - Separate border and fill colors
+  - Border width customization
+  - Transparent fill support with alpha channel
+  - Example: `PdfSquareAnnotation.Create(page, bounds, borderColor: 0xFFFF0000, fillColor: 0x400000FF, borderWidth: 2.0);`
+- **Circle Annotations**: `PdfCircleAnnotation.Create()` with borders and fills
+  - Same customization options as rectangles
+  - Perfect for highlighting circular areas
+  - Example: `PdfCircleAnnotation.Create(page, bounds, borderColor: 0xFF00FF00, fillColor: 0x4000FF00);`
+- **Underline Annotations**: `PdfUnderlineAnnotation.Create()` for text underlining
+  - Custom color support
+  - Precise text range specification with quad points
+  - Example: `PdfUnderlineAnnotation.Create(page, bounds, 0xFFFF0000);`
+- **StrikeOut Annotations**: `PdfStrikeOutAnnotation.Create()` for text strikethrough
+  - Similar to underline with different visual style
+  - Example: `PdfStrikeOutAnnotation.Create(page, bounds, 0xFF0000FF);`
+
+#### Page Operations
+- **Page Rotation API**: Three methods for rotating pages with `PdfRotation` enum (Rotate0, Rotate90, Rotate180, Rotate270):
+  - `RotatePage(pageIndex, rotation)` - Rotate single page
+  - `RotatePages(rotation, params int[] pageIndices)` - Rotate specific pages
+  - `RotateAllPages(rotation)` - Rotate all pages at once
+  - Also supports setting rotation via `page.Rotation` property
+  - Examples:
+    ```csharp
+    document.RotatePages(PdfRotation.Rotate90, 0, 2, 4);  // Rotate pages 0, 2, 4
+    document.RotateAllPages(PdfRotation.Rotate180);       // Rotate all pages
+    page.Rotation = PdfRotation.Rotate270;                // Rotate single page
+    ```
+
+#### Security & Permissions
+- **Security Information Reading**: New `PdfDocument.Security` property providing comprehensive security analysis:
+  - `IsEncrypted` - Detect if document is password-protected
+  - `EncryptionMethod` - Identify encryption algorithm:
+    - "None" for unencrypted documents
+    - "40-bit RC4" (Revision 2)
+    - "128-bit RC4" (Revision 3)
+    - "128-bit AES" (Revision 4)
+    - "256-bit AES" (Revision 5)
+    - "256-bit AES (PDF 2.0)" (Revision 6)
+  - `SecurityHandlerRevision` - Get security handler version
+  - `Permissions` and `UserPermissions` - Raw permission flags
+  - Convenience properties with smart checking (unencrypted = all allowed):
+    - `CanPrint`, `CanPrintHighQuality` - Print permissions
+    - `CanModifyContents` - Modify document content
+    - `CanCopyContent` - Copy text and graphics
+    - `CanModifyAnnotations` - Add/modify annotations
+    - `CanFillForms` - Fill form fields
+    - `CanExtractForAccessibility` - Extract for accessibility
+    - `CanAssembleDocument` - Assemble document (insert/delete pages)
+  - Example:
+    ```csharp
+    var security = document.Security;
+    if (security.IsEncrypted) {
+        Console.WriteLine($"Encryption: {security.EncryptionMethod}");
+    }
+    Console.WriteLine($"Can print: {security.CanPrint}");
+    ```
+- **New `PdfPermissions` enum**: Standard PDF permission flags per PDF Reference 1.7, Table 3.20
+  - Print (Bit 3), ModifyContents (Bit 4), CopyContent (Bit 5)
+  - ModifyAnnotations (Bit 6), FillForms (Bit 9), ExtractAccessibility (Bit 10)
+  - AssembleDocument (Bit 11), PrintHighQuality (Bit 12)
+  - Supports bitwise operations with [Flags] attribute
+- **New `PdfSecurityInfo` class**: Sealed class with internal constructor for controlled access
+
+**Important**: PDFiumZ can read PDF security information but does not support encrypting or password-protecting PDFs. This is a PDFium library limitation - the underlying library only provides read access to security features.
+
+#### Performance & Quality Assurance
+- **Comprehensive Performance Benchmarks**: 23 benchmarks using BenchmarkDotNet v0.15.8
+  - **Document Loading**: Small PDF (1 page), Medium PDF (10 pages)
+  - **Page Operations**: Single page access, batch page retrieval, page property access
+  - **Rendering Performance**: 72 DPI, 150 DPI, 300 DPI rendering tests
+  - **Text Operations**: Text extraction, text search
+  - **Document Manipulation**: Merge 3 documents, split document, rotate all pages
+  - **Save Operations**: Save small document, save medium document
+  - **Content Creation**: Add text with font, add watermark
+  - **Metadata Access**: Access document metadata, access security info
+  - **Real-World Workflows**: Load → Render → Save, Load → Modify → Save
+  - **Memory Diagnostics**: Gen0/Gen1/Gen2 GC statistics and allocation tracking
+  - **Performance Ranking**: Automatic ranking by execution time
+- **Performance Analysis Report (PERFORMANCE.md)**: Comprehensive 249-line analysis including:
+  - Executive summary with key findings
+  - Detailed benchmark results by category
+  - Performance rankings (fastest to slowest operations)
+  - Memory efficiency analysis
+  - Optimization opportunities identification:
+    - High Priority: Batch page access optimization, Page load caching
+    - Medium Priority: Rendering pipeline optimization, Memory pooling
+    - Low Priority: Async I/O considerations
+  - Best practices for library users (DPI selection, document reuse, async operations, batching)
+  - Best practices for library developers (caching, batch APIs, memory pooling, parallel rendering)
+  - Performance characteristics summary by category
+  - Key insights:
+    - Document loading: 52-65 μs (extremely fast)
+    - Page creation: 4.682 μs (fastest operation)
+    - Rendering scales quadratically with DPI
+    - Memory footprint: <1KB for most operations
+- **Benchmark Documentation**: Detailed benchmarking guide (PDFiumZ.Benchmarks/README.md)
+  - Instructions for running benchmarks
+  - Benchmark category explanations
+  - Performance tips and optimization strategies
+  - Contributing guidelines for new benchmarks
+
+#### Testing
+- **Comprehensive Unit Test Coverage**: 37 unit tests across multiple test classes
+  - **Document Creation Tests**: CreateNew, CreatePage validation
+  - **Watermark Tests**: Position, opacity, rotation, font customization
+  - **Merge & Split Tests**: Multi-document merging, page range extraction
+  - **Extended Annotation Tests**: Line, Square, Circle, Underline, StrikeOut annotations
+  - **Page Rotation Tests**: Single page, multiple pages, all pages rotation
+  - **Security Tests**: 8 tests covering:
+    - Encryption detection for unencrypted documents
+    - Security handler revision retrieval
+    - Permission flag reading for unencrypted documents
+    - Convenience property validation (CanPrint, CanModify, etc.)
+    - Smart permission checking (unencrypted = all allowed)
+  - All tests passing with proper resource cleanup
+  - Uses xUnit framework with IDisposable pattern
+
 ### Changed
 - **Project renamed to PDFiumZ** - Package ID and assembly name changed from PDFiumZ to PDFiumZ
 - Namespaces remain as `PDFiumZ` and `PDFiumZ.HighLevel` for API compatibility
 - Updated package description and metadata
 - Reorganized documentation for clarity
+- Improved annotation API consistency across all annotation types
+- Enhanced error handling for invalid rotation angles
+- Optimized memory usage in batch operations
+
+### Documentation
+- **README.md**: Added comprehensive examples for all v145.1.0 features:
+  - **Create PDF from Scratch** section with CreateNew and CreatePage examples
+  - **Merge and Split PDFs** section with multi-document operations
+  - **Add Watermarks** section with full customization examples
+  - **Rotate Pages** section showing all three rotation methods
+  - **Check PDF Security and Permissions** section with complete security inspection
+  - **Performance Benchmarks** section with benchmark running instructions
+  - Updated Features list with bold markers for new v145.1.0 features
+  - All code examples tested and verified
+- **PERFORMANCE.md**: New comprehensive 249-line performance analysis report
+  - Executive summary with key performance metrics
+  - Complete benchmark results organized by category
+  - Performance rankings from fastest to slowest operations
+  - Memory efficiency analysis with allocation statistics
+  - High/Medium/Low priority optimization opportunities
+  - Best practices for library users and developers
+  - Real-world workflow performance characteristics
+- **ROADMAP.md**: Updated to reflect accurate project status
+  - Current completion: 92% (Round 1: 100%, Round 2: 85%)
+  - Detailed breakdown of completed features by phase
+  - Updated security feature status (read-only implementation)
+  - Updated performance optimization status (complete with 23 benchmarks)
+  - Updated documentation status (comprehensive guides completed)
+  - Clear next steps: v145.1.0 finalization and release preparation
+- **PDFiumZ.Benchmarks/README.md**: New detailed benchmarking guide
+  - Prerequisites and setup instructions
+  - Running benchmarks (all tests and filtered tests)
+  - Benchmark categories explained (9 categories, 23 tests)
+  - Understanding BenchmarkDotNet results
+  - Performance tips based on benchmark findings
+  - Contributing guidelines for new benchmarks
+  - Continuous performance monitoring recommendations
+
+### Fixed
+- Fixed permission checking logic for unencrypted documents
+  - Now correctly returns all permissions as allowed for unencrypted PDFs
+  - Smart checking: `!IsEncrypted || Permissions.HasFlag(...)` pattern
+  - Previously incorrectly checked flags on 0 value
+- Improved security information accuracy for documents with no encryption
 
 ### Added
 - **High-Level API** - New `PDFiumZ.HighLevel` namespace with modern, easy-to-use API
