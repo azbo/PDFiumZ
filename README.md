@@ -47,6 +47,75 @@ finally
 }
 ```
 
+### Create PDF from Scratch
+
+```csharp
+// Create a new empty PDF document
+using var document = PdfDocument.CreateNew();
+
+// Add pages with different sizes
+using var page1 = document.CreatePage(595, 842);   // A4 (210mm x 297mm)
+using var page2 = document.CreatePage(612, 792);   // Letter (8.5" x 11")
+using var page3 = document.CreatePage(800, 600);   // Custom size
+
+Console.WriteLine($"Created document with {document.PageCount} pages");
+
+// Save the new document
+document.SaveToFile("new-document.pdf");
+```
+
+### Merge and Split PDFs
+
+```csharp
+// Merge multiple PDF documents
+using var merged = PdfDocument.Merge("doc1.pdf", "doc2.pdf", "doc3.pdf");
+Console.WriteLine($"Merged document has {merged.PageCount} pages");
+merged.SaveToFile("merged.pdf");
+
+// Split PDF by extracting page range
+using var source = PdfDocument.Open("large.pdf");
+using var split = source.Split(startIndex: 0, pageCount: 10);  // Extract first 10 pages
+split.SaveToFile("first-10-pages.pdf");
+```
+
+### Add Watermarks
+
+```csharp
+using var document = PdfDocument.Open("document.pdf");
+
+// Add watermark to all pages
+document.AddTextWatermark(
+    "CONFIDENTIAL",
+    WatermarkPosition.Center,
+    new WatermarkOptions
+    {
+        Opacity = 0.3,        // 30% opacity
+        Rotation = 45,        // 45 degrees
+        FontSize = 48,        // 48 points
+        Color = 0xFF0000FF    // Blue (ARGB format)
+    });
+
+document.SaveToFile("watermarked.pdf");
+```
+
+### Rotate Pages
+
+```csharp
+using var document = PdfDocument.Open("document.pdf");
+
+// Rotate individual pages
+document.RotatePages(PdfRotation.Rotate90, 0, 2, 4);  // Rotate pages 0, 2, 4 by 90°
+
+// Rotate all pages
+document.RotateAllPages(PdfRotation.Rotate180);
+
+// Or rotate a single page
+using var page = document.GetPage(0);
+page.Rotation = PdfRotation.Rotate270;
+
+document.SaveToFile("rotated.pdf");
+```
+
 ## Features
 
 ### High-Level API (Recommended)
@@ -132,7 +201,7 @@ try
     // Work with annotations
     using var annotPage = document.GetPage(0);
 
-    // Create a highlight annotation
+    // Create a highlight annotation (text markup)
     var highlightBounds = new PdfRectangle(100, 700, 200, 20);
     var highlight = PdfHighlightAnnotation.Create(annotPage, highlightBounds, 0x80FFFF00); // Yellow, 50% opacity
     highlight.SetQuadPoints(new[]
@@ -141,19 +210,55 @@ try
         new PdfRectangle(100, 710, 150, 10)
     });
 
+    // Create an underline annotation
+    var underline = PdfUnderlineAnnotation.Create(
+        annotPage,
+        new PdfRectangle(100, 650, 200, 15),
+        0xFFFF0000); // Red underline
+
+    // Create a strikeout annotation
+    var strikeout = PdfStrikeOutAnnotation.Create(
+        annotPage,
+        new PdfRectangle(100, 600, 200, 15),
+        0xFF0000FF); // Blue strikeout
+
+    // Create a line annotation
+    var line = PdfLineAnnotation.Create(
+        annotPage,
+        startX: 50, startY: 550,
+        endX: 250, endY: 550,
+        color: 0xFFFF0000,  // Red
+        width: 2.0);
+
+    // Create a rectangle annotation
+    var rectangle = PdfSquareAnnotation.Create(
+        annotPage,
+        new PdfRectangle(300, 700, 150, 100),
+        borderColor: 0xFFFF0000,  // Red border
+        fillColor: 0x400000FF,    // Blue fill, 25% opacity
+        borderWidth: 2.0);
+
+    // Create a circle annotation
+    var circle = PdfCircleAnnotation.Create(
+        annotPage,
+        new PdfRectangle(300, 550, 100, 100),
+        borderColor: 0xFF00FF00,  // Green border
+        fillColor: 0x4000FF00,    // Green fill, 25% opacity
+        borderWidth: 2.0);
+
     // Create a text annotation (sticky note)
-    var textAnnot = PdfTextAnnotation.Create(annotPage, 50, 650, "Important: Review this section");
+    var textAnnot = PdfTextAnnotation.Create(annotPage, 50, 450, "Important: Review this section");
     textAnnot.Author = "Reviewer";
 
     // Create stamp annotations
     var draftStamp = PdfStampAnnotation.Create(
         annotPage,
-        new PdfRectangle(350, 700, 120, 50),
+        new PdfRectangle(350, 400, 120, 50),
         PdfStampType.Draft);
 
     var approvedStamp = PdfStampAnnotation.Create(
         annotPage,
-        new PdfRectangle(350, 640, 120, 50),
+        new PdfRectangle(350, 340, 120, 50),
         PdfStampType.Approved);
 
     // Save document with annotations
@@ -161,6 +266,11 @@ try
 
     // Clean up annotations
     highlight.Dispose();
+    underline.Dispose();
+    strikeout.Dispose();
+    line.Dispose();
+    rectangle.Dispose();
+    circle.Dispose();
     textAnnot.Dispose();
     draftStamp.Dispose();
     approvedStamp.Dispose();
@@ -292,7 +402,11 @@ finally
 **Features:**
 - ✅ Modern C# API with `IDisposable` pattern
 - ✅ Fluent rendering options (`WithDpi()`, `WithScale()`, `WithTransparency()`)
+- ✅ **PDF creation from scratch** (create new documents and blank pages)
+- ✅ **PDF merge and split** (combine multiple PDFs or extract page ranges)
 - ✅ Page manipulation (insert, delete, move, import)
+- ✅ **Page rotation** (rotate individual pages, batch rotation, or all pages)
+- ✅ **Text watermarks** (add watermarks with custom rotation, opacity, and styling)
 - ✅ Bookmark navigation with tree traversal
 - ✅ Form field reading and writing (all standard field types)
 - ✅ Document metadata access (title, author, dates, etc.)
@@ -304,7 +418,7 @@ finally
 - ✅ Page object enumeration and type classification
 - ✅ Document saving
 - ✅ Zero-copy image access via `Span<byte>`
-- ✅ **Annotation support** (highlight, text notes, stamps)
+- ✅ **Annotation support** (highlight, underline, strikeout, text notes, stamps, lines, rectangles, circles)
 - ✅ **Content creation** (add text, images, shapes to pages)
 - ✅ **Font management** (standard PDF fonts and TrueType fonts)
 - ✅ **Async API** (non-blocking operations with cancellation support)
