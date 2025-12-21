@@ -18,6 +18,7 @@ namespace PDFiumZDemo
             Console.WriteLine("=== PDFiumZ High-Level API Demo ===\n");
 
             DemoCreateNewDocument();  // NEW: Test CreateNew + CreatePage
+            DemoWatermark();  // NEW: Test AddTextWatermark
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
@@ -68,6 +69,36 @@ namespace PDFiumZDemo
                 // Save the new document
                 document.SaveToFile("output/new-document.pdf");
                 Console.WriteLine("   Saved: new-document.pdf\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates adding watermarks to PDF documents.
+        /// </summary>
+        static void DemoWatermark()
+        {
+            Console.WriteLine("0.5. Add Watermarks to PDF");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                // Open existing document
+                using var document = PdfDocument.Open("pdf-sample.pdf");
+                Console.WriteLine($"   Loaded: {document.PageCount} page(s)");
+
+                // Add watermark with custom options (center, 45° rotation, 30% opacity)
+                document.AddTextWatermark("CONFIDENTIAL", WatermarkPosition.Center,
+                    new WatermarkOptions { Opacity = 0.3, Rotation = 45 });
+                Console.WriteLine("   Added CONFIDENTIAL watermark (center, 45° rotation, 30% opacity)");
+
+                // Save with watermark
+                document.SaveToFile("output/watermarked.pdf");
+                Console.WriteLine("   Saved: watermarked.pdf\n");
             }
             finally
             {

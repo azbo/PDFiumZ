@@ -756,6 +756,22 @@
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to save document.</exception>
             <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
         </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.AddTextWatermark(System.String,PDFiumZ.HighLevel.WatermarkPosition,PDFiumZ.HighLevel.WatermarkOptions)">
+            <summary>
+            Adds a text watermark to all pages in the document.
+            </summary>
+            <param name="text">The watermark text.</param>
+            <param name="position">The position of the watermark on each page.</param>
+            <param name="options">Watermark appearance options. If null, default options are used.</param>
+            <exception cref="T:System.ArgumentNullException">text is null.</exception>
+            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to add watermark to one or more pages.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.AddTextWatermarkToPage(PDFiumZ.HighLevel.PdfPage,System.String,PDFiumZ.HighLevel.WatermarkPosition,PDFiumZ.HighLevel.WatermarkOptions)">
+            <summary>
+            Adds a text watermark to a single page.
+            </summary>
+        </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocument.FlattenForm(System.Boolean)">
             <summary>
             Flattens all form fields and annotations in the document, converting them to static content.
@@ -2100,6 +2116,91 @@
         <member name="M:PDFiumZ.HighLevel.RenderOptions.CreateClipping(System.Double,System.Double)">
             <summary>
             Creates the clipping rectangle for rendering.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.WatermarkOptions">
+            <summary>
+            Options for configuring watermark appearance.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.WatermarkOptions.Opacity">
+            <summary>
+            Gets or sets the opacity of the watermark (0.0 = transparent, 1.0 = opaque).
+            Default is 0.5.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.WatermarkOptions.Rotation">
+            <summary>
+            Gets or sets the rotation angle of the watermark in degrees (clockwise).
+            Default is 0 (no rotation).
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.WatermarkOptions.FontSize">
+            <summary>
+            Gets or sets the font size for text watermarks in points.
+            Default is 48.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.WatermarkOptions.Color">
+            <summary>
+            Gets or sets the color of the watermark in ARGB format.
+            Default is gray (0xFF808080).
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.WatermarkOptions.Font">
+            <summary>
+            Gets or sets the font for text watermarks.
+            Default is Helvetica Bold.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.WatermarkPosition">
+            <summary>
+            Defines the position of a watermark on a PDF page.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.WatermarkPosition.Center">
+            <summary>
+            Center of the page.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.WatermarkPosition.TopLeft">
+            <summary>
+            Top-left corner.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.WatermarkPosition.TopCenter">
+            <summary>
+            Top-center.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.WatermarkPosition.TopRight">
+            <summary>
+            Top-right corner.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.WatermarkPosition.MiddleLeft">
+            <summary>
+            Middle-left.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.WatermarkPosition.MiddleRight">
+            <summary>
+            Middle-right.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.WatermarkPosition.BottomLeft">
+            <summary>
+            Bottom-left corner.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.WatermarkPosition.BottomCenter">
+            <summary>
+            Bottom-center.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.WatermarkPosition.BottomRight">
+            <summary>
+            Bottom-right corner.
             </summary>
         </member>
         <member name="M:PDFiumZ.fpdfview.FPDF_InitLibraryWithConfig(PDFiumZ.FPDF_LIBRARY_CONFIG_)">
