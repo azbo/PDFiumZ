@@ -638,6 +638,164 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
+    /// Adds a text watermark to all pages in the document.
+    /// </summary>
+    /// <param name="text">The watermark text.</param>
+    /// <param name="position">The position of the watermark on each page.</param>
+    /// <param name="options">Watermark appearance options. If null, default options are used.</param>
+    /// <exception cref="ArgumentNullException">text is null.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to add watermark to one or more pages.</exception>
+    public void AddTextWatermark(string text, WatermarkPosition position, WatermarkOptions? options = null)
+    {
+        if (text is null)
+            throw new ArgumentNullException(nameof(text));
+
+        ThrowIfDisposed();
+
+        options ??= new WatermarkOptions();
+
+        // Add watermark to all pages
+        for (int i = 0; i < PageCount; i++)
+        {
+            using var page = GetPage(i);
+            AddTextWatermarkToPage(page, text, position, options);
+        }
+    }
+
+    /// <summary>
+    /// Adds a text watermark to a single page.
+    /// </summary>
+    private unsafe void AddTextWatermarkToPage(PdfPage page, string text, WatermarkPosition position, WatermarkOptions options)
+    {
+        // Load font
+        var font = PdfFont.LoadStandardFont(this, options.Font);
+
+        try
+        {
+            using var editor = page.BeginEdit();
+
+            // Create text object
+            var textObj = fpdf_edit.FPDFPageObjNewTextObj(
+                _handle!,
+                font.Name,
+                (float)options.FontSize);
+
+            if (textObj is null || textObj.__Instance == IntPtr.Zero)
+                throw new PdfException($"Failed to create watermark text object.");
+
+            try
+            {
+                // Set text content (UTF-16LE)
+                var utf16Array = new ushort[text.Length + 1];
+                for (int i = 0; i < text.Length; i++)
+                {
+                    utf16Array[i] = text[i];
+                }
+                utf16Array[text.Length] = 0;
+
+                var result = fpdf_edit.FPDFTextSetText(textObj, ref utf16Array[0]);
+                if (result == 0)
+                    throw new PdfException("Failed to set watermark text content.");
+
+                // Set text color with opacity (ARGB format)
+                uint alpha = (uint)(options.Opacity * 255);
+                uint color = options.Color;
+                uint r = (color >> 16) & 0xFF;
+                uint g = (color >> 8) & 0xFF;
+                uint b = color & 0xFF;
+
+                fpdf_edit.FPDFPageObjSetFillColor(textObj, r, g, b, alpha);
+
+                // Calculate text dimensions (rough estimate based on font size)
+                double textWidth = text.Length * options.FontSize * 0.6;  // Approximate width
+                double textHeight = options.FontSize;
+
+                // Calculate position based on page size and watermark position
+                double pageWidth = page.Width;
+                double pageHeight = page.Height;
+                double x = 0, y = 0;
+
+                switch (position)
+                {
+                    case WatermarkPosition.Center:
+                        x = (pageWidth - textWidth) / 2;
+                        y = (pageHeight - textHeight) / 2;
+                        break;
+                    case WatermarkPosition.TopLeft:
+                        x = 50;
+                        y = pageHeight - textHeight - 50;
+                        break;
+                    case WatermarkPosition.TopCenter:
+                        x = (pageWidth - textWidth) / 2;
+                        y = pageHeight - textHeight - 50;
+                        break;
+                    case WatermarkPosition.TopRight:
+                        x = pageWidth - textWidth - 50;
+                        y = pageHeight - textHeight - 50;
+                        break;
+                    case WatermarkPosition.MiddleLeft:
+                        x = 50;
+                        y = (pageHeight - textHeight) / 2;
+                        break;
+                    case WatermarkPosition.MiddleRight:
+                        x = pageWidth - textWidth - 50;
+                        y = (pageHeight - textHeight) / 2;
+                        break;
+                    case WatermarkPosition.BottomLeft:
+                        x = 50;
+                        y = 50;
+                        break;
+                    case WatermarkPosition.BottomCenter:
+                        x = (pageWidth - textWidth) / 2;
+                        y = 50;
+                        break;
+                    case WatermarkPosition.BottomRight:
+                        x = pageWidth - textWidth - 50;
+                        y = 50;
+                        break;
+                }
+
+                // Apply transformation with rotation
+                // For rotation, we need to rotate around the text center
+                double rotationRad = options.Rotation * Math.PI / 180.0;
+                double cos = Math.Cos(rotationRad);
+                double sin = Math.Sin(rotationRad);
+
+                // Calculate center point for rotation
+                double centerX = x + textWidth / 2;
+                double centerY = y + textHeight / 2;
+
+                // Transformation matrix with rotation around center:
+                // First translate to origin, rotate, then translate back
+                // Matrix: [a b c d e f] where:
+                // a = cos, b = sin, c = -sin, d = cos (for rotation)
+                // e, f = translation
+                double finalX = centerX - (centerX * cos - centerY * sin);
+                double finalY = centerY - (centerX * sin + centerY * cos);
+
+                fpdf_edit.FPDFPageObjTransform(textObj, cos, sin, -sin, cos, finalX, finalY);
+
+                // Insert object into page
+                fpdf_edit.FPDFPageInsertObject(page._handle!, textObj);
+
+                // Generate content to apply changes
+                editor.GenerateContent();
+            }
+            catch
+            {
+                // Clean up on failure
+                fpdf_edit.FPDFPageObjDestroy(textObj);
+                throw;
+            }
+        }
+        finally
+        {
+            font.Dispose();
+        }
+    }
+
+    /// <summary>
     /// Flattens all form fields and annotations in the document, converting them to static content.
     /// This operation is irreversible and makes the form non-interactive.
     /// </summary>
