@@ -2134,6 +2134,60 @@
             Draft stamp.
             </summary>
         </member>
+        <member name="T:PDFiumZ.HighLevel.PdfStrikeOutAnnotation">
+            <summary>
+            Represents a strikeout annotation in a PDF document.
+            Strikeout annotations mark selected text with a line through it.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfStrikeOutAnnotation.Create(PDFiumZ.HighLevel.PdfPage,PDFiumZ.HighLevel.PdfRectangle,System.UInt32)">
+            <summary>
+            Creates a new strikeout annotation on the specified page.
+            </summary>
+            <param name="page">The page to add the annotation to.</param>
+            <param name="bounds">The bounding rectangle of the strikeout.</param>
+            <param name="color">The strikeout color in ARGB format (default: red with full opacity).</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfStrikeOutAnnotation"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">page is null.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create annotation.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfStrikeOutAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfStrikeOutAnnotation"/> class.
+            Internal constructor - use factory methods to create annotations.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfStrikeOutAnnotation.GetQuadPoints">
+            <summary>
+            Gets the quad points that define the strikeout regions.
+            Each quad point represents a quadrilateral region (typically a text selection).
+            </summary>
+            <returns>An array of rectangles representing the strikeout regions.</returns>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfStrikeOutAnnotation.SetQuadPoints(PDFiumZ.HighLevel.PdfRectangle[])">
+            <summary>
+            Sets the quad points that define the strikeout regions.
+            Each rectangle is converted to a quadrilateral for the strikeout.
+            </summary>
+            <param name="rectangles">The rectangles to strike out.</param>
+            <exception cref="T:System.ArgumentNullException">rectangles is null.</exception>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to set quad points.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfStrikeOutAnnotation.AddQuadPoint(PDFiumZ.HighLevel.PdfRectangle)">
+            <summary>
+            Adds a rectangular region to the strikeout.
+            </summary>
+            <param name="rectangle">The rectangle to add.</param>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to add quad point.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfStrikeOutAnnotation.CreateQuadFromRectangle(PDFiumZ.HighLevel.PdfRectangle)">
+            <summary>
+            Creates a FS_QUADPOINTSF structure from a rectangle.
+            </summary>
+        </member>
         <member name="T:PDFiumZ.HighLevel.PdfTextAnnotation">
             <summary>
             Represents a text annotation (sticky note/comment) in a PDF document.
@@ -2204,6 +2258,60 @@
             <param name="charCount">Number of characters in the match.</param>
             <param name="text">Matched text content.</param>
             <param name="boundingRectangles">Bounding rectangles for the match.</param>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfUnderlineAnnotation">
+            <summary>
+            Represents an underline annotation in a PDF document.
+            Underline annotations mark selected text with an underline.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfUnderlineAnnotation.Create(PDFiumZ.HighLevel.PdfPage,PDFiumZ.HighLevel.PdfRectangle,System.UInt32)">
+            <summary>
+            Creates a new underline annotation on the specified page.
+            </summary>
+            <param name="page">The page to add the annotation to.</param>
+            <param name="bounds">The bounding rectangle of the underline.</param>
+            <param name="color">The underline color in ARGB format (default: red with full opacity).</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfUnderlineAnnotation"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">page is null.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create annotation.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfUnderlineAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfUnderlineAnnotation"/> class.
+            Internal constructor - use factory methods to create annotations.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfUnderlineAnnotation.GetQuadPoints">
+            <summary>
+            Gets the quad points that define the underlined regions.
+            Each quad point represents a quadrilateral region (typically a text selection).
+            </summary>
+            <returns>An array of rectangles representing the underlined regions.</returns>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfUnderlineAnnotation.SetQuadPoints(PDFiumZ.HighLevel.PdfRectangle[])">
+            <summary>
+            Sets the quad points that define the underlined regions.
+            Each rectangle is converted to a quadrilateral for the underline.
+            </summary>
+            <param name="rectangles">The rectangles to underline.</param>
+            <exception cref="T:System.ArgumentNullException">rectangles is null.</exception>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to set quad points.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfUnderlineAnnotation.AddQuadPoint(PDFiumZ.HighLevel.PdfRectangle)">
+            <summary>
+            Adds a rectangular region to the underline.
+            </summary>
+            <param name="rectangle">The rectangle to add.</param>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to add quad point.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfUnderlineAnnotation.CreateQuadFromRectangle(PDFiumZ.HighLevel.PdfRectangle)">
+            <summary>
+            Creates a FS_QUADPOINTSF structure from a rectangle.
+            </summary>
         </member>
         <member name="T:PDFiumZ.HighLevel.RenderOptions">
             <summary>
