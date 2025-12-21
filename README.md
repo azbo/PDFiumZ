@@ -469,6 +469,28 @@ The low-level P/Invoke API is still available for advanced scenarios through the
 2. Run `dotnet build` in the `src` directory
 3. Run `dotnet pack` to create NuGet packages
 
+## Performance Benchmarks
+
+PDFiumZ includes comprehensive performance benchmarks using BenchmarkDotNet. These help track performance and identify optimization opportunities.
+
+### Running Benchmarks
+
+```bash
+cd src/PDFiumZ.Benchmarks
+dotnet run -c Release
+```
+
+The benchmarks cover:
+- Document loading (small/medium PDFs)
+- Page operations and batch operations
+- Rendering at different DPIs (72/150/300)
+- Text extraction and search
+- Document manipulation (merge, split, rotate)
+- Content creation and watermarks
+- Real-world workflow scenarios
+
+For detailed benchmark documentation and performance tips, see [PDFiumZ.Benchmarks/README.md](src/PDFiumZ.Benchmarks/README.md).
+
 ### Resources
 
 - [PDFium Source](https://pdfium.googlesource.com/pdfium/)
