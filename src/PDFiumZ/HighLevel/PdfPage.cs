@@ -657,6 +657,8 @@ public sealed unsafe class PdfPage : IDisposable
             PdfAnnotationType.Line => new PdfLineAnnotation(handle, this, index),
             PdfAnnotationType.Square => new PdfSquareAnnotation(handle, this, index),
             PdfAnnotationType.Circle => new PdfCircleAnnotation(handle, this, index),
+            PdfAnnotationType.Underline => new PdfUnderlineAnnotation(handle, this, index),
+            PdfAnnotationType.StrikeOut => new PdfStrikeOutAnnotation(handle, this, index),
             // Add other annotation types as they are implemented
             _ => new GenericAnnotation(handle, this, annotType, index)
         };
