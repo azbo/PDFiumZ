@@ -1,19 +1,33 @@
 # PDFiumZ 开发路线图
 
-> 最后更新: 2025-12-20
+> 最后更新: 2025-12-21
 
 ## 🎯 当前状态
 
-**版本**: v145.0.7578.0
-**完成度**: Phase 1-4 完成 (70%)
-**发布状态**: ✅ NuGet.org 已发布
+**版本**: v145.1.0 (开发中)
+**完成度**: 第一轮 100%，第二轮 85% (总体约 92%)
+**发布状态**: ✅ v145.0.7578.0 已发布到 NuGet.org
 
 ### ✅ 已完成功能
 
+**基础功能** (v145.0.7578.0):
 - **Phase 1**: 注解支持 (高亮、文本、图章)
 - **Phase 2**: 表单填充 (读写表单字段)
 - **Phase 3**: 内容创建 (文本、图像、形状)
 - **Phase 4**: 性能优化 (异步 API、批量操作)
+
+**第一轮新增** (v145.1.0):
+- ✅ 从零创建 PDF 文档 (CreateNew, CreatePage)
+- ✅ PDF 水印功能 (文本水印，自定义旋转/透明度)
+- ✅ PDF 合并拆分 (Merge, Split 方法)
+- ✅ 单元测试覆盖 (37个测试，覆盖所有新功能)
+
+**第二轮新增** (v145.1.0):
+- ✅ 扩展注解类型 (Line, Square, Circle, Underline, StrikeOut)
+- ✅ 页面旋转 (RotatePage, RotateAllPages, RotatePages)
+- ✅ PDF 安全信息读取 (加密状态、权限检查)
+- ✅ 性能基准测试 (23个基准测试，完整性能分析)
+- ✅ 性能文档 (PERFORMANCE.md)
 
 ---
 
@@ -67,25 +81,36 @@ var split = document.Split(0, 10); // 前10页
 
 ### 6. PDF 安全功能 ⭐⭐
 **工作量**: 2-3天
+**状态**: ✅ 部分完成 - 已实现安全信息读取（加密检测、权限检查）
 
+**已实现**：
 ```csharp
-document.Encrypt("userpass", "ownerpass",
-    PdfPermissions.Print | PdfPermissions.Copy);
+var security = document.Security;
+Console.WriteLine($"Encrypted: {security.IsEncrypted}");
+Console.WriteLine($"Can Print: {security.CanPrint}");
 ```
+
+**未实现**：加密/密码保护（PDFium 限制，仅支持读取）
 
 ### 7. 性能优化 ⭐⭐
 **工作量**: 2-3天
+**状态**: ✅ 已完成
 
-- 性能基准测试
-- 内存优化
-- 大文档处理
+**已实现**：
+- ✅ 性能基准测试（23个基准测试）
+- ✅ 性能分析报告（PERFORMANCE.md）
+- ✅ 优化建议和最佳实践
+- ✅ 内存使用分析
 
 ### 8. 文档完善 ⭐⭐
 **工作量**: 2-3天
+**状态**: ✅ 已完成
 
-- 详细使用指南
-- 代码示例集
-- FAQ 文档
+**已实现**：
+- ✅ README.md 完整功能文档
+- ✅ 性能分析报告（PERFORMANCE.md）
+- ✅ 基准测试文档（Benchmarks/README.md）
+- ✅ 代码示例和用法说明
 
 ---
 
@@ -131,10 +156,19 @@ document.Encrypt("userpass", "ownerpass",
 
 ## 💡 下一步行动
 
-**立即开始**:
-1. Phase 5.1 - 从零创建文档
-2. Phase 6.1 - 单元测试
+**v145.1.0 收尾工作**:
+1. ✅ 更新 ROADMAP.md 反映实际进度
+2. 📝 创建 CHANGELOG.md（版本更新日志）
+3. 🚀 准备 v145.1.0 发布到 NuGet
 
-**2周后发布**: v145.1.0
+**可选优化项**:
+- Ink 注解类型实现
+- 批量页面访问优化（性能提升）
+- 页面加载缓存机制
+
+**第三轮开发规划** (v146.0.0):
+- 文档比较功能
+- PDF/A 合规支持
+- 数字签名功能
 
 **长期愿景**: 成为 .NET 最佳 PDF 库
