@@ -392,6 +392,61 @@
             Returns a string representation of the bookmark.
             </summary>
         </member>
+        <member name="T:PDFiumZ.HighLevel.PdfCircleAnnotation">
+            <summary>
+            Represents a circle/ellipse annotation in a PDF document.
+            Circle annotations display a circular or elliptical shape.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfCircleAnnotation.Create(PDFiumZ.HighLevel.PdfPage,PDFiumZ.HighLevel.PdfRectangle,System.UInt32,System.UInt32,System.Double)">
+            <summary>
+            Creates a new circle/ellipse annotation on the specified page.
+            </summary>
+            <param name="page">The page to add the annotation to.</param>
+            <param name="bounds">The bounding rectangle of the circle/ellipse.</param>
+            <param name="borderColor">The border color in ARGB format (default: solid blue). Set to 0 for no border.</param>
+            <param name="fillColor">The fill color in ARGB format (default: transparent). Set to 0 for no fill.</param>
+            <param name="borderWidth">The border width in points (default: 1.0).</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfCircleAnnotation"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">page is null.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create annotation.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfCircleAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfCircleAnnotation"/> class.
+            Internal constructor - use factory methods to create annotations.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfCircleAnnotation.SetBorderColor(System.UInt32)">
+            <summary>
+            Sets the border (stroke) color of the circle.
+            </summary>
+            <param name="color">The border color in ARGB format.</param>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to set border color.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfCircleAnnotation.SetFillColor(System.UInt32)">
+            <summary>
+            Sets the fill (interior) color of the circle.
+            </summary>
+            <param name="color">The fill color in ARGB format.</param>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to set fill color.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfCircleAnnotation.GetBorderColor">
+            <summary>
+            Gets the border (stroke) color of the circle.
+            </summary>
+            <returns>The border color in ARGB format.</returns>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfCircleAnnotation.GetFillColor">
+            <summary>
+            Gets the fill (interior) color of the circle.
+            </summary>
+            <returns>The fill color in ARGB format.</returns>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+        </member>
         <member name="T:PDFiumZ.HighLevel.PdfContentEditor">
             <summary>
             Provides methods for editing PDF page content by adding text, images, and shapes.
@@ -1354,6 +1409,33 @@
             WARNING: Only use if you know all documents are disposed.
             </summary>
         </member>
+        <member name="T:PDFiumZ.HighLevel.PdfLineAnnotation">
+            <summary>
+            Represents a line annotation in a PDF document.
+            Line annotations draw a straight line between two points.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfLineAnnotation.Create(PDFiumZ.HighLevel.PdfPage,System.Double,System.Double,System.Double,System.Double,System.UInt32,System.Double)">
+            <summary>
+            Creates a new line annotation on the specified page.
+            </summary>
+            <param name="page">The page to add the annotation to.</param>
+            <param name="startX">The X coordinate of the line start point.</param>
+            <param name="startY">The Y coordinate of the line start point.</param>
+            <param name="endX">The X coordinate of the line end point.</param>
+            <param name="endY">The Y coordinate of the line end point.</param>
+            <param name="color">The line color in ARGB format (default: solid red).</param>
+            <param name="width">The line width in points (default: 1.0).</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfLineAnnotation"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">page is null.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create annotation.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfLineAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfLineAnnotation"/> class.
+            Internal constructor - use factory methods to create annotations.
+            </summary>
+        </member>
         <member name="T:PDFiumZ.HighLevel.PdfLink">
             <summary>
             Represents a hyperlink on a PDF page.
@@ -1876,6 +1958,61 @@
             <summary>
             Rotated 270 degrees clockwise (or 90 degrees counter-clockwise).
             </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfSquareAnnotation">
+            <summary>
+            Represents a square/rectangle annotation in a PDF document.
+            Square annotations display a rectangle or square shape.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfSquareAnnotation.Create(PDFiumZ.HighLevel.PdfPage,PDFiumZ.HighLevel.PdfRectangle,System.UInt32,System.UInt32,System.Double)">
+            <summary>
+            Creates a new square/rectangle annotation on the specified page.
+            </summary>
+            <param name="page">The page to add the annotation to.</param>
+            <param name="bounds">The bounding rectangle of the square/rectangle.</param>
+            <param name="borderColor">The border color in ARGB format (default: solid red). Set to 0 for no border.</param>
+            <param name="fillColor">The fill color in ARGB format (default: transparent). Set to 0 for no fill.</param>
+            <param name="borderWidth">The border width in points (default: 1.0).</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfSquareAnnotation"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">page is null.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create annotation.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfSquareAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfSquareAnnotation"/> class.
+            Internal constructor - use factory methods to create annotations.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfSquareAnnotation.SetBorderColor(System.UInt32)">
+            <summary>
+            Sets the border (stroke) color of the rectangle.
+            </summary>
+            <param name="color">The border color in ARGB format.</param>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to set border color.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfSquareAnnotation.SetFillColor(System.UInt32)">
+            <summary>
+            Sets the fill (interior) color of the rectangle.
+            </summary>
+            <param name="color">The fill color in ARGB format.</param>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to set fill color.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfSquareAnnotation.GetBorderColor">
+            <summary>
+            Gets the border (stroke) color of the rectangle.
+            </summary>
+            <returns>The border color in ARGB format.</returns>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfSquareAnnotation.GetFillColor">
+            <summary>
+            Gets the fill (interior) color of the rectangle.
+            </summary>
+            <returns>The fill color in ARGB format.</returns>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfStampAnnotation">
             <summary>
