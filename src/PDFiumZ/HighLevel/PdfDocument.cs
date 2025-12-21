@@ -253,6 +253,104 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
+    /// Merges multiple PDF documents into a single document.
+    /// </summary>
+    /// <param name="filePaths">Paths to PDF files to merge.</param>
+    /// <returns>A new <see cref="PdfDocument"/> containing all pages from the source documents.</returns>
+    /// <exception cref="ArgumentNullException">filePaths is null.</exception>
+    /// <exception cref="ArgumentException">filePaths is empty or contains null/empty strings.</exception>
+    /// <exception cref="FileNotFoundException">One or more files do not exist.</exception>
+    /// <exception cref="PdfLoadException">Failed to load one or more PDF documents.</exception>
+    /// <exception cref="PdfException">Failed to merge documents.</exception>
+    /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
+    public static PdfDocument Merge(params string[] filePaths)
+    {
+        if (filePaths is null)
+            throw new ArgumentNullException(nameof(filePaths));
+        if (filePaths.Length == 0)
+            throw new ArgumentException("At least one file path must be provided.", nameof(filePaths));
+
+        EnsureLibraryInitialized();
+
+        // Validate all file paths first
+        foreach (var path in filePaths)
+        {
+            if (string.IsNullOrEmpty(path))
+                throw new ArgumentException("File paths cannot be null or empty.", nameof(filePaths));
+            if (!File.Exists(path))
+                throw new FileNotFoundException($"PDF file not found: {path}", path);
+        }
+
+        // Create new document to hold merged content
+        var mergedDoc = CreateNew();
+
+        try
+        {
+            // Import pages from each source document
+            foreach (var filePath in filePaths)
+            {
+                using var sourceDoc = Open(filePath);
+                // Use PageCount instead of -1 to ensure compatibility
+                mergedDoc.ImportPages(sourceDoc, null, mergedDoc.PageCount);
+            }
+
+            return mergedDoc;
+        }
+        catch
+        {
+            mergedDoc.Dispose();
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Splits this document by extracting a range of pages into a new document.
+    /// </summary>
+    /// <param name="startIndex">Zero-based index of the first page to extract.</param>
+    /// <param name="pageCount">Number of pages to extract.</param>
+    /// <returns>A new <see cref="PdfDocument"/> containing the extracted pages.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">startIndex or pageCount is invalid.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to split document.</exception>
+    public PdfDocument Split(int startIndex, int pageCount)
+    {
+        ThrowIfDisposed();
+
+        if (startIndex < 0 || startIndex >= PageCount)
+            throw new ArgumentOutOfRangeException(nameof(startIndex),
+                $"Start index {startIndex} is out of range (0-{PageCount - 1}).");
+        if (pageCount <= 0)
+            throw new ArgumentOutOfRangeException(nameof(pageCount), "Page count must be positive.");
+        if (startIndex + pageCount > PageCount)
+            throw new ArgumentOutOfRangeException(nameof(pageCount),
+                $"Range ({startIndex} + {pageCount}) exceeds page count ({PageCount}).");
+
+        // Create page indices array
+        var pageIndices = new int[pageCount];
+        for (int i = 0; i < pageCount; i++)
+        {
+            pageIndices[i] = startIndex + i;
+        }
+
+        // Create new document and import pages
+        var splitDoc = CreateNew();
+        try
+        {
+            splitDoc.ImportPagesAt(this, pageIndices, 0);
+
+            // Copy viewer preferences
+            fpdf_ppo.FPDF_CopyViewerPreferences(splitDoc._handle!, _handle!);
+
+            return splitDoc;
+        }
+        catch
+        {
+            splitDoc.Dispose();
+            throw;
+        }
+    }
+
+    /// <summary>
     /// Gets a page by zero-based index.
     /// </summary>
     /// <param name="index">Zero-based page index.</param>
@@ -335,6 +433,12 @@ public sealed class PdfDocument : IDisposable
 
         if (pageHandle is null || pageHandle.__Instance == IntPtr.Zero)
             throw new PdfException($"Failed to create new page with dimensions {width}x{height}.");
+
+        // Generate content stream for the blank page
+        // This is required for the page to be properly saved and imported
+        var result = fpdf_edit.FPDFPageGenerateContent(pageHandle);
+        if (result == 0)
+            throw new PdfException("Failed to generate content for new page.");
 
         return new PdfPage(pageHandle, pageIndex, this);
     }
