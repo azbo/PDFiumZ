@@ -49,6 +49,10 @@ public sealed unsafe class PdfContentEditor : IDisposable
     /// <exception cref="ArgumentNullException">text or font is null.</exception>
     /// <exception cref="ObjectDisposedException">Editor has been disposed.</exception>
     /// <exception cref="PdfException">Failed to create or add text object.</exception>
+    /// <remarks>
+    /// This method is deprecated. Use the fluent <see cref="Text"/> method instead for better API experience.
+    /// </remarks>
+    [Obsolete("Use Text() fluent method instead. This method will be removed in v146.")]
     public FpdfPageobjectT AddText(string text, double x, double y, PdfFont font, double fontSize)
     {
         if (text is null)
@@ -118,6 +122,10 @@ public sealed unsafe class PdfContentEditor : IDisposable
     /// <exception cref="ArgumentException">imageData size doesn't match width*height*4.</exception>
     /// <exception cref="ObjectDisposedException">Editor has been disposed.</exception>
     /// <exception cref="PdfException">Failed to create or add image object.</exception>
+    /// <remarks>
+    /// This method is deprecated. Use the fluent <see cref="Image"/> method instead for better API experience.
+    /// </remarks>
+    [Obsolete("Use Image() fluent method instead. This method will be removed in v146.")]
     public FpdfPageobjectT AddImage(byte[] imageData, int width, int height, PdfRectangle bounds)
     {
         if (imageData is null)
@@ -203,6 +211,10 @@ public sealed unsafe class PdfContentEditor : IDisposable
     /// <returns>The created rectangle object handle.</returns>
     /// <exception cref="ObjectDisposedException">Editor has been disposed.</exception>
     /// <exception cref="PdfException">Failed to create or add rectangle object.</exception>
+    /// <remarks>
+    /// This method is deprecated. Use the fluent <see cref="Rectangle"/> method instead for better API experience.
+    /// </remarks>
+    [Obsolete("Use Rectangle() fluent method instead. This method will be removed in v146.")]
     public FpdfPageobjectT AddRectangle(PdfRectangle bounds, uint strokeColor, uint fillColor)
     {
         ThrowIfDisposed();
@@ -233,6 +245,10 @@ public sealed unsafe class PdfContentEditor : IDisposable
     /// <param name="strokeColor">Line color in ARGB format. Use 0 for no stroke.</param>
     /// <param name="lineWidth">Line width. Use 0 for default.</param>
     /// <returns>The created line object handle.</returns>
+    /// <remarks>
+    /// This method is deprecated. Use the fluent <see cref="Line"/> method instead for better API experience.
+    /// </remarks>
+    [Obsolete("Use Line() fluent method instead. This method will be removed in v146.")]
     public FpdfPageobjectT AddLine(double x1, double y1, double x2, double y2, uint strokeColor, double lineWidth)
     {
         ThrowIfDisposed();
@@ -268,6 +284,10 @@ public sealed unsafe class PdfContentEditor : IDisposable
     /// <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke.</param>
     /// <param name="fillColor">Fill color in ARGB format. Use 0 for no fill.</param>
     /// <returns>The created circle object handle.</returns>
+    /// <remarks>
+    /// This method is deprecated. Use the fluent <see cref="Circle"/> method instead for better API experience.
+    /// </remarks>
+    [Obsolete("Use Circle() fluent method instead. This method will be removed in v146.")]
     public FpdfPageobjectT AddCircle(double centerX, double centerY, double radius, uint strokeColor, uint fillColor)
     {
         return AddEllipse(new PdfRectangle(centerX - radius, centerY - radius, radius * 2, radius * 2), strokeColor, fillColor);
@@ -280,6 +300,10 @@ public sealed unsafe class PdfContentEditor : IDisposable
     /// <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke.</param>
     /// <param name="fillColor">Fill color in ARGB format. Use 0 for no fill.</param>
     /// <returns>The created ellipse object handle.</returns>
+    /// <remarks>
+    /// This method is deprecated. Use the fluent <see cref="Ellipse"/> method instead for better API experience.
+    /// </remarks>
+    [Obsolete("Use Ellipse() fluent method instead. This method will be removed in v146.")]
     public FpdfPageobjectT AddEllipse(PdfRectangle bounds, uint strokeColor, uint fillColor)
     {
         ThrowIfDisposed();
@@ -404,6 +428,10 @@ public sealed unsafe class PdfContentEditor : IDisposable
     /// <exception cref="ArgumentNullException">indices is null.</exception>
     /// <exception cref="ObjectDisposedException">Editor has been disposed.</exception>
     /// <exception cref="PdfException">Failed to remove one or more objects.</exception>
+    /// <remarks>
+    /// This method is deprecated. Use the fluent <see cref="Remove"/> method instead for better API experience.
+    /// </remarks>
+    [Obsolete("Use Remove() fluent method instead. This method will be removed in v146.")]
     public void RemoveObjects(params int[] indices)
     {
         if (indices is null)
