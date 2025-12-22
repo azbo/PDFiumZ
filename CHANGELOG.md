@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Multi-targeted `PDFiumZ` to support `net10.0`, `net9.0`, `net8.0`, `netstandard2.1`, and `netstandard2.0`
 
+### Fixed
+- `netstandard2.x` build compatibility (`Span<T>`, `IsExternalInit`, and ink annotation interop)
+
 ## [145.1.0] - 2025-12-21
 
 ### Added
