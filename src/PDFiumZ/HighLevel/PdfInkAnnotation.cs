@@ -82,7 +82,7 @@ public sealed unsafe class PdfInkAnnotation : PdfAnnotation
                     // protected FS_POINTF_(void* native, bool skipVTables) sets __Instance = new __IntPtr(native);
                     // It does NOT set __ownsNativeInstance = true.
                     
-                    var pointsWrapper = FS_POINTF_.__CreateInstance(new IntPtr(memory));
+                    var pointsWrapper = FS_POINTF_.__CreateInstance(memory);
                     fpdf_annot.FPDFAnnotAddInkStroke(handle, pointsWrapper, (ulong)pointsList.Count);
                 }
                 finally
@@ -157,7 +157,7 @@ public sealed unsafe class PdfInkAnnotation : PdfAnnotation
 
             try
             {
-                var pointsWrapper = FS_POINTF_.__CreateInstance(new IntPtr(memory));
+                var pointsWrapper = FS_POINTF_.__CreateInstance(memory);
                 
                 var retrievedCount = fpdf_annot.FPDFAnnotGetInkListPath(_handle!, i, pointsWrapper, pointCount);
                 

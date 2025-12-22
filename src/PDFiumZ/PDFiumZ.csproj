@@ -1,10 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net10.0</TargetFrameworks>
+    <TargetFrameworks>net10.0;net9.0;netstandard2.1;netstandard2.0</TargetFrameworks>
     <Version>145.1.0</Version>
     <AssemblyName>PDFiumZ</AssemblyName>
     <PackageId>PDFiumZ</PackageId>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
     <!--
       PDFiumZ includes CppSharp runtime sources and auto-generated PDFium bindings.
       Those sources intentionally use PDFium's naming conventions and don't include full XML docs.
@@ -34,6 +35,8 @@
     <PackageReference Include="bblanchon.PDFium.macOS" Version="145.0.7578" PrivateAssets="analyzers" />
     <PackageReference Include="bblanchon.PDFium.Win32" Version="145.0.7578" PrivateAssets="analyzers" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" PrivateAssets="All" Condition="'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netstandard2.1'" />
+    <PackageReference Include="System.Memory" Version="4.5.5" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CppSharp\src\Runtime\MarshalUtil.cs" Link="CppSharp\MarshalUtil.cs" />
