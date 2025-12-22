@@ -229,6 +229,10 @@ public class HtmlToPdfConverter : IDisposable
                 ProcessListItem(editor, content, style);
                 break;
 
+            case "table":
+                ProcessTable(editor, content, style);
+                break;
+
             case "b":
             case "strong":
                 style.IsBold = true;
@@ -690,6 +694,263 @@ public class HtmlToPdfConverter : IDisposable
 
         // Add small spacing after list item
         _currentY -= style.FontSize * 0.2;
+    }
+
+    private void ProcessTable(PdfContentEditor editor, string content, TextStyle style)
+    {
+        var table = new TableInfo();
+
+        // Parse table structure
+        ParseTableContent(content, table, style);
+
+        if (table.Rows.Count == 0)
+            return;
+
+        // Calculate column widths
+        CalculateColumnWidths(table);
+
+        // Render table
+        RenderTable(editor, table, style);
+    }
+
+    private void ParseTableContent(string html, TableInfo table, TextStyle parentStyle)
+    {
+        int position = 0;
+
+        while (position < html.Length)
+        {
+            // Find next tag
+            int tagStart = html.IndexOf('<', position);
+
+            if (tagStart == -1)
+                break;
+
+            position = tagStart;
+
+            // Find tag end
+            int tagEnd = html.IndexOf('>', position);
+            if (tagEnd == -1) break;
+
+            string tagContent = html.Substring(position + 1, tagEnd - position - 1);
+            position = tagEnd + 1;
+
+            // Skip comments
+            if (tagContent.StartsWith("!--"))
+            {
+                int commentEnd = html.IndexOf("-->", position);
+                if (commentEnd != -1)
+                    position = commentEnd + 3;
+                continue;
+            }
+
+            // Check if closing tag
+            if (tagContent.StartsWith("/"))
+                continue;
+
+            // Parse tag
+            var (tagName, attributes, isSelfClosing) = ParseTag(tagContent);
+
+            if (tagName == "tr")
+            {
+                // Find closing tag for row
+                int closeTagPos = FindClosingTag(html, position, "tr");
+                if (closeTagPos == -1) continue;
+
+                string rowHtml = html.Substring(position, closeTagPos - position);
+                position = closeTagPos;
+
+                // Parse row
+                var row = ParseTableRow(rowHtml, parentStyle);
+                table.Rows.Add(row);
+            }
+        }
+    }
+
+    private RowInfo ParseTableRow(string html, TextStyle parentStyle)
+    {
+        var row = new RowInfo();
+        int position = 0;
+
+        while (position < html.Length)
+        {
+            int tagStart = html.IndexOf('<', position);
+
+            if (tagStart == -1)
+                break;
+
+            position = tagStart;
+
+            int tagEnd = html.IndexOf('>', position);
+            if (tagEnd == -1) break;
+
+            string tagContent = html.Substring(position + 1, tagEnd - position - 1);
+            position = tagEnd + 1;
+
+            if (tagContent.StartsWith("/"))
+                continue;
+
+            var (tagName, attributes, isSelfClosing) = ParseTag(tagContent);
+
+            if (tagName == "td" || tagName == "th")
+            {
+                // Find the closing tag start position (not end position)
+                int closeTagStart = html.IndexOf("</" + tagName, position, StringComparison.OrdinalIgnoreCase);
+                if (closeTagStart == -1) continue;
+
+                string cellHtml = html.Substring(position, closeTagStart - position);
+
+                // Move position past the closing tag
+                int closeTagEnd = html.IndexOf('>', closeTagStart);
+                position = closeTagEnd != -1 ? closeTagEnd + 1 : closeTagStart;
+
+                // Parse cell
+                var cell = new CellInfo
+                {
+                    Content = System.Net.WebUtility.HtmlDecode(cellHtml.Trim()),
+                    IsHeader = tagName == "th",
+                    Style = parentStyle.Clone()
+                };
+
+                // Make header bold
+                if (cell.IsHeader)
+                    cell.Style.IsBold = true;
+
+                // Parse colspan and rowspan
+                if (attributes.TryGetValue("colspan", out string? colspanStr))
+                {
+                    if (int.TryParse(colspanStr, out int colspan))
+                        cell.ColSpan = colspan;
+                }
+
+                if (attributes.TryGetValue("rowspan", out string? rowspanStr))
+                {
+                    if (int.TryParse(rowspanStr, out int rowspan))
+                        cell.RowSpan = rowspan;
+                }
+
+                row.Cells.Add(cell);
+            }
+        }
+
+        return row;
+    }
+
+    private void CalculateColumnWidths(TableInfo table)
+    {
+        if (table.Rows.Count == 0)
+            return;
+
+        // Find maximum column count
+        int maxCols = 0;
+        foreach (var row in table.Rows)
+        {
+            int colCount = 0;
+            foreach (var cell in row.Cells)
+                colCount += cell.ColSpan;
+            maxCols = System.Math.Max(maxCols, colCount);
+        }
+
+        if (maxCols == 0)
+            return;
+
+        // Calculate available width
+        double availableWidth = _pageWidth - _marginLeft - _marginRight;
+        double totalBorderWidth = (maxCols + 1) * table.BorderWidth;
+        double usableWidth = availableWidth - totalBorderWidth;
+
+        // Equal column widths for simplicity
+        double columnWidth = usableWidth / maxCols;
+
+        table.ColumnWidths = new double[maxCols];
+        for (int i = 0; i < maxCols; i++)
+            table.ColumnWidths[i] = columnWidth;
+    }
+
+    private void RenderTable(PdfContentEditor editor, TableInfo table, TextStyle style)
+    {
+        if (table.Rows.Count == 0 || table.ColumnWidths.Length == 0)
+            return;
+
+        // Add spacing before table
+        _currentY -= style.FontSize;
+
+        double tableWidth = 0;
+        foreach (var width in table.ColumnWidths)
+            tableWidth += width;
+        tableWidth += (table.ColumnWidths.Length + 1) * table.BorderWidth;
+
+        double tableX = _marginLeft;
+        double tableY = _currentY;
+
+        // Draw table borders and cells
+        double currentY = tableY;
+
+        foreach (var row in table.Rows)
+        {
+            double rowHeight = CalculateRowHeight(row, table);
+
+            // Draw row cells
+            double currentX = tableX;
+            int colIndex = 0;
+
+            foreach (var cell in row.Cells)
+            {
+                double cellWidth = 0;
+                for (int i = 0; i < cell.ColSpan && colIndex + i < table.ColumnWidths.Length; i++)
+                    cellWidth += table.ColumnWidths[colIndex + i];
+                cellWidth += (cell.ColSpan - 1) * table.BorderWidth;
+
+                // Draw cell border
+                var cellBounds = new PdfRectangle(
+                    currentX,
+                    currentY - rowHeight,
+                    cellWidth + table.BorderWidth,
+                    rowHeight
+                );
+
+                editor.Rectangle(cellBounds, table.BorderColor, PdfColor.Transparent);
+
+                // Draw cell content
+                if (!string.IsNullOrWhiteSpace(cell.Content))
+                {
+                    var font = GetFont(cell.Style);
+                    if (font != null)
+                    {
+                        double textX = currentX + table.BorderWidth + table.CellPadding;
+                        double textY = currentY - table.CellPadding - cell.Style.FontSize;
+
+                        editor.WithFont(font)
+                              .WithFontSize(cell.Style.FontSize)
+                              .WithTextColor(cell.Style.Color)
+                              .Text(cell.Content, textX, textY);
+                    }
+                }
+
+                currentX += cellWidth + table.BorderWidth;
+                colIndex += cell.ColSpan;
+            }
+
+            currentY -= rowHeight;
+        }
+
+        // Draw final bottom border
+        editor.Line(tableX, currentY, tableX + tableWidth, currentY, table.BorderColor, table.BorderWidth);
+
+        // Update current Y position
+        _currentY = currentY - style.FontSize;
+    }
+
+    private double CalculateRowHeight(RowInfo row, TableInfo table)
+    {
+        double maxHeight = 0;
+
+        foreach (var cell in row.Cells)
+        {
+            double cellHeight = cell.Style.FontSize + 2 * table.CellPadding;
+            maxHeight = System.Math.Max(maxHeight, cellHeight);
+        }
+
+        return maxHeight;
     }
 
     private void ProcessImage(PdfContentEditor editor, Dictionary<string, string> attributes, TextStyle style)
