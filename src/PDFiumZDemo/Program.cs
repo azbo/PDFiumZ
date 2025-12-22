@@ -50,6 +50,7 @@ namespace PDFiumZDemo
             DemoHtmlWithImages();  // NEW: Test HTML with images
             DemoHtmlTablesToPdf();  // NEW: Test HTML tables (table, tr, td, th)
             DemoFluentTableAPI();  // NEW: Test fluent table API
+            DemoSvgSupport(); // NEW: Test SVG rendering
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
@@ -823,6 +824,84 @@ namespace PDFiumZDemo
             {
                 Console.WriteLine($"\n   Error: {ex.Message}");
                 Console.WriteLine($"   Stack trace: {ex.StackTrace}\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates SVG support using Svg.Skia.
+        /// </summary>
+        static void DemoSvgSupport()
+        {
+            Console.WriteLine("0.14. SVG Rendering Support");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                // Create a sample SVG file
+                string svgPath = "output/sample.svg";
+                string svgContent = @"<svg width='200' height='200' xmlns='http://www.w3.org/2000/svg'>
+                    <circle cx='100' cy='100' r='80' stroke='black' stroke-width='3' fill='red' />
+                    <rect x='60' y='60' width='80' height='80' fill='blue' fill-opacity='0.5' />
+                    <text x='100' y='110' font-family='Arial' font-size='24' fill='white' text-anchor='middle'>SVG</text>
+                </svg>";
+                System.IO.File.WriteAllText(svgPath, svgContent);
+                Console.WriteLine("   Created sample SVG file");
+
+                using var document = PdfDocument.CreateNew();
+
+                // 1. Add SVG directly using extension method
+                using (var page1 = document.CreatePage(595, 842))
+                {
+                    Console.WriteLine("   Example 1: Adding SVG directly to page");
+                    using var editor = page1.BeginEdit();
+                    
+                    var helvetica = PdfFont.LoadStandardFont(document, PdfStandardFont.Helvetica);
+                    editor.AddText("SVG Direct Rendering", 50, 800, helvetica, 24);
+                    
+                    // Use the extension method from PdfImageSvgExtensions
+                    editor.AddSvgFromFile(svgPath, new PdfRectangle(100, 500, 300, 300));
+                    
+                    editor.GenerateContent();
+                    Console.WriteLine("      Added SVG to page 1");
+                }
+
+                // 2. SVG in HTML-to-PDF
+                using (var converter = new PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter(document))
+                {
+                    Console.WriteLine("\n   Example 2: SVG in HTML-to-PDF conversion");
+                    converter.ImageLoaderFunc = SkiaSharpImageLoader;
+
+                    string html = $@"
+                        <h1 style='color: #2980B9; text-align: center;'>SVG in HTML</h1>
+                        <p style='text-align: center;'>The following image is an SVG file loaded via HTML:</p>
+                        <div style='text-align: center;'>
+                            <img src='{svgPath}' width='200' height='200' />
+                        </div>
+                        <p style='margin-top: 20pt;'>SVG features supported:</p>
+                        <ul>
+                            <li>Vector scaling without quality loss</li>
+                            <li>Transparency / Opacity</li>
+                            <li>Shapes (circles, rects)</li>
+                            <li>Text rendering</li>
+                        </ul>
+                    ";
+
+                    converter.ConvertToPdf(html);
+                    Console.WriteLine("      Created page from HTML with SVG");
+                }
+
+                document.SaveToFile("output/svg-support-demo.pdf");
+                Console.WriteLine("\n   Saved: svg-support-demo.pdf");
+                Console.WriteLine("   SVG support demo complete!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"   Error during SVG demo: {ex.Message}");
             }
             finally
             {
@@ -1698,8 +1777,11 @@ namespace PDFiumZDemo
                     return null;
                 }
 
-                // Load image using SkiaSharp
-                using var originalBitmap = SkiaSharp.SKBitmap.Decode(src);
+                // Load image using SkiaSharp or Svg.Skia
+                using var originalBitmap = src.EndsWith(".svg", StringComparison.OrdinalIgnoreCase)
+                    ? PdfImageSvgExtensions.LoadSvgToBitmap(src)
+                    : SkiaSharp.SKBitmap.Decode(src);
+
                 if (originalBitmap == null)
                 {
                     Console.WriteLine($"      Warning: Failed to decode image: {src}");
