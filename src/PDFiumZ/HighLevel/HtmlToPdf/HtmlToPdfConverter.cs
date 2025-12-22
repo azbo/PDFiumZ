@@ -898,19 +898,25 @@ public class HtmlToPdfConverter : IDisposable
         double tableWidth = 0;
         foreach (var width in table.ColumnWidths)
             tableWidth += width;
-        tableWidth += (table.ColumnWidths.Length + 1) * table.BorderWidth;
 
         double tableX = _marginLeft;
         double tableY = _currentY;
 
-        // Draw table borders and cells
-        double currentY = tableY;
-
-        foreach (var row in table.Rows)
+        // Calculate all row heights first
+        var rowHeights = new double[table.Rows.Count];
+        for (int i = 0; i < table.Rows.Count; i++)
         {
-            double rowHeight = CalculateRowHeight(row, table);
+            rowHeights[i] = CalculateRowHeight(table.Rows[i], table);
+        }
 
-            // Draw row cells
+        // Draw cell contents and collect positions for grid lines
+        double currentY = tableY;
+        var horizontalLines = new System.Collections.Generic.List<double> { currentY }; // Top line
+
+        for (int rowIndex = 0; rowIndex < table.Rows.Count; rowIndex++)
+        {
+            var row = table.Rows[rowIndex];
+            double rowHeight = rowHeights[rowIndex];
             double currentX = tableX;
             int colIndex = 0;
 
@@ -919,17 +925,6 @@ public class HtmlToPdfConverter : IDisposable
                 double cellWidth = 0;
                 for (int i = 0; i < cell.ColSpan && colIndex + i < table.ColumnWidths.Length; i++)
                     cellWidth += table.ColumnWidths[colIndex + i];
-                cellWidth += (cell.ColSpan - 1) * table.BorderWidth;
-
-                // Draw cell border
-                var cellBounds = new PdfRectangle(
-                    currentX,
-                    currentY - rowHeight,
-                    cellWidth + table.BorderWidth,
-                    rowHeight
-                );
-
-                editor.Rectangle(cellBounds, table.BorderColor, PdfColor.Transparent);
 
                 // Draw cell content
                 if (!string.IsNullOrWhiteSpace(cell.Content))
@@ -937,7 +932,7 @@ public class HtmlToPdfConverter : IDisposable
                     var font = GetFont(cell.Style);
                     if (font != null)
                     {
-                        double textX = currentX + table.BorderWidth + table.CellPadding;
+                        double textX = currentX + table.CellPadding;
                         double textY = currentY - table.CellPadding - cell.Style.FontSize;
 
                         editor.WithFont(font)
@@ -947,15 +942,33 @@ public class HtmlToPdfConverter : IDisposable
                     }
                 }
 
-                currentX += cellWidth + table.BorderWidth;
+                currentX += cellWidth;
                 colIndex += cell.ColSpan;
             }
 
             currentY -= rowHeight;
+            horizontalLines.Add(currentY); // Bottom line of this row
         }
 
-        // Draw final bottom border
-        editor.Line(tableX, currentY, tableX + tableWidth, currentY, table.BorderColor, table.BorderWidth);
+        // Draw borders only if border width > 0
+        if (table.BorderWidth > 0)
+        {
+            // Draw horizontal grid lines (top and bottom of each row)
+            foreach (var yPos in horizontalLines)
+            {
+                editor.Line(tableX, yPos, tableX + tableWidth, yPos, table.BorderColor, table.BorderWidth);
+            }
+
+            // Draw vertical grid lines (left and right of each column)
+            double xPos = tableX;
+            editor.Line(xPos, tableY, xPos, currentY, table.BorderColor, table.BorderWidth); // Left border
+
+            for (int i = 0; i < table.ColumnWidths.Length; i++)
+            {
+                xPos += table.ColumnWidths[i];
+                editor.Line(xPos, tableY, xPos, currentY, table.BorderColor, table.BorderWidth);
+            }
+        }
 
         // Update current Y position
         _currentY = currentY - style.FontSize;
