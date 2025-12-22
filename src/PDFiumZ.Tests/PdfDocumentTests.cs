@@ -253,4 +253,23 @@ public class PdfDocumentTests : IDisposable
         Assert.Contains("Header 2/2", text2);
         Assert.Contains("Footer 2", text2);
     }
+
+    [Fact]
+    public void ContentEditor_Fluent_ShouldWork()
+    {
+        using var document = PdfDocument.CreateNew();
+        using var page = document.CreatePage(595, 842);
+        using var font = PdfFont.LoadStandardFont(document, PdfStandardFont.Helvetica);
+
+        using (var editor = page.BeginEdit())
+        {
+            editor
+                .Text("Hello", 50, 750, font, 14)
+                .Rectangle(new PdfRectangle(50, 700, 200, 40), strokeColor: 0xFFFF0000, fillColor: 0x2000FF00)
+                .Commit();
+        }
+
+        var text = page.ExtractText();
+        Assert.Contains("Hello", text);
+    }
 }
