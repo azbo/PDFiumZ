@@ -1697,33 +1697,28 @@ namespace PDFiumZDemo
                 }
 
                 // Load image using SkiaSharp
-                using var bitmap = SkiaSharp.SKBitmap.Decode(src);
-                if (bitmap == null)
+                using var originalBitmap = SkiaSharp.SKBitmap.Decode(src);
+                if (originalBitmap == null)
                 {
                     Console.WriteLine($"      Warning: Failed to decode image: {src}");
                     return null;
                 }
 
-                int width = bitmap.Width;
-                int height = bitmap.Height;
+                int width = originalBitmap.Width;
+                int height = originalBitmap.Height;
 
-                // Convert to BGRA format (required by PDFium)
-                byte[] bgraData = new byte[width * height * 4];
+                // Create a new bitmap in BGRA_8888 format (which PDFium expects)
+                using var bitmap = new SkiaSharp.SKBitmap(width, height, SkiaSharp.SKColorType.Bgra8888, SkiaSharp.SKAlphaType.Premul);
 
-                for (int y = 0; y < height; y++)
+                // Draw the original bitmap onto the new one to convert format
+                using (var canvas = new SkiaSharp.SKCanvas(bitmap))
                 {
-                    for (int x = 0; x < width; x++)
-                    {
-                        var pixel = bitmap.GetPixel(x, y);
-                        int index = (y * width + x) * 4;
-
-                        // BGRA format
-                        bgraData[index + 0] = pixel.Blue;
-                        bgraData[index + 1] = pixel.Green;
-                        bgraData[index + 2] = pixel.Red;
-                        bgraData[index + 3] = pixel.Alpha;
-                    }
+                    canvas.DrawBitmap(originalBitmap, 0, 0);
                 }
+
+                // Get pixel data directly
+                byte[] bgraData = new byte[width * height * 4];
+                System.Runtime.InteropServices.Marshal.Copy(bitmap.GetPixels(), bgraData, 0, bgraData.Length);
 
                 return (bgraData, width, height);
             }
@@ -1772,10 +1767,8 @@ namespace PDFiumZDemo
                 ";
 
                 Console.WriteLine("   Example 1: Simple image");
-                using (var page1 = converter.ConvertToPdf(html1))
-                {
-                    Console.WriteLine("      Created page with single image");
-                }
+                converter.ConvertToPdf(html1);
+                Console.WriteLine("      Created page with single image");
 
                 // Example 2: Multiple images
                 string html2 = @"
@@ -1789,10 +1782,8 @@ namespace PDFiumZDemo
                 ";
 
                 Console.WriteLine("\n   Example 2: Multiple images");
-                using (var page2 = converter.ConvertToPdf(html2))
-                {
-                    Console.WriteLine("      Created page with multiple images");
-                }
+                converter.ConvertToPdf(html2);
+                Console.WriteLine("      Created page with multiple images");
 
                 // Example 3: Images with custom sizes
                 string html3 = @"
@@ -1809,10 +1800,8 @@ namespace PDFiumZDemo
                 ";
 
                 Console.WriteLine("\n   Example 3: Custom sized images");
-                using (var page3 = converter.ConvertToPdf(html3))
-                {
-                    Console.WriteLine("      Created page with custom sized images");
-                }
+                converter.ConvertToPdf(html3);
+                Console.WriteLine("      Created page with custom sized images");
 
                 // Example 4: Mixed content
                 string html4 = @"
@@ -1831,10 +1820,8 @@ namespace PDFiumZDemo
                 ";
 
                 Console.WriteLine("\n   Example 4: Mixed content (text + lists + images)");
-                using (var page4 = converter.ConvertToPdf(html4))
-                {
-                    Console.WriteLine("      Created page with mixed content");
-                }
+                converter.ConvertToPdf(html4);
+                Console.WriteLine("      Created page with mixed content");
 
                 // Save document
                 document.SaveToFile("output/html-with-images.pdf");

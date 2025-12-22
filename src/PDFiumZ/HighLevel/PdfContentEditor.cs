@@ -145,8 +145,8 @@ public sealed unsafe class PdfContentEditor : IDisposable
                 }
 
                 // Set bitmap to image object
-                // Note: we need to pass page handles array, but for single page we can pass null
-                var result = fpdf_edit.FPDFImageObjSetBitmap(null, 0, imageObj, bitmap);
+                // Pass the current page handle in the pages array
+                var result = fpdf_edit.FPDFImageObjSetBitmap(_page._handle!, 1, imageObj, bitmap);
                 if (result == 0)
                 {
                     throw new PdfException("Failed to set bitmap to image object.");
