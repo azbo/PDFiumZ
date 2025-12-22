@@ -315,9 +315,6 @@ document.SaveToFile("from-html.pdf");
 ```
 
 ## Documentation
-```
-
-## Documentation
 
 - Examples and extended snippets: `docs/README.md`
 - Performance analysis: `PERFORMANCE.md`
