@@ -43,13 +43,22 @@
 
 ### 7. 示例程序
 - ✅ `FluentApiDemo.cs` - 演示如何使用Fluent API
+- ✅ `ImageGenerationExample.cs` - 演示图片生成API的使用
+
+### 8. 图片生成API (Image Generation API)
+- ✅ `PdfDocumentImageExtensions` - PDF页面转图片扩展方法
+  - `GenerateImages()` - 生成图片对象（IEnumerable<PdfImage>）
+  - `SaveAsImages()` - 直接保存为图片文件（推荐）
+- ✅ 文档: `IMAGE_GENERATION_API.md` - 详细的中文使用指南
+- ✅ 示例: `ImageGenerationExample.cs` - 6种不同的使用方式
 
 ## ✅ 编译状态
 
 **状态：编译成功！**
-- ✅ 0 个警告
-- ✅ 0 个错误
+- ✅ PDFiumZ库：0 个警告，0 个错误
+- ✅ PDFiumZDemo：2 个警告（SVG扩展参数修饰符建议），0 个错误
 - ✅ 所有 `with` 表达式已修复
+- ✅ 所有 `using System;` 指令已添加
 - ✅ 支持多目标框架：
   - .NET Standard 2.0
   - .NET Standard 2.1
@@ -158,14 +167,18 @@ var page = Column(10,
 
 ## 下一步
 
-1. 修复剩余的编译错误（替换with表达式）
-2. 测试基本功能
-3. 实现Table元素
-4. 实现Inlined元素（内联布局）
-5. 实现List元素
-6. 添加更多示例
-7. 性能优化
-8. 单元测试
+**已完成任务：**
+1. ✅ 实现QuestPDF风格的Fluent API
+2. ✅ 修复所有编译错误（with表达式、using指令）
+3. ✅ 简化图片生成API，使其更易用
+
+**未来可能的扩展：**
+1. 实现Table元素（QuestPDF风格的表格布局）
+2. 实现Inlined元素（内联布局）
+3. 实现List元素（列表布局）
+4. 添加更多示例和文档
+5. 性能优化
+6. 单元测试
 
 ## 文件结构
 

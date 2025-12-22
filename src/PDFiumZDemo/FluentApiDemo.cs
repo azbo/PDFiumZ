@@ -1,3 +1,4 @@
+using System;
 using PDFiumZ.Fluent;
 using PDFiumZ.Fluent.Document;
 using PDFiumZ.HighLevel;
