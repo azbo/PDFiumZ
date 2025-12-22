@@ -9,6 +9,26 @@ namespace PDFiumZDemo
 {
     class Program
     {
+        private static readonly string SamplePdfPath = ResolveSamplePdfPath();
+
+        private static string ResolveSamplePdfPath()
+        {
+            var candidates = new[]
+            {
+                "pdf-sample.pdf",
+                System.IO.Path.Combine(AppContext.BaseDirectory, "pdf-sample.pdf"),
+                System.IO.Path.GetFullPath(System.IO.Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "pdf-sample.pdf"))
+            };
+
+            foreach (var candidate in candidates)
+            {
+                if (System.IO.File.Exists(candidate))
+                    return candidate;
+            }
+
+            return "pdf-sample.pdf";
+        }
+
         static async Task Main(string[] args)
         {
             // Create output directory for generated files
@@ -54,17 +74,37 @@ namespace PDFiumZDemo
                 using var document = PdfDocument.CreateNew();
                 Console.WriteLine("   Created new empty document");
 
-                // Create an A4 page (595 x 842 points)
-                using var page1 = document.CreatePage(595, 842);
-                Console.WriteLine($"   Created page 1: {page1.Width:F1} x {page1.Height:F1} points (A4)");
+                var helvetica = PdfFont.LoadStandardFont(document, PdfStandardFont.Helvetica);
 
-                // Create a Letter size page (612 x 792 points)
-                using var page2 = document.CreatePage(612, 792);
-                Console.WriteLine($"   Created page 2: {page2.Width:F1} x {page2.Height:F1} points (Letter)");
+                using (var page1 = document.CreatePage(595, 842))
+                {
+                    Console.WriteLine($"   Created page 1: {page1.Width:F1} x {page1.Height:F1} points (A4)");
+                    using var editor = page1.BeginEdit();
+                    editor.AddText("PDFiumZ Demo - New Document", 50, page1.Height - 80, helvetica, 24);
+                    editor.AddText("Page 1 (A4)", 50, page1.Height - 120, helvetica, 14);
+                    editor.AddText($"Size: {page1.Width:F0} x {page1.Height:F0} pt", 50, page1.Height - 145, helvetica, 12);
+                    editor.GenerateContent();
+                }
 
-                // Create a custom size page
-                using var page3 = document.CreatePage(800, 600);
-                Console.WriteLine($"   Created page 3: {page3.Width:F1} x {page3.Height:F1} points (Custom)");
+                using (var page2 = document.CreatePage(612, 792))
+                {
+                    Console.WriteLine($"   Created page 2: {page2.Width:F1} x {page2.Height:F1} points (Letter)");
+                    using var editor = page2.BeginEdit();
+                    editor.AddText("Page 2 (Letter)", 50, page2.Height - 80, helvetica, 18);
+                    editor.AddText($"Size: {page2.Width:F0} x {page2.Height:F0} pt", 50, page2.Height - 110, helvetica, 12);
+                    editor.GenerateContent();
+                }
+
+                using (var page3 = document.CreatePage(800, 600))
+                {
+                    Console.WriteLine($"   Created page 3: {page3.Width:F1} x {page3.Height:F1} points (Custom)");
+                    using var editor = page3.BeginEdit();
+                    editor.AddText("Page 3 (Custom)", 50, page3.Height - 80, helvetica, 18);
+                    editor.AddText($"Size: {page3.Width:F0} x {page3.Height:F0} pt", 50, page3.Height - 110, helvetica, 12);
+                    editor.GenerateContent();
+                }
+
+                helvetica.Dispose();
 
                 Console.WriteLine($"   Total pages: {document.PageCount}");
 
@@ -94,22 +134,58 @@ namespace PDFiumZDemo
 
                 using (var doc1 = PdfDocument.CreateNew())
                 {
-                    doc1.CreatePage(595, 842).Dispose(); // A4 page
+                    var font = PdfFont.LoadStandardFont(doc1, PdfStandardFont.Helvetica);
+                    using (var page = doc1.CreatePage(595, 842))
+                    {
+                        using var editor = page.BeginEdit();
+                        editor.AddText("Merge/Split Test - Doc1 - Page 1", 50, page.Height - 80, font, 18);
+                        editor.GenerateContent();
+                    }
+                    font.Dispose();
                     doc1.SaveToFile("output/test-doc1.pdf");
                 }
 
                 using (var doc2 = PdfDocument.CreateNew())
                 {
-                    doc2.CreatePage(595, 842).Dispose();
-                    doc2.CreatePage(595, 842).Dispose(); // 2 pages
+                    var font = PdfFont.LoadStandardFont(doc2, PdfStandardFont.Helvetica);
+                    using (var page = doc2.CreatePage(595, 842))
+                    {
+                        using var editor = page.BeginEdit();
+                        editor.AddText("Merge/Split Test - Doc2 - Page 1", 50, page.Height - 80, font, 18);
+                        editor.GenerateContent();
+                    }
+                    using (var page = doc2.CreatePage(595, 842))
+                    {
+                        using var editor = page.BeginEdit();
+                        editor.AddText("Merge/Split Test - Doc2 - Page 2", 50, page.Height - 80, font, 18);
+                        editor.GenerateContent();
+                    }
+                    font.Dispose();
                     doc2.SaveToFile("output/test-doc2.pdf");
                 }
 
                 using (var doc3 = PdfDocument.CreateNew())
                 {
-                    doc3.CreatePage(595, 842).Dispose();
-                    doc3.CreatePage(595, 842).Dispose();
-                    doc3.CreatePage(595, 842).Dispose(); // 3 pages
+                    var font = PdfFont.LoadStandardFont(doc3, PdfStandardFont.Helvetica);
+                    using (var page = doc3.CreatePage(595, 842))
+                    {
+                        using var editor = page.BeginEdit();
+                        editor.AddText("Merge/Split Test - Doc3 - Page 1", 50, page.Height - 80, font, 18);
+                        editor.GenerateContent();
+                    }
+                    using (var page = doc3.CreatePage(595, 842))
+                    {
+                        using var editor = page.BeginEdit();
+                        editor.AddText("Merge/Split Test - Doc3 - Page 2", 50, page.Height - 80, font, 18);
+                        editor.GenerateContent();
+                    }
+                    using (var page = doc3.CreatePage(595, 842))
+                    {
+                        using var editor = page.BeginEdit();
+                        editor.AddText("Merge/Split Test - Doc3 - Page 3", 50, page.Height - 80, font, 18);
+                        editor.GenerateContent();
+                    }
+                    font.Dispose();
                     doc3.SaveToFile("output/test-doc3.pdf");
                 }
 
@@ -170,11 +246,17 @@ namespace PDFiumZDemo
                 // Create a test document with 4 pages
                 Console.WriteLine("   Creating test document with 4 pages...");
                 using var document = PdfDocument.CreateNew();
+                var font = PdfFont.LoadStandardFont(document, PdfStandardFont.Helvetica);
 
                 for (int i = 0; i < 4; i++)
                 {
-                    document.CreatePage(595, 842).Dispose(); // A4 pages
+                    using var page = document.CreatePage(595, 842);
+                    using var editor = page.BeginEdit();
+                    editor.AddText($"Rotate Test - Page {i + 1}", 50, page.Height - 80, font, 18);
+                    editor.AddText("Use this label to verify rotation direction.", 50, page.Height - 110, font, 12);
+                    editor.GenerateContent();
                 }
+                font.Dispose();
                 Console.WriteLine($"   Created document with {document.PageCount} pages");
 
                 // Test 1: Rotate individual pages
@@ -195,10 +277,15 @@ namespace PDFiumZDemo
                 // Test 2: Rotate all pages
                 Console.WriteLine("\n   Test 2: Rotating all pages...");
                 using var document2 = PdfDocument.CreateNew();
+                var font2 = PdfFont.LoadStandardFont(document2, PdfStandardFont.Helvetica);
                 for (int i = 0; i < 3; i++)
                 {
-                    document2.CreatePage(595, 842).Dispose();
+                    using var page = document2.CreatePage(595, 842);
+                    using var editor = page.BeginEdit();
+                    editor.AddText($"Rotate-All Test - Page {i + 1}", 50, page.Height - 80, font2, 18);
+                    editor.GenerateContent();
                 }
+                font2.Dispose();
 
                 document2.RotateAllPages(PdfRotation.Rotate90);
                 Console.WriteLine($"      Rotated all {document2.PageCount} pages by 90°");
@@ -239,7 +326,7 @@ namespace PDFiumZDemo
             try
             {
                 // Open existing document
-                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var document = PdfDocument.Open(SamplePdfPath);
                 Console.WriteLine($"   Loaded: {document.PageCount} page(s)");
 
                 // Add watermark with custom options (center, 45° rotation, 30% opacity)
@@ -270,7 +357,7 @@ namespace PDFiumZDemo
             try
             {
                 // Open document - automatic resource management via 'using'
-                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var document = PdfDocument.Open(SamplePdfPath);
                 Console.WriteLine($"   Loaded: {document.PageCount} page(s)");
 
                 // Get first page
@@ -302,7 +389,7 @@ namespace PDFiumZDemo
 
             try
             {
-                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var document = PdfDocument.Open(SamplePdfPath);
                 using var page = document.GetPage(0);
 
                 // High DPI rendering with fluent configuration
@@ -334,7 +421,7 @@ namespace PDFiumZDemo
 
             try
             {
-                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var document = PdfDocument.Open(SamplePdfPath);
                 using var page = document.GetPage(0);
 
                 // Extract text content
@@ -359,7 +446,7 @@ namespace PDFiumZDemo
 
             try
             {
-                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var document = PdfDocument.Open(SamplePdfPath);
                 using var page = document.GetPage(0);
 
                 // Search for text (case-insensitive)
@@ -402,7 +489,7 @@ namespace PDFiumZDemo
 
             try
             {
-                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var document = PdfDocument.Open(SamplePdfPath);
                 using var page = document.GetPage(0);
 
                 // Get page object count
@@ -455,7 +542,7 @@ namespace PDFiumZDemo
 
             try
             {
-                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var document = PdfDocument.Open(SamplePdfPath);
                 var meta = document.Metadata;
 
                 Console.WriteLine($"   Title: {(string.IsNullOrEmpty(meta.Title) ? "(none)" : meta.Title)}");
@@ -484,7 +571,7 @@ namespace PDFiumZDemo
 
             try
             {
-                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var document = PdfDocument.Open(SamplePdfPath);
 
                 Console.WriteLine($"   Document has {document.PageCount} page(s)");
                 Console.WriteLine("   Page labels:");
@@ -520,7 +607,7 @@ namespace PDFiumZDemo
 
             try
             {
-                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var document = PdfDocument.Open(SamplePdfPath);
                 Console.WriteLine($"   Original: {document.PageCount} page(s)");
 
                 // Insert a blank A4 page at the beginning
@@ -563,7 +650,7 @@ namespace PDFiumZDemo
 
             try
             {
-                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var document = PdfDocument.Open(SamplePdfPath);
                 bool foundFormFields = false;
 
                 // Iterate through all pages looking for form fields
@@ -632,7 +719,7 @@ namespace PDFiumZDemo
             try
             {
                 // Load document and get first page
-                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var document = PdfDocument.Open(SamplePdfPath);
                 using var page = document.GetPage(0);
 
                 Console.WriteLine($"   Original annotations: {page.GetAnnotationCount()}");
@@ -707,7 +794,7 @@ namespace PDFiumZDemo
 
             try
             {
-                using var document = PdfDocument.Open("output-with-annotations.pdf");
+                using var document = PdfDocument.Open("output/output-with-annotations.pdf");
                 using var page = document.GetPage(0);
 
                 var annotCount = page.GetAnnotationCount();
@@ -794,7 +881,7 @@ namespace PDFiumZDemo
             try
             {
                 // Load document
-                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var document = PdfDocument.Open(SamplePdfPath);
 
                 // Insert a blank page at the beginning for our content
                 document.InsertBlankPage(0, 595, 842);  // A4 size
@@ -944,7 +1031,7 @@ namespace PDFiumZDemo
                 Console.WriteLine("\n   Testing async document loading...");
                 var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
-                using var document = await PdfDocument.OpenAsync("pdf-sample.pdf");
+                using var document = await PdfDocument.OpenAsync(SamplePdfPath);
                 stopwatch.Stop();
 
                 Console.WriteLine($"      Loaded {document.PageCount} pages asynchronously in {stopwatch.ElapsedMilliseconds}ms");
@@ -983,7 +1070,7 @@ namespace PDFiumZDemo
                 try
                 {
                     // This might or might not be canceled depending on timing
-                    using var doc = await PdfDocument.OpenAsync("pdf-sample.pdf", cancellationToken: cts.Token);
+                    using var doc = await PdfDocument.OpenAsync(SamplePdfPath, cancellationToken: cts.Token);
                     Console.WriteLine("      Operation completed before cancellation");
                 }
                 catch (OperationCanceledException)
@@ -1010,7 +1097,7 @@ namespace PDFiumZDemo
 
             try
             {
-                using var document = PdfDocument.Open("pdf-sample.pdf");
+                using var document = PdfDocument.Open(SamplePdfPath);
                 Console.WriteLine($"   Original: {document.PageCount} page(s)");
 
                 // Make a copy for testing batch operations
@@ -1086,7 +1173,7 @@ namespace PDFiumZDemo
             float scale = 1;
             uint color = uint.MaxValue;
 
-            var document = fpdfview.FPDF_LoadDocument("pdf-sample.pdf", null);
+            var document = fpdfview.FPDF_LoadDocument(SamplePdfPath, null);
             var page = fpdfview.FPDF_LoadPage(document, 0);
             fpdfview.FPDF_GetPageSizeByIndex(document, 0, ref pageWidth, ref pageHeight);
 
