@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace PDFiumZ.HighLevel;
 
@@ -10,6 +12,7 @@ public sealed unsafe class PdfContentEditor : IDisposable
 {
     private readonly PdfPage _page;
     private bool _disposed;
+    private readonly List<FpdfBitmapT> _bitmaps = new();
 
     // Default state for fluent API
     private PdfFont? _defaultFont;
@@ -134,29 +137,36 @@ public sealed unsafe class PdfContentEditor : IDisposable
         FpdfBitmapT? bitmap = null;
         try
         {
-            // Create bitmap from data (FPDFBitmap format: BGRA, 4 bytes per pixel)
-            fixed (byte* pData = imageData)
+            // Create bitmap and copy data to it
+            // alpha = 1 means BGRA format
+            bitmap = fpdfview.FPDFBitmapCreate(width, height, 1);
+            if (bitmap is null || bitmap.__Instance == IntPtr.Zero)
             {
-                // Format 4 = BGRA
-                bitmap = fpdfview.FPDFBitmapCreateEx(width, height, 4, (IntPtr)pData, width * 4);
-                if (bitmap is null || bitmap.__Instance == IntPtr.Zero)
-                {
-                    throw new PdfException("Failed to create bitmap from image data.");
-                }
+                throw new PdfException("Failed to create bitmap.");
+            }
 
-                // Set bitmap to image object
-                // Pass the current page handle in the pages array
-                var result = fpdf_edit.FPDFImageObjSetBitmap(_page._handle!, 1, imageObj, bitmap);
-                if (result == 0)
-                {
-                    throw new PdfException("Failed to set bitmap to image object.");
-                }
+            IntPtr pBuffer = fpdfview.FPDFBitmapGetBuffer(bitmap);
+            if (pBuffer == IntPtr.Zero)
+            {
+                throw new PdfException("Failed to get bitmap buffer.");
+            }
+
+            // Copy image data to bitmap buffer
+            Marshal.Copy(imageData, 0, pBuffer, imageData.Length);
+
+            // Set bitmap to image object
+            // Pass the current page handle in the pages array
+            var result = fpdf_edit.FPDFImageObjSetBitmap(_page._handle!, 1, imageObj, bitmap);
+            if (result == 0)
+            {
+                throw new PdfException("Failed to set bitmap to image object.");
             }
 
             // Calculate transformation matrix to position and scale image
-            // Scale image from pixel size to page bounds size
-            double scaleX = bounds.Width / width;
-            double scaleY = bounds.Height / height;
+            // In PDFium, image objects are 1x1 units by default.
+            // To display at bounds size, we scale by bounds.Width and bounds.Height.
+            double scaleX = bounds.Width;
+            double scaleY = bounds.Height;
 
             // Matrix: [a b c d e f]
             // a = scaleX, d = scaleY (scale)
@@ -166,21 +176,20 @@ public sealed unsafe class PdfContentEditor : IDisposable
             // Insert object into page
             fpdf_edit.FPDFPageInsertObject(_page._handle!, imageObj);
 
+            // Keep bitmap alive until Commit/Dispose
+            _bitmaps.Add(bitmap);
+
             return imageObj;
         }
         catch
         {
             // Clean up on failure
-            fpdf_edit.FPDFPageObjDestroy(imageObj);
-            throw;
-        }
-        finally
-        {
-            // Destroy bitmap (no longer needed after SetBitmap)
             if (bitmap is not null && bitmap.__Instance != IntPtr.Zero)
             {
                 fpdfview.FPDFBitmapDestroy(bitmap);
             }
+            fpdf_edit.FPDFPageObjDestroy(imageObj);
+            throw;
         }
     }
 
@@ -663,6 +672,15 @@ public sealed unsafe class PdfContentEditor : IDisposable
     {
         if (_disposed) return;
         _disposed = true;
+
+        foreach (var bitmap in _bitmaps)
+        {
+            if (bitmap is not null && bitmap.__Instance != IntPtr.Zero)
+            {
+                fpdfview.FPDFBitmapDestroy(bitmap);
+            }
+        }
+        _bitmaps.Clear();
     }
 
     private void ThrowIfDisposed()
