@@ -57,6 +57,69 @@ finally
 }
 ```
 
+## Common Examples
+
+All snippets assume you call `PdfiumLibrary.Initialize()` once at app start and `PdfiumLibrary.Shutdown()` on exit.
+
+### Create a New Document
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.CreateNew();
+using var page1 = document.CreatePage();
+using var page2 = document.CreatePage(PdfPageSize.A3);
+
+document.SaveToFile("new-document.pdf");
+```
+
+### Merge and Split
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var merged = PdfDocument.Merge("a.pdf", "b.pdf");
+merged.SaveToFile("merged.pdf");
+
+using var source = PdfDocument.Open("merged.pdf");
+using var first3 = source.Split(0, 3);
+first3.SaveToFile("first-3-pages.pdf");
+```
+
+### Render and Extract Text
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.Open("sample.pdf");
+using var page = document.GetPage(0);
+
+using var image = page.RenderToImage(RenderOptions.Default.WithDpi(150));
+image.SaveAsSkiaPng("page-0.png");
+
+var text = page.ExtractText();
+```
+
+### Rotate Pages
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.Open("document.pdf");
+document.RotateAllPages(PdfRotation.Rotate90);
+document.SaveToFile("rotated.pdf");
+```
+
+### Add a Watermark
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.Open("document.pdf");
+document.AddTextWatermark("CONFIDENTIAL", WatermarkPosition.Center, new WatermarkOptions { Opacity = 0.3, Rotation = 45 });
+document.SaveToFile("watermarked.pdf");
+```
+
 ## Documentation
 
 - Examples and extended snippets: `docs/README.md`
