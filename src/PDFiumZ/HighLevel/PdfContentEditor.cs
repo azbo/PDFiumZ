@@ -624,6 +624,33 @@ public sealed unsafe class PdfContentEditor : IDisposable
 
     #endregion
 
+    #region Table Builder
+
+    /// <summary>
+    /// Begins building a table with fluent API (QuestPDF-style).
+    /// </summary>
+    /// <returns>A table builder instance for configuring and rendering the table.</returns>
+    /// <exception cref="ObjectDisposedException">Editor has been disposed.</exception>
+    /// <example>
+    /// <code>
+    /// editor.BeginTable()
+    ///     .Columns(cols => cols.Add(100).Add().Add(150))
+    ///     .Header(header => header.Cell("Name").Cell("Age").Cell("Email"))
+    ///     .Row(row => row.Cell("John").Cell("30").Cell("john@example.com"))
+    ///     .Row(row => row.Cell("Jane").Cell("25").Cell("jane@example.com"))
+    ///     .EndTable();
+    /// </code>
+    /// </example>
+    public PdfTableBuilder BeginTable()
+    {
+        ThrowIfDisposed();
+        _page.ThrowIfDisposed();
+
+        return new PdfTableBuilder(this);
+    }
+
+    #endregion
+
     public void Commit()
     {
         GenerateContent();
