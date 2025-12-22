@@ -65,6 +65,27 @@ finally
 - Changelog: `CHANGELOG.md`
 - Roadmap: `ROADMAP.md`
 
+## Completed
+
+- Create PDF from scratch (`PdfDocument.CreateNew`, `CreatePage`)
+- Merge / split documents (`PdfDocument.Merge`, `Split`)
+- Watermarks (`AddTextWatermark`)
+- Page rotation (single / batch / all pages)
+- Text extraction and search (with positions)
+- Render to bitmap and save as images (via extension packages)
+- Annotation support (highlight, underline, strikeout, notes, stamps, line, square, circle, ink, free text)
+- Content creation (add text/images/shapes) and font management
+- Security info reading (encryption + permissions)
+- Async APIs + batch operations
+- Multi-targeting: `net10.0`, `net9.0`, `net8.0`, `netstandard2.1`, `netstandard2.0`
+
+See `CHANGELOG.md` and `ROADMAP.md` for full details.
+
+## Performance
+
+- Performance test report: `PERFORMANCE.md`
+- Benchmarks guide and how to run: `src/PDFiumZ.Benchmarks/README.md`
+
 ## Building
 
 - Requirements: .NET 10.0 SDK or later
@@ -78,4 +99,9 @@ Apache-2.0. See `LICENSE`.
 ## Support
 
 See `docs/README.md#support`.
+
+<div align="center">
+  <img src="./docs/wechat-pay-qr.png" width="200" alt="WeChat Pay">
+  <img src="./docs/alipay-qr.png" width="200" alt="Alipay">
+</div>
 
