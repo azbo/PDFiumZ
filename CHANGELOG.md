@@ -46,6 +46,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Bold text for header cells (th tags)
     - Support for multiple rows and columns
     - Mixed content support (tables with text, lists, etc.)
+    - **HTML attributes support**:
+      - `border="N"` - Set border width in points (e.g., border="1", border="3", border="0")
+      - `cellpadding="N"` - Set cell padding in points (e.g., cellpadding="5", cellpadding="10")
   - **Extension methods**:
     - `CreatePageFromHtml(html)` - Create page from HTML with default A4 size
     - `CreatePageFromHtml(html, marginLeft, marginRight, marginTop, marginBottom, pageWidth, pageHeight)` - With custom margins
@@ -98,7 +101,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     // Tables
     string htmlWithTables = @"
         <h1>Product Catalog</h1>
-        <table>
+        <table border='2' cellpadding='8'>
             <tr>
                 <th>Product</th>
                 <th>Price</th>

@@ -195,11 +195,11 @@ public class HtmlToPdfConverter : IDisposable
             var elementStyle = CreateStyleFromTag(tagName, attributes, parentStyle);
 
             // Process element
-            ProcessElement(editor, tagName, innerHtml, elementStyle);
+            ProcessElement(editor, tagName, innerHtml, elementStyle, attributes);
         }
     }
 
-    private void ProcessElement(PdfContentEditor editor, string tagName, string content, TextStyle style)
+    private void ProcessElement(PdfContentEditor editor, string tagName, string content, TextStyle style, Dictionary<string, string> attributes)
     {
         switch (tagName.ToLower())
         {
@@ -230,7 +230,7 @@ public class HtmlToPdfConverter : IDisposable
                 break;
 
             case "table":
-                ProcessTable(editor, content, style);
+                ProcessTable(editor, content, style, attributes);
                 break;
 
             case "b":
@@ -696,9 +696,30 @@ public class HtmlToPdfConverter : IDisposable
         _currentY -= style.FontSize * 0.2;
     }
 
-    private void ProcessTable(PdfContentEditor editor, string content, TextStyle style)
+    private void ProcessTable(PdfContentEditor editor, string content, TextStyle style, Dictionary<string, string> attributes)
     {
         var table = new TableInfo();
+
+        // Parse border attribute
+        if (attributes.TryGetValue("border", out string? borderValue))
+        {
+            if (double.TryParse(borderValue, out double borderWidth))
+            {
+                table.BorderWidth = borderWidth;
+            }
+        }
+
+        // Parse cellpadding attribute
+        if (attributes.TryGetValue("cellpadding", out string? cellpaddingValue))
+        {
+            if (double.TryParse(cellpaddingValue, out double cellPadding))
+            {
+                table.CellPadding = cellPadding;
+            }
+        }
+
+        // Parse cellspacing attribute (not supported by PDFium, but we can adjust border)
+        // Note: cellspacing in HTML affects spacing between cells, which we don't fully support
 
         // Parse table structure
         ParseTableContent(content, table, style);
