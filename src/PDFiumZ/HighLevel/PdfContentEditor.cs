@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace PDFiumZ.HighLevel;
@@ -219,162 +220,23 @@ public sealed unsafe class PdfContentEditor : IDisposable
             throw new PdfException("Failed to create rectangle object.");
         }
 
-        try
-        {
-            // Set stroke color if specified
-            if (strokeColor != 0)
-            {
-                uint a = (strokeColor >> 24) & 0xFF;
-                uint r = (strokeColor >> 16) & 0xFF;
-                uint g = (strokeColor >> 8) & 0xFF;
-                uint b = strokeColor & 0xFF;
-
-                var result = fpdf_edit.FPDFPageObjSetStrokeColor(rectObj, r, g, b, a);
-                if (result == 0)
-                {
-                    throw new PdfException("Failed to set rectangle stroke color.");
-                }
-            }
-
-            // Set fill color if specified
-            if (fillColor != 0)
-            {
-                uint a = (fillColor >> 24) & 0xFF;
-                uint r = (fillColor >> 16) & 0xFF;
-                uint g = (fillColor >> 8) & 0xFF;
-                uint b = fillColor & 0xFF;
-
-                var result = fpdf_edit.FPDFPageObjSetFillColor(rectObj, r, g, b, a);
-                if (result == 0)
-                {
-                    throw new PdfException("Failed to set rectangle fill color.");
-                }
-            }
-
-            // Insert object into page
-            fpdf_edit.FPDFPageInsertObject(_page._handle!, rectObj);
-
-            return rectObj;
-        }
-        catch
-        {
-            // Clean up on failure
-            fpdf_edit.FPDFPageObjDestroy(rectObj);
-            throw;
-        }
+        return PrepareAndInsertObject(rectObj, strokeColor, fillColor);
     }
 
     /// <summary>
-    /// Removes a page object at the specified index.
-    /// </summary>
-    /// <param name="index">Zero-based index of the object to remove.</param>
-    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
-    /// <exception cref="ObjectDisposedException">Editor has been disposed.</exception>
-    /// <exception cref="PdfException">Failed to remove object.</exception>
-    public void RemoveObject(int index)
-    {
-        ThrowIfDisposed();
-        _page.ThrowIfDisposed();
-
-        var objectCount = _page.GetPageObjectCount();
-        if (index < 0 || index >= objectCount)
-            throw new ArgumentOutOfRangeException(nameof(index),
-                $"Object index {index} is out of range (0-{objectCount - 1}).");
-
-        // Get the page object at the specified index
-        var pageObject = fpdf_edit.FPDFPageGetObject(_page._handle!, index);
-        if (pageObject is null || pageObject.__Instance == IntPtr.Zero)
-        {
-            throw new PdfException($"Failed to get page object at index {index}.");
-        }
-
-        // Remove the object from the page
-        var result = fpdf_edit.FPDFPageRemoveObject(_page._handle!, pageObject);
-        if (result == 0)
-        {
-            throw new PdfException($"Failed to remove object at index {index}.");
-        }
-    }
-
-    /// <summary>
-    /// Regenerates the page content stream to persist all changes.
-    /// This must be called after all editing operations before saving the document.
-    /// </summary>
-    /// <exception cref="ObjectDisposedException">Editor has been disposed.</exception>
-    /// <exception cref="PdfException">Failed to generate content.</exception>
-    public void GenerateContent()
-    {
-        ThrowIfDisposed();
-        _page.ThrowIfDisposed();
-
-        var result = fpdf_edit.FPDFPageGenerateContent(_page._handle!);
-        if (result == 0)
-        {
-            throw new PdfException("Failed to generate page content.");
-        }
-    }
-
-    public PdfContentEditor Text(string text, double x, double y, PdfFont font, double fontSize)
-    {
-        AddText(text, x, y, font, fontSize);
-        return this;
-    }
-
-    /// <summary>
-    /// Adds text to the page using current default font and size (fluent API).
-    /// </summary>
-    /// <param name="text">The text to add.</param>
-    /// <param name="x">X coordinate in page units.</param>
-    /// <param name="y">Y coordinate in page units.</param>
-    /// <returns>This editor instance for fluent chaining.</returns>
-    /// <exception cref="InvalidOperationException">Default font is not set. Call WithFont first.</exception>
-    public PdfContentEditor Text(string text, double x, double y)
-    {
-        if (_defaultFont == null)
-            throw new InvalidOperationException("Default font is not set. Call WithFont(font) first.");
-
-        AddText(text, x, y, _defaultFont, _defaultFontSize);
-        return this;
-    }
-
-    public PdfContentEditor Image(byte[] imageData, int width, int height, PdfRectangle bounds)
-    {
-        AddImage(imageData, width, height, bounds);
-        return this;
-    }
-
-    public PdfContentEditor Rectangle(PdfRectangle bounds, uint strokeColor = 0, uint fillColor = 0)
-    {
-        AddRectangle(bounds, strokeColor, fillColor);
-        return this;
-    }
-
-    /// <summary>
-    /// Adds a rectangle using current default stroke and fill colors (fluent API).
-    /// </summary>
-    public PdfContentEditor Rectangle(PdfRectangle bounds)
-    {
-        AddRectangle(bounds, _defaultStrokeColor, _defaultFillColor);
-        return this;
-    }
-
-    /// <summary>
-    /// Adds a line between two points (fluent API).
+    /// Adds a line between two points.
     /// </summary>
     /// <param name="x1">Start X coordinate.</param>
     /// <param name="y1">Start Y coordinate.</param>
     /// <param name="x2">End X coordinate.</param>
     /// <param name="y2">End Y coordinate.</param>
-    /// <param name="strokeColor">Line color in ARGB format. Use 0 or omit to use default stroke color.</param>
-    /// <param name="lineWidth">Line width. Use 0 or omit to use default line width.</param>
-    /// <returns>This editor instance for fluent chaining.</returns>
-    public PdfContentEditor Line(double x1, double y1, double x2, double y2, uint strokeColor = 0, double lineWidth = 0)
+    /// <param name="strokeColor">Line color in ARGB format. Use 0 for no stroke.</param>
+    /// <param name="lineWidth">Line width. Use 0 for default.</param>
+    /// <returns>The created line object handle.</returns>
+    public FpdfPageobjectT AddLine(double x1, double y1, double x2, double y2, uint strokeColor, double lineWidth)
     {
         ThrowIfDisposed();
         _page.ThrowIfDisposed();
-
-        var color = strokeColor == 0 ? _defaultStrokeColor : strokeColor;
-        var width = lineWidth == 0 ? _defaultLineWidth : lineWidth;
 
         // Create path object
         var pathObj = fpdf_edit.FPDFPageObjCreateNewPath((float)x1, (float)y1);
@@ -388,73 +250,40 @@ public sealed unsafe class PdfContentEditor : IDisposable
             // Add line segment
             fpdf_edit.FPDFPathLineTo(pathObj, (float)x2, (float)y2);
 
-            // Set stroke color
-            uint a = (color >> 24) & 0xFF;
-            uint r = (color >> 16) & 0xFF;
-            uint g = (color >> 8) & 0xFF;
-            uint b = color & 0xFF;
-
-            var result = fpdf_edit.FPDFPageObjSetStrokeColor(pathObj, r, g, b, a);
-            if (result == 0)
-            {
-                throw new PdfException("Failed to set line stroke color.");
-            }
-
-            // Set stroke width
-            fpdf_edit.FPDFPageObjSetStrokeWidth(pathObj, (float)width);
-
-            // Set draw mode to stroke only
-            fpdf_edit.FPDFPathSetDrawMode(pathObj, 1, 0); // stroke = 1, fill = 0
-
-            // Insert object into page
-            fpdf_edit.FPDFPageInsertObject(_page._handle!, pathObj);
+            return PrepareAndInsertObject(pathObj, strokeColor, 0, lineWidth);
         }
         catch
         {
             fpdf_edit.FPDFPageObjDestroy(pathObj);
             throw;
         }
-
-        return this;
     }
 
     /// <summary>
-    /// Adds a circle (fluent API).
+    /// Adds a circle to the page.
     /// </summary>
     /// <param name="centerX">Center X coordinate.</param>
     /// <param name="centerY">Center Y coordinate.</param>
     /// <param name="radius">Circle radius.</param>
-    /// <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke or omit to use default.</param>
-    /// <param name="fillColor">Fill color in ARGB format. Use 0 for no fill or omit to use default.</param>
-    /// <returns>This editor instance for fluent chaining.</returns>
-    public PdfContentEditor Circle(double centerX, double centerY, double radius, uint strokeColor = 0, uint fillColor = 0)
+    /// <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke.</param>
+    /// <param name="fillColor">Fill color in ARGB format. Use 0 for no fill.</param>
+    /// <returns>The created circle object handle.</returns>
+    public FpdfPageobjectT AddCircle(double centerX, double centerY, double radius, uint strokeColor, uint fillColor)
     {
-        var bounds = new PdfRectangle(
-            centerX - radius,
-            centerY - radius,
-            radius * 2,
-            radius * 2);
-
-        var stroke = strokeColor == 0 ? _defaultStrokeColor : strokeColor;
-        var fill = fillColor == 0 ? _defaultFillColor : fillColor;
-
-        return Ellipse(bounds, stroke, fill);
+        return AddEllipse(new PdfRectangle(centerX - radius, centerY - radius, radius * 2, radius * 2), strokeColor, fillColor);
     }
 
     /// <summary>
-    /// Adds an ellipse (fluent API).
+    /// Adds an ellipse to the page.
     /// </summary>
     /// <param name="bounds">Bounding rectangle for the ellipse.</param>
-    /// <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke or omit to use default.</param>
-    /// <param name="fillColor">Fill color in ARGB format. Use 0 for no fill or omit to use default.</param>
-    /// <returns>This editor instance for fluent chaining.</returns>
-    public PdfContentEditor Ellipse(PdfRectangle bounds, uint strokeColor = 0, uint fillColor = 0)
+    /// <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke.</param>
+    /// <param name="fillColor">Fill color in ARGB format. Use 0 for no fill.</param>
+    /// <returns>The created ellipse object handle.</returns>
+    public FpdfPageobjectT AddEllipse(PdfRectangle bounds, uint strokeColor, uint fillColor)
     {
         ThrowIfDisposed();
         _page.ThrowIfDisposed();
-
-        var stroke = strokeColor == 0 ? _defaultStrokeColor : strokeColor;
-        var fill = fillColor == 0 ? _defaultFillColor : fillColor;
 
         // Create ellipse using Bezier curves
         var pathObj = fpdf_edit.FPDFPageObjCreateNewPath(
@@ -478,82 +307,258 @@ public sealed unsafe class PdfContentEditor : IDisposable
             var ox = rx * kappa;
             var oy = ry * kappa;
 
-            // Top
+            // Top-right
             fpdf_edit.FPDFPathBezierTo(pathObj,
                 (float)(cx + ox), (float)(cy + ry),
                 (float)(cx + rx), (float)(cy + oy),
                 (float)(cx + rx), (float)cy);
 
-            // Right
+            // Bottom-right
             fpdf_edit.FPDFPathBezierTo(pathObj,
                 (float)(cx + rx), (float)(cy - oy),
                 (float)(cx + ox), (float)(cy - ry),
                 (float)cx, (float)(cy - ry));
 
-            // Bottom
+            // Bottom-left
             fpdf_edit.FPDFPathBezierTo(pathObj,
                 (float)(cx - ox), (float)(cy - ry),
                 (float)(cx - rx), (float)(cy - oy),
                 (float)(cx - rx), (float)cy);
 
-            // Left
+            // Top-left
             fpdf_edit.FPDFPathBezierTo(pathObj,
                 (float)(cx - rx), (float)(cy + oy),
                 (float)(cx - ox), (float)(cy + ry),
                 (float)cx, (float)(cy + ry));
 
-            fpdf_edit.FPDFPathClose(pathObj);
-
-            // Set stroke color if specified
-            if (stroke != 0)
-            {
-                uint a = (stroke >> 24) & 0xFF;
-                uint r = (stroke >> 16) & 0xFF;
-                uint g = (stroke >> 8) & 0xFF;
-                uint b = stroke & 0xFF;
-
-                var result = fpdf_edit.FPDFPageObjSetStrokeColor(pathObj, r, g, b, a);
-                if (result == 0)
-                {
-                    throw new PdfException("Failed to set ellipse stroke color.");
-                }
-            }
-
-            // Set fill color if specified
-            if (fill != 0)
-            {
-                uint a = (fill >> 24) & 0xFF;
-                uint r = (fill >> 16) & 0xFF;
-                uint g = (fill >> 8) & 0xFF;
-                uint b = fill & 0xFF;
-
-                var result = fpdf_edit.FPDFPageObjSetFillColor(pathObj, r, g, b, a);
-                if (result == 0)
-                {
-                    throw new PdfException("Failed to set ellipse fill color.");
-                }
-            }
-
-            // Set draw mode
-            var hasStroke = stroke != 0 ? 1 : 0;
-            var hasFill = fill != 0 ? 1 : 0;
-            fpdf_edit.FPDFPathSetDrawMode(pathObj, hasStroke, hasFill);
-
-            // Insert object into page
-            fpdf_edit.FPDFPageInsertObject(_page._handle!, pathObj);
+            return PrepareAndInsertObject(pathObj, strokeColor, fillColor);
         }
         catch
         {
             fpdf_edit.FPDFPageObjDestroy(pathObj);
             throw;
         }
+    }
 
+    private FpdfPageobjectT PrepareAndInsertObject(FpdfPageobjectT obj, uint strokeColor, uint fillColor, double lineWidth = 0)
+    {
+        try
+        {
+            // Set draw mode
+            bool hasStroke = strokeColor != 0;
+            bool hasFill = fillColor != 0;
+            
+            // FPDFPathSetDrawMode is for path objects. 
+            // For rect objects created via FPDFPageObjCreateNewRect, it also works as they are paths.
+            fpdf_edit.FPDFPathSetDrawMode(obj, hasStroke ? 1 : 0, hasFill ? 1 : 0);
+
+            // Set stroke color if specified
+            if (hasStroke)
+            {
+                uint a = (strokeColor >> 24) & 0xFF;
+                uint r = (strokeColor >> 16) & 0xFF;
+                uint g = (strokeColor >> 8) & 0xFF;
+                uint b = strokeColor & 0xFF;
+                if (fpdf_edit.FPDFPageObjSetStrokeColor(obj, r, g, b, a) == 0)
+                {
+                    throw new PdfException("Failed to set stroke color.");
+                }
+                
+                if (lineWidth > 0)
+                {
+                    fpdf_edit.FPDFPageObjSetStrokeWidth(obj, (float)lineWidth);
+                }
+            }
+
+            // Set fill color if specified
+            if (hasFill)
+            {
+                uint a = (fillColor >> 24) & 0xFF;
+                uint r = (fillColor >> 16) & 0xFF;
+                uint g = (fillColor >> 8) & 0xFF;
+                uint b = fillColor & 0xFF;
+
+                if (fpdf_edit.FPDFPageObjSetFillColor(obj, r, g, b, a) == 0)
+                {
+                    throw new PdfException("Failed to set fill color.");
+                }
+            }
+
+            // Insert object into page
+            fpdf_edit.FPDFPageInsertObject(_page._handle!, obj);
+
+            return obj;
+        }
+        catch
+        {
+            fpdf_edit.FPDFPageObjDestroy(obj);
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Removes page objects at the specified indices.
+    /// Indices are processed in descending order to maintain correct mapping during removal.
+    /// </summary>
+    /// <param name="indices">The zero-based indices of the objects to remove.</param>
+    /// <exception cref="ArgumentNullException">indices is null.</exception>
+    /// <exception cref="ObjectDisposedException">Editor has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to remove one or more objects.</exception>
+    public void RemoveObjects(params int[] indices)
+    {
+        if (indices is null)
+            throw new ArgumentNullException(nameof(indices));
+
+        ThrowIfDisposed();
+        _page.ThrowIfDisposed();
+
+        // Sort indices in descending order to avoid index shifts during removal
+        var sortedIndices = indices.Distinct().OrderByDescending(i => i).ToArray();
+
+        foreach (var index in sortedIndices)
+        {
+            if (index < 0)
+                continue;
+
+            var objectCount = _page.PageObjectCount;
+            if (index >= objectCount)
+                continue;
+
+            // Get the page object at the specified index
+            var pageObject = fpdf_edit.FPDFPageGetObject(_page._handle!, index);
+            if (pageObject is null || pageObject.__Instance == IntPtr.Zero)
+            {
+                throw new PdfException($"Failed to get page object at index {index}.");
+            }
+
+            // Remove the object from the page
+            var result = fpdf_edit.FPDFPageRemoveObject(_page._handle!, pageObject);
+            if (result == 0)
+            {
+                throw new PdfException($"Failed to remove object at index {index}.");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Regenerates the page content stream to persist all changes.
+    /// This must be called after all editing operations before saving the document.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">Editor has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to generate content.</exception>
+    public void GenerateContent()
+    {
+        ThrowIfDisposed();
+        _page.ThrowIfDisposed();
+
+        var result = fpdf_edit.FPDFPageGenerateContent(_page._handle!);
+        if (result == 0)
+        {
+            throw new PdfException("Failed to generate page content.");
+        }
+    }
+
+    /// <summary>
+    /// Adds text to the page (fluent API).
+    /// </summary>
+    /// <param name="text">The text to add.</param>
+    /// <param name="x">X coordinate in page units.</param>
+    /// <param name="y">Y coordinate in page units.</param>
+    /// <param name="font">The font to use. Omit to use default font.</param>
+    /// <param name="fontSize">Font size in points. Omit to use default font size.</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    /// <exception cref="InvalidOperationException">Font is not specified and no default font is set.</exception>
+    public PdfContentEditor Text(string text, double x, double y, PdfFont? font = null, double fontSize = 0)
+    {
+        var targetFont = font ?? _defaultFont ?? throw new InvalidOperationException("Font is not specified and no default font is set. Call WithFont(font) first.");
+        var targetSize = fontSize > 0 ? fontSize : _defaultFontSize;
+
+        AddText(text, x, y, targetFont, targetSize);
         return this;
     }
 
-    public PdfContentEditor Remove(int index)
+    public PdfContentEditor Image(byte[] imageData, int width, int height, PdfRectangle bounds)
     {
-        RemoveObject(index);
+        AddImage(imageData, width, height, bounds);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a rectangle to the page (fluent API).
+    /// </summary>
+    /// <param name="bounds">Rectangle position and size.</param>
+    /// <param name="strokeColor">Stroke color in ARGB format. Use 0 or omit to use default.</param>
+    /// <param name="fillColor">Fill color in ARGB format. Use 0 or omit to use default.</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    public PdfContentEditor Rectangle(PdfRectangle bounds, uint strokeColor = 0, uint fillColor = 0)
+    {
+        var stroke = strokeColor == 0 ? _defaultStrokeColor : strokeColor;
+        var fill = fillColor == 0 ? _defaultFillColor : fillColor;
+        AddRectangle(bounds, stroke, fill);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a line between two points (fluent API).
+    /// </summary>
+    /// <param name="x1">Start X coordinate.</param>
+    /// <param name="y1">Start Y coordinate.</param>
+    /// <param name="x2">End X coordinate.</param>
+    /// <param name="y2">End Y coordinate.</param>
+    /// <param name="strokeColor">Line color in ARGB format. Use 0 or omit to use default stroke color.</param>
+    /// <param name="lineWidth">Line width. Use 0 or omit to use default line width.</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    public PdfContentEditor Line(double x1, double y1, double x2, double y2, uint strokeColor = 0, double lineWidth = 0)
+    {
+        var color = strokeColor == 0 ? _defaultStrokeColor : strokeColor;
+        var width = lineWidth == 0 ? _defaultLineWidth : lineWidth;
+
+        AddLine(x1, y1, x2, y2, color, width);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a circle (fluent API).
+    /// </summary>
+    /// <param name="centerX">Center X coordinate.</param>
+    /// <param name="centerY">Center Y coordinate.</param>
+    /// <param name="radius">Circle radius.</param>
+    /// <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke or omit to use default.</param>
+    /// <param name="fillColor">Fill color in ARGB format. Use 0 for no fill or omit to use default.</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    public PdfContentEditor Circle(double centerX, double centerY, double radius, uint strokeColor = 0, uint fillColor = 0)
+    {
+        var stroke = strokeColor == 0 ? _defaultStrokeColor : strokeColor;
+        var fill = fillColor == 0 ? _defaultFillColor : fillColor;
+
+        AddCircle(centerX, centerY, radius, stroke, fill);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds an ellipse (fluent API).
+    /// </summary>
+    /// <param name="bounds">Bounding rectangle for the ellipse.</param>
+    /// <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke or omit to use default.</param>
+    /// <param name="fillColor">Fill color in ARGB format. Use 0 for no fill or omit to use default.</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    public PdfContentEditor Ellipse(PdfRectangle bounds, uint strokeColor = 0, uint fillColor = 0)
+    {
+        var stroke = strokeColor == 0 ? _defaultStrokeColor : strokeColor;
+        var fill = fillColor == 0 ? _defaultFillColor : fillColor;
+
+        AddEllipse(bounds, stroke, fill);
+        return this;
+    }
+
+    /// <summary>
+    /// Removes page objects at the specified indices (fluent API).
+    /// </summary>
+    /// <param name="indices">The zero-based indices of the objects to remove.</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    public PdfContentEditor Remove(params int[] indices)
+    {
+        RemoveObjects(indices);
         return this;
     }
 

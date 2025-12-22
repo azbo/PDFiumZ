@@ -9,6 +9,163 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+#### API Simplification & Consolidation (Merge Similar APIs)
+- **PdfDocument**: Unified document management methods
+  - Added `GetPages` methods (range-based and index-based) for more flexible page access.
+  - Added `PdfDocument.Merge` static methods for merging multiple PDF files or documents.
+  - Added `Split` method to extract specific pages into a new document.
+  - Renamed `SaveToFile` and `SaveToFileAsync` to `Save` and `SaveAsync` (old methods removed).
+  - Added `Stream` support to `Save` and `SaveAsync`.
+  - Added `PdfDocument.Open(Stream)` overloads.
+  - Unified `DeletePage` and `DeletePages` into `DeletePages(int startIndex, int count = 1)` (old methods removed).
+  - Unified `RotateAllPages` into `RotatePages(PdfRotation rotation, int[]? pageIndices = null)` (old methods removed).
+  - Renamed `ImportPagesAt` to `ImportPages` (old methods removed).
+  - Unified `InsertBlankPage` into `CreatePage` (old method removed).
+  - Added `AddTextWatermarkAsync` for consistency.
+
+- **PdfBookmark**: Improved bookmark navigation
+  - Added `FirstChild` and `NextSibling` properties for cleaner tree traversal.
+  - Deprecated `GetFirstChild()` and `GetNextSibling()` methods in favor of properties.
+
+- **PdfPage & PdfAnnotation**: Unified annotation and text access
+  - Added `AnnotationCount` and `PageObjectCount` properties to `PdfPage`.
+  - Deprecated `GetAnnotationCount()` and `GetPageObjectCount()` in favor of properties.
+  - Unified `GetAnnotation` and `GetAnnotations` into `GetAnnotations` methods (single index or all).
+  - Merged `GetAnnotations<T>` and `GetAnnotations()` into a single generic method with overloads.
+  - `PdfFreeTextAnnotation`: Renamed `Text` to `Contents` and added `DefaultAppearance` property to align with PDF specification.
+  - Refactored `PdfFormField` to inherit from `PdfAnnotation`, simplifying its implementation and lifecycle.
+  - Added `ExtractTextAsync` and `SearchTextAsync` for consistency.
+
+- **PdfDocumentImageExtensions**: Enhanced image generation
+  - Added `GenerateImages` extension method for flexible page-to-image conversion.
+  - Added `startIndex` and `count` optional parameters to the path-generator `SaveAsImages` overload for better control.
+
+#### QuestPDF-Style Fluent API for Document Generation
+- **FluentDocument**: Modern declarative API inspired by QuestPDF for creating PDF documents
+  - **Two-Phase Rendering**: Measure-then-Render pattern for accurate layout calculation
+  - **Container Pattern**: Single-child (`Container`) and multi-child (`MultiContainer`) base classes
+  - **Space Planning**: `SpacePlan` system with FullRender/PartialRender/Wrap states
+
+- **Visual Elements**:
+  - `TextElement` - Render text with font, size, and color customization
+  - `ImageElement` - Render images with size control
+  - `BackgroundElement` - Apply background colors to child elements
+  - `BorderElement` - Draw borders around child elements with customizable color and width
+  - `LineElement` - Draw horizontal and vertical lines
+
+- **Positional Elements**:
+  - `WidthElement` - Apply width constraints
+  - `HeightElement` - Apply height constraints
+  - `PaddingElement` - Add padding around child elements
+  - `AlignmentElement` - Align children (left, center, right, top, middle, bottom)
+  - `AspectRatioElement` - Maintain aspect ratio
+  - `ExtendElement` - Extend child to fill available space
+
+- **Layout Elements**:
+  - `ColumnElement` - Vertical stacking layout with spacing
+  - `RowElement` - Horizontal layout with spacing
+  - `LayersElement` - Layer elements on top of each other
+
+- **Content Flow Elements**:
+  - `ShowIfElement` - Conditional rendering based on predicate
+  - `PageBreakElement` - Force page breaks
+
+- **Fluent Composition**:
+  - `ElementExtensions` - Extension methods for chaining (`.Text()`, `.Padding()`, `.Background()`, etc.)
+  - Method chaining for clean, readable code
+  - Example:
+    ```csharp
+    using PDFiumZ.Fluent;
+    using PDFiumZ.Fluent.Document;
+
+    using var document = new FluentDocument();
+    document.Content(page =>
+    {
+        page.Column(column =>
+        {
+            column.Item(item => item.Text("Hello, Fluent API!"));
+            column.Item(item =>
+            {
+                item.Background(PdfColor.LightGray, bg =>
+                {
+                    bg.Padding(10, content =>
+                    {
+                        content.Text("Content with styling");
+                    });
+                });
+            });
+        });
+    });
+
+    document.Generate();
+    document.Save("output.pdf");
+    ```
+
+- **Compatibility**:
+  - Multi-framework support: .NET Standard 2.0/2.1, .NET 8.0/9.0/10.0
+  - No C# 9.0 features - uses `Clone()` methods instead of `with` expressions
+  - Full documentation in `FLUENT_API_SUMMARY.md`
+  - Demo program in `FluentApiDemo.cs`
+
+#### Simplified Image Generation API
+- **PdfDocumentImageExtensions**: Extension methods for easy PDF-to-image conversion
+  - **GenerateImages()**: Generate `IEnumerable<PdfImage>` for manual processing
+    - `GenerateImages(options)` - With custom render options
+    - `GenerateImages(startIndex, count, options)` - For page ranges
+
+  - **SaveAsImages()**: Directly save pages as image files (RECOMMENDED)
+    - `SaveAsImages(outputDirectory)` - Simplest usage with auto-naming ("page-0.png", "page-1.png", ...)
+    - `SaveAsImages(outputDirectory, fileNamePattern)` - Custom file naming pattern (e.g., "document-{0:D3}.png")
+    - `SaveAsImages(outputDirectory, startIndex, count, fileNamePattern, options)` - Save specific page range
+    - `SaveAsImages(filePathGenerator, options)` - Full custom control with path generator function
+
+  - **Features**:
+    - Automatic directory creation
+    - Support for custom DPI and transparency via `RenderOptions`
+    - Automatic resource management (no manual `using` required)
+    - Returns array of generated file paths
+
+  - **Example**:
+    ```csharp
+    using PDFiumZ.HighLevel;
+
+    using var document = PdfDocument.Open("sample.pdf");
+
+    // Simplest way (recommended)
+    document.SaveAsImages("output/");
+
+    // Custom file names
+    document.SaveAsImages("output/", "document-page-{0}.png");
+
+    // Save specific pages
+    document.SaveAsImages("output/", startIndex: 0, count: 3);
+
+    // High-DPI rendering
+    var options = RenderOptions.Default.WithDpi(300);
+    document.SaveAsImages("highres/", options: options);
+
+    // Full custom control
+    document.SaveAsImages(pageIndex =>
+        $"output/custom-{DateTime.Now:yyyyMMdd}-page-{pageIndex}.png");
+    ```
+
+  - **API Simplification**: Replaces manual looping pattern
+    ```csharp
+    // OLD (manual loop)
+    for (int i = 0; i < document.PageCount; i++)
+    {
+        using var page = document.GetPage(i);
+        using var image = page.RenderToImage();
+        image.SaveAsPng($"page-{i}.png");
+    }
+
+    // NEW (one line)
+    document.SaveAsImages("output/");
+    ```
+
+  - **Documentation**: Complete usage guide in `IMAGE_GENERATION_API.md`
+  - **Examples**: 6 different usage patterns in `ImageGenerationExample.cs`
+
 #### HTML to PDF Conversion
 - **HtmlToPdfConverter**: Simple HTML to PDF conversion with inline CSS support
   - **Supported HTML tags**:
@@ -68,7 +225,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         <p>Convert <b>HTML</b> to PDF with ease!</p>
     ";
     document.CreatePageFromHtml(html);
-    document.SaveToFile("from-html.pdf");
+    document.Save("from-html.pdf");
 
     // Lists
     string htmlWithLists = @"
@@ -248,11 +405,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     image.SaveAsSkiaWebP("output.webp", quality: 85);
 
     // Add SkiaSharp image to PDF
+    // Use the unified Image API
     using var bitmap = SKBitmap.Decode("photo.jpg");
-    editor.AddSkiaImage(bitmap, new PdfRectangle(50, 700, 200, 150));
+    editor.Image(bitmap, new PdfRectangle(50, 700, 200, 150));
 
-    // Or directly from file path
-    editor.AddImageFromFile("chart.png", new PdfRectangle(50, 500, 300, 200));
+    // Or directly from file path (supports PNG, JPG, SVG, etc.)
+    editor.Image("chart.png", new PdfRectangle(50, 500, 300, 200));
     ```
 
 ### Changed
@@ -468,7 +626,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **High-Level API** - New `PDFiumZ.HighLevel` namespace with modern, easy-to-use API
-  - `PdfDocument` - Document lifecycle management with factory methods (`Open`, `OpenFromMemory`)
+  - `PdfDocument` - Document lifecycle management with factory methods (`Open`)
   - `PdfPage` - Page operations with rendering and text extraction
   - `PdfImage` - Rendered page as bitmap with zero-copy buffer access
   - `RenderOptions` - Fluent API for rendering configuration (DPI, scale, transparency, flags)
@@ -480,8 +638,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `DeletePage()` - Remove pages from document
   - `MovePages()` - Rearrange pages within document
   - `ImportPages()` - Copy pages from another document using page range strings (e.g., "1,3,5-7")
-  - `ImportPagesAt()` - Copy specific page indices from another document
-  - `SaveToFile()` - Save modified documents to disk
+  - `ImportPages()` - Copy specific page indices from another document
+  - `Save()` - Save modified documents to disk or stream
 
 - **Bookmark Operations**
   - `PdfBookmark` - Bookmark navigation with tree traversal support
@@ -592,8 +750,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Async API Support** - Non-blocking async operations with cancellation support
   - `PdfDocument` async methods:
     - `OpenAsync(filePath, password?, cancellationToken)` - Async document loading from file
-    - `OpenFromMemoryAsync(data, password?, cancellationToken)` - Async loading from memory
-    - `SaveToFileAsync(filePath, cancellationToken)` - Async document saving
+    - `OpenAsync(data, password?, cancellationToken)` - Async loading from memory
+    - `SaveAsync(filePath, cancellationToken)` - Async document saving to file
+    - `SaveAsync(stream, cancellationToken)` - Async document saving to stream
   - `PdfPage` async methods:
     - `RenderToImageAsync(cancellationToken)` - Async rendering with default options
     - `RenderToImageAsync(options, cancellationToken)` - Async rendering with custom options

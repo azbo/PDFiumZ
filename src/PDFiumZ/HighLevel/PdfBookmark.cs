@@ -79,25 +79,31 @@ public sealed unsafe class PdfBookmark
     /// <summary>
     /// Gets the first child bookmark, or null if none.
     /// </summary>
-    public PdfBookmark? GetFirstChild()
+    public PdfBookmark? FirstChild
     {
-        var childHandle = fpdf_doc.FPDFBookmarkGetFirstChild(_document._handle!, _handle!);
-        if (childHandle is null || childHandle.__Instance == IntPtr.Zero)
-            return null;
+        get
+        {
+            var childHandle = fpdf_doc.FPDFBookmarkGetFirstChild(_document._handle!, _handle!);
+            if (childHandle is null || childHandle.__Instance == IntPtr.Zero)
+                return null;
 
-        return new PdfBookmark(childHandle, _document);
+            return new PdfBookmark(childHandle, _document);
+        }
     }
 
     /// <summary>
     /// Gets the next sibling bookmark, or null if none.
     /// </summary>
-    public PdfBookmark? GetNextSibling()
+    public PdfBookmark? NextSibling
     {
-        var siblingHandle = fpdf_doc.FPDFBookmarkGetNextSibling(_document._handle!, _handle!);
-        if (siblingHandle is null || siblingHandle.__Instance == IntPtr.Zero)
-            return null;
+        get
+        {
+            var siblingHandle = fpdf_doc.FPDFBookmarkGetNextSibling(_document._handle!, _handle!);
+            if (siblingHandle is null || siblingHandle.__Instance == IntPtr.Zero)
+                return null;
 
-        return new PdfBookmark(siblingHandle, _document);
+            return new PdfBookmark(siblingHandle, _document);
+        }
     }
 
     /// <summary>
@@ -105,11 +111,11 @@ public sealed unsafe class PdfBookmark
     /// </summary>
     public IEnumerable<PdfBookmark> GetChildren()
     {
-        var child = GetFirstChild();
+        var child = FirstChild;
         while (child is not null)
         {
             yield return child;
-            child = child.GetNextSibling();
+            child = child.NextSibling;
         }
     }
 

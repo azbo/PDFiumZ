@@ -58,7 +58,7 @@ public class PdfPageTests : IDisposable
     }
 
     [Fact]
-    public void RotateAllPages_ShouldRotateAllPages()
+    public void RotatePages_ShouldRotateAllPages()
     {
         // Arrange
         using var document = PdfDocument.CreateNew();
@@ -67,12 +67,12 @@ public class PdfPageTests : IDisposable
         document.CreatePage(595, 842).Dispose();
 
         // Act
-        document.RotateAllPages(PdfRotation.Rotate90);
+        document.RotatePages(PdfRotation.Rotate90);
 
         // Assert
-        using var page0 = document.GetPage(0);
-        using var page1 = document.GetPage(1);
-        using var page2 = document.GetPage(2);
+        using var page0 = document.GetPages(0).First();
+        using var page1 = document.GetPages(1).First();
+        using var page2 = document.GetPages(2).First();
         Assert.Equal(PdfRotation.Rotate90, page0.Rotation);
         Assert.Equal(PdfRotation.Rotate90, page1.Rotation);
         Assert.Equal(PdfRotation.Rotate90, page2.Rotation);
@@ -92,10 +92,10 @@ public class PdfPageTests : IDisposable
         document.RotatePages(PdfRotation.Rotate180, 0, 2);
 
         // Assert
-        using var page0 = document.GetPage(0);
-        using var page1 = document.GetPage(1);
-        using var page2 = document.GetPage(2);
-        using var page3 = document.GetPage(3);
+        using var page0 = document.GetPages(0).First();
+        using var page1 = document.GetPages(1).First();
+        using var page2 = document.GetPages(2).First();
+        using var page3 = document.GetPages(3).First();
         Assert.Equal(PdfRotation.Rotate180, page0.Rotation);
         Assert.Equal(PdfRotation.None, page1.Rotation);
         Assert.Equal(PdfRotation.Rotate180, page2.Rotation);
@@ -129,14 +129,14 @@ public class PdfPageTests : IDisposable
             document.CreatePage(595, 842).Dispose();
             document.CreatePage(595, 842).Dispose();
             document.RotatePages(PdfRotation.Rotate270, 0);
-            document.SaveToFile(filePath);
+            document.Save(filePath);
         }
 
         // Act - Reopen and check
         using (var document = PdfDocument.Open(filePath))
         {
-            using var page0 = document.GetPage(0);
-            using var page1 = document.GetPage(1);
+            using var page0 = document.GetPages(0).First();
+            using var page1 = document.GetPages(1).First();
 
             // Assert
             Assert.Equal(PdfRotation.Rotate270, page0.Rotation);
@@ -171,3 +171,4 @@ public class PdfPageTests : IDisposable
         Assert.Equal(792.0, size.Height, 0.1);
     }
 }
+

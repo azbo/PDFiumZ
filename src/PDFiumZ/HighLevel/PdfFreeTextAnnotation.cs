@@ -34,10 +34,10 @@ public sealed unsafe class PdfFreeTextAnnotation : PdfAnnotation
         try
         {
             annotation.Bounds = rect;
-            annotation.Text = text;
+            annotation.Contents = text;
             // Default appearance is often required for the text to show up.
             // We set a basic DA string: "0 0 0 rg /Helv 12 Tf" (Black, Helvetica, 12pt)
-            annotation.SetDefaultAppearance("0 0 0 rg /Helv 12 Tf");
+            annotation.DefaultAppearance = "0 0 0 rg /Helv 12 Tf";
         }
         catch
         {
@@ -56,7 +56,7 @@ public sealed unsafe class PdfFreeTextAnnotation : PdfAnnotation
     /// <summary>
     /// Gets or sets the text content of the annotation.
     /// </summary>
-    public string Text
+    public string Contents
     {
         get
         {
@@ -89,39 +89,37 @@ public sealed unsafe class PdfFreeTextAnnotation : PdfAnnotation
     }
 
     /// <summary>
-    /// Sets the Default Appearance (DA) string for the annotation.
+    /// Gets or sets the Default Appearance (DA) string for the annotation.
     /// This controls font, size, and color of the text.
     /// </summary>
-    /// <param name="da">The DA string (e.g., "0 0 0 rg /Helv 12 Tf").</param>
-    public void SetDefaultAppearance(string da)
+    public string DefaultAppearance
     {
-        ThrowIfDisposed();
-        var str = da ?? string.Empty;
-        
-        var utf16Array = new ushort[str.Length + 1];
-        for (int i = 0; i < str.Length; i++)
-            utf16Array[i] = str[i];
-        utf16Array[str.Length] = 0;
-
-        fpdf_annot.FPDFAnnotSetStringValue(_handle!, "DA", ref utf16Array[0]);
-    }
-
-    /// <summary>
-    /// Gets the Default Appearance (DA) string.
-    /// </summary>
-    public string GetDefaultAppearance()
-    {
-        ThrowIfDisposed();
-        ushort dummy = 0;
-        uint len = fpdf_annot.FPDFAnnotGetStringValue(_handle!, "DA", ref dummy, 0);
-        if (len <= 2) return string.Empty;
-
-        var buffer = new ushort[len / 2];
-        fpdf_annot.FPDFAnnotGetStringValue(_handle!, "DA", ref buffer[0], len);
-        
-        fixed (ushort* p = buffer)
+        get
         {
-            return new string((char*)p, 0, (int)(len / 2) - 1);
+            ThrowIfDisposed();
+            ushort dummy = 0;
+            uint len = fpdf_annot.FPDFAnnotGetStringValue(_handle!, "DA", ref dummy, 0);
+            if (len <= 2) return string.Empty;
+
+            var buffer = new ushort[len / 2];
+            fpdf_annot.FPDFAnnotGetStringValue(_handle!, "DA", ref buffer[0], len);
+            
+            fixed (ushort* p = buffer)
+            {
+                return new string((char*)p, 0, (int)(len / 2) - 1);
+            }
+        }
+        set
+        {
+            ThrowIfDisposed();
+            var str = value ?? string.Empty;
+            
+            var utf16Array = new ushort[str.Length + 1];
+            for (int i = 0; i < str.Length; i++)
+                utf16Array[i] = str[i];
+            utf16Array[str.Length] = 0;
+
+            fpdf_annot.FPDFAnnotSetStringValue(_handle!, "DA", ref utf16Array[0]);
         }
     }
 }

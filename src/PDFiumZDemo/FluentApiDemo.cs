@@ -68,7 +68,7 @@ public static class FluentApiDemo
 
             // Generate and save
             document.Generate();
-            document.SaveToFile("output/fluent-api-demo.pdf");
+            document.Save("output/fluent-api-demo.pdf");
             Console.WriteLine("\nSaved: output/fluent-api-demo.pdf");
         }
         finally
@@ -166,3 +166,4 @@ public static class FluentApiDemo
         Console.WriteLine("=== Layout Elements Demo Complete ===\n");
     }
 }
+

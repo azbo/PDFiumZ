@@ -83,7 +83,7 @@ public class PdfSecurityTests : IDisposable
         using (var document = PdfDocument.CreateNew())
         {
             document.CreatePage(595, 842).Dispose();
-            document.SaveToFile(filePath);
+            document.Save(filePath);
         }
 
         // Act
@@ -149,6 +149,6 @@ public class PdfSecurityTests : IDisposable
         // Assert
         // For unencrypted newly created documents, permissions are typically 0
         Assert.NotNull(security);
-        Assert.NotNull(security.UserPermissions);
     }
 }
+

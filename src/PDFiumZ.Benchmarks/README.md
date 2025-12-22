@@ -52,7 +52,7 @@ dotnet run -c Release --filter "*Batch*"     # Run only batch operation benchmar
 ### 5. Document Manipulation
 - `MergeDocuments` - Merge 3 PDF documents
 - `SplitDocument` - Split a document into parts
-- `RotateAllPages` - Rotate all pages in a document
+- `RotatePages` - Rotate pages in a document
 
 ### 6. Save Operations
 - `SaveSmallDocument` - Save a 1-page document

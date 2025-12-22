@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 
 namespace PDFiumZ.HighLevel;
 
@@ -36,7 +37,7 @@ public sealed unsafe class PdfFont : IDisposable
     /// <returns>A new <see cref="PdfFont"/> instance.</returns>
     /// <exception cref="ArgumentNullException">document or fontName is null.</exception>
     /// <exception cref="PdfException">Failed to load the font.</exception>
-    public static PdfFont LoadStandardFont(PdfDocument document, string fontName)
+    public static PdfFont Load(PdfDocument document, string fontName)
     {
         if (document is null)
             throw new ArgumentNullException(nameof(document));
@@ -62,7 +63,7 @@ public sealed unsafe class PdfFont : IDisposable
     /// <returns>A new <see cref="PdfFont"/> instance.</returns>
     /// <exception cref="ArgumentNullException">document is null.</exception>
     /// <exception cref="PdfException">Failed to load the font.</exception>
-    public static PdfFont LoadStandardFont(PdfDocument document, PdfStandardFont font)
+    public static PdfFont Load(PdfDocument document, PdfStandardFont font)
     {
         var fontName = font switch
         {
@@ -83,7 +84,7 @@ public sealed unsafe class PdfFont : IDisposable
             _ => throw new ArgumentException($"Unknown font type: {font}", nameof(font))
         };
 
-        return LoadStandardFont(document, fontName);
+        return Load(document, fontName);
     }
 
     /// <summary>
@@ -96,7 +97,7 @@ public sealed unsafe class PdfFont : IDisposable
     /// <exception cref="ArgumentNullException">document or fontData is null.</exception>
     /// <exception cref="ArgumentException">fontData is empty.</exception>
     /// <exception cref="PdfException">Failed to load the font.</exception>
-    public static PdfFont LoadTrueTypeFont(PdfDocument document, byte[] fontData, bool isCidFont = false)
+    public static PdfFont Load(PdfDocument document, byte[] fontData, bool isCidFont = false)
     {
         if (document is null)
             throw new ArgumentNullException(nameof(document));
@@ -122,6 +123,27 @@ public sealed unsafe class PdfFont : IDisposable
         }
 
         return new PdfFont(handle, document, "CustomFont");
+    }
+
+    /// <summary>
+    /// Loads a TrueType font from a file path.
+    /// </summary>
+    /// <param name="document">The document to load the font into.</param>
+    /// <param name="filePath">Path to the TrueType font file (.ttf, .otf).</param>
+    /// <param name="isCidFont">True if this is a CID font (for Asian languages), false for standard TrueType.</param>
+    /// <returns>A new <see cref="PdfFont"/> instance.</returns>
+    /// <exception cref="ArgumentNullException">document or filePath is null.</exception>
+    /// <exception cref="FileNotFoundException">Font file does not exist.</exception>
+    /// <exception cref="PdfException">Failed to load the font.</exception>
+    public static PdfFont Load(PdfDocument document, string filePath, bool isCidFont)
+    {
+        if (filePath is null)
+            throw new ArgumentNullException(nameof(filePath));
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException($"Font file not found: {filePath}", filePath);
+
+        var fontData = File.ReadAllBytes(filePath);
+        return Load(document, fontData, isCidFont);
     }
 
     /// <summary>

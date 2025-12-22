@@ -19,7 +19,6 @@ foreach (var image in document.GenerateImages())
     using (image)
     {
         // 手动处理图片...
-        image.SaveAsSkiaPng($"page-{i}.png");
     }
 }
 
@@ -34,7 +33,7 @@ foreach (var image in document.GenerateImages(startIndex: 0, count: 5))
 
 // 使用自定义渲染选项
 var options = RenderOptions.Default.WithDpi(150).WithTransparency();
-foreach (var image in document.GenerateImages(options))
+foreach (var image in document.GenerateImages(options: options))
 {
     using (image)
     {
@@ -66,7 +65,10 @@ document.SaveAsImages("output/", startIndex: 0, count: 3);
 // 完全自定义文件名和路径
 document.SaveAsImages(pageIndex => $"output/custom-{pageIndex:D3}.png");
 
-// 方式5: 使用高DPI选项
+// 方式5: 使用自定义路径生成器并指定范围
+document.SaveAsImages(pageIndex => $"output/part-{pageIndex}.png", startIndex: 10, count: 5);
+
+// 方式6: 使用高DPI选项
 var options = RenderOptions.Default.WithDpi(300);
 document.SaveAsImages("highres/", fileNamePattern: "page-{0}.png", options: options);
 ```

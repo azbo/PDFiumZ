@@ -8,20 +8,12 @@ namespace PDFiumZ.HighLevel;
 /// Provides read and write access to form field properties.
 /// Supports setting values, checking/unchecking boxes, and selecting options.
 /// </summary>
-public sealed unsafe class PdfFormField : IDisposable
+public sealed unsafe class PdfFormField : PdfAnnotation
 {
-    private FpdfAnnotationT? _annotHandle;
     private FpdfFormHandleT? _formHandle;
-    private readonly PdfPage _page;
-    private bool _disposed;
     private string? _name;
     private string? _alternateName;
     private string? _value;
-
-    /// <summary>
-    /// Gets the index of this form field annotation in the page.
-    /// </summary>
-    public int Index { get; }
 
     /// <summary>
     /// Gets the type of the form field.
@@ -29,7 +21,7 @@ public sealed unsafe class PdfFormField : IDisposable
     public PdfFormFieldType FieldType { get; }
 
     /// <summary>
-    /// Gets the field name (unique identifier within the document).
+    /// Gets or sets the field name (unique identifier within the document).
     /// </summary>
     public string Name
     {
@@ -41,7 +33,7 @@ public sealed unsafe class PdfFormField : IDisposable
             ThrowIfDisposed();
 
             // Get name length first
-            var length = fpdf_annot.FPDFAnnotGetFormFieldName(_formHandle!, _annotHandle!, ref _dummyBuffer, 0);
+            var length = fpdf_annot.FPDFAnnotGetFormFieldName(_formHandle!, _handle!, ref _dummyBuffer, 0);
             if (length <= 2)
             {
                 _name = string.Empty;
@@ -52,16 +44,17 @@ public sealed unsafe class PdfFormField : IDisposable
             var buffer = new ushort[length / 2];
             fixed (ushort* pBuffer = buffer)
             {
-                fpdf_annot.FPDFAnnotGetFormFieldName(_formHandle!, _annotHandle!, ref buffer[0], length);
+                fpdf_annot.FPDFAnnotGetFormFieldName(_formHandle!, _handle!, ref buffer[0], length);
                 _name = new string((char*)pBuffer, 0, (int)(length / 2) - 1);
             }
 
             return _name;
         }
+        // TODO: Implement set if PDFium supports renaming fields
     }
 
     /// <summary>
-    /// Gets the alternate field name (user-friendly name, often used as label).
+    /// Gets or sets the alternate field name (user-friendly name, often used as label).
     /// </summary>
     public string AlternateName
     {
@@ -72,7 +65,7 @@ public sealed unsafe class PdfFormField : IDisposable
 
             ThrowIfDisposed();
 
-            var length = fpdf_annot.FPDFAnnotGetFormFieldAlternateName(_formHandle!, _annotHandle!, ref _dummyBuffer, 0);
+            var length = fpdf_annot.FPDFAnnotGetFormFieldAlternateName(_formHandle!, _handle!, ref _dummyBuffer, 0);
             if (length <= 2)
             {
                 _alternateName = string.Empty;
@@ -82,16 +75,17 @@ public sealed unsafe class PdfFormField : IDisposable
             var buffer = new ushort[length / 2];
             fixed (ushort* pBuffer = buffer)
             {
-                fpdf_annot.FPDFAnnotGetFormFieldAlternateName(_formHandle!, _annotHandle!, ref buffer[0], length);
+                fpdf_annot.FPDFAnnotGetFormFieldAlternateName(_formHandle!, _handle!, ref buffer[0], length);
                 _alternateName = new string((char*)pBuffer, 0, (int)(length / 2) - 1);
             }
 
             return _alternateName;
         }
+        // TODO: Implement set if PDFium supports changing alternate name
     }
 
     /// <summary>
-    /// Gets the current value of the form field (for text fields, combo boxes, etc.).
+    /// Gets or sets the current value of the form field (for text fields, combo boxes, etc.).
     /// Returns empty string if field has no value or is not a value-based field.
     /// </summary>
     public string Value
@@ -103,7 +97,7 @@ public sealed unsafe class PdfFormField : IDisposable
 
             ThrowIfDisposed();
 
-            var length = fpdf_annot.FPDFAnnotGetFormFieldValue(_formHandle!, _annotHandle!, ref _dummyBuffer, 0);
+            var length = fpdf_annot.FPDFAnnotGetFormFieldValue(_formHandle!, _handle!, ref _dummyBuffer, 0);
             if (length <= 2)
             {
                 _value = string.Empty;
@@ -113,16 +107,44 @@ public sealed unsafe class PdfFormField : IDisposable
             var buffer = new ushort[length / 2];
             fixed (ushort* pBuffer = buffer)
             {
-                fpdf_annot.FPDFAnnotGetFormFieldValue(_formHandle!, _annotHandle!, ref buffer[0], length);
+                fpdf_annot.FPDFAnnotGetFormFieldValue(_formHandle!, _handle!, ref buffer[0], length);
                 _value = new string((char*)pBuffer, 0, (int)(length / 2) - 1);
             }
 
             return _value;
         }
+        set
+        {
+            if (value is null)
+                throw new ArgumentNullException(nameof(value));
+
+            ThrowIfDisposed();
+
+            // Convert to UTF-16LE (ushort array)
+            var utf16Array = new ushort[value.Length + 1]; // +1 for null terminator
+            for (int i = 0; i < value.Length; i++)
+            {
+                utf16Array[i] = value[i];
+            }
+            utf16Array[value.Length] = 0; // Null terminator
+
+            // Set the "V" (Value) key using FPDFAnnotSetStringValue
+            var result = fpdf_annot.FPDFAnnotSetStringValue(_handle!, "V", ref utf16Array[0]);
+            if (result == 0)
+            {
+                throw new PdfException("Failed to set form field value.");
+            }
+
+            // Clear cached value
+            _value = null;
+
+            // Update the annotation's appearance
+            fpdf_annot.FPDFAnnotSetAP(_handle!, 0, ref utf16Array[0]); // 0 = Normal appearance
+        }
     }
 
     /// <summary>
-    /// Gets whether this is a checkbox or radio button that is currently checked.
+    /// Gets or sets whether this is a checkbox or radio button that is currently checked.
     /// Returns false for other field types.
     /// </summary>
     public bool IsChecked
@@ -130,7 +152,32 @@ public sealed unsafe class PdfFormField : IDisposable
         get
         {
             ThrowIfDisposed();
-            return fpdf_annot.FPDFAnnotIsChecked(_formHandle!, _annotHandle!) != 0;
+            return fpdf_annot.FPDFAnnotIsChecked(_formHandle!, _handle!) != 0;
+        }
+        set
+        {
+            ThrowIfDisposed();
+
+            if (FieldType != PdfFormFieldType.CheckBox && FieldType != PdfFormFieldType.RadioButton)
+            {
+                throw new InvalidOperationException($"IsChecked can only be set on CheckBox or RadioButton fields. Current field type: {FieldType}");
+            }
+
+            // For checkboxes and radio buttons, we set the appearance state (AS)
+            // "Yes" or "Off" are common values, but we need to check what values this field supports
+            var stateValue = value ? "Yes" : "Off";
+            var utf16Array = new ushort[stateValue.Length + 1];
+            for (int i = 0; i < stateValue.Length; i++)
+            {
+                utf16Array[i] = stateValue[i];
+            }
+            utf16Array[stateValue.Length] = 0;
+
+            var result = fpdf_annot.FPDFAnnotSetStringValue(_handle!, "AS", ref utf16Array[0]);
+            if (result == 0)
+            {
+                throw new PdfException("Failed to set checkbox/radio button state.");
+            }
         }
     }
 
@@ -142,7 +189,7 @@ public sealed unsafe class PdfFormField : IDisposable
         get
         {
             ThrowIfDisposed();
-            return fpdf_annot.FPDFAnnotGetFormFieldFlags(_formHandle!, _annotHandle!);
+            return fpdf_annot.FPDFAnnotGetFormFieldFlags(_formHandle!, _handle!);
         }
     }
 
@@ -153,14 +200,12 @@ public sealed unsafe class PdfFormField : IDisposable
     /// Internal constructor - created by PdfPage only.
     /// </summary>
     internal PdfFormField(FpdfAnnotationT annotHandle, FpdfFormHandleT formHandle, PdfPage page, int index)
+        : base(annotHandle, page, PdfAnnotationType.Widget, index)
     {
-        _annotHandle = annotHandle ?? throw new ArgumentNullException(nameof(annotHandle));
         _formHandle = formHandle ?? throw new ArgumentNullException(nameof(formHandle));
-        _page = page ?? throw new ArgumentNullException(nameof(page));
-        Index = index;
 
         // Get field type
-        var typeValue = fpdf_annot.FPDFAnnotGetFormFieldType(_formHandle, _annotHandle);
+        var typeValue = fpdf_annot.FPDFAnnotGetFormFieldType(_formHandle, _handle!);
         FieldType = (PdfFormFieldType)typeValue;
     }
 
@@ -171,7 +216,7 @@ public sealed unsafe class PdfFormField : IDisposable
     public int GetOptionCount()
     {
         ThrowIfDisposed();
-        return fpdf_annot.FPDFAnnotGetOptionCount(_formHandle!, _annotHandle!);
+        return fpdf_annot.FPDFAnnotGetOptionCount(_formHandle!, _handle!);
     }
 
     /// <summary>
@@ -189,14 +234,14 @@ public sealed unsafe class PdfFormField : IDisposable
             throw new ArgumentOutOfRangeException(nameof(index),
                 $"Option index {index} is out of range (0-{optionCount - 1}).");
 
-        var length = fpdf_annot.FPDFAnnotGetOptionLabel(_formHandle!, _annotHandle!, index, ref _dummyBuffer, 0);
+        var length = fpdf_annot.FPDFAnnotGetOptionLabel(_formHandle!, _handle!, index, ref _dummyBuffer, 0);
         if (length <= 2)
             return string.Empty;
 
         var buffer = new ushort[length / 2];
         fixed (ushort* pBuffer = buffer)
         {
-            fpdf_annot.FPDFAnnotGetOptionLabel(_formHandle!, _annotHandle!, index, ref buffer[0], length);
+            fpdf_annot.FPDFAnnotGetOptionLabel(_formHandle!, _handle!, index, ref buffer[0], length);
             return new string((char*)pBuffer, 0, (int)(length / 2) - 1);
         }
     }
@@ -228,7 +273,7 @@ public sealed unsafe class PdfFormField : IDisposable
     public bool IsOptionSelected(int index)
     {
         ThrowIfDisposed();
-        return fpdf_annot.FPDFAnnotIsOptionSelected(_formHandle!, _annotHandle!, index) != 0;
+        return fpdf_annot.FPDFAnnotIsOptionSelected(_formHandle!, _handle!, index) != 0;
     }
 
     /// <summary>
@@ -243,134 +288,43 @@ public sealed unsafe class PdfFormField : IDisposable
     #region Write Operations
 
     /// <summary>
-    /// Sets the value of the form field (for text fields, combo boxes, etc.).
+    /// Sets the selected options for combo boxes and list boxes.
     /// </summary>
-    /// <param name="value">The new value to set.</param>
-    /// <exception cref="ArgumentNullException">value is null.</exception>
-    /// <exception cref="ObjectDisposedException">The form field has been disposed.</exception>
-    /// <exception cref="PdfException">Failed to set the value.</exception>
-    public void SetValue(string value)
-    {
-        if (value is null)
-            throw new ArgumentNullException(nameof(value));
-
-        ThrowIfDisposed();
-
-        // Convert to UTF-16LE (ushort array)
-        var utf16Array = new ushort[value.Length + 1]; // +1 for null terminator
-        for (int i = 0; i < value.Length; i++)
-        {
-            utf16Array[i] = value[i];
-        }
-        utf16Array[value.Length] = 0; // Null terminator
-
-        // Set the "V" (Value) key using FPDFAnnotSetStringValue
-        var result = fpdf_annot.FPDFAnnotSetStringValue(_annotHandle!, "V", ref utf16Array[0]);
-        if (result == 0)
-        {
-            throw new PdfException("Failed to set form field value.");
-        }
-
-        // Clear cached value
-        _value = null;
-
-        // Update the annotation's appearance
-        fpdf_annot.FPDFAnnotSetAP(_annotHandle!, 0, ref utf16Array[0]); // 0 = Normal appearance
-    }
-
-    /// <summary>
-    /// Sets the checked state for checkboxes and radio buttons.
-    /// </summary>
-    /// <param name="isChecked">True to check the box, false to uncheck.</param>
-    /// <exception cref="ObjectDisposedException">The form field has been disposed.</exception>
-    /// <exception cref="InvalidOperationException">This field is not a checkbox or radio button.</exception>
-    /// <exception cref="PdfException">Failed to set the checked state.</exception>
-    public void SetChecked(bool isChecked)
-    {
-        ThrowIfDisposed();
-
-        if (FieldType != PdfFormFieldType.CheckBox && FieldType != PdfFormFieldType.RadioButton)
-        {
-            throw new InvalidOperationException($"SetChecked can only be called on CheckBox or RadioButton fields. Current field type: {FieldType}");
-        }
-
-        // For checkboxes and radio buttons, we set the appearance state (AS)
-        // "Yes" or "Off" are common values, but we need to check what values this field supports
-        var stateValue = isChecked ? "Yes" : "Off";
-        var utf16Array = new ushort[stateValue.Length + 1];
-        for (int i = 0; i < stateValue.Length; i++)
-        {
-            utf16Array[i] = stateValue[i];
-        }
-        utf16Array[stateValue.Length] = 0;
-
-        var result = fpdf_annot.FPDFAnnotSetStringValue(_annotHandle!, "AS", ref utf16Array[0]);
-        if (result == 0)
-        {
-            throw new PdfException("Failed to set checkbox/radio button state.");
-        }
-    }
-
-    /// <summary>
-    /// Sets the selected option for combo boxes and list boxes (single selection).
-    /// </summary>
-    /// <param name="index">Zero-based index of the option to select.</param>
-    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
-    /// <exception cref="ObjectDisposedException">The form field has been disposed.</exception>
-    /// <exception cref="InvalidOperationException">This field is not a combo box or list box.</exception>
-    /// <exception cref="PdfException">Failed to select the option.</exception>
-    public void SetSelectedOption(int index)
-    {
-        ThrowIfDisposed();
-
-        if (FieldType != PdfFormFieldType.ComboBox && FieldType != PdfFormFieldType.ListBox)
-        {
-            throw new InvalidOperationException($"SetSelectedOption can only be called on ComboBox or ListBox fields. Current field type: {FieldType}");
-        }
-
-        var optionCount = GetOptionCount();
-        if (index < 0 || index >= optionCount)
-            throw new ArgumentOutOfRangeException(nameof(index),
-                $"Option index {index} is out of range (0-{optionCount - 1}).");
-
-        // Use FORM_SetIndexSelected to select the option
-        var result = fpdf_formfill.FORM_SetIndexSelected(_formHandle!, _page._handle!, index, 1);
-        if (result == 0)
-        {
-            throw new PdfException($"Failed to select option at index {index}.");
-        }
-
-        // Clear cached value
-        _value = null;
-    }
-
-    /// <summary>
-    /// Sets multiple selected options for list boxes (multiple selection).
-    /// </summary>
-    /// <param name="indices">Array of zero-based indices of options to select.</param>
+    /// <param name="indices">Zero-based indices of the options to select.</param>
     /// <exception cref="ArgumentNullException">indices is null.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Any index is out of range.</exception>
     /// <exception cref="ObjectDisposedException">The form field has been disposed.</exception>
-    /// <exception cref="InvalidOperationException">This field is not a list box.</exception>
+    /// <exception cref="InvalidOperationException">This field is not a combo box or list box.</exception>
     /// <exception cref="PdfException">Failed to select options.</exception>
-    public void SetSelectedOptions(int[] indices)
+    public void SetSelectedOptions(params int[] indices)
     {
         if (indices is null)
             throw new ArgumentNullException(nameof(indices));
 
         ThrowIfDisposed();
 
-        if (FieldType != PdfFormFieldType.ListBox)
+        if (FieldType != PdfFormFieldType.ComboBox && FieldType != PdfFormFieldType.ListBox)
         {
-            throw new InvalidOperationException($"SetSelectedOptions can only be called on ListBox fields. Current field type: {FieldType}");
+            throw new InvalidOperationException($"SetSelectedOptions can only be called on ComboBox or ListBox fields. Current field type: {FieldType}");
         }
 
         var optionCount = GetOptionCount();
 
-        // First, deselect all options
-        for (int i = 0; i < optionCount; i++)
+        // For combo boxes and single-selection list boxes, we only support one selection
+        var isMultiSelect = (Flags & 0x00200000) != 0; // bit 22: MultiSelect
+
+        if (!isMultiSelect && indices.Length > 1)
         {
-            fpdf_formfill.FORM_SetIndexSelected(_formHandle!, _page._handle!, i, 0);
+            throw new InvalidOperationException("This field does not support multiple selections.");
+        }
+
+        // First, deselect all options (only for list boxes, combo boxes only have one selection anyway)
+        if (FieldType == PdfFormFieldType.ListBox)
+        {
+            for (int i = 0; i < optionCount; i++)
+            {
+                fpdf_formfill.FORM_SetIndexSelected(_formHandle!, _page._handle!, i, 0);
+            }
         }
 
         // Then select the specified indices
@@ -394,17 +348,11 @@ public sealed unsafe class PdfFormField : IDisposable
     #endregion
 
     /// <summary>
-    /// Releases all resources used by the <see cref="PdfFormField"/>.
+    /// Releases the native resources used by the <see cref="PdfFormField"/>.
     /// </summary>
-    public void Dispose()
+    protected override void Dispose(bool disposing)
     {
         if (_disposed) return;
-
-        if (_annotHandle != null)
-        {
-            fpdf_annot.FPDFPageCloseAnnot(_annotHandle);
-            _annotHandle = null;
-        }
 
         if (_formHandle != null)
         {
@@ -412,12 +360,6 @@ public sealed unsafe class PdfFormField : IDisposable
             _formHandle = null;
         }
 
-        _disposed = true;
-    }
-
-    private void ThrowIfDisposed()
-    {
-        if (_disposed)
-            throw new ObjectDisposedException(nameof(PdfFormField));
+        base.Dispose(disposing);
     }
 }

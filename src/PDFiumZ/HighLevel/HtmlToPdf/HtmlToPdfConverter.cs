@@ -115,9 +115,8 @@ public class HtmlToPdfConverter : IDisposable
 
     private void RenderHtml(PdfContentEditor editor, string html)
     {
-        // Remove extra whitespace and normalize line breaks
-        html = Regex.Replace(html, @"\r\n|\r|\n", " ");
-        html = Regex.Replace(html, @"\s+", " ");
+        // Remove extra whitespace and normalize line breaks in a single pass
+        html = Regex.Replace(html, @"(?:\r\n|\r|\n|\s)+", " ");
 
         var baseStyle = new TextStyle();
         ProcessHtmlContent(editor, html, baseStyle);
@@ -366,7 +365,7 @@ public class HtmlToPdfConverter : IDisposable
             else
                 standardFont = PdfStandardFont.Helvetica;
 
-            _fontCache[fontKey] = PdfFont.LoadStandardFont(_document, standardFont);
+            _fontCache[fontKey] = PdfFont.Load(_document, standardFont);
         }
 
         return _fontCache[fontKey];

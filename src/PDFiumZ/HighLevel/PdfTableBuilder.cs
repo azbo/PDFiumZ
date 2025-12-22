@@ -49,6 +49,16 @@ public sealed class PdfTableBuilder
     /// <summary>
     /// Defines the table header row.
     /// </summary>
+    /// <param name="texts">Header cell text contents.</param>
+    /// <returns>This instance for fluent chaining.</returns>
+    public PdfTableBuilder Header(params string[] texts)
+    {
+        return Header(row => row.Cell(texts));
+    }
+
+    /// <summary>
+    /// Defines the table header row using a configuration action.
+    /// </summary>
     /// <param name="configureHeader">Action to configure header cells.</param>
     /// <returns>This instance for fluent chaining.</returns>
     public PdfTableBuilder Header(Action<PdfTableRowBuilder> configureHeader)
@@ -63,6 +73,16 @@ public sealed class PdfTableBuilder
 
     /// <summary>
     /// Adds a data row to the table.
+    /// </summary>
+    /// <param name="texts">Row cell text contents.</param>
+    /// <returns>This instance for fluent chaining.</returns>
+    public PdfTableBuilder Row(params string[] texts)
+    {
+        return Row(row => row.Cell(texts));
+    }
+
+    /// <summary>
+    /// Adds a data row to the table using a configuration action.
     /// </summary>
     /// <param name="configureRow">Action to configure row cells.</param>
     /// <returns>This instance for fluent chaining.</returns>
@@ -215,8 +235,8 @@ public sealed class PdfTableBuilder
 
             // Get font for this row
             var font = isHeader && _headerBold
-                ? PdfFont.LoadStandardFont(page._document, PdfStandardFont.HelveticaBold)
-                : PdfFont.LoadStandardFont(page._document, PdfStandardFont.Helvetica);
+                ? PdfFont.Load(page._document, PdfStandardFont.HelveticaBold)
+                : PdfFont.Load(page._document, PdfStandardFont.Helvetica);
 
             var fontSize = isHeader ? _headerFontSize : 12;
             var textColor = isHeader ? _headerTextColor : PdfColor.Black;

@@ -13,7 +13,7 @@ public abstract class PdfAnnotation : IDisposable
     /// Gets the page that owns this annotation.
     /// </summary>
     protected readonly PdfPage _page;
-    private bool _disposed;
+    protected bool _disposed;
     private int _index = -1;
 
     /// <summary>
@@ -35,7 +35,7 @@ public abstract class PdfAnnotation : IDisposable
     /// Gets or sets the bounding rectangle of the annotation in page coordinates.
     /// </summary>
     /// <exception cref="ObjectDisposedException">The annotation has been disposed.</exception>
-    public PdfRectangle Bounds
+    public virtual PdfRectangle Bounds
     {
         get
         {

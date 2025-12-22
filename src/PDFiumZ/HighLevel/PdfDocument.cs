@@ -213,7 +213,7 @@ public sealed class PdfDocument : IDisposable
     /// <exception cref="ArgumentException">data is empty.</exception>
     /// <exception cref="PdfLoadException">Failed to load PDF.</exception>
     /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
-    public static PdfDocument OpenFromMemory(byte[] data, string? password = null)
+    public static PdfDocument Open(byte[] data, string? password = null)
     {
         if (data is null)
             throw new ArgumentNullException(nameof(data));
@@ -242,6 +242,30 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
+    /// Opens a PDF document from a stream.
+    /// </summary>
+    /// <param name="stream">Stream containing the PDF file data.</param>
+    /// <param name="password">Optional password for encrypted PDFs.</param>
+    /// <returns>A new <see cref="PdfDocument"/> instance.</returns>
+    /// <exception cref="ArgumentNullException">stream is null.</exception>
+    /// <exception cref="PdfLoadException">Failed to load PDF.</exception>
+    /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
+    public static PdfDocument Open(Stream stream, string? password = null)
+    {
+        if (stream is null)
+            throw new ArgumentNullException(nameof(stream));
+
+        if (stream is MemoryStream ms)
+        {
+            return Open(ms.ToArray(), password);
+        }
+
+        using var memoryStream = new MemoryStream();
+        stream.CopyTo(memoryStream);
+        return Open(memoryStream.ToArray(), password);
+    }
+
+    /// <summary>
     /// Asynchronously opens a PDF document from a byte array in memory.
     /// </summary>
     /// <param name="data">PDF file content as byte array.</param>
@@ -253,12 +277,32 @@ public sealed class PdfDocument : IDisposable
     /// <exception cref="PdfLoadException">Failed to load PDF.</exception>
     /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    public static Task<PdfDocument> OpenFromMemoryAsync(byte[] data, string? password = null, CancellationToken cancellationToken = default)
+    public static Task<PdfDocument> OpenAsync(byte[] data, string? password = null, CancellationToken cancellationToken = default)
     {
         return Task.Run(() =>
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return OpenFromMemory(data, password);
+            return Open(data, password);
+        }, cancellationToken);
+    }
+
+    /// <summary>
+    /// Asynchronously opens a PDF document from a stream.
+    /// </summary>
+    /// <param name="stream">Stream containing the PDF file data.</param>
+    /// <param name="password">Optional password for encrypted PDFs.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a new <see cref="PdfDocument"/> instance.</returns>
+    /// <exception cref="ArgumentNullException">stream is null.</exception>
+    /// <exception cref="PdfLoadException">Failed to load PDF.</exception>
+    /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public static Task<PdfDocument> OpenAsync(Stream stream, string? password = null, CancellationToken cancellationToken = default)
+    {
+        return Task.Run(() =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            return Open(stream, password);
         }, cancellationToken);
     }
 
@@ -280,14 +324,13 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
-    /// Merges multiple PDF documents into a single document.
+    /// Merges multiple PDF files into a single document.
     /// </summary>
-    /// <param name="filePaths">Paths to PDF files to merge.</param>
-    /// <returns>A new <see cref="PdfDocument"/> containing all pages from the source documents.</returns>
+    /// <param name="filePaths">The paths of the PDF files to merge.</param>
+    /// <returns>A new <see cref="PdfDocument"/> containing all pages from the source files.</returns>
     /// <exception cref="ArgumentNullException">filePaths is null.</exception>
     /// <exception cref="ArgumentException">filePaths is empty or contains null/empty strings.</exception>
     /// <exception cref="FileNotFoundException">One or more files do not exist.</exception>
-    /// <exception cref="PdfLoadException">Failed to load one or more PDF documents.</exception>
     /// <exception cref="PdfException">Failed to merge documents.</exception>
     /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
     public static PdfDocument Merge(params string[] filePaths)
@@ -317,8 +360,7 @@ public sealed class PdfDocument : IDisposable
             foreach (var filePath in filePaths)
             {
                 using var sourceDoc = Open(filePath);
-                // Use PageCount instead of -1 to ensure compatibility
-                mergedDoc.ImportPages(sourceDoc, null, mergedDoc.PageCount);
+                mergedDoc.ImportPages(sourceDoc, mergedDoc.PageCount);
             }
 
             return mergedDoc;
@@ -331,39 +373,77 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
-    /// Splits this document by extracting a range of pages into a new document.
+    /// Resolves ambiguity when calling Merge with no arguments.
     /// </summary>
-    /// <param name="startIndex">Zero-based index of the first page to extract.</param>
-    /// <param name="pageCount">Number of pages to extract.</param>
+    /// <exception cref="ArgumentException">Always thrown.</exception>
+    public static PdfDocument Merge()
+    {
+        throw new ArgumentException("At least one document or file path must be provided.");
+    }
+
+    /// <summary>
+    /// Merges multiple PDF documents into a single document.
+    /// </summary>
+    /// <param name="documents">The documents to merge.</param>
+    /// <returns>A new <see cref="PdfDocument"/> containing all pages from the source documents.</returns>
+    /// <exception cref="ArgumentNullException">documents is null.</exception>
+    /// <exception cref="ArgumentException">documents is empty.</exception>
+    /// <exception cref="PdfException">Failed to merge documents.</exception>
+    public static PdfDocument Merge(params PdfDocument[] documents)
+    {
+        if (documents is null)
+            throw new ArgumentNullException(nameof(documents));
+        if (documents.Length == 0)
+            throw new ArgumentException("At least one document must be provided.", nameof(documents));
+
+        EnsureLibraryInitialized();
+
+        var mergedDoc = CreateNew();
+        try
+        {
+            foreach (var doc in documents)
+            {
+                if (doc == null) continue;
+                mergedDoc.ImportPages(doc, mergedDoc.PageCount);
+            }
+            return mergedDoc;
+        }
+        catch
+        {
+            mergedDoc.Dispose();
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Splits this document by extracting specific pages into a new document.
+    /// </summary>
+    /// <param name="pageIndices">Array of zero-based page indices to extract. If null or empty, all pages are extracted.</param>
     /// <returns>A new <see cref="PdfDocument"/> containing the extracted pages.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">startIndex or pageCount is invalid.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Any index is out of range.</exception>
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
     /// <exception cref="PdfException">Failed to split document.</exception>
-    public PdfDocument Split(int startIndex, int pageCount)
+    public PdfDocument Split(params int[]? pageIndices)
     {
         ThrowIfDisposed();
 
-        if (startIndex < 0 || startIndex >= PageCount)
-            throw new ArgumentOutOfRangeException(nameof(startIndex),
-                $"Start index {startIndex} is out of range (0-{PageCount - 1}).");
-        if (pageCount <= 0)
-            throw new ArgumentOutOfRangeException(nameof(pageCount), "Page count must be positive.");
-        if (startIndex + pageCount > PageCount)
-            throw new ArgumentOutOfRangeException(nameof(pageCount),
-                $"Range ({startIndex} + {pageCount}) exceeds page count ({PageCount}).");
+        var indices = (pageIndices == null || pageIndices.Length == 0)
+            ? Enumerable.Range(0, PageCount).ToArray()
+            : pageIndices;
 
-        // Create page indices array
-        var pageIndices = new int[pageCount];
-        for (int i = 0; i < pageCount; i++)
+        // Validate all indices
+        foreach (var index in indices)
         {
-            pageIndices[i] = startIndex + i;
+            if (index < 0 || index >= PageCount)
+                throw new ArgumentOutOfRangeException(nameof(pageIndices),
+                    $"Page index {index} is out of range (0-{PageCount - 1}).");
         }
 
         // Create new document and import pages
         var splitDoc = CreateNew();
         try
         {
-            splitDoc.ImportPagesAt(this, pageIndices, 0);
+            splitDoc.ImportPages(this, 0, indices);
 
             // Copy viewer preferences
             fpdf_ppo.FPDF_CopyViewerPreferences(splitDoc._handle!, _handle!);
@@ -377,14 +457,6 @@ public sealed class PdfDocument : IDisposable
         }
     }
 
-    /// <summary>
-    /// Gets a page by zero-based index.
-    /// </summary>
-    /// <param name="index">Zero-based page index.</param>
-    /// <returns>A <see cref="PdfPage"/> instance that must be disposed.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
-    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
-    /// <exception cref="PdfException">Failed to load page.</exception>
     public PdfPage GetPage(int index)
     {
         ThrowIfDisposed();
@@ -400,63 +472,72 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
-    /// Gets a range of consecutive pages.
+    /// Gets a range of pages, specific pages by index, or all pages if no parameters are provided.
     /// </summary>
-    /// <param name="startIndex">Zero-based index of the first page to get.</param>
-    /// <param name="count">Number of pages to get.</param>
+    /// <param name="startIndex">Zero-based index of the first page to get. Defaults to 0.</param>
+    /// <param name="count">Number of pages to get. Defaults to all remaining pages.</param>
     /// <returns>An enumerable of <see cref="PdfPage"/> instances that must be disposed.</returns>
     /// <exception cref="ArgumentOutOfRangeException">startIndex or count is invalid.</exception>
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
     /// <exception cref="PdfException">Failed to load one or more pages.</exception>
-    public IEnumerable<PdfPage> GetPages(int startIndex, int count)
+    public IEnumerable<PdfPage> GetPages(int? startIndex = null, int? count = null)
     {
         ThrowIfDisposed();
 
-        if (startIndex < 0 || startIndex >= PageCount)
+        int start = startIndex ?? 0;
+        int num = count ?? (PageCount - start);
+
+        if (start < 0 || start >= PageCount)
             throw new ArgumentOutOfRangeException(nameof(startIndex),
-                $"Start index {startIndex} is out of range (0-{PageCount - 1}).");
+                $"Start index {start} is out of range (0-{PageCount - 1}).");
 
-        if (count <= 0)
-            throw new ArgumentOutOfRangeException(nameof(count), "Count must be positive.");
+        if (num < 0)
+            throw new ArgumentOutOfRangeException(nameof(count), "Count cannot be negative.");
 
-        if (startIndex + count > PageCount)
+        if (start + num > PageCount)
             throw new ArgumentOutOfRangeException(nameof(count),
-                $"Range ({startIndex} + {count}) exceeds page count ({PageCount}).");
+                $"Range ({start} + {num}) exceeds page count ({PageCount}).");
 
         // Load pages lazily
-        for (int i = startIndex; i < startIndex + count; i++)
+        for (int i = start; i < start + num; i++)
         {
             yield return GetPage(i);
         }
     }
 
-    public PdfPage CreatePage()
+    /// <summary>
+    /// Gets specific pages by their indices.
+    /// </summary>
+    /// <param name="pageIndices">Array of zero-based page indices.</param>
+    /// <returns>An enumerable of <see cref="PdfPage"/> instances that must be disposed.</returns>
+    /// <exception cref="ArgumentNullException">pageIndices is null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Any index is out of range.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to load one or more pages.</exception>
+    public IEnumerable<PdfPage> GetPages(params int[] pageIndices)
     {
-        return CreatePage(PdfPageSize.A4);
-    }
+        if (pageIndices is null)
+            throw new ArgumentNullException(nameof(pageIndices));
 
-    public PdfPage CreatePage(PdfPageSize size)
-    {
-        var (width, height) = GetPageDimensions(size);
-        return CreatePage(width, height);
+        ThrowIfDisposed();
+
+        foreach (var index in pageIndices)
+        {
+            yield return GetPage(index);
+        }
     }
 
     /// <summary>
     /// Creates a new blank page and adds it to the document.
     /// </summary>
-    /// <param name="width">Page width in points (1/72 inch).</param>
-    /// <param name="height">Page height in points (1/72 inch).</param>
+    /// <param name="width">Page width in points (1/72 inch). Default is A4 width.</param>
+    /// <param name="height">Page height in points (1/72 inch). Default is A4 height.</param>
+    /// <param name="index">Zero-based index where to insert the page (-1 for the end of the document).</param>
     /// <returns>The newly created <see cref="PdfPage"/> instance that must be disposed.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Width or height is not positive.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Width, height, or index is invalid.</exception>
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
     /// <exception cref="PdfException">Failed to create page.</exception>
-    /// <remarks>
-    /// Common page sizes:
-    /// - Letter: 612 x 792 points (8.5" x 11")
-    /// - A4: 595 x 842 points (210mm x 297mm)
-    /// - Legal: 612 x 1008 points (8.5" x 14")
-    /// </remarks>
-    public PdfPage CreatePage(double width, double height)
+    public PdfPage CreatePage(double width = 595, double height = 842, int index = -1)
     {
         ThrowIfDisposed();
 
@@ -465,11 +546,16 @@ public sealed class PdfDocument : IDisposable
         if (height <= 0)
             throw new ArgumentOutOfRangeException(nameof(height), "Height must be positive.");
 
-        var pageIndex = PageCount;
+        var originalCount = PageCount;
+        if (index < -1 || index > originalCount)
+            throw new ArgumentOutOfRangeException(nameof(index),
+                $"Insert index {index} is out of range (-1 to {originalCount}).");
+
+        var pageIndex = index == -1 ? originalCount : index;
         var pageHandle = fpdf_edit.FPDFPageNew(_handle!, pageIndex, width, height);
 
         if (pageHandle is null || pageHandle.__Instance == IntPtr.Zero)
-            throw new PdfException($"Failed to create new page with dimensions {width}x{height}.");
+            throw new PdfException($"Failed to create new page at index {pageIndex} with dimensions {width}x{height}.");
 
         try
         {
@@ -483,8 +569,20 @@ public sealed class PdfDocument : IDisposable
             throw;
         }
 
-        _pageCountCache = pageIndex + 1;
+        _pageCountCache = originalCount + 1;
         return new PdfPage(pageHandle, pageIndex, this);
+    }
+
+    /// <summary>
+    /// Creates a new blank page with a standard size and adds it to the document.
+    /// </summary>
+    /// <param name="size">The standard page size.</param>
+    /// <param name="index">Zero-based index where to insert the page (-1 for the end of the document).</param>
+    /// <returns>The newly created <see cref="PdfPage"/> instance that must be disposed.</returns>
+    public PdfPage CreatePage(PdfPageSize size, int index = -1)
+    {
+        var (width, height) = GetPageDimensions(size);
+        return CreatePage(width, height, index);
     }
 
     private static (double Width, double Height) GetPageDimensions(PdfPageSize size)
@@ -539,122 +637,59 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
-    /// Gets the page label for the specified page index.
+    /// Gets page labels for the specified page indices, or all page labels if no indices are provided.
     /// Page labels allow custom page numbering (e.g., "i", "ii", "iii" for front matter).
-    /// Returns the numeric page number if no custom label is defined.
     /// </summary>
-    /// <param name="index">Zero-based page index.</param>
-    /// <returns>The page label string.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
+    /// <param name="pageIndices">Optional zero-based page indices to get labels for. If null or empty, gets labels for all pages.</param>
+    /// <returns>A dictionary mapping page index to its label string.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Any index is out of range.</exception>
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
-    public unsafe string GetPageLabel(int index)
-    {
-        ThrowIfDisposed();
-        if (index < 0 || index >= PageCount)
-            throw new ArgumentOutOfRangeException(nameof(index),
-                $"Page index {index} is out of range (0-{PageCount - 1}).");
-
-        // Get required buffer size (in bytes, including null terminator)
-        var bufferSize = fpdf_doc.FPDF_GetPageLabel(_handle!, index, IntPtr.Zero, 0);
-
-        if (bufferSize <= 2) // 2 bytes = just null terminator for UTF-16
-        {
-            // No custom label, return numeric page number (1-based)
-            return (index + 1).ToString();
-        }
-
-        // Allocate buffer (UTF-16, so divide by 2 for ushort count)
-        var buffer = new ushort[bufferSize / 2];
-
-        fixed (ushort* pBuffer = buffer)
-        {
-            var bytesWritten = fpdf_doc.FPDF_GetPageLabel(
-                _handle!, index, (IntPtr)pBuffer, bufferSize);
-
-            if (bytesWritten <= 2)
-            {
-                // Failed to get label, return numeric page number
-                return (index + 1).ToString();
-            }
-
-            // Convert UTF-16 to string (bytesWritten includes null terminator)
-            return new string((char*)pBuffer, 0, (int)(bytesWritten / 2) - 1);
-        }
-    }
-
-    /// <summary>
-    /// Gets all page labels as a dictionary mapping page index to label.
-    /// Useful for generating table of contents or navigation.
-    /// </summary>
-    /// <returns>Dictionary with page indices (0-based) as keys and labels as values.</returns>
-    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
-    public Dictionary<int, string> GetAllPageLabels()
+    public unsafe Dictionary<int, string> GetPageLabels(params int[]? pageIndices)
     {
         ThrowIfDisposed();
 
         var labels = new Dictionary<int, string>();
-        for (int i = 0; i < PageCount; i++)
+        var indices = (pageIndices == null || pageIndices.Length == 0)
+            ? Enumerable.Range(0, PageCount)
+            : pageIndices;
+
+        foreach (var index in indices)
         {
-            labels[i] = GetPageLabel(i);
+            if (index < 0 || index >= PageCount)
+                throw new ArgumentOutOfRangeException(nameof(pageIndices),
+                    $"Page index {index} is out of range (0-{PageCount - 1}).");
+
+            // Get required buffer size
+            var bufferSize = fpdf_doc.FPDF_GetPageLabel(_handle!, index, IntPtr.Zero, 0);
+
+            if (bufferSize <= 2)
+            {
+                labels[index] = (index + 1).ToString();
+                continue;
+            }
+
+            var buffer = new ushort[bufferSize / 2];
+            fixed (ushort* pBuffer = buffer)
+            {
+                var bytesWritten = fpdf_doc.FPDF_GetPageLabel(
+                    _handle!, index, (IntPtr)pBuffer, bufferSize);
+
+                if (bytesWritten <= 2)
+                    labels[index] = (index + 1).ToString();
+                else
+                    labels[index] = new string((char*)pBuffer, 0, (int)(bytesWritten / 2) - 1);
+            }
         }
 
         return labels;
     }
 
     /// <summary>
-    /// Inserts a new blank page at the specified index.
+    /// Deletes pages from the document.
     /// </summary>
-    /// <param name="index">Zero-based index where to insert (0 = beginning, PageCount = end).</param>
-    /// <param name="width">Page width in points (1/72 inch). Standard A4 = 595.</param>
-    /// <param name="height">Page height in points (1/72 inch). Standard A4 = 842.</param>
-    /// <exception cref="ArgumentOutOfRangeException">Index or dimensions are invalid.</exception>
-    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
-    /// <exception cref="PdfException">Failed to create page.</exception>
-    public void InsertBlankPage(int index, double width, double height)
-    {
-        ThrowIfDisposed();
-        var originalCount = PageCount;
-        if (index < 0 || index > originalCount)
-            throw new ArgumentOutOfRangeException(nameof(index),
-                $"Insert index {index} is out of range (0-{originalCount}).");
-        if (width <= 0 || height <= 0)
-            throw new ArgumentOutOfRangeException(nameof(width),
-                "Page dimensions must be positive.");
-
-        var pageHandle = fpdf_edit.FPDFPageNew(_handle!, index, width, height);
-        if (pageHandle is null || pageHandle.__Instance == IntPtr.Zero)
-            throw new PdfException($"Failed to create blank page at index {index}.");
-
-        // Close the page immediately as we don't need to return it
-        fpdfview.FPDF_ClosePage(pageHandle);
-        _pageCountCache = originalCount + 1;
-    }
-
-    /// <summary>
-    /// Deletes the page at the specified index.
-    /// </summary>
-    /// <param name="index">Zero-based page index to delete.</param>
-    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
-    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
-    public void DeletePage(int index)
-    {
-        ThrowIfDisposed();
-        var originalCount = PageCount;
-        if (index < 0 || index >= originalCount)
-            throw new ArgumentOutOfRangeException(nameof(index),
-                $"Page index {index} is out of range (0-{originalCount - 1}).");
-
-        fpdf_edit.FPDFPageDelete(_handle!, index);
-        _pageCountCache = originalCount - 1;
-    }
-
-    /// <summary>
-    /// Deletes multiple pages at the specified indices.
-    /// Pages are deleted in descending order to maintain correct indices during deletion.
-    /// </summary>
-    /// <param name="pageIndices">Array of zero-based page indices to delete.</param>
+    /// <param name="pageIndices">Zero-based indices of pages to delete.</param>
     /// <exception cref="ArgumentNullException">pageIndices is null.</exception>
-    /// <exception cref="ArgumentException">pageIndices is empty or contains invalid indices.</exception>
+    /// <exception cref="ArgumentException">pageIndices is empty.</exception>
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
     public void DeletePages(params int[] pageIndices)
     {
@@ -686,47 +721,15 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
-    /// Deletes a range of consecutive pages.
-    /// </summary>
-    /// <param name="startIndex">Zero-based index of the first page to delete.</param>
-    /// <param name="count">Number of pages to delete.</param>
-    /// <exception cref="ArgumentOutOfRangeException">startIndex or count is invalid.</exception>
-    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
-    public void DeletePages(int startIndex, int count)
-    {
-        ThrowIfDisposed();
-        var originalCount = PageCount;
-
-        if (startIndex < 0 || startIndex >= originalCount)
-            throw new ArgumentOutOfRangeException(nameof(startIndex),
-                $"Start index {startIndex} is out of range (0-{originalCount - 1}).");
-
-        if (count <= 0)
-            throw new ArgumentOutOfRangeException(nameof(count), "Count must be positive.");
-
-        if (startIndex + count > originalCount)
-            throw new ArgumentOutOfRangeException(nameof(count),
-                $"Range ({startIndex} + {count}) exceeds page count ({originalCount}).");
-
-        // Delete pages in descending order to avoid index shifts
-        for (int i = startIndex + count - 1; i >= startIndex; i--)
-        {
-            fpdf_edit.FPDFPageDelete(_handle!, i);
-        }
-
-        _pageCountCache = originalCount - count;
-    }
-
-    /// <summary>
     /// Moves pages to a new position within the document.
     /// </summary>
-    /// <param name="pageIndices">Array of zero-based page indices to move.</param>
     /// <param name="destIndex">Destination index where pages will be moved.</param>
+    /// <param name="pageIndices">Array of zero-based page indices to move.</param>
     /// <exception cref="ArgumentNullException">pageIndices is null.</exception>
     /// <exception cref="ArgumentException">pageIndices is empty or contains invalid indices.</exception>
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
     /// <exception cref="PdfException">Failed to move pages.</exception>
-    public void MovePages(int[] pageIndices, int destIndex)
+    public void MovePages(int destIndex, params int[] pageIndices)
     {
         ThrowIfDisposed();
         if (pageIndices is null)
@@ -753,13 +756,13 @@ public sealed class PdfDocument : IDisposable
     /// Imports pages from another document using a page range string.
     /// </summary>
     /// <param name="sourceDoc">Source PDF document to copy pages from.</param>
-    /// <param name="pageRange">Page range string (e.g., "1,3,5-7" or null for all pages).</param>
-    /// <param name="insertAtIndex">Index where to insert pages in this document.</param>
+    /// <param name="insertAtIndex">Index where to insert pages in this document (-1 for end).</param>
+    /// <param name="pageRange">Optional page range string (e.g., "1,3,5-7"). Null for all pages.</param>
     /// <exception cref="ArgumentNullException">sourceDoc is null.</exception>
     /// <exception cref="ArgumentOutOfRangeException">insertAtIndex is invalid.</exception>
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
     /// <exception cref="PdfException">Failed to import pages.</exception>
-    public void ImportPages(PdfDocument sourceDoc, string? pageRange = null, int insertAtIndex = -1)
+    public void ImportPages(PdfDocument sourceDoc, int insertAtIndex = -1, string? pageRange = null)
     {
         ThrowIfDisposed();
         if (sourceDoc is null)
@@ -785,24 +788,29 @@ public sealed class PdfDocument : IDisposable
     /// Imports specific pages by index from another document.
     /// </summary>
     /// <param name="sourceDoc">Source PDF document to copy pages from.</param>
-    /// <param name="pageIndices">Array of zero-based page indices to import from source.</param>
-    /// <param name="insertAtIndex">Index where to insert pages in this document.</param>
+    /// <param name="insertAtIndex">Index where to insert pages in this document (-1 for end).</param>
+    /// <param name="pageIndices">Array of zero-based page indices to import from source. If empty, imports all pages.</param>
     /// <exception cref="ArgumentNullException">sourceDoc or pageIndices is null.</exception>
-    /// <exception cref="ArgumentException">pageIndices is empty.</exception>
     /// <exception cref="ArgumentOutOfRangeException">insertAtIndex is invalid.</exception>
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
     /// <exception cref="PdfException">Failed to import pages.</exception>
-    public void ImportPagesAt(PdfDocument sourceDoc, int[] pageIndices, int insertAtIndex = -1)
+    public void ImportPages(PdfDocument sourceDoc, int insertAtIndex, params int[] pageIndices)
     {
+        if (pageIndices is null)
+            throw new ArgumentNullException(nameof(pageIndices));
+
+        if (pageIndices.Length == 0)
+        {
+            ImportPages(sourceDoc, insertAtIndex, (string?)null);
+            return;
+        }
+
         ThrowIfDisposed();
         if (sourceDoc is null)
             throw new ArgumentNullException(nameof(sourceDoc));
         if (sourceDoc._disposed)
             throw new ObjectDisposedException(nameof(sourceDoc), "Source document has been disposed.");
-        if (pageIndices is null)
-            throw new ArgumentNullException(nameof(pageIndices));
-        if (pageIndices.Length == 0)
-            throw new ArgumentException("Page indices array cannot be empty.", nameof(pageIndices));
+
         var originalCount = PageCount;
         if (insertAtIndex < -1 || insertAtIndex > originalCount)
             throw new ArgumentOutOfRangeException(nameof(insertAtIndex),
@@ -822,18 +830,37 @@ public sealed class PdfDocument : IDisposable
     /// <exception cref="ArgumentNullException">filePath is null.</exception>
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
     /// <exception cref="PdfException">Failed to save document.</exception>
-    public void SaveToFile(string filePath)
+    public void Save(string filePath)
     {
         ThrowIfDisposed();
         if (filePath is null)
             throw new ArgumentNullException(nameof(filePath));
 
         using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-        var writer = new PdfFileWriter(fileStream);
+        Save(fileStream);
+    }
+
+    /// <summary>
+    /// Saves the document to a stream.
+    /// </summary>
+    /// <param name="stream">The stream to save the PDF to.</param>
+    /// <exception cref="ArgumentNullException">stream is null.</exception>
+    /// <exception cref="ArgumentException">stream is not writable.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to save document.</exception>
+    public void Save(Stream stream)
+    {
+        ThrowIfDisposed();
+        if (stream is null)
+            throw new ArgumentNullException(nameof(stream));
+        if (!stream.CanWrite)
+            throw new ArgumentException("Stream must be writable.", nameof(stream));
+
+        using var writer = new PdfFileWriter(stream);
 
         var result = fpdf_save.FPDF_SaveAsCopy(_handle!, writer.GetWriteStruct(), 0);
         if (result == 0)
-            throw new PdfException($"Failed to save PDF to '{filePath}'.");
+            throw new PdfException("Failed to save PDF to stream.");
     }
 
     /// <summary>
@@ -846,25 +873,46 @@ public sealed class PdfDocument : IDisposable
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
     /// <exception cref="PdfException">Failed to save document.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    public Task SaveToFileAsync(string filePath, CancellationToken cancellationToken = default)
+    public Task SaveAsync(string filePath, CancellationToken cancellationToken = default)
     {
         return Task.Run(() =>
         {
             cancellationToken.ThrowIfCancellationRequested();
-            SaveToFile(filePath);
+            Save(filePath);
         }, cancellationToken);
     }
 
     /// <summary>
-    /// Adds a text watermark to all pages in the document.
+    /// Asynchronously saves the document to a stream.
+    /// </summary>
+    /// <param name="stream">The stream to save the PDF to.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    /// <exception cref="ArgumentNullException">stream is null.</exception>
+    /// <exception cref="ArgumentException">stream is not writable.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to save document.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public Task SaveAsync(Stream stream, CancellationToken cancellationToken = default)
+    {
+        return Task.Run(() =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            Save(stream);
+        }, cancellationToken);
+    }
+
+    /// <summary>
+    /// Adds a text watermark to pages in the document.
     /// </summary>
     /// <param name="text">The watermark text.</param>
     /// <param name="position">The position of the watermark on each page.</param>
     /// <param name="options">Watermark appearance options. If null, default options are used.</param>
+    /// <param name="pageIndices">Optional indices of pages to add watermark to. If null or empty, adds to all pages.</param>
     /// <exception cref="ArgumentNullException">text is null.</exception>
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
     /// <exception cref="PdfException">Failed to add watermark to one or more pages.</exception>
-    public void AddTextWatermark(string text, WatermarkPosition position, WatermarkOptions? options = null)
+    public void AddTextWatermark(string text, WatermarkPosition position, WatermarkOptions? options = null, params int[]? pageIndices)
     {
         if (text is null)
             throw new ArgumentNullException(nameof(text));
@@ -873,15 +921,37 @@ public sealed class PdfDocument : IDisposable
 
         options ??= new WatermarkOptions();
 
-        var pageCount = PageCount;
-        for (int i = 0; i < pageCount; i++)
+        if (pageIndices == null || pageIndices.Length == 0)
         {
-            using var page = GetPage(i);
-            AddTextWatermarkToPage(page, text, position, options);
+            var pageCount = PageCount;
+            for (int i = 0; i < pageCount; i++)
+            {
+                using var page = GetPage(i);
+                AddTextWatermarkToPage(page, text, position, options);
+            }
+        }
+        else
+        {
+            foreach (var index in pageIndices)
+            {
+                if (index < 0 || index >= PageCount)
+                    throw new ArgumentOutOfRangeException(nameof(pageIndices),
+                        $"Page index {index} is out of range (0-{PageCount - 1}).");
+
+                using var page = GetPage(index);
+                AddTextWatermarkToPage(page, text, position, options);
+            }
         }
     }
 
-    public void AddHeaderFooter(string? headerText = null, string? footerText = null, HeaderFooterOptions? options = null)
+    /// <summary>
+    /// Adds a header and footer to pages in the document.
+    /// </summary>
+    /// <param name="headerText">Text for the header. Can include {PageNumber} and {TotalPages} placeholders.</param>
+    /// <param name="footerText">Text for the footer. Can include {PageNumber} and {TotalPages} placeholders.</param>
+    /// <param name="options">Header/Footer appearance options.</param>
+    /// <param name="pageIndices">Optional indices of pages to add header/footer to. If null or empty, adds to all pages.</param>
+    public void AddHeaderFooter(string? headerText, string? footerText, HeaderFooterOptions? options = null, params int[]? pageIndices)
     {
         ThrowIfDisposed();
 
@@ -897,10 +967,28 @@ public sealed class PdfDocument : IDisposable
         if (string.IsNullOrEmpty(headerText) && string.IsNullOrEmpty(footerText))
             return;
 
-        using var font = PdfFont.LoadStandardFont(this, options.Font);
-
+        using var font = PdfFont.Load(this, options.Font);
         var totalPages = PageCount;
-        for (int i = 0; i < totalPages; i++)
+
+        if (pageIndices == null || pageIndices.Length == 0)
+        {
+            for (int i = 0; i < totalPages; i++)
+            {
+                ProcessPageForHeaderFooter(i);
+            }
+        }
+        else
+        {
+            foreach (var i in pageIndices)
+            {
+                if (i < 0 || i >= totalPages)
+                    throw new ArgumentOutOfRangeException(nameof(pageIndices),
+                        $"Page index {i} is out of range (0-{totalPages - 1}).");
+                ProcessPageForHeaderFooter(i);
+            }
+        }
+
+        void ProcessPageForHeaderFooter(int i)
         {
             using var page = GetPage(i);
             using var editor = page.BeginEdit();
@@ -928,7 +1016,7 @@ public sealed class PdfDocument : IDisposable
     private unsafe void AddTextWatermarkToPage(PdfPage page, string text, WatermarkPosition position, WatermarkOptions options)
     {
         // Load font
-        var font = PdfFont.LoadStandardFont(this, options.Font);
+        var font = PdfFont.Load(this, options.Font);
 
         try
         {
@@ -1054,6 +1142,26 @@ public sealed class PdfDocument : IDisposable
         }
     }
 
+    /// <summary>
+    /// Asynchronously adds a text watermark to all pages in the document.
+    /// </summary>
+    /// <param name="text">The watermark text.</param>
+    /// <param name="position">The position of the watermark.</param>
+    /// <param name="options">Watermark options (font, size, color, etc.).</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    /// <exception cref="ArgumentNullException">text is null.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public Task AddTextWatermarkAsync(string text, WatermarkPosition position, WatermarkOptions? options = null, CancellationToken cancellationToken = default)
+    {
+        return Task.Run(() =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            AddTextWatermark(text, position, options);
+        }, cancellationToken);
+    }
+
     private unsafe void AddHeaderFooterTextToPage(
         PdfPage page,
         string templateText,
@@ -1133,44 +1241,35 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
-    /// Rotates all pages in the document by the specified angle.
-    /// </summary>
-    /// <param name="rotation">The rotation angle to apply to all pages.</param>
-    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
-    public void RotateAllPages(PdfRotation rotation)
-    {
-        ThrowIfDisposed();
-
-        for (int i = 0; i < PageCount; i++)
-        {
-            using var page = GetPage(i);
-            page.Rotation = rotation;
-        }
-    }
-
-    /// <summary>
-    /// Rotates specific pages in the document.
+    /// Rotates pages in the document.
     /// </summary>
     /// <param name="rotation">The rotation angle to apply.</param>
-    /// <param name="pageIndices">Zero-based indices of pages to rotate.</param>
-    /// <exception cref="ArgumentNullException">pageIndices is null.</exception>
+    /// <param name="pageIndices">Zero-based indices of pages to rotate. If null or empty, rotates all pages.</param>
     /// <exception cref="ArgumentOutOfRangeException">One or more page indices are out of range.</exception>
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
-    public void RotatePages(PdfRotation rotation, params int[] pageIndices)
+    public void RotatePages(PdfRotation rotation, params int[]? pageIndices)
     {
-        if (pageIndices is null)
-            throw new ArgumentNullException(nameof(pageIndices));
-
         ThrowIfDisposed();
 
-        foreach (var index in pageIndices)
+        if (pageIndices == null || pageIndices.Length == 0)
         {
-            if (index < 0 || index >= PageCount)
-                throw new ArgumentOutOfRangeException(nameof(pageIndices),
-                    $"Page index {index} is out of range (0-{PageCount - 1}).");
+            for (int i = 0; i < PageCount; i++)
+            {
+                using var page = GetPage(i);
+                page.Rotation = rotation;
+            }
+        }
+        else
+        {
+            foreach (var index in pageIndices)
+            {
+                if (index < 0 || index >= PageCount)
+                    throw new ArgumentOutOfRangeException(nameof(pageIndices),
+                        $"Page index {index} is out of range (0-{PageCount - 1}).");
 
-            using var page = GetPage(index);
-            page.Rotation = rotation;
+                using var page = GetPage(index);
+                page.Rotation = rotation;
+            }
         }
     }
 
@@ -1212,41 +1311,46 @@ public sealed class PdfDocument : IDisposable
     /// </summary>
     /// <returns>The first bookmark, or null if document has no bookmarks.</returns>
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
-    public PdfBookmark? GetFirstBookmark()
+    public PdfBookmark? FirstBookmark
     {
-        ThrowIfDisposed();
-
-        // Pass null as bookmark parameter to get first root bookmark
-        var bookmarkHandle = fpdf_doc.FPDFBookmarkGetFirstChild(_handle!, null);
-        if (bookmarkHandle is null || bookmarkHandle.__Instance == IntPtr.Zero)
-            return null;
-
-        return new PdfBookmark(bookmarkHandle, this);
-    }
-
-    /// <summary>
-    /// Gets all root-level bookmarks in the document.
-    /// </summary>
-    /// <returns>An enumerable of root bookmarks.</returns>
-    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
-    public IEnumerable<PdfBookmark> GetBookmarks()
-    {
-        var bookmark = GetFirstBookmark();
-        while (bookmark is not null)
+        get
         {
-            yield return bookmark;
-            bookmark = bookmark.GetNextSibling();
+            ThrowIfDisposed();
+
+            // Pass null as bookmark parameter to get first root bookmark
+            var bookmarkHandle = fpdf_doc.FPDFBookmarkGetFirstChild(_handle!, null);
+            if (bookmarkHandle is null || bookmarkHandle.__Instance == IntPtr.Zero)
+                return null;
+
+            return new PdfBookmark(bookmarkHandle, this);
         }
     }
 
     /// <summary>
-    /// Finds a bookmark by its title text.
+    /// Gets root-level bookmarks in the document.
     /// </summary>
-    /// <param name="title">The bookmark title to search for.</param>
-    /// <returns>The bookmark if found, or null if not found.</returns>
-    /// <exception cref="ArgumentNullException">title is null.</exception>
+    /// <param name="title">Optional title to search for a specific bookmark.</param>
+    /// <returns>An enumerable of bookmarks.</returns>
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
-    public unsafe PdfBookmark? FindBookmark(string title)
+    public IEnumerable<PdfBookmark> GetBookmarks(string? title = null)
+    {
+        if (title != null)
+        {
+            var bookmark = FindBookmark(title);
+            if (bookmark != null)
+                yield return bookmark;
+            yield break;
+        }
+
+        var firstBookmark = FirstBookmark;
+        while (firstBookmark is not null)
+        {
+            yield return firstBookmark;
+            firstBookmark = firstBookmark.NextSibling;
+        }
+    }
+
+    private unsafe PdfBookmark? FindBookmark(string title)
     {
         ThrowIfDisposed();
         if (title is null)

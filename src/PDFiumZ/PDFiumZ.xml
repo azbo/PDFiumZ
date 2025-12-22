@@ -29,7 +29,7 @@
             Generates the PDF document.
             </summary>
         </member>
-        <member name="M:PDFiumZ.Fluent.Document.FluentDocument.SaveToFile(System.String)">
+        <member name="M:PDFiumZ.Fluent.Document.FluentDocument.Save(System.String)">
             <summary>
             Saves the generated document to a file.
             </summary>
@@ -760,12 +760,12 @@
             Internal constructor - created by PdfDocument only.
             </summary>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfBookmark.GetFirstChild">
+        <member name="P:PDFiumZ.HighLevel.PdfBookmark.FirstChild">
             <summary>
             Gets the first child bookmark, or null if none.
             </summary>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfBookmark.GetNextSibling">
+        <member name="P:PDFiumZ.HighLevel.PdfBookmark.NextSibling">
             <summary>
             Gets the next sibling bookmark, or null if none.
             </summary>
@@ -997,18 +997,13 @@
             Gets the number of columns defined.
             </summary>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfColumnDefinition.Add">
+        <member name="M:PDFiumZ.HighLevel.PdfColumnDefinition.Add(System.Nullable{System.Double})">
             <summary>
-            Adds a column with automatic width (equal distribution of remaining space).
+            Adds a column to the table.
             </summary>
+            <param name="width">Column width in points. Omit or set to null for automatic width.</param>
             <returns>This instance for fluent chaining.</returns>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfColumnDefinition.Add(System.Double)">
-            <summary>
-            Adds a column with fixed width in points.
-            </summary>
-            <param name="width">Column width in points.</param>
-            <returns>This instance for fluent chaining.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Width is not positive.</exception>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfColumnDefinition.CalculateWidths(System.Double)">
             <summary>
@@ -1073,14 +1068,47 @@
             <exception cref="T:System.ObjectDisposedException">Editor has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create or add rectangle object.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.RemoveObject(System.Int32)">
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.AddLine(System.Double,System.Double,System.Double,System.Double,System.UInt32,System.Double)">
             <summary>
-            Removes a page object at the specified index.
+            Adds a line between two points.
             </summary>
-            <param name="index">Zero-based index of the object to remove.</param>
-            <exception cref="T:System.ArgumentOutOfRangeException">Index is out of range.</exception>
+            <param name="x1">Start X coordinate.</param>
+            <param name="y1">Start Y coordinate.</param>
+            <param name="x2">End X coordinate.</param>
+            <param name="y2">End Y coordinate.</param>
+            <param name="strokeColor">Line color in ARGB format. Use 0 for no stroke.</param>
+            <param name="lineWidth">Line width. Use 0 for default.</param>
+            <returns>The created line object handle.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.AddCircle(System.Double,System.Double,System.Double,System.UInt32,System.UInt32)">
+            <summary>
+            Adds a circle to the page.
+            </summary>
+            <param name="centerX">Center X coordinate.</param>
+            <param name="centerY">Center Y coordinate.</param>
+            <param name="radius">Circle radius.</param>
+            <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke.</param>
+            <param name="fillColor">Fill color in ARGB format. Use 0 for no fill.</param>
+            <returns>The created circle object handle.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.AddEllipse(PDFiumZ.HighLevel.PdfRectangle,System.UInt32,System.UInt32)">
+            <summary>
+            Adds an ellipse to the page.
+            </summary>
+            <param name="bounds">Bounding rectangle for the ellipse.</param>
+            <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke.</param>
+            <param name="fillColor">Fill color in ARGB format. Use 0 for no fill.</param>
+            <returns>The created ellipse object handle.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.RemoveObjects(System.Int32[])">
+            <summary>
+            Removes page objects at the specified indices.
+            Indices are processed in descending order to maintain correct mapping during removal.
+            </summary>
+            <param name="indices">The zero-based indices of the objects to remove.</param>
+            <exception cref="T:System.ArgumentNullException">indices is null.</exception>
             <exception cref="T:System.ObjectDisposedException">Editor has been disposed.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to remove object.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to remove one or more objects.</exception>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfContentEditor.GenerateContent">
             <summary>
@@ -1090,20 +1118,26 @@
             <exception cref="T:System.ObjectDisposedException">Editor has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to generate content.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.Text(System.String,System.Double,System.Double)">
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.Text(System.String,System.Double,System.Double,PDFiumZ.HighLevel.PdfFont,System.Double)">
             <summary>
-            Adds text to the page using current default font and size (fluent API).
+            Adds text to the page (fluent API).
             </summary>
             <param name="text">The text to add.</param>
             <param name="x">X coordinate in page units.</param>
             <param name="y">Y coordinate in page units.</param>
+            <param name="font">The font to use. Omit to use default font.</param>
+            <param name="fontSize">Font size in points. Omit to use default font size.</param>
             <returns>This editor instance for fluent chaining.</returns>
-            <exception cref="T:System.InvalidOperationException">Default font is not set. Call WithFont first.</exception>
+            <exception cref="T:System.InvalidOperationException">Font is not specified and no default font is set.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.Rectangle(PDFiumZ.HighLevel.PdfRectangle)">
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.Rectangle(PDFiumZ.HighLevel.PdfRectangle,System.UInt32,System.UInt32)">
             <summary>
-            Adds a rectangle using current default stroke and fill colors (fluent API).
+            Adds a rectangle to the page (fluent API).
             </summary>
+            <param name="bounds">Rectangle position and size.</param>
+            <param name="strokeColor">Stroke color in ARGB format. Use 0 or omit to use default.</param>
+            <param name="fillColor">Fill color in ARGB format. Use 0 or omit to use default.</param>
+            <returns>This editor instance for fluent chaining.</returns>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfContentEditor.Line(System.Double,System.Double,System.Double,System.Double,System.UInt32,System.Double)">
             <summary>
@@ -1135,6 +1169,13 @@
             <param name="bounds">Bounding rectangle for the ellipse.</param>
             <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke or omit to use default.</param>
             <param name="fillColor">Fill color in ARGB format. Use 0 for no fill or omit to use default.</param>
+            <returns>This editor instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.Remove(System.Int32[])">
+            <summary>
+            Removes page objects at the specified indices (fluent API).
+            </summary>
+            <param name="indices">The zero-based indices of the objects to remove.</param>
             <returns>This editor instance for fluent chaining.</returns>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfContentEditor.WithFont(PDFiumZ.HighLevel.PdfFont)">
@@ -1308,7 +1349,7 @@
             <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
             <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.OpenFromMemory(System.Byte[],System.String)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.Open(System.Byte[],System.String)">
             <summary>
             Opens a PDF document from a byte array in memory.
             </summary>
@@ -1320,7 +1361,18 @@
             <exception cref="T:PDFiumZ.HighLevel.PdfLoadException">Failed to load PDF.</exception>
             <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.OpenFromMemoryAsync(System.Byte[],System.String,System.Threading.CancellationToken)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.Open(System.IO.Stream,System.String)">
+            <summary>
+            Opens a PDF document from a stream.
+            </summary>
+            <param name="stream">Stream containing the PDF file data.</param>
+            <param name="password">Optional password for encrypted PDFs.</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">stream is null.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfLoadException">Failed to load PDF.</exception>
+            <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.OpenAsync(System.Byte[],System.String,System.Threading.CancellationToken)">
             <summary>
             Asynchronously opens a PDF document from a byte array in memory.
             </summary>
@@ -1330,6 +1382,19 @@
             <returns>A task that represents the asynchronous operation. The task result contains a new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> instance.</returns>
             <exception cref="T:System.ArgumentNullException">data is null.</exception>
             <exception cref="T:System.ArgumentException">data is empty.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfLoadException">Failed to load PDF.</exception>
+            <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
+            <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.OpenAsync(System.IO.Stream,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously opens a PDF document from a stream.
+            </summary>
+            <param name="stream">Stream containing the PDF file data.</param>
+            <param name="password">Optional password for encrypted PDFs.</param>
+            <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+            <returns>A task that represents the asynchronous operation. The task result contains a new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">stream is null.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfLoadException">Failed to load PDF.</exception>
             <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
             <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
@@ -1344,160 +1409,139 @@
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocument.Merge(System.String[])">
             <summary>
-            Merges multiple PDF documents into a single document.
+            Merges multiple PDF files into a single document.
             </summary>
-            <param name="filePaths">Paths to PDF files to merge.</param>
-            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> containing all pages from the source documents.</returns>
+            <param name="filePaths">The paths of the PDF files to merge.</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> containing all pages from the source files.</returns>
             <exception cref="T:System.ArgumentNullException">filePaths is null.</exception>
             <exception cref="T:System.ArgumentException">filePaths is empty or contains null/empty strings.</exception>
             <exception cref="T:System.IO.FileNotFoundException">One or more files do not exist.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfLoadException">Failed to load one or more PDF documents.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to merge documents.</exception>
             <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.Split(System.Int32,System.Int32)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.Merge">
             <summary>
-            Splits this document by extracting a range of pages into a new document.
+            Resolves ambiguity when calling Merge with no arguments.
             </summary>
-            <param name="startIndex">Zero-based index of the first page to extract.</param>
-            <param name="pageCount">Number of pages to extract.</param>
+            <exception cref="T:System.ArgumentException">Always thrown.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.Merge(PDFiumZ.HighLevel.PdfDocument[])">
+            <summary>
+            Merges multiple PDF documents into a single document.
+            </summary>
+            <param name="documents">The documents to merge.</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> containing all pages from the source documents.</returns>
+            <exception cref="T:System.ArgumentNullException">documents is null.</exception>
+            <exception cref="T:System.ArgumentException">documents is empty.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to merge documents.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.Split(System.Int32[])">
+            <summary>
+            Splits this document by extracting specific pages into a new document.
+            </summary>
+            <param name="pageIndices">Array of zero-based page indices to extract. If null or empty, all pages are extracted.</param>
             <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> containing the extracted pages.</returns>
-            <exception cref="T:System.ArgumentOutOfRangeException">startIndex or pageCount is invalid.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Any index is out of range.</exception>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to split document.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.GetPage(System.Int32)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.GetPages(System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
-            Gets a page by zero-based index.
+            Gets a range of pages, specific pages by index, or all pages if no parameters are provided.
             </summary>
-            <param name="index">Zero-based page index.</param>
-            <returns>A <see cref="T:PDFiumZ.HighLevel.PdfPage"/> instance that must be disposed.</returns>
-            <exception cref="T:System.ArgumentOutOfRangeException">Index is out of range.</exception>
-            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load page.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.GetPages(System.Int32,System.Int32)">
-            <summary>
-            Gets a range of consecutive pages.
-            </summary>
-            <param name="startIndex">Zero-based index of the first page to get.</param>
-            <param name="count">Number of pages to get.</param>
+            <param name="startIndex">Zero-based index of the first page to get. Defaults to 0.</param>
+            <param name="count">Number of pages to get. Defaults to all remaining pages.</param>
             <returns>An enumerable of <see cref="T:PDFiumZ.HighLevel.PdfPage"/> instances that must be disposed.</returns>
             <exception cref="T:System.ArgumentOutOfRangeException">startIndex or count is invalid.</exception>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load one or more pages.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.CreatePage(System.Double,System.Double)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.GetPages(System.Int32[])">
+            <summary>
+            Gets specific pages by their indices.
+            </summary>
+            <param name="pageIndices">Array of zero-based page indices.</param>
+            <returns>An enumerable of <see cref="T:PDFiumZ.HighLevel.PdfPage"/> instances that must be disposed.</returns>
+            <exception cref="T:System.ArgumentNullException">pageIndices is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Any index is out of range.</exception>
+            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load one or more pages.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.CreatePage(System.Double,System.Double,System.Int32)">
             <summary>
             Creates a new blank page and adds it to the document.
             </summary>
-            <param name="width">Page width in points (1/72 inch).</param>
-            <param name="height">Page height in points (1/72 inch).</param>
+            <param name="width">Page width in points (1/72 inch). Default is A4 width.</param>
+            <param name="height">Page height in points (1/72 inch). Default is A4 height.</param>
+            <param name="index">Zero-based index where to insert the page (-1 for the end of the document).</param>
             <returns>The newly created <see cref="T:PDFiumZ.HighLevel.PdfPage"/> instance that must be disposed.</returns>
-            <exception cref="T:System.ArgumentOutOfRangeException">Width or height is not positive.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Width, height, or index is invalid.</exception>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create page.</exception>
-            <remarks>
-            Common page sizes:
-            - Letter: 612 x 792 points (8.5" x 11")
-            - A4: 595 x 842 points (210mm x 297mm)
-            - Legal: 612 x 1008 points (8.5" x 14")
-            </remarks>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.GetPageLabel(System.Int32)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.CreatePage(PDFiumZ.HighLevel.PdfPageSize,System.Int32)">
             <summary>
-            Gets the page label for the specified page index.
+            Creates a new blank page with a standard size and adds it to the document.
+            </summary>
+            <param name="size">The standard page size.</param>
+            <param name="index">Zero-based index where to insert the page (-1 for the end of the document).</param>
+            <returns>The newly created <see cref="T:PDFiumZ.HighLevel.PdfPage"/> instance that must be disposed.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.GetPageLabels(System.Int32[])">
+            <summary>
+            Gets page labels for the specified page indices, or all page labels if no indices are provided.
             Page labels allow custom page numbering (e.g., "i", "ii", "iii" for front matter).
-            Returns the numeric page number if no custom label is defined.
             </summary>
-            <param name="index">Zero-based page index.</param>
-            <returns>The page label string.</returns>
-            <exception cref="T:System.ArgumentOutOfRangeException">Index is out of range.</exception>
-            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.GetAllPageLabels">
-            <summary>
-            Gets all page labels as a dictionary mapping page index to label.
-            Useful for generating table of contents or navigation.
-            </summary>
-            <returns>Dictionary with page indices (0-based) as keys and labels as values.</returns>
-            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.InsertBlankPage(System.Int32,System.Double,System.Double)">
-            <summary>
-            Inserts a new blank page at the specified index.
-            </summary>
-            <param name="index">Zero-based index where to insert (0 = beginning, PageCount = end).</param>
-            <param name="width">Page width in points (1/72 inch). Standard A4 = 595.</param>
-            <param name="height">Page height in points (1/72 inch). Standard A4 = 842.</param>
-            <exception cref="T:System.ArgumentOutOfRangeException">Index or dimensions are invalid.</exception>
-            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create page.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.DeletePage(System.Int32)">
-            <summary>
-            Deletes the page at the specified index.
-            </summary>
-            <param name="index">Zero-based page index to delete.</param>
-            <exception cref="T:System.ArgumentOutOfRangeException">Index is out of range.</exception>
+            <param name="pageIndices">Optional zero-based page indices to get labels for. If null or empty, gets labels for all pages.</param>
+            <returns>A dictionary mapping page index to its label string.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Any index is out of range.</exception>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocument.DeletePages(System.Int32[])">
             <summary>
-            Deletes multiple pages at the specified indices.
-            Pages are deleted in descending order to maintain correct indices during deletion.
+            Deletes pages from the document.
             </summary>
-            <param name="pageIndices">Array of zero-based page indices to delete.</param>
+            <param name="pageIndices">Zero-based indices of pages to delete.</param>
             <exception cref="T:System.ArgumentNullException">pageIndices is null.</exception>
-            <exception cref="T:System.ArgumentException">pageIndices is empty or contains invalid indices.</exception>
+            <exception cref="T:System.ArgumentException">pageIndices is empty.</exception>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.DeletePages(System.Int32,System.Int32)">
-            <summary>
-            Deletes a range of consecutive pages.
-            </summary>
-            <param name="startIndex">Zero-based index of the first page to delete.</param>
-            <param name="count">Number of pages to delete.</param>
-            <exception cref="T:System.ArgumentOutOfRangeException">startIndex or count is invalid.</exception>
-            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.MovePages(System.Int32[],System.Int32)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.MovePages(System.Int32,System.Int32[])">
             <summary>
             Moves pages to a new position within the document.
             </summary>
-            <param name="pageIndices">Array of zero-based page indices to move.</param>
             <param name="destIndex">Destination index where pages will be moved.</param>
+            <param name="pageIndices">Array of zero-based page indices to move.</param>
             <exception cref="T:System.ArgumentNullException">pageIndices is null.</exception>
             <exception cref="T:System.ArgumentException">pageIndices is empty or contains invalid indices.</exception>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to move pages.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.ImportPages(PDFiumZ.HighLevel.PdfDocument,System.String,System.Int32)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.ImportPages(PDFiumZ.HighLevel.PdfDocument,System.Int32,System.String)">
             <summary>
             Imports pages from another document using a page range string.
             </summary>
             <param name="sourceDoc">Source PDF document to copy pages from.</param>
-            <param name="pageRange">Page range string (e.g., "1,3,5-7" or null for all pages).</param>
-            <param name="insertAtIndex">Index where to insert pages in this document.</param>
+            <param name="insertAtIndex">Index where to insert pages in this document (-1 for end).</param>
+            <param name="pageRange">Optional page range string (e.g., "1,3,5-7"). Null for all pages.</param>
             <exception cref="T:System.ArgumentNullException">sourceDoc is null.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException">insertAtIndex is invalid.</exception>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to import pages.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.ImportPagesAt(PDFiumZ.HighLevel.PdfDocument,System.Int32[],System.Int32)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.ImportPages(PDFiumZ.HighLevel.PdfDocument,System.Int32,System.Int32[])">
             <summary>
             Imports specific pages by index from another document.
             </summary>
             <param name="sourceDoc">Source PDF document to copy pages from.</param>
-            <param name="pageIndices">Array of zero-based page indices to import from source.</param>
-            <param name="insertAtIndex">Index where to insert pages in this document.</param>
+            <param name="insertAtIndex">Index where to insert pages in this document (-1 for end).</param>
+            <param name="pageIndices">Array of zero-based page indices to import from source. If empty, imports all pages.</param>
             <exception cref="T:System.ArgumentNullException">sourceDoc or pageIndices is null.</exception>
-            <exception cref="T:System.ArgumentException">pageIndices is empty.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException">insertAtIndex is invalid.</exception>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to import pages.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.SaveToFile(System.String)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.Save(System.String)">
             <summary>
             Saves the document to a file.
             </summary>
@@ -1506,7 +1550,17 @@
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to save document.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.SaveToFileAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.Save(System.IO.Stream)">
+            <summary>
+            Saves the document to a stream.
+            </summary>
+            <param name="stream">The stream to save the PDF to.</param>
+            <exception cref="T:System.ArgumentNullException">stream is null.</exception>
+            <exception cref="T:System.ArgumentException">stream is not writable.</exception>
+            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to save document.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.SaveAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Asynchronously saves the document to a file.
             </summary>
@@ -1518,36 +1572,64 @@
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to save document.</exception>
             <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.AddTextWatermark(System.String,PDFiumZ.HighLevel.WatermarkPosition,PDFiumZ.HighLevel.WatermarkOptions)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.SaveAsync(System.IO.Stream,System.Threading.CancellationToken)">
             <summary>
-            Adds a text watermark to all pages in the document.
+            Asynchronously saves the document to a stream.
+            </summary>
+            <param name="stream">The stream to save the PDF to.</param>
+            <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+            <returns>A task that represents the asynchronous operation.</returns>
+            <exception cref="T:System.ArgumentNullException">stream is null.</exception>
+            <exception cref="T:System.ArgumentException">stream is not writable.</exception>
+            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to save document.</exception>
+            <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.AddTextWatermark(System.String,PDFiumZ.HighLevel.WatermarkPosition,PDFiumZ.HighLevel.WatermarkOptions,System.Int32[])">
+            <summary>
+            Adds a text watermark to pages in the document.
             </summary>
             <param name="text">The watermark text.</param>
             <param name="position">The position of the watermark on each page.</param>
             <param name="options">Watermark appearance options. If null, default options are used.</param>
+            <param name="pageIndices">Optional indices of pages to add watermark to. If null or empty, adds to all pages.</param>
             <exception cref="T:System.ArgumentNullException">text is null.</exception>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to add watermark to one or more pages.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.AddHeaderFooter(System.String,System.String,PDFiumZ.HighLevel.HeaderFooterOptions,System.Int32[])">
+            <summary>
+            Adds a header and footer to pages in the document.
+            </summary>
+            <param name="headerText">Text for the header. Can include {PageNumber} and {TotalPages} placeholders.</param>
+            <param name="footerText">Text for the footer. Can include {PageNumber} and {TotalPages} placeholders.</param>
+            <param name="options">Header/Footer appearance options.</param>
+            <param name="pageIndices">Optional indices of pages to add header/footer to. If null or empty, adds to all pages.</param>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocument.AddTextWatermarkToPage(PDFiumZ.HighLevel.PdfPage,System.String,PDFiumZ.HighLevel.WatermarkPosition,PDFiumZ.HighLevel.WatermarkOptions)">
             <summary>
             Adds a text watermark to a single page.
             </summary>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.RotateAllPages(PDFiumZ.HighLevel.PdfRotation)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.AddTextWatermarkAsync(System.String,PDFiumZ.HighLevel.WatermarkPosition,PDFiumZ.HighLevel.WatermarkOptions,System.Threading.CancellationToken)">
             <summary>
-            Rotates all pages in the document by the specified angle.
+            Asynchronously adds a text watermark to all pages in the document.
             </summary>
-            <param name="rotation">The rotation angle to apply to all pages.</param>
+            <param name="text">The watermark text.</param>
+            <param name="position">The position of the watermark.</param>
+            <param name="options">Watermark options (font, size, color, etc.).</param>
+            <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+            <returns>A task that represents the asynchronous operation.</returns>
+            <exception cref="T:System.ArgumentNullException">text is null.</exception>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
+            <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocument.RotatePages(PDFiumZ.HighLevel.PdfRotation,System.Int32[])">
             <summary>
-            Rotates specific pages in the document.
+            Rotates pages in the document.
             </summary>
             <param name="rotation">The rotation angle to apply.</param>
-            <param name="pageIndices">Zero-based indices of pages to rotate.</param>
-            <exception cref="T:System.ArgumentNullException">pageIndices is null.</exception>
+            <param name="pageIndices">Zero-based indices of pages to rotate. If null or empty, rotates all pages.</param>
             <exception cref="T:System.ArgumentOutOfRangeException">One or more page indices are out of range.</exception>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
         </member>
@@ -1560,27 +1642,19 @@
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to flatten forms on one or more pages.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.GetFirstBookmark">
+        <member name="P:PDFiumZ.HighLevel.PdfDocument.FirstBookmark">
             <summary>
             Gets the first (root-level) bookmark in the document, or null if none.
             </summary>
             <returns>The first bookmark, or null if document has no bookmarks.</returns>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.GetBookmarks">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.GetBookmarks(System.String)">
             <summary>
-            Gets all root-level bookmarks in the document.
+            Gets root-level bookmarks in the document.
             </summary>
-            <returns>An enumerable of root bookmarks.</returns>
-            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.FindBookmark(System.String)">
-            <summary>
-            Finds a bookmark by its title text.
-            </summary>
-            <param name="title">The bookmark title to search for.</param>
-            <returns>The bookmark if found, or null if not found.</returns>
-            <exception cref="T:System.ArgumentNullException">title is null.</exception>
+            <param name="title">Optional title to search for a specific bookmark.</param>
+            <returns>An enumerable of bookmarks.</returns>
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocument.CreateFormHandle">
@@ -1609,101 +1683,101 @@
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfDocumentImageExtensions">
             <summary>
-            Extension methods for generating images from PDF documents.
+            Extension methods for generating images from PdfDocument.
             </summary>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.GenerateImages(PDFiumZ.HighLevel.PdfDocument,PDFiumZ.HighLevel.RenderOptions)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.GenerateImages(PDFiumZ.HighLevel.PdfDocument,System.Int32[])">
             <summary>
-            Generates images from all pages in the document.
+            Generates images from the specified page indices.
             </summary>
             <param name="document">The PDF document.</param>
-            <param name="options">Optional render options. If null, uses default settings.</param>
+            <param name="pageIndices">Zero-based indices of pages to render.</param>
             <returns>An enumerable of PdfImage objects. Remember to dispose each image after use.</returns>
-            <exception cref="T:System.ArgumentNullException">document is null.</exception>
+            <exception cref="T:System.ArgumentNullException">document or pageIndices is null.</exception>
             <exception cref="T:System.ObjectDisposedException">document has been disposed.</exception>
-            <example>
-            <code>
-            using var document = PdfDocument.Open("sample.pdf");
-            foreach (var image in document.GenerateImages())
-            {
-                using (image)
-                {
-                    // Process image...
-                    image.SaveAsSkiaPng($"page-{i}.png");
-                }
-            }
-            </code>
-            </example>
+            <exception cref="T:System.ArgumentOutOfRangeException">Any index is out of range.</exception>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.GenerateImages(PDFiumZ.HighLevel.PdfDocument,System.Int32,System.Int32,PDFiumZ.HighLevel.RenderOptions)">
             <summary>
             Generates images from a range of pages.
             </summary>
             <param name="document">The PDF document.</param>
-            <param name="startIndex">The zero-based starting page index.</param>
+            <param name="startIndex">Zero-based index of the first page to render.</param>
             <param name="count">Number of pages to render.</param>
             <param name="options">Optional render options.</param>
             <returns>An enumerable of PdfImage objects.</returns>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.String,System.String,PDFiumZ.HighLevel.RenderOptions)">
-             <summary>
-             Saves all pages as image files to a directory with a specified format.
-             File names are automatically generated as "page-0.png", "page-1.png", etc.
-             </summary>
-             <param name="document">The PDF document.</param>
-             <param name="outputDirectory">Directory path where images will be saved.</param>
-             <param name="fileNamePattern">Optional file name pattern. Use {0} for page index. Default: "page-{0}.png"</param>
-             <param name="options">Optional render options.</param>
-             <returns>Array of generated file paths.</returns>
-             <exception cref="T:System.ArgumentNullException">document or outputDirectory is null.</exception>
-             <exception cref="T:System.ObjectDisposedException">document has been disposed.</exception>
-             <example>
-             <code>
-             // Save to output directory with default naming
-             document.SaveAsImages("output/");
-            
-             // Save with custom naming pattern
-             document.SaveAsImages("output/", "document-page-{0}.png");
-            
-             // Save with custom options
-             var options = RenderOptions.Default.WithDpi(150);
-             document.SaveAsImages("output/", options: options);
-             </code>
-             </example>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.String,System.Int32,System.Int32,System.String,PDFiumZ.HighLevel.RenderOptions)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.GenerateImages(PDFiumZ.HighLevel.PdfDocument,PDFiumZ.HighLevel.RenderOptions)">
             <summary>
-            Saves a range of pages as image files.
+            Generates images for all pages in the document.
+            </summary>
+            <param name="document">The PDF document.</param>
+            <param name="options">Optional render options.</param>
+            <returns>An enumerable of PdfImage objects.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.GenerateImages(PDFiumZ.HighLevel.PdfDocument,System.Int32[],PDFiumZ.HighLevel.RenderOptions)">
+            <summary>
+            Generates images from the specified page indices with custom options.
+            </summary>
+            <param name="document">The PDF document.</param>
+            <param name="pageIndices">Zero-based indices of pages to render.</param>
+            <param name="options">Optional render options. If null, uses default settings.</param>
+            <returns>An enumerable of PdfImage objects. Remember to dispose each image after use.</returns>
+            <exception cref="T:System.ArgumentNullException">document or pageIndices is null.</exception>
+            <exception cref="T:System.ObjectDisposedException">document has been disposed.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Any index is out of range.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.String,PDFiumZ.HighLevel.RenderOptions)">
+            <summary>
+            Saves all pages as image files to a directory.
             </summary>
             <param name="document">The PDF document.</param>
             <param name="outputDirectory">Directory path where images will be saved.</param>
-            <param name="startIndex">The zero-based starting page index.</param>
-            <param name="count">Number of pages to save.</param>
-            <param name="fileNamePattern">Optional file name pattern. Default: "page-{0}.png"</param>
             <param name="options">Optional render options.</param>
             <returns>Array of generated file paths.</returns>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.Func{System.Int32,System.String},PDFiumZ.HighLevel.RenderOptions)">
-             <summary>
-             Saves all pages as image files using a custom path generator function.
-             </summary>
-             <param name="document">The PDF document.</param>
-             <param name="filePathGenerator">Function that generates file path for each page index.</param>
-             <param name="options">Optional render options.</param>
-             <returns>Array of generated file paths.</returns>
-             <exception cref="T:System.ArgumentNullException">document or filePathGenerator is null.</exception>
-             <example>
-             <code>
-             // Generate custom file names
-             document.SaveAsImages(pageIndex => $"output/doc-{pageIndex:D3}.png");
-            
-             // With custom options
-             var options = RenderOptions.Default.WithDpi(300).WithTransparency();
-             document.SaveAsImages(
-                 pageIndex => $"highres/page-{pageIndex}.png",
-                 options);
-             </code>
-             </example>
+        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.String,System.Int32,System.Int32,System.String,PDFiumZ.HighLevel.RenderOptions)">
+            <summary>
+            Saves a range of pages as image files to a directory.
+            </summary>
+            <param name="document">The PDF document.</param>
+            <param name="outputDirectory">Directory path where images will be saved.</param>
+            <param name="startIndex">Zero-based index of the first page to save.</param>
+            <param name="count">Number of pages to save.</param>
+            <param name="fileNamePattern">Optional file name pattern. Use {0} for page index. Default: "page-{0}.png"</param>
+            <param name="options">Optional render options.</param>
+            <returns>Array of generated file paths.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.String,System.Int32[])">
+            <summary>
+            Saves the specified pages as image files to a directory.
+            </summary>
+            <param name="document">The PDF document.</param>
+            <param name="outputDirectory">Directory path where images will be saved.</param>
+            <param name="pageIndices">Zero-based indices of pages to save.</param>
+            <returns>Array of generated file paths.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.String,System.Int32[],System.String,PDFiumZ.HighLevel.RenderOptions)">
+            <summary>
+            Saves the specified pages as image files to a directory.
+            </summary>
+            <param name="document">The PDF document.</param>
+            <param name="outputDirectory">Directory path where images will be saved.</param>
+            <param name="pageIndices">Zero-based indices of pages to save.</param>
+            <param name="fileNamePattern">Optional file name pattern. Use {0} for page index. Default: "page-{0}.png"</param>
+            <param name="options">Optional render options.</param>
+            <returns>Array of generated file paths.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.Func{System.Int32,System.String},System.Nullable{System.Int32},System.Nullable{System.Int32},PDFiumZ.HighLevel.RenderOptions)">
+            <summary>
+            Saves pages as image files using a custom path generator.
+            </summary>
+            <param name="document">The PDF document.</param>
+            <param name="pathGenerator">Function that generates a file path for a given page index.</param>
+            <param name="startIndex">Zero-based index of the first page to save. Defaults to 0.</param>
+            <param name="count">Number of pages to save. Defaults to all remaining pages.</param>
+            <param name="options">Optional render options.</param>
+            <returns>Array of generated file paths.</returns>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfExtractedImage">
             <summary>
@@ -1775,7 +1849,7 @@
             Internal constructor - use factory methods to create fonts.
             </summary>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfFont.LoadStandardFont(PDFiumZ.HighLevel.PdfDocument,System.String)">
+        <member name="M:PDFiumZ.HighLevel.PdfFont.Load(PDFiumZ.HighLevel.PdfDocument,System.String)">
             <summary>
             Loads a standard PDF font (14 built-in fonts).
             </summary>
@@ -1785,7 +1859,7 @@
             <exception cref="T:System.ArgumentNullException">document or fontName is null.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load the font.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfFont.LoadStandardFont(PDFiumZ.HighLevel.PdfDocument,PDFiumZ.HighLevel.PdfStandardFont)">
+        <member name="M:PDFiumZ.HighLevel.PdfFont.Load(PDFiumZ.HighLevel.PdfDocument,PDFiumZ.HighLevel.PdfStandardFont)">
             <summary>
             Loads a standard PDF font using the predefined enum values.
             </summary>
@@ -1795,7 +1869,7 @@
             <exception cref="T:System.ArgumentNullException">document is null.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load the font.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfFont.LoadTrueTypeFont(PDFiumZ.HighLevel.PdfDocument,System.Byte[],System.Boolean)">
+        <member name="M:PDFiumZ.HighLevel.PdfFont.Load(PDFiumZ.HighLevel.PdfDocument,System.Byte[],System.Boolean)">
             <summary>
             Loads a TrueType font from byte data.
             </summary>
@@ -1805,6 +1879,18 @@
             <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfFont"/> instance.</returns>
             <exception cref="T:System.ArgumentNullException">document or fontData is null.</exception>
             <exception cref="T:System.ArgumentException">fontData is empty.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load the font.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFont.Load(PDFiumZ.HighLevel.PdfDocument,System.String,System.Boolean)">
+            <summary>
+            Loads a TrueType font from a file path.
+            </summary>
+            <param name="document">The document to load the font into.</param>
+            <param name="filePath">Path to the TrueType font file (.ttf, .otf).</param>
+            <param name="isCidFont">True if this is a CID font (for Asian languages), false for standard TrueType.</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfFont"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">document or filePath is null.</exception>
+            <exception cref="T:System.IO.FileNotFoundException">Font file does not exist.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load the font.</exception>
         </member>
         <member name="P:PDFiumZ.HighLevel.PdfFont.Handle">
@@ -1930,11 +2016,6 @@
             Supports setting values, checking/unchecking boxes, and selecting options.
             </summary>
         </member>
-        <member name="P:PDFiumZ.HighLevel.PdfFormField.Index">
-            <summary>
-            Gets the index of this form field annotation in the page.
-            </summary>
-        </member>
         <member name="P:PDFiumZ.HighLevel.PdfFormField.FieldType">
             <summary>
             Gets the type of the form field.
@@ -1942,23 +2023,23 @@
         </member>
         <member name="P:PDFiumZ.HighLevel.PdfFormField.Name">
             <summary>
-            Gets the field name (unique identifier within the document).
+            Gets or sets the field name (unique identifier within the document).
             </summary>
         </member>
         <member name="P:PDFiumZ.HighLevel.PdfFormField.AlternateName">
             <summary>
-            Gets the alternate field name (user-friendly name, often used as label).
+            Gets or sets the alternate field name (user-friendly name, often used as label).
             </summary>
         </member>
         <member name="P:PDFiumZ.HighLevel.PdfFormField.Value">
             <summary>
-            Gets the current value of the form field (for text fields, combo boxes, etc.).
+            Gets or sets the current value of the form field (for text fields, combo boxes, etc.).
             Returns empty string if field has no value or is not a value-based field.
             </summary>
         </member>
         <member name="P:PDFiumZ.HighLevel.PdfFormField.IsChecked">
             <summary>
-            Gets whether this is a checkbox or radio button that is currently checked.
+            Gets or sets whether this is a checkbox or radio button that is currently checked.
             Returns false for other field types.
             </summary>
         </member>
@@ -2005,48 +2086,20 @@
             Returns a string representation of the form field.
             </summary>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfFormField.SetValue(System.String)">
-            <summary>
-            Sets the value of the form field (for text fields, combo boxes, etc.).
-            </summary>
-            <param name="value">The new value to set.</param>
-            <exception cref="T:System.ArgumentNullException">value is null.</exception>
-            <exception cref="T:System.ObjectDisposedException">The form field has been disposed.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to set the value.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfFormField.SetChecked(System.Boolean)">
-            <summary>
-            Sets the checked state for checkboxes and radio buttons.
-            </summary>
-            <param name="isChecked">True to check the box, false to uncheck.</param>
-            <exception cref="T:System.ObjectDisposedException">The form field has been disposed.</exception>
-            <exception cref="T:System.InvalidOperationException">This field is not a checkbox or radio button.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to set the checked state.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfFormField.SetSelectedOption(System.Int32)">
-            <summary>
-            Sets the selected option for combo boxes and list boxes (single selection).
-            </summary>
-            <param name="index">Zero-based index of the option to select.</param>
-            <exception cref="T:System.ArgumentOutOfRangeException">Index is out of range.</exception>
-            <exception cref="T:System.ObjectDisposedException">The form field has been disposed.</exception>
-            <exception cref="T:System.InvalidOperationException">This field is not a combo box or list box.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to select the option.</exception>
-        </member>
         <member name="M:PDFiumZ.HighLevel.PdfFormField.SetSelectedOptions(System.Int32[])">
             <summary>
-            Sets multiple selected options for list boxes (multiple selection).
+            Sets the selected options for combo boxes and list boxes.
             </summary>
-            <param name="indices">Array of zero-based indices of options to select.</param>
+            <param name="indices">Zero-based indices of the options to select.</param>
             <exception cref="T:System.ArgumentNullException">indices is null.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException">Any index is out of range.</exception>
             <exception cref="T:System.ObjectDisposedException">The form field has been disposed.</exception>
-            <exception cref="T:System.InvalidOperationException">This field is not a list box.</exception>
+            <exception cref="T:System.InvalidOperationException">This field is not a combo box or list box.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to select options.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfFormField.Dispose">
+        <member name="M:PDFiumZ.HighLevel.PdfFormField.Dispose(System.Boolean)">
             <summary>
-            Releases all resources used by the <see cref="T:PDFiumZ.HighLevel.PdfFormField"/>.
+            Releases the native resources used by the <see cref="T:PDFiumZ.HighLevel.PdfFormField"/>.
             </summary>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfFormFieldType">
@@ -2110,21 +2163,15 @@
             <exception cref="T:System.ArgumentNullException">page is null.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create annotation.</exception>
         </member>
-        <member name="P:PDFiumZ.HighLevel.PdfFreeTextAnnotation.Text">
+        <member name="P:PDFiumZ.HighLevel.PdfFreeTextAnnotation.Contents">
             <summary>
             Gets or sets the text content of the annotation.
             </summary>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfFreeTextAnnotation.SetDefaultAppearance(System.String)">
+        <member name="P:PDFiumZ.HighLevel.PdfFreeTextAnnotation.DefaultAppearance">
             <summary>
-            Sets the Default Appearance (DA) string for the annotation.
+            Gets or sets the Default Appearance (DA) string for the annotation.
             This controls font, size, and color of the text.
-            </summary>
-            <param name="da">The DA string (e.g., "0 0 0 rg /Helv 12 Tf").</param>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfFreeTextAnnotation.GetDefaultAppearance">
-            <summary>
-            Gets the Default Appearance (DA) string.
             </summary>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfHighlightAnnotation">
@@ -2524,42 +2571,22 @@
             Internal constructor - created by PdfDocument only.
             </summary>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.RenderToImage">
-            <summary>
-            Renders the page to a bitmap image with default options.
-            </summary>
-            <returns>A <see cref="T:PDFiumZ.HighLevel.PdfImage"/> containing the rendered result.</returns>
-            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfRenderException">Rendering failed.</exception>
-        </member>
         <member name="M:PDFiumZ.HighLevel.PdfPage.RenderToImage(PDFiumZ.HighLevel.RenderOptions)">
             <summary>
-            Renders the page to a bitmap image with specified options.
+            Renders the page to a bitmap image.
             </summary>
-            <param name="options">Rendering configuration.</param>
+            <param name="options">Rendering configuration. Omit to use default options.</param>
             <returns>A <see cref="T:PDFiumZ.HighLevel.PdfImage"/> containing the rendered result.</returns>
-            <exception cref="T:System.ArgumentNullException">options is null.</exception>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfRenderException">Rendering failed.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.RenderToImageAsync(System.Threading.CancellationToken)">
-            <summary>
-            Asynchronously renders the page to a bitmap image with default options.
-            </summary>
-            <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-            <returns>A task that represents the asynchronous operation. The task result contains a <see cref="T:PDFiumZ.HighLevel.PdfImage"/> with the rendered result.</returns>
-            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfRenderException">Rendering failed.</exception>
-            <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfPage.RenderToImageAsync(PDFiumZ.HighLevel.RenderOptions,System.Threading.CancellationToken)">
             <summary>
-            Asynchronously renders the page to a bitmap image with specified options.
+            Asynchronously renders the page to a bitmap image.
             </summary>
-            <param name="options">Rendering configuration.</param>
+            <param name="options">Rendering configuration. Omit to use default options.</param>
             <param name="cancellationToken">Cancellation token to cancel the operation.</param>
             <returns>A task that represents the asynchronous operation. The task result contains a <see cref="T:PDFiumZ.HighLevel.PdfImage"/> with the rendered result.</returns>
-            <exception cref="T:System.ArgumentNullException">options is null.</exception>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfRenderException">Rendering failed.</exception>
             <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
@@ -2571,6 +2598,16 @@
             <returns>Extracted text as a string.</returns>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load text from the page.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfPage.ExtractTextAsync(System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously extracts text content from the page.
+            </summary>
+            <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+            <returns>A task that represents the asynchronous operation. The task result contains the extracted text.</returns>
+            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load text from the page.</exception>
+            <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfPage.SearchText(System.String,System.Boolean,System.Boolean)">
             <summary>
@@ -2585,6 +2622,21 @@
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load text or perform search.</exception>
         </member>
+        <member name="M:PDFiumZ.HighLevel.PdfPage.SearchTextAsync(System.String,System.Boolean,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously searches for text on the page and returns all matches.
+            </summary>
+            <param name="searchText">Text to search for.</param>
+            <param name="matchCase">If true, performs case-sensitive search.</param>
+            <param name="matchWholeWord">If true, only matches whole words.</param>
+            <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+            <returns>A task that represents the asynchronous operation. The task result contains a list of search results.</returns>
+            <exception cref="T:System.ArgumentNullException">searchText is null.</exception>
+            <exception cref="T:System.ArgumentException">searchText is empty.</exception>
+            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load text or perform search.</exception>
+            <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
+        </member>
         <member name="M:PDFiumZ.HighLevel.PdfPage.GetTextRange(PDFiumZ.FpdfTextpageT,System.Int32,System.Int32)">
             <summary>
             Gets text for a specific character range.
@@ -2595,69 +2647,45 @@
             Gets bounding rectangles for a text range.
             </summary>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.GetFormFieldCount">
+        <member name="M:PDFiumZ.HighLevel.PdfPage.GetFormFields(System.Nullable{System.Int32})">
             <summary>
-            Gets the number of form field annotations on this page.
+            Gets form field annotations from the page.
             </summary>
-            <returns>The count of form field annotations.</returns>
-            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.GetFormField(System.Int32)">
-            <summary>
-            Gets a form field annotation at the specified index.
-            Note: This returns form fields as well as other annotations. Check FieldType to verify it's a form field.
-            </summary>
-            <param name="index">Zero-based annotation index.</param>
-            <returns>A <see cref="T:PDFiumZ.HighLevel.PdfFormField"/> instance, or null if the annotation is not a form field.</returns>
+            <param name="index">Optional zero-based annotation index to get a specific form field. If null, gets all form fields.</param>
+            <returns>An enumerable of form fields.</returns>
             <exception cref="T:System.ArgumentOutOfRangeException">Index is out of range.</exception>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.GetFormFields">
+        <member name="M:PDFiumZ.HighLevel.PdfPage.GetLinks(System.Nullable{System.Double},System.Nullable{System.Double})">
             <summary>
-            Gets all form field annotations on this page.
+            Gets hyperlinks from the page.
             </summary>
-            <returns>An enumerable of form fields.</returns>
+            <param name="x">Optional X coordinate to get a link at a specific point.</param>
+            <param name="y">Optional Y coordinate to get a link at a specific point.</param>
+            <returns>An enumerable of links.</returns>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.GetLinkAtPoint(System.Double,System.Double)">
+        <member name="M:PDFiumZ.HighLevel.PdfPage.GetPageObjects(System.Nullable{System.Int32})">
             <summary>
-            Gets a hyperlink at the specified point on the page.
+            Gets page objects (images, text, paths, etc.) from the page.
             </summary>
-            <param name="x">X coordinate in page coordinate system.</param>
-            <param name="y">Y coordinate in page coordinate system.</param>
-            <returns>A <see cref="T:PDFiumZ.HighLevel.PdfLink"/> instance, or null if no link exists at the point.</returns>
+            <param name="index">Optional zero-based object index to get a specific object. If null, gets all objects.</param>
+            <returns>An enumerable of page objects.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Index is out of range.</exception>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.GetPageObjectCount">
+        <member name="P:PDFiumZ.HighLevel.PdfPage.PageObjectCount">
             <summary>
             Gets the number of page objects (images, text, paths, etc.) on this page.
             </summary>
-            <returns>The count of page objects.</returns>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.GetPageObject(System.Int32)">
+        <member name="M:PDFiumZ.HighLevel.PdfPage.ExtractImages(System.Nullable{System.Int32})">
             <summary>
-            Gets information about a page object at the specified index.
+            Extracts images from the page.
             </summary>
-            <param name="index">Zero-based object index.</param>
-            <returns>A <see cref="T:PDFiumZ.HighLevel.PdfPageObject"/> with object information.</returns>
-            <exception cref="T:System.ArgumentOutOfRangeException">Index is out of range.</exception>
-            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to get page object.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.ExtractImages">
-            <summary>
-            Extracts all images from the page.
-            </summary>
+            <param name="index">Optional zero-based page object index to extract a specific image. If null, extracts all images.</param>
             <returns>A list of extracted images.</returns>
-            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.ExtractImage(System.Int32)">
-            <summary>
-            Extracts a specific image object from the page.
-            </summary>
-            <param name="objectIndex">Zero-based page object index.</param>
-            <returns>The extracted image, or null if the object is not an image.</returns>
             <exception cref="T:System.ArgumentOutOfRangeException">Index is out of range.</exception>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
         </member>
@@ -2666,54 +2694,48 @@
             Releases all resources used by the <see cref="T:PDFiumZ.HighLevel.PdfPage"/>.
             </summary>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.GetAnnotationCount">
+        <member name="M:PDFiumZ.HighLevel.PdfPage.GetAnnotations``1(System.Nullable{System.Int32})">
             <summary>
-            Gets the number of annotations on this page.
+            Gets annotations from the page, optionally filtered by type and/or index.
             </summary>
-            <returns>The number of annotations.</returns>
+            <typeparam name="T">The type of annotation to retrieve. Defaults to <see cref="T:PDFiumZ.HighLevel.PdfAnnotation"/>.</typeparam>
+            <param name="index">Optional zero-based annotation index to get a specific annotation. If null, gets all annotations.</param>
+            <returns>An enumerable of annotations.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Index is out of range.</exception>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.GetAnnotation(System.Int32)">
-            <summary>
-            Gets an annotation by its index.
-            </summary>
-            <param name="index">The zero-based index of the annotation.</param>
-            <returns>The annotation at the specified index, or null if not found or unsupported type.</returns>
-            <exception cref="T:System.ArgumentOutOfRangeException">index is negative.</exception>
-            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.GetAnnotations">
+        <member name="M:PDFiumZ.HighLevel.PdfPage.GetAnnotations(System.Nullable{System.Int32})">
             <summary>
             Gets all annotations on the page.
             </summary>
-            <returns>An enumerable of all annotations on the page.</returns>
+            <param name="index">Optional zero-based annotation index to get a specific annotation.</param>
+            <returns>An enumerable of annotations.</returns>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.GetAnnotations``1">
+        <member name="P:PDFiumZ.HighLevel.PdfPage.AnnotationCount">
             <summary>
-            Gets all annotations of a specific type.
+            Gets the number of annotations on this page.
             </summary>
-            <typeparam name="T">The type of annotation to retrieve.</typeparam>
-            <returns>An enumerable of annotations of the specified type.</returns>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.RemoveAnnotation(System.Int32)">
+        <member name="M:PDFiumZ.HighLevel.PdfPage.RemoveAnnotations(System.Int32[])">
             <summary>
-            Removes an annotation from the page by its index.
+            Removes annotations from the page by their indices.
+            Indices are processed in descending order to maintain correct mapping during removal.
             </summary>
-            <param name="index">The zero-based index of the annotation to remove.</param>
-            <exception cref="T:System.ArgumentOutOfRangeException">index is negative.</exception>
+            <param name="indices">The zero-based indices of the annotations to remove.</param>
+            <exception cref="T:System.ArgumentNullException">indices is null.</exception>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to remove annotation.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to remove one or more annotations.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.RemoveAnnotation(PDFiumZ.HighLevel.PdfAnnotation)">
+        <member name="M:PDFiumZ.HighLevel.PdfPage.RemoveAnnotations(PDFiumZ.HighLevel.PdfAnnotation[])">
             <summary>
-            Removes the specified annotation from the page.
+            Removes the specified annotations from the page.
             </summary>
-            <param name="annotation">The annotation to remove.</param>
-            <exception cref="T:System.ArgumentNullException">annotation is null.</exception>
+            <param name="annotations">The annotations to remove.</param>
+            <exception cref="T:System.ArgumentNullException">annotations is null.</exception>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to remove annotation.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to remove one or more annotations.</exception>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfPage.BeginEdit">
             <summary>
@@ -3252,16 +3274,30 @@
             <param name="configureColumns">Action to configure columns.</param>
             <returns>This instance for fluent chaining.</returns>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.Header(System.Action{PDFiumZ.HighLevel.PdfTableRowBuilder})">
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.Header(System.String[])">
             <summary>
             Defines the table header row.
+            </summary>
+            <param name="texts">Header cell text contents.</param>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.Header(System.Action{PDFiumZ.HighLevel.PdfTableRowBuilder})">
+            <summary>
+            Defines the table header row using a configuration action.
             </summary>
             <param name="configureHeader">Action to configure header cells.</param>
             <returns>This instance for fluent chaining.</returns>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.Row(System.Action{PDFiumZ.HighLevel.PdfTableRowBuilder})">
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.Row(System.String[])">
             <summary>
             Adds a data row to the table.
+            </summary>
+            <param name="texts">Row cell text contents.</param>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.Row(System.Action{PDFiumZ.HighLevel.PdfTableRowBuilder})">
+            <summary>
+            Adds a data row to the table using a configuration action.
             </summary>
             <param name="configureRow">Action to configure row cells.</param>
             <returns>This instance for fluent chaining.</returns>
@@ -3342,18 +3378,11 @@
             </summary>
             <param name="isHeader">Whether this is a header row.</param>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfTableRowBuilder.Cell(System.String)">
+        <member name="M:PDFiumZ.HighLevel.PdfTableRowBuilder.Cell(System.String[])">
             <summary>
-            Adds a cell with text content.
+            Adds one or more cells to the row.
             </summary>
-            <param name="text">Cell text content.</param>
-            <returns>This instance for fluent chaining.</returns>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfTableRowBuilder.AddCells(System.String[])">
-            <summary>
-            Adds multiple cells from an array.
-            </summary>
-            <param name="texts">Array of cell texts.</param>
+            <param name="texts">Cell text contents.</param>
             <returns>This instance for fluent chaining.</returns>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfTextAnnotation">

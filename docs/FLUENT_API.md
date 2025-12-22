@@ -98,7 +98,7 @@ using (var document = new FluentDocument())
     });
 
     document.Generate(); // 595x842 (A4)
-    document.SaveToFile("output.pdf");
+    document.Save("output.pdf");
 }
 
 PdfiumLibrary.Shutdown();
