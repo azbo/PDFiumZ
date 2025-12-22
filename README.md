@@ -174,6 +174,96 @@ using (var editor = page.BeginEdit())
 document.SaveToFile("content.pdf");
 ```
 
+### Create Tables (QuestPDF-Style Fluent API)
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.CreateNew();
+using var page = document.CreatePage();
+using var font = PdfFont.LoadStandardFont(document, PdfStandardFont.Helvetica);
+
+using (var editor = page.BeginEdit())
+{
+    editor
+        .WithFont(font)
+        .WithFontSize(PdfFontSize.Heading1)
+        .WithTextColor(PdfColor.DarkBlue)
+        .Text("Employee Directory", 50, 780);
+
+    // Build table with fluent API
+    editor.BeginTable()
+        .Columns(cols => cols
+            .Add(120)   // Fixed: 120pt
+            .Add()      // Auto width (equal distribution)
+            .Add(100)   // Fixed: 100pt
+            .Add(80))   // Fixed: 80pt
+        .HeaderBackgroundColor(PdfColor.WithOpacity(PdfColor.Blue, 0.2))
+        .HeaderTextColor(PdfColor.DarkBlue)
+        .HeaderFontSize(14)
+        .CellPadding(8)
+        .BorderWidth(1)
+        .BorderColor(PdfColor.Gray)
+        .Header(header => header
+            .Cell("Name")
+            .Cell("Position")
+            .Cell("Department")
+            .Cell("Ext"))
+        .Row(row => row
+            .Cell("John Doe")
+            .Cell("Senior Developer")
+            .Cell("Engineering")
+            .Cell("1234"))
+        .Row(row => row
+            .Cell("Jane Smith")
+            .Cell("Product Manager")
+            .Cell("Product")
+            .Cell("5678"))
+        .Row(row => row
+            .Cell("Bob Johnson")
+            .Cell("QA Engineer")
+            .Cell("Quality")
+            .Cell("9012"))
+        .EndTable();
+
+    editor.Commit();
+}
+
+document.SaveToFile("table.pdf");
+```
+
+### SkiaSharp Integration
+
+```csharp
+using PDFiumZ.HighLevel;
+using PDFiumZ.SkiaSharp;  // Extension methods
+using SkiaSharp;
+
+// Render PDF to various image formats
+using var document = PdfDocument.Open("sample.pdf");
+using var page = document.GetPage(0);
+using var image = page.RenderToImage();
+
+image.SaveAsSkiaPng("output.png");
+image.SaveAsSkiaJpeg("output.jpg", quality: 90);
+image.SaveAsSkiaWebP("output.webp", quality: 85);
+
+// Add images to PDF from SkiaSharp
+using var newDoc = PdfDocument.CreateNew();
+using var newPage = newDoc.CreatePage();
+using var editor = newPage.BeginEdit();
+
+// Load and add image from file
+editor.AddImageFromFile("chart.png", new PdfRectangle(50, 700, 300, 200));
+
+// Or use SKBitmap/SKImage directly
+using var bitmap = SKBitmap.Decode("photo.jpg");
+editor.AddSkiaImage(bitmap, new PdfRectangle(50, 450, 200, 150));
+
+editor.Commit();
+newDoc.SaveToFile("with-images.pdf");
+```
+
 ### Convert HTML to PDF
 
 ```csharp
@@ -188,10 +278,43 @@ string html = @"
     <h2 style='color: #FF6600;'>Features</h2>
     <p>Supports <b>bold</b>, <i>italic</i>, and <u>underline</u> text.</p>
     <p style='text-align: center; color: #009933;'>Centered and colored text.</p>
+
+    <h2>Lists</h2>
+    <ul>
+        <li>Unordered lists with bullet points</li>
+        <li>Nested lists support
+            <ul>
+                <li>Depth-based bullet styles</li>
+                <li>Unlimited nesting levels</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>Tables</h2>
+    <table border='2' cellpadding='8'>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Stock</th>
+        </tr>
+        <tr>
+            <td>Widget A</td>
+            <td>$19.99</td>
+            <td>50</td>
+        </tr>
+        <tr>
+            <td>Widget B</td>
+            <td>$29.99</td>
+            <td>30</td>
+        </tr>
+    </table>
 ";
 
 document.CreatePageFromHtml(html);
 document.SaveToFile("from-html.pdf");
+```
+
+## Documentation
 ```
 
 ## Documentation
