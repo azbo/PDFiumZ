@@ -375,7 +375,7 @@ Apache-2.0. See `LICENSE`.
 If this project helps you, please consider sponsoring!
 
 <div align="center">
-  <img src="./docs/wechat-pay-qr.png" width="200" alt="WeChat Pay">
-  <img src="./docs/alipay-qr.png" width="200" alt="Alipay">
+  <img src="docs/wechat-pay-qr.png" width="200" alt="WeChat Pay">
+  <img src="docs/alipay-qr.png" width="200" alt="Alipay">
 </div>
 
