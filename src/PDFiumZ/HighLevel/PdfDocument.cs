@@ -881,6 +881,47 @@ public sealed class PdfDocument : IDisposable
         }
     }
 
+    public void AddHeaderFooter(string? headerText = null, string? footerText = null, HeaderFooterOptions? options = null)
+    {
+        ThrowIfDisposed();
+
+        options ??= new HeaderFooterOptions();
+
+        if (options.Margin < 0)
+            throw new ArgumentOutOfRangeException(nameof(options.Margin), "Margin must be non-negative.");
+        if (options.FontSize <= 0)
+            throw new ArgumentOutOfRangeException(nameof(options.FontSize), "FontSize must be greater than 0.");
+        if (options.Opacity < 0 || options.Opacity > 1)
+            throw new ArgumentOutOfRangeException(nameof(options.Opacity), "Opacity must be in [0, 1].");
+
+        if (string.IsNullOrEmpty(headerText) && string.IsNullOrEmpty(footerText))
+            return;
+
+        using var font = PdfFont.LoadStandardFont(this, options.Font);
+
+        var totalPages = PageCount;
+        for (int i = 0; i < totalPages; i++)
+        {
+            using var page = GetPage(i);
+            using var editor = page.BeginEdit();
+
+            var pageNumber = i + 1;
+            if (!string.IsNullOrEmpty(headerText))
+            {
+                var y = page.Height - options.Margin - options.FontSize;
+                AddHeaderFooterTextToPage(page, headerText, y, options.HeaderAlignment, options, font, pageNumber, totalPages);
+            }
+
+            if (!string.IsNullOrEmpty(footerText))
+            {
+                var y = options.Margin;
+                AddHeaderFooterTextToPage(page, footerText, y, options.FooterAlignment, options, font, pageNumber, totalPages);
+            }
+
+            editor.GenerateContent();
+        }
+    }
+
     /// <summary>
     /// Adds a text watermark to a single page.
     /// </summary>
@@ -1011,6 +1052,84 @@ public sealed class PdfDocument : IDisposable
         {
             font.Dispose();
         }
+    }
+
+    private unsafe void AddHeaderFooterTextToPage(
+        PdfPage page,
+        string templateText,
+        double y,
+        HeaderFooterAlignment alignment,
+        HeaderFooterOptions options,
+        PdfFont font,
+        int pageNumber,
+        int totalPages)
+    {
+        var text = ReplaceHeaderFooterTokens(templateText, pageNumber, totalPages);
+        if (string.IsNullOrEmpty(text))
+            return;
+
+        var textObj = fpdf_edit.FPDFPageObjNewTextObj(
+            _handle!,
+            font.Name,
+            (float)options.FontSize);
+
+        if (textObj is null || textObj.__Instance == IntPtr.Zero)
+            throw new PdfException("Failed to create header/footer text object.");
+
+        try
+        {
+            var utf16Array = new ushort[text.Length + 1];
+            for (int i = 0; i < text.Length; i++)
+            {
+                utf16Array[i] = text[i];
+            }
+            utf16Array[text.Length] = 0;
+
+            var result = fpdf_edit.FPDFTextSetText(textObj, ref utf16Array[0]);
+            if (result == 0)
+                throw new PdfException("Failed to set header/footer text content.");
+
+            uint alpha = (uint)(options.Opacity * 255);
+            uint color = options.Color;
+            uint r = (color >> 16) & 0xFF;
+            uint g = (color >> 8) & 0xFF;
+            uint b = color & 0xFF;
+
+            fpdf_edit.FPDFPageObjSetFillColor(textObj, r, g, b, alpha);
+
+            double textWidth = text.Length * options.FontSize * 0.6;
+            double x = alignment switch
+            {
+                HeaderFooterAlignment.Left => options.Margin,
+                HeaderFooterAlignment.Center => (page.Width - textWidth) / 2,
+                HeaderFooterAlignment.Right => page.Width - textWidth - options.Margin,
+                _ => options.Margin
+            };
+
+            if (x < 0)
+                x = 0;
+
+            if (y < 0)
+                y = 0;
+            else if (y > page.Height - options.FontSize)
+                y = page.Height - options.FontSize;
+
+            fpdf_edit.FPDFPageObjTransform(textObj, 1, 0, 0, 1, x, y);
+            fpdf_edit.FPDFPageInsertObject(page._handle!, textObj);
+        }
+        catch
+        {
+            fpdf_edit.FPDFPageObjDestroy(textObj);
+            throw;
+        }
+    }
+
+    private static string ReplaceHeaderFooterTokens(string template, int pageNumber, int totalPages)
+    {
+        return template
+            .Replace("{page}", pageNumber.ToString())
+            .Replace("{pages}", totalPages.ToString())
+            .Replace("{totalPages}", totalPages.ToString());
     }
 
     /// <summary>
@@ -1255,4 +1374,22 @@ public sealed class PdfDocument : IDisposable
             _ => $"Error code {error}"
         };
     }
+}
+
+public enum HeaderFooterAlignment
+{
+    Left,
+    Center,
+    Right
+}
+
+public sealed class HeaderFooterOptions
+{
+    public double Margin { get; set; } = 36;
+    public double FontSize { get; set; } = 12;
+    public double Opacity { get; set; } = 1.0;
+    public uint Color { get; set; } = 0xFF000000;
+    public PdfStandardFont Font { get; set; } = PdfStandardFont.Helvetica;
+    public HeaderFooterAlignment HeaderAlignment { get; set; } = HeaderFooterAlignment.Center;
+    public HeaderFooterAlignment FooterAlignment { get; set; } = HeaderFooterAlignment.Center;
 }

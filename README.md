@@ -120,6 +120,21 @@ document.AddTextWatermark("CONFIDENTIAL", WatermarkPosition.Center, new Watermar
 document.SaveToFile("watermarked.pdf");
 ```
 
+### Add Header and Footer
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.Open("document.pdf");
+
+document.AddHeaderFooter(
+    headerText: "My Report — Page {page}/{pages}",
+    footerText: "Confidential",
+    options: new HeaderFooterOptions { FontSize = 10, Margin = 36 });
+
+document.SaveToFile("with-header-footer.pdf");
+```
+
 ## Documentation
 
 - Examples and extended snippets: `docs/README.md`
