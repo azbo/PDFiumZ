@@ -174,6 +174,26 @@ using (var editor = page.BeginEdit())
 document.SaveToFile("content.pdf");
 ```
 
+### Convert HTML to PDF
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.CreateNew();
+
+string html = @"
+    <h1 style='color: #0066CC; text-align: center;'>Welcome to PDFiumZ</h1>
+    <p style='font-size: 14pt;'>Convert HTML to PDF with ease!</p>
+
+    <h2 style='color: #FF6600;'>Features</h2>
+    <p>Supports <b>bold</b>, <i>italic</i>, and <u>underline</u> text.</p>
+    <p style='text-align: center; color: #009933;'>Centered and colored text.</p>
+";
+
+document.CreatePageFromHtml(html);
+document.SaveToFile("from-html.pdf");
+```
+
 ## Documentation
 
 - Examples and extended snippets: `docs/README.md`
@@ -199,6 +219,11 @@ document.SaveToFile("content.pdf");
   - Predefined colors (`PdfColor` - 40+ colors including basic, extended, highlights, and shades)
   - Common font sizes (`PdfFontSize` - 15+ presets from 6pt to 72pt)
   - Hex color support (`PdfColor.FromHex`, `WithOpacity`)
+- **HTML to PDF conversion**:
+  - Support for common HTML tags (h1-h6, p, div, span, b, strong, i, em, u, br)
+  - Inline CSS styles (font-size, color, text-align, font-weight, font-style, text-decoration)
+  - Simple extension method (`CreatePageFromHtml`)
+  - Customizable margins
 - Security info reading (encryption + permissions)
 - Async APIs + batch operations
 - Multi-targeting: `net10.0`, `net9.0`, `net8.0`, `netstandard2.1`, `netstandard2.0`
