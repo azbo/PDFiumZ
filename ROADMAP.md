@@ -41,7 +41,7 @@
 
 ```csharp
 var doc = PdfDocument.CreateNew();
-var page = doc.CreatePage(595, 842); // A4
+var page = doc.CreatePage(PdfPageSize.A4);
 doc.SaveToFile("new.pdf");
 ```
 

@@ -17,8 +17,8 @@ using PDFiumZ.HighLevel;
 
 using var document = PdfDocument.CreateNew();
 
-using var page1 = document.CreatePage(595, 842);   // A4 (210mm x 297mm)
-using var page2 = document.CreatePage(612, 792);   // Letter (8.5" x 11")
+using var page1 = document.CreatePage(PdfPageSize.A4);
+using var page2 = document.CreatePage(PdfPageSize.Letter);
 using var page3 = document.CreatePage(800, 600);   // Custom size
 
 Console.WriteLine($"Created document with {document.PageCount} pages");
