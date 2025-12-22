@@ -174,7 +174,7 @@ using (var editor = page.BeginEdit())
 document.SaveToFile("content.pdf");
 ```
 
-### Create Tables (QuestPDF-Style Fluent API)
+### Create Tables (Fluent API)
 
 ```csharp
 using PDFiumZ.HighLevel;

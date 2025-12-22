@@ -168,7 +168,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         .Commit();
     ```
 
-- **QuestPDF-Style Fluent Table API**: Modern table building with discoverable, chainable API
+- **Fluent Table API**: Modern table building with discoverable, chainable API
   - **PdfTableBuilder**: Fluent table construction with method chaining
   - **Column Configuration**:
     - `Columns(cols => cols.Add(width))` - Fixed width columns

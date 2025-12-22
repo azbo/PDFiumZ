@@ -627,7 +627,7 @@ public sealed unsafe class PdfContentEditor : IDisposable
     #region Table Builder
 
     /// <summary>
-    /// Begins building a table with fluent API (QuestPDF-style).
+    /// Begins building a table with fluent API.
     /// </summary>
     /// <returns>A table builder instance for configuring and rendering the table.</returns>
     /// <exception cref="ObjectDisposedException">Editor has been disposed.</exception>
