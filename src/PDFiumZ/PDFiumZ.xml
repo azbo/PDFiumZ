@@ -224,6 +224,21 @@
             Line height multiplier (1.0 = single spacing).
             </summary>
         </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.TextStyle.ListDepth">
+            <summary>
+            Current list depth level (0 = not in list, 1+ = nesting level).
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.TextStyle.ListType">
+            <summary>
+            Current list type (ul, ol, none).
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.TextStyle.ListItemIndex">
+            <summary>
+            Current list item index (for ordered lists).
+            </summary>
+        </member>
         <member name="M:PDFiumZ.HighLevel.HtmlToPdf.TextStyle.Clone">
             <summary>
             Creates a copy of this style.

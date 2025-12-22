@@ -198,6 +198,18 @@ public class HtmlToPdfConverter : IDisposable
                 ProcessParagraph(editor, content, style);
                 break;
 
+            case "ul":
+                ProcessUnorderedList(editor, content, style);
+                break;
+
+            case "ol":
+                ProcessOrderedList(editor, content, style);
+                break;
+
+            case "li":
+                ProcessListItem(editor, content, style);
+                break;
+
             case "b":
             case "strong":
                 style.IsBold = true;
@@ -550,6 +562,111 @@ public class HtmlToPdfConverter : IDisposable
         }
 
         return -1;
+    }
+
+    private void ProcessUnorderedList(PdfContentEditor editor, string content, TextStyle style)
+    {
+        // Increase list depth
+        var listStyle = style.Clone();
+        listStyle.ListDepth++;
+        listStyle.ListType = "ul";
+
+        // Process list content
+        ProcessHtmlContent(editor, content, listStyle);
+
+        // Add spacing after list
+        _currentY -= style.FontSize * 0.5;
+    }
+
+    private void ProcessOrderedList(PdfContentEditor editor, string content, TextStyle style)
+    {
+        // Increase list depth
+        var listStyle = style.Clone();
+        listStyle.ListDepth++;
+        listStyle.ListType = "ol";
+        listStyle.ListItemIndex = 0; // Reset counter for this list
+
+        // Process list content
+        ProcessHtmlContent(editor, content, listStyle);
+
+        // Add spacing after list
+        _currentY -= style.FontSize * 0.5;
+    }
+
+    private void ProcessListItem(PdfContentEditor editor, string content, TextStyle style)
+    {
+        if (style.ListDepth == 0)
+        {
+            // Not in a list context, treat as paragraph
+            ProcessParagraph(editor, content, style);
+            return;
+        }
+
+        // Get appropriate font
+        var font = GetFont(style);
+        if (font == null)
+            return;
+
+        // Calculate indentation based on depth
+        double indentPerLevel = 20;
+        double indent = style.ListDepth * indentPerLevel;
+        double bulletWidth = 15;
+
+        // Increment list item index for ordered lists
+        if (style.ListType == "ol")
+        {
+            style.ListItemIndex++;
+        }
+
+        // Calculate X position for bullet/number
+        double bulletX = _marginLeft + indent;
+        double contentX = bulletX + bulletWidth;
+
+        // Render bullet or number
+        string marker = "";
+        if (style.ListType == "ul")
+        {
+            // Use bullet point based on depth
+            int depthMod = style.ListDepth % 3;
+            if (depthMod == 1)
+                marker = "•";  // Filled circle
+            else if (depthMod == 2)
+                marker = "◦";  // Hollow circle
+            else
+                marker = "▪";  // Square
+        }
+        else if (style.ListType == "ol")
+        {
+            marker = style.ListItemIndex.ToString() + ".";
+        }
+
+        // Render the marker
+        editor.WithFont(font)
+              .WithFontSize(style.FontSize)
+              .WithTextColor(style.Color)
+              .Text(marker, bulletX, _currentY);
+
+        // Save current Y position
+        double startY = _currentY;
+
+        // Temporarily adjust margin for list item content
+        double savedMarginLeft = _marginLeft;
+        _marginLeft = contentX;
+
+        // Process list item content
+        ProcessHtmlContent(editor, content, style);
+
+        // Restore margin
+        _marginLeft = savedMarginLeft;
+
+        // Ensure minimum spacing between list items
+        if (_currentY >= startY - style.FontSize * style.LineHeight)
+        {
+            _currentY = startY - style.FontSize * style.LineHeight;
+        }
+
+        // Add small spacing after list item
+        _currentY -= style.FontSize * 0.2;
     }
 
     /// <summary>
