@@ -370,7 +370,9 @@ Apache-2.0. See `LICENSE`.
 
 ## Support
 
-See `docs/README.md#support`.
+如果这个项目对您有帮助，欢迎赞助支持！
+
+If this project helps you, please consider sponsoring!
 
 <div align="center">
   <img src="./docs/wechat-pay-qr.png" width="200" alt="WeChat Pay">
