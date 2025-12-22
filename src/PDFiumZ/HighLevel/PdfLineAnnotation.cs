@@ -2,6 +2,9 @@ using System;
 
 namespace PDFiumZ.HighLevel;
 
+/// <summary>
+/// Represents a line annotation.
+/// </summary>
 public sealed class PdfLineAnnotation : PdfAnnotation
 {
     internal PdfLineAnnotation(FpdfAnnotationT handle, PdfPage page, int index)
@@ -9,6 +12,9 @@ public sealed class PdfLineAnnotation : PdfAnnotation
     {
     }
 
+    /// <summary>
+    /// Tries to get the start and end points of the line in page coordinates.
+    /// </summary>
     public bool TryGetLine(out (double X, double Y) start, out (double X, double Y) end)
     {
         ThrowIfDisposed();
@@ -29,6 +35,9 @@ public sealed class PdfLineAnnotation : PdfAnnotation
         return true;
     }
 
+    /// <summary>
+    /// Gets the start point of the line in page coordinates.
+    /// </summary>
     public (double X, double Y) Start
     {
         get
@@ -39,6 +48,9 @@ public sealed class PdfLineAnnotation : PdfAnnotation
         }
     }
 
+    /// <summary>
+    /// Gets the end point of the line in page coordinates.
+    /// </summary>
     public (double X, double Y) End
     {
         get
