@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Table Features**:
     - Basic table structure with headers (th) and data cells (td)
     - Automatic column width calculation (equal distribution)
+    - **Grid-based border rendering** - Complete borders on all four sides (top, bottom, left, right) for all cells
     - Cell borders with customizable width and color
     - Cell padding for content spacing
     - Bold text for header cells (th tags)
@@ -187,6 +188,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `HeaderBold(bool)` - Enable/disable bold headers (default: true)
   - **Features**:
     - Automatic column width calculation based on available space
+    - **Grid-based border rendering** - Complete borders on all four sides for all cells
     - Header rows with customizable styling
     - Cell borders and padding
     - Background colors for headers
@@ -217,12 +219,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         .EndTable();
     ```
 
+#### SkiaSharp Integration Extensions
+- **PdfImageSkiaExtensions**: Comprehensive SkiaSharp integration for image handling
+  - **PdfImage to SkiaSharp Conversions**:
+    - `ToSkiaBitmap()` - Zero-copy conversion to SKBitmap
+    - `ToSkiaImage()` - Convert to SKImage
+  - **Save Methods**:
+    - `SaveAsSkiaPng(path, quality)` - Save as PNG with quality control
+    - `SaveAsSkiaJpeg(path, quality)` - Save as JPEG with quality control (default: 90)
+    - `SaveAsSkiaWebP(path, quality)` - Save as WebP with quality control (default: 90)
+  - **SkiaSharp to PDF Conversions**:
+    - `ToBgraBytes(SKBitmap)` - Convert SKBitmap to BGRA byte array for PDF embedding
+    - `AddSkiaImage(editor, SKBitmap, bounds)` - Fluent API to add SKBitmap to PDF page
+    - `AddSkiaImage(editor, SKImage, bounds)` - Fluent API to add SKImage to PDF page
+    - `AddImageFromFile(editor, path, bounds)` - Load image file and add to PDF using SkiaSharp decoder
+  - **Features**:
+    - Zero-copy bitmap sharing where possible for optimal performance
+    - Automatic format conversion to BGRA for PDF compatibility
+    - Support for all image formats supported by SkiaSharp
+    - Fluent API integration with PdfContentEditor
+  - Example:
+    ```csharp
+    using PDFiumZ.SkiaSharp;
+
+    // Render PDF to image and save
+    using var image = page.RenderToImage();
+    image.SaveAsSkiaPng("output.png");
+    image.SaveAsSkiaWebP("output.webp", quality: 85);
+
+    // Add SkiaSharp image to PDF
+    using var bitmap = SKBitmap.Decode("photo.jpg");
+    editor.AddSkiaImage(bitmap, new PdfRectangle(50, 700, 200, 150));
+
+    // Or directly from file path
+    editor.AddImageFromFile("chart.png", new PdfRectangle(50, 500, 300, 200));
+    ```
+
 ### Changed
 - Multi-targeted `PDFiumZ` to support `net10.0`, `net9.0`, `net8.0`, `netstandard2.1`, and `netstandard2.0`
 
 ### Fixed
 - `netstandard2.x` build compatibility (`Span<T>`, `IsExternalInit`, and ink annotation interop)
 - Math.Clamp compatibility for .NET Standard 2.0 (replaced with Math.Min/Max)
+- **Table border rendering** - Fixed both HTML and Fluent table APIs to use grid-based line drawing
+  - Previously only bottom borders were visible due to overlapping per-cell rectangles
+  - Now all cell borders (top, bottom, left, right) render correctly as complete grid lines
 
 ## [145.1.0] - 2025-12-21
 

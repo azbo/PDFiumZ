@@ -184,90 +184,101 @@ public sealed class PdfTableBuilder
         double tableWidth = 0;
         foreach (var width in columnWidths)
             tableWidth += width;
-        tableWidth += (columnWidths.Length + 1) * _borderWidth;
 
         double tableX = 50; // Left margin
-        double currentY = page.Height - 100; // Start position (with top margin)
+        double tableY = page.Height - 100; // Start position (with top margin)
+        double currentY = tableY;
 
-        // Render header row if exists
+        // Collect all rows (header + data)
+        var allRows = new List<(PdfTableRowBuilder row, bool isHeader)>();
         if (_headerRow != null)
-        {
-            currentY = RenderRow(_headerRow, columnWidths, tableX, currentY, isHeader: true);
-        }
-
-        // Render data rows
+            allRows.Add((_headerRow, true));
         foreach (var row in _dataRows)
+            allRows.Add((row, false));
+
+        // Calculate all row heights first
+        var rowHeights = new double[allRows.Count];
+        for (int i = 0; i < allRows.Count; i++)
         {
-            currentY = RenderRow(row, columnWidths, tableX, currentY, isHeader: false);
+            var (row, isHeader) = allRows[i];
+            var fontSize = isHeader ? _headerFontSize : 12;
+            rowHeights[i] = fontSize + 2 * _cellPadding;
         }
 
-        // Draw bottom border
-        _editor.Line(tableX, currentY, tableX + tableWidth, currentY, _borderColor, _borderWidth);
+        // Draw cell contents and backgrounds, collect Y positions for grid lines
+        var horizontalLines = new List<double> { currentY }; // Top line
 
-        return _editor;
-    }
-
-    private double RenderRow(PdfTableRowBuilder row, double[] columnWidths, double tableX, double currentY, bool isHeader)
-    {
-        // Get font for this row
-        var font = isHeader && _headerBold
-            ? PdfFont.LoadStandardFont(_editor.Page._document, PdfStandardFont.HelveticaBold)
-            : PdfFont.LoadStandardFont(_editor.Page._document, PdfStandardFont.Helvetica);
-
-        var fontSize = isHeader ? _headerFontSize : 12;
-        var textColor = isHeader ? _headerTextColor : PdfColor.Black;
-
-        // Calculate row height
-        double rowHeight = fontSize + 2 * _cellPadding;
-
-        // Draw cells
-        double currentX = tableX;
-        int cellIndex = 0;
-
-        foreach (var cellText in row.Cells)
+        for (int rowIndex = 0; rowIndex < allRows.Count; rowIndex++)
         {
-            if (cellIndex >= columnWidths.Length)
-                break; // Skip extra cells
+            var (row, isHeader) = allRows[rowIndex];
+            double rowHeight = rowHeights[rowIndex];
 
-            double cellWidth = columnWidths[cellIndex];
+            // Get font for this row
+            var font = isHeader && _headerBold
+                ? PdfFont.LoadStandardFont(page._document, PdfStandardFont.HelveticaBold)
+                : PdfFont.LoadStandardFont(page._document, PdfStandardFont.Helvetica);
 
-            // Draw cell border
-            var cellBounds = new PdfRectangle(
-                currentX,
-                currentY - rowHeight,
-                cellWidth + _borderWidth,
-                rowHeight
-            );
+            var fontSize = isHeader ? _headerFontSize : 12;
+            var textColor = isHeader ? _headerTextColor : PdfColor.Black;
 
-            // Draw background for header
+            // Draw header background if needed
             if (isHeader && _headerBackgroundColor != PdfColor.Transparent)
             {
-                _editor.Rectangle(cellBounds, _borderColor, _headerBackgroundColor);
+                var headerBounds = new PdfRectangle(tableX, currentY - rowHeight, tableWidth, rowHeight);
+                _editor.Rectangle(headerBounds, PdfColor.Transparent, _headerBackgroundColor);
             }
-            else
+
+            // Draw cell text content
+            double currentX = tableX;
+            int cellIndex = 0;
+
+            foreach (var cellText in row.Cells)
             {
-                _editor.Rectangle(cellBounds, _borderColor, PdfColor.Transparent);
+                if (cellIndex >= columnWidths.Length)
+                    break; // Skip extra cells
+
+                double cellWidth = columnWidths[cellIndex];
+
+                if (!string.IsNullOrWhiteSpace(cellText))
+                {
+                    double textX = currentX + _cellPadding;
+                    double textY = currentY - _cellPadding - fontSize;
+
+                    _editor.WithFont(font)
+                          .WithFontSize(fontSize)
+                          .WithTextColor(textColor)
+                          .Text(cellText, textX, textY);
+                }
+
+                currentX += cellWidth;
+                cellIndex++;
             }
 
-            // Draw cell text
-            if (!string.IsNullOrWhiteSpace(cellText))
-            {
-                double textX = currentX + _borderWidth + _cellPadding;
-                double textY = currentY - _cellPadding - fontSize;
-
-                _editor.WithFont(font)
-                      .WithFontSize(fontSize)
-                      .WithTextColor(textColor)
-                      .Text(cellText, textX, textY);
-            }
-
-            currentX += cellWidth + _borderWidth;
-            cellIndex++;
+            font.Dispose();
+            currentY -= rowHeight;
+            horizontalLines.Add(currentY); // Bottom line of this row
         }
 
-        // Dispose font
-        font.Dispose();
+        // Draw borders only if border width > 0
+        if (_borderWidth > 0)
+        {
+            // Draw all horizontal grid lines (top + bottom of each row)
+            foreach (var yPos in horizontalLines)
+            {
+                _editor.Line(tableX, yPos, tableX + tableWidth, yPos, _borderColor, _borderWidth);
+            }
 
-        return currentY - rowHeight;
+            // Draw all vertical grid lines (left + right of each column)
+            double xPos = tableX;
+            _editor.Line(xPos, tableY, xPos, currentY, _borderColor, _borderWidth); // Left border
+
+            for (int i = 0; i < columnWidths.Length; i++)
+            {
+                xPos += columnWidths[i];
+                _editor.Line(xPos, tableY, xPos, currentY, _borderColor, _borderWidth);
+            }
+        }
+
+        return _editor;
     }
 }
