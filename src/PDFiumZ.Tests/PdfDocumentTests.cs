@@ -231,4 +231,26 @@ public class PdfDocumentTests : IDisposable
         // Verify file is larger than empty document (watermark adds content)
         Assert.True(new FileInfo(filePath).Length > 1000);
     }
+
+    [Fact]
+    public void AddHeaderFooter_ShouldAddTextToAllPages()
+    {
+        using var document = PdfDocument.CreateNew();
+        document.CreatePage(595, 842).Dispose();
+        document.CreatePage(595, 842).Dispose();
+
+        document.AddHeaderFooter("Header {page}/{pages}", "Footer {page}");
+
+        using var page1 = document.GetPage(0);
+        using var page2 = document.GetPage(1);
+
+        var text1 = page1.ExtractText();
+        var text2 = page2.ExtractText();
+
+        Assert.Contains("Header 1/2", text1);
+        Assert.Contains("Footer 1", text1);
+
+        Assert.Contains("Header 2/2", text2);
+        Assert.Contains("Footer 2", text2);
+    }
 }
