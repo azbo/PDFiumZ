@@ -59,7 +59,7 @@ public class FluentDocument : IDisposable
     {
         if (_defaultFont == null)
         {
-            _defaultFont = PdfFont.LoadStandardFont(_document, PdfStandardFont.Helvetica);
+            _defaultFont = PdfFont.Load(_document, PdfStandardFont.Helvetica);
         }
 
         var pageSize = new Size(pageWidth, pageHeight);
@@ -107,9 +107,9 @@ public class FluentDocument : IDisposable
     /// <summary>
     /// Saves the generated document to a file.
     /// </summary>
-    public void SaveToFile(string filePath)
+    public void Save(string filePath)
     {
-        _document.SaveToFile(filePath);
+        _document.Save(filePath);
     }
 
     public void Dispose()

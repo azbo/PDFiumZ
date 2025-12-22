@@ -199,7 +199,7 @@ public class PdfAnnotationTests : IDisposable
         // Assert
         Assert.NotNull(freeText);
         Assert.Equal(PdfAnnotationType.FreeText, freeText.Type);
-        Assert.Equal(text, freeText.Text);
+        Assert.Equal(text, freeText.Contents);
         
         // Verify bounds
         var bounds = freeText.Bounds;
@@ -230,11 +230,11 @@ public class PdfAnnotationTests : IDisposable
         var ink = PdfInkAnnotation.Create(page, paths, color: 0xFF0000FF, width: 2.0);
         var freeText = PdfFreeTextAnnotation.Create(page, new PdfRectangle(100, 500, 200, 50), "Hello");
 
-        var annot0 = page.GetAnnotation(0);
+        var annot0 = page.GetAnnotations(0).First();
         Assert.NotNull(annot0);
         Assert.IsType<PdfInkAnnotation>(annot0);
 
-        var annot1 = page.GetAnnotation(1);
+        var annot1 = page.GetAnnotations(1).First();
         Assert.NotNull(annot1);
         Assert.IsType<PdfFreeTextAnnotation>(annot1);
 
@@ -319,7 +319,7 @@ public class PdfAnnotationTests : IDisposable
         var circle = PdfCircleAnnotation.Create(page, new PdfRectangle(200, 200, 50, 50));
 
         // Assert
-        Assert.Equal(2, page.GetAnnotationCount());
+        Assert.Equal(2, page.AnnotationCount);
 
         square.Dispose();
         circle.Dispose();
@@ -427,14 +427,14 @@ public class PdfAnnotationTests : IDisposable
             var circle = PdfCircleAnnotation.Create(page, new PdfRectangle(200, 200, 50, 50));
             square.Dispose();
             circle.Dispose();
-            document.SaveToFile(filePath);
+            document.Save(filePath);
         }
 
         // Act - Reopen and check
         using (var document = PdfDocument.Open(filePath))
         {
-            using var page = document.GetPage(0);
-            var count = page.GetAnnotationCount();
+            using var page = document.GetPages(0).First();
+            var count = page.AnnotationCount;
 
             // Assert
             Assert.Equal(2, count);
@@ -452,12 +452,13 @@ public class PdfAnnotationTests : IDisposable
         square.Dispose();
         circle.Dispose();
 
-        Assert.Equal(2, page.GetAnnotationCount());
+        Assert.Equal(2, page.AnnotationCount);
 
         // Act
-        page.RemoveAnnotation(0);
+        page.RemoveAnnotations(0);
 
         // Assert
-        Assert.Equal(1, page.GetAnnotationCount());
+        Assert.Equal(1, page.AnnotationCount);
     }
 }
+

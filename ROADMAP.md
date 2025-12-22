@@ -42,7 +42,7 @@
 ```csharp
 var doc = PdfDocument.CreateNew();
 var page = doc.CreatePage(PdfPageSize.A4);
-doc.SaveToFile("new.pdf");
+doc.Save("new.pdf");
 ```
 
 ### 2. PDF 水印功能 ⭐⭐⭐
@@ -202,3 +202,4 @@ Console.WriteLine($"Can Print: {security.CanPrint}");
 - 数字签名功能
 
 **长期愿景**: 成为 .NET 最佳 PDF 库
+

@@ -79,6 +79,7 @@ public sealed class PdfUnderlineAnnotation : PdfAnnotation
             if (result != 0)
             {
                 // Convert quad points to rectangle
+                // Quad points are in order: bottom-left, bottom-right, top-left, top-right
                 var x1 = quad.X1;
                 var y1 = quad.Y1;
                 var x2 = quad.X2;
@@ -116,6 +117,7 @@ public sealed class PdfUnderlineAnnotation : PdfAnnotation
 
         ThrowIfDisposed();
 
+        // Clear existing attachment points
         var existingCount = (int)fpdf_annot.FPDFAnnotCountAttachmentPoints(_handle!);
 
         // Add each rectangle as a quad
@@ -127,10 +129,12 @@ public sealed class PdfUnderlineAnnotation : PdfAnnotation
             int result;
             if (i < existingCount)
             {
+                // Update existing quad
                 result = fpdf_annot.FPDFAnnotSetAttachmentPoints(_handle!, (ulong)i, quad);
             }
             else
             {
+                // Append new quad
                 result = fpdf_annot.FPDFAnnotAppendAttachmentPoints(_handle!, quad);
             }
 

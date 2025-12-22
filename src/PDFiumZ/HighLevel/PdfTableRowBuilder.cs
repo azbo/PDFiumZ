@@ -31,22 +31,11 @@ public sealed class PdfTableRowBuilder
     }
 
     /// <summary>
-    /// Adds a cell with text content.
+    /// Adds one or more cells to the row.
     /// </summary>
-    /// <param name="text">Cell text content.</param>
+    /// <param name="texts">Cell text contents.</param>
     /// <returns>This instance for fluent chaining.</returns>
-    public PdfTableRowBuilder Cell(string text)
-    {
-        _cells.Add(text ?? string.Empty);
-        return this;
-    }
-
-    /// <summary>
-    /// Adds multiple cells from an array.
-    /// </summary>
-    /// <param name="texts">Array of cell texts.</param>
-    /// <returns>This instance for fluent chaining.</returns>
-    public PdfTableRowBuilder AddCells(params string[] texts)
+    public PdfTableRowBuilder Cell(params string[] texts)
     {
         if (texts != null)
         {

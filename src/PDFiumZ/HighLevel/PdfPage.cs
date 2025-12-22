@@ -119,33 +119,20 @@ public sealed unsafe class PdfPage : IDisposable
     }
 
     /// <summary>
-    /// Renders the page to a bitmap image with default options.
+    /// Renders the page to a bitmap image.
     /// </summary>
+    /// <param name="options">Rendering configuration. Omit to use default options.</param>
     /// <returns>A <see cref="PdfImage"/> containing the rendered result.</returns>
     /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
     /// <exception cref="PdfRenderException">Rendering failed.</exception>
-    public PdfImage RenderToImage()
-    {
-        return RenderToImage(RenderOptions.Default);
-    }
-
-    /// <summary>
-    /// Renders the page to a bitmap image with specified options.
-    /// </summary>
-    /// <param name="options">Rendering configuration.</param>
-    /// <returns>A <see cref="PdfImage"/> containing the rendered result.</returns>
-    /// <exception cref="ArgumentNullException">options is null.</exception>
-    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    /// <exception cref="PdfRenderException">Rendering failed.</exception>
-    public PdfImage RenderToImage(RenderOptions options)
+    public PdfImage RenderToImage(RenderOptions? options = null)
     {
         ThrowIfDisposed();
-        if (options is null)
-            throw new ArgumentNullException(nameof(options));
+        var opt = options ?? RenderOptions.Default;
 
         // Apply options to calculate final dimensions
-        var (width, height) = options.CalculateDimensions(Width, Height);
-        var format = options.HasTransparency ? FPDFBitmapFormat.BGRA : FPDFBitmapFormat.BGRx;
+        var (width, height) = opt.CalculateDimensions(Width, Height);
+        var format = opt.HasTransparency ? FPDFBitmapFormat.BGRA : FPDFBitmapFormat.BGRx;
 
         // Create bitmap
         var bitmap = fpdfview.FPDFBitmapCreateEx(
@@ -161,19 +148,19 @@ public sealed unsafe class PdfPage : IDisposable
         try
         {
             // Fill background if not transparent
-            if (!options.HasTransparency)
+            if (!opt.HasTransparency)
             {
                 fpdfview.FPDFBitmapFillRect(
-                    bitmap, 0, 0, (int)width, (int)height, options.BackgroundColor);
+                    bitmap, 0, 0, (int)width, (int)height, opt.BackgroundColor);
             }
 
             // Prepare matrix and clipping
-            using var matrix = options.CreateMatrix(Width, Height);
-            using var clipping = options.CreateClipping(width, height);
+            using var matrix = opt.CreateMatrix(Width, Height);
+            using var clipping = opt.CreateClipping(width, height);
 
             // Render
             fpdfview.FPDF_RenderPageBitmapWithMatrix(
-                bitmap, _handle!, matrix, clipping, (int)options.Flags);
+                bitmap, _handle!, matrix, clipping, (int)opt.Flags);
 
             // Wrap in managed object
             return new PdfImage(bitmap, (int)width, (int)height);
@@ -187,29 +174,15 @@ public sealed unsafe class PdfPage : IDisposable
     }
 
     /// <summary>
-    /// Asynchronously renders the page to a bitmap image with default options.
+    /// Asynchronously renders the page to a bitmap image.
     /// </summary>
+    /// <param name="options">Rendering configuration. Omit to use default options.</param>
     /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a <see cref="PdfImage"/> with the rendered result.</returns>
     /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
     /// <exception cref="PdfRenderException">Rendering failed.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    public Task<PdfImage> RenderToImageAsync(CancellationToken cancellationToken = default)
-    {
-        return RenderToImageAsync(RenderOptions.Default, cancellationToken);
-    }
-
-    /// <summary>
-    /// Asynchronously renders the page to a bitmap image with specified options.
-    /// </summary>
-    /// <param name="options">Rendering configuration.</param>
-    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a <see cref="PdfImage"/> with the rendered result.</returns>
-    /// <exception cref="ArgumentNullException">options is null.</exception>
-    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    /// <exception cref="PdfRenderException">Rendering failed.</exception>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    public Task<PdfImage> RenderToImageAsync(RenderOptions options, CancellationToken cancellationToken = default)
+    public Task<PdfImage> RenderToImageAsync(RenderOptions? options = null, CancellationToken cancellationToken = default)
     {
         return Task.Run(() =>
         {
@@ -245,6 +218,23 @@ public sealed unsafe class PdfPage : IDisposable
         {
             return new string((char*)pBuffer, 0, bytesWritten - 1);
         }
+    }
+
+    /// <summary>
+    /// Asynchronously extracts text content from the page.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the extracted text.</returns>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to load text from the page.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public Task<string> ExtractTextAsync(CancellationToken cancellationToken = default)
+    {
+        return Task.Run(() =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            return ExtractText();
+        }, cancellationToken);
     }
 
     /// <summary>
@@ -321,6 +311,28 @@ public sealed unsafe class PdfPage : IDisposable
     }
 
     /// <summary>
+    /// Asynchronously searches for text on the page and returns all matches.
+    /// </summary>
+    /// <param name="searchText">Text to search for.</param>
+    /// <param name="matchCase">If true, performs case-sensitive search.</param>
+    /// <param name="matchWholeWord">If true, only matches whole words.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of search results.</returns>
+    /// <exception cref="ArgumentNullException">searchText is null.</exception>
+    /// <exception cref="ArgumentException">searchText is empty.</exception>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to load text or perform search.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public Task<IReadOnlyList<PdfTextSearchResult>> SearchTextAsync(string searchText, bool matchCase = false, bool matchWholeWord = false, CancellationToken cancellationToken = default)
+    {
+        return Task.Run(() =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            return SearchText(searchText, matchCase, matchWholeWord);
+        }, cancellationToken);
+    }
+
+    /// <summary>
     /// Gets text for a specific character range.
     /// </summary>
     private string GetTextRange(FpdfTextpageT textPage, int startIndex, int count)
@@ -363,92 +375,67 @@ public sealed unsafe class PdfPage : IDisposable
     }
 
     /// <summary>
-    /// Gets the number of form field annotations on this page.
+    /// Gets form field annotations from the page.
     /// </summary>
-    /// <returns>The count of form field annotations.</returns>
-    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    public int GetFormFieldCount()
-    {
-        ThrowIfDisposed();
-        return fpdf_annot.FPDFPageGetAnnotCount(_handle!);
-    }
-
-    /// <summary>
-    /// Gets a form field annotation at the specified index.
-    /// Note: This returns form fields as well as other annotations. Check FieldType to verify it's a form field.
-    /// </summary>
-    /// <param name="index">Zero-based annotation index.</param>
-    /// <returns>A <see cref="PdfFormField"/> instance, or null if the annotation is not a form field.</returns>
+    /// <param name="index">Optional zero-based annotation index to get a specific form field. If null, gets all form fields.</param>
+    /// <returns>An enumerable of form fields.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
     /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    public PdfFormField? GetFormField(int index)
+    public IEnumerable<PdfFormField> GetFormFields(int? index = null)
+    {
+        if (index.HasValue)
+        {
+            var field = GetAnnotation(index.Value) as PdfFormField;
+            return field != null ? [field] : [];
+        }
+        return GetAnnotations<PdfFormField>();
+    }
+
+    /// <summary>
+    /// Gets hyperlinks from the page.
+    /// </summary>
+    /// <param name="x">Optional X coordinate to get a link at a specific point.</param>
+    /// <param name="y">Optional Y coordinate to get a link at a specific point.</param>
+    /// <returns>An enumerable of links.</returns>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public IEnumerable<PdfLink> GetLinks(double? x = null, double? y = null)
     {
         ThrowIfDisposed();
 
-        var annotCount = GetFormFieldCount();
-        if (index < 0 || index >= annotCount)
-            throw new ArgumentOutOfRangeException(nameof(index),
-                $"Annotation index {index} is out of range (0-{annotCount - 1}).");
-
-        var annotHandle = fpdf_annot.FPDFPageGetAnnot(_handle!, index);
-        if (annotHandle is null || annotHandle.__Instance == IntPtr.Zero)
-            return null;
-
-        // Create form handle for this document
-        var formHandle = _document.CreateFormHandle();
-        if (formHandle is null || formHandle.__Instance == IntPtr.Zero)
+        if (x.HasValue && y.HasValue)
         {
-            fpdf_annot.FPDFPageCloseAnnot(annotHandle);
-            return null;
+            var link = GetLinkAtPoint(x.Value, y.Value);
+            if (link != null)
+                yield return link;
+            yield break;
         }
 
-        try
+        foreach (var link in EnumerateLinks())
         {
-            // Check if this is a form field
-            var fieldType = fpdf_annot.FPDFAnnotGetFormFieldType(formHandle, annotHandle);
-            if (fieldType < 0) // Not a form field
-            {
-                fpdf_annot.FPDFPageCloseAnnot(annotHandle);
-                _document.DestroyFormHandle(formHandle);
-                return null;
-            }
-
-            return new PdfFormField(annotHandle, formHandle, this, index);
-        }
-        catch
-        {
-            fpdf_annot.FPDFPageCloseAnnot(annotHandle);
-            _document.DestroyFormHandle(formHandle);
-            throw;
+            yield return link;
         }
     }
 
-    /// <summary>
-    /// Gets all form field annotations on this page.
-    /// </summary>
-    /// <returns>An enumerable of form fields.</returns>
-    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    public IEnumerable<PdfFormField> GetFormFields()
+    private IEnumerable<PdfLink> EnumerateLinks()
     {
-        var count = GetFormFieldCount();
-        for (int i = 0; i < count; i++)
+        var links = new List<PdfLink>();
+        unsafe
         {
-            var field = GetFormField(i);
-            if (field != null)
+            int pos = 0;
+            while (true)
             {
-                yield return field;
+                IntPtr linkPtr = IntPtr.Zero;
+                int result = fpdf_doc.__Internal.FPDFLinkEnumerate(_handle!.__Instance, &pos, (IntPtr)(&linkPtr));
+                if (result == 0 || linkPtr == IntPtr.Zero)
+                    break;
+
+                links.Add(new PdfLink(FpdfLinkT.__GetOrCreateInstance(linkPtr, false), this));
             }
         }
+        return links;
     }
 
-    /// <summary>
-    /// Gets a hyperlink at the specified point on the page.
-    /// </summary>
-    /// <param name="x">X coordinate in page coordinate system.</param>
-    /// <param name="y">Y coordinate in page coordinate system.</param>
-    /// <returns>A <see cref="PdfLink"/> instance, or null if no link exists at the point.</returns>
-    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    public PdfLink? GetLinkAtPoint(double x, double y)
+    private PdfLink? GetLinkAtPoint(double x, double y)
     {
         ThrowIfDisposed();
 
@@ -460,29 +447,47 @@ public sealed unsafe class PdfPage : IDisposable
     }
 
     /// <summary>
-    /// Gets the number of page objects (images, text, paths, etc.) on this page.
+    /// Gets page objects (images, text, paths, etc.) from the page.
     /// </summary>
-    /// <returns>The count of page objects.</returns>
+    /// <param name="index">Optional zero-based object index to get a specific object. If null, gets all objects.</param>
+    /// <returns>An enumerable of page objects.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
     /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    public int GetPageObjectCount()
+    public IEnumerable<PdfPageObject> GetPageObjects(int? index = null)
     {
         ThrowIfDisposed();
-        return fpdf_edit.FPDFPageCountObjects(_handle!);
+
+        if (index.HasValue)
+        {
+            yield return GetPageObject(index.Value);
+            yield break;
+        }
+
+        var count = PageObjectCount;
+        for (int i = 0; i < count; i++)
+        {
+            yield return GetPageObject(i);
+        }
     }
 
     /// <summary>
-    /// Gets information about a page object at the specified index.
+    /// Gets the number of page objects (images, text, paths, etc.) on this page.
     /// </summary>
-    /// <param name="index">Zero-based object index.</param>
-    /// <returns>A <see cref="PdfPageObject"/> with object information.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
     /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    /// <exception cref="PdfException">Failed to get page object.</exception>
-    public PdfPageObject GetPageObject(int index)
+    public int PageObjectCount
+    {
+        get
+        {
+            ThrowIfDisposed();
+            return fpdf_edit.FPDFPageCountObjects(_handle!);
+        }
+    }
+
+    private PdfPageObject GetPageObject(int index)
     {
         ThrowIfDisposed();
 
-        var objectCount = GetPageObjectCount();
+        var objectCount = PageObjectCount;
         if (index < 0 || index >= objectCount)
             throw new ArgumentOutOfRangeException(nameof(index),
                 $"Object index {index} is out of range (0-{objectCount - 1}).");
@@ -497,74 +502,40 @@ public sealed unsafe class PdfPage : IDisposable
     }
 
     /// <summary>
-    /// Extracts all images from the page.
+    /// Extracts images from the page.
     /// </summary>
+    /// <param name="index">Optional zero-based page object index to extract a specific image. If null, extracts all images.</param>
     /// <returns>A list of extracted images.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
     /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    public IReadOnlyList<PdfExtractedImage> ExtractImages()
+    public IReadOnlyList<PdfExtractedImage> ExtractImages(int? index = null)
     {
         ThrowIfDisposed();
 
+        if (index.HasValue)
+        {
+            var extracted = ExtractImage(index.Value);
+            return extracted != null ? new[] { extracted } : Array.Empty<PdfExtractedImage>();
+        }
+
         var images = new List<PdfExtractedImage>();
-        var objectCount = GetPageObjectCount();
+        var objectCount = PageObjectCount;
 
         for (int i = 0; i < objectCount; i++)
         {
-            try
+            var extracted = ExtractImage(i);
+            if (extracted != null)
             {
-                var objectHandle = fpdf_edit.FPDFPageGetObject(_handle!, i);
-                if (objectHandle is null || objectHandle.__Instance == IntPtr.Zero)
-                    continue;
-
-                var objectType = fpdf_edit.FPDFPageObjGetType(objectHandle);
-                if (objectType != 3) // FPDF_PAGEOBJ_IMAGE = 3
-                    continue;
-
-                // Get rendered bitmap for this image object
-                var bitmapHandle = fpdf_edit.FPDFImageObjGetRenderedBitmap(
-                    _document._handle!, _handle!, objectHandle);
-
-                if (bitmapHandle is null || bitmapHandle.__Instance == IntPtr.Zero)
-                    continue;
-
-                // Get bitmap dimensions
-                var width = fpdfview.FPDFBitmapGetWidth(bitmapHandle);
-                var height = fpdfview.FPDFBitmapGetHeight(bitmapHandle);
-
-                if (width <= 0 || height <= 0)
-                {
-                    fpdfview.FPDFBitmapDestroy(bitmapHandle);
-                    continue;
-                }
-
-                // Wrap in managed objects
-                var pdfImage = new PdfImage(bitmapHandle, width, height);
-                var extractedImage = new PdfExtractedImage(i, pdfImage);
-
-                images.Add(extractedImage);
-            }
-            catch
-            {
-                // Skip objects that fail to extract
-                continue;
+                images.Add(extracted);
             }
         }
 
         return images;
     }
 
-    /// <summary>
-    /// Extracts a specific image object from the page.
-    /// </summary>
-    /// <param name="objectIndex">Zero-based page object index.</param>
-    /// <returns>The extracted image, or null if the object is not an image.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
-    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    public PdfExtractedImage? ExtractImage(int objectIndex)
+    private PdfExtractedImage? ExtractImage(int objectIndex)
     {
-        ThrowIfDisposed();
-
-        var objectCount = GetPageObjectCount();
+        var objectCount = PageObjectCount;
         if (objectIndex < 0 || objectIndex >= objectCount)
             throw new ArgumentOutOfRangeException(nameof(objectIndex),
                 $"Object index {objectIndex} is out of range (0-{objectCount - 1}).");
@@ -624,24 +595,56 @@ public sealed unsafe class PdfPage : IDisposable
     #region Annotation Management
 
     /// <summary>
-    /// Gets the number of annotations on this page.
+    /// Gets annotations from the page, optionally filtered by type and/or index.
     /// </summary>
-    /// <returns>The number of annotations.</returns>
+    /// <typeparam name="T">The type of annotation to retrieve. Defaults to <see cref="PdfAnnotation"/>.</typeparam>
+    /// <param name="index">Optional zero-based annotation index to get a specific annotation. If null, gets all annotations.</param>
+    /// <returns>An enumerable of annotations.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
     /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    public int GetAnnotationCount()
+    public IEnumerable<T> GetAnnotations<T>(int? index = null) where T : PdfAnnotation
     {
         ThrowIfDisposed();
-        return fpdf_annot.FPDFPageGetAnnotCount(_handle!);
+
+        if (index.HasValue)
+        {
+            var annotation = GetAnnotation(index.Value);
+            if (annotation is T typedAnnotation)
+                yield return typedAnnotation;
+            yield break;
+        }
+
+        var count = AnnotationCount;
+        for (int i = 0; i < count; i++)
+        {
+            var annotation = GetAnnotation(i);
+            if (annotation is T typedAnnotation)
+                yield return typedAnnotation;
+        }
     }
 
     /// <summary>
-    /// Gets an annotation by its index.
+    /// Gets all annotations on the page.
     /// </summary>
-    /// <param name="index">The zero-based index of the annotation.</param>
-    /// <returns>The annotation at the specified index, or null if not found or unsupported type.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">index is negative.</exception>
+    /// <param name="index">Optional zero-based annotation index to get a specific annotation.</param>
+    /// <returns>An enumerable of annotations.</returns>
     /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    public PdfAnnotation? GetAnnotation(int index)
+    public IEnumerable<PdfAnnotation> GetAnnotations(int? index = null) => GetAnnotations<PdfAnnotation>(index);
+
+    /// <summary>
+    /// Gets the number of annotations on this page.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    public int AnnotationCount
+    {
+        get
+        {
+            ThrowIfDisposed();
+            return fpdf_annot.FPDFPageGetAnnotCount(_handle!);
+        }
+    }
+
+    private PdfAnnotation? GetAnnotation(int index)
     {
         if (index < 0)
             throw new ArgumentOutOfRangeException(nameof(index), "Index must be non-negative.");
@@ -669,79 +672,65 @@ public sealed unsafe class PdfPage : IDisposable
             PdfAnnotationType.StrikeOut => new PdfStrikeOutAnnotation(handle, this, index),
             PdfAnnotationType.Ink => new PdfInkAnnotation(handle, this, index),
             PdfAnnotationType.FreeText => new PdfFreeTextAnnotation(handle, this, index),
+            PdfAnnotationType.Widget => new PdfFormField(handle, _document.CreateFormHandle(), this, index),
             // Add other annotation types as they are implemented
             _ => new GenericAnnotation(handle, this, annotType, index)
         };
     }
 
     /// <summary>
-    /// Gets all annotations on the page.
+    /// Removes annotations from the page by their indices.
+    /// Indices are processed in descending order to maintain correct mapping during removal.
     /// </summary>
-    /// <returns>An enumerable of all annotations on the page.</returns>
+    /// <param name="indices">The zero-based indices of the annotations to remove.</param>
+    /// <exception cref="ArgumentNullException">indices is null.</exception>
     /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    public IEnumerable<PdfAnnotation> GetAnnotations()
+    /// <exception cref="PdfException">Failed to remove one or more annotations.</exception>
+    public void RemoveAnnotations(params int[] indices)
     {
+        if (indices is null)
+            throw new ArgumentNullException(nameof(indices));
+
         ThrowIfDisposed();
 
-        var count = GetAnnotationCount();
-        for (int i = 0; i < count; i++)
+        // Sort indices in descending order to avoid index shifts during removal
+        var sortedIndices = indices.Distinct().OrderByDescending(i => i).ToArray();
+
+        foreach (var index in sortedIndices)
         {
-            var annotation = GetAnnotation(i);
-            if (annotation is not null)
-                yield return annotation;
+            if (index < 0)
+                continue;
+
+            var result = fpdf_annot.FPDFPageRemoveAnnot(_handle!, index);
+            if (result == 0)
+            {
+                throw new PdfException($"Failed to remove annotation at index {index}.");
+            }
         }
     }
 
     /// <summary>
-    /// Gets all annotations of a specific type.
+    /// Removes the specified annotations from the page.
     /// </summary>
-    /// <typeparam name="T">The type of annotation to retrieve.</typeparam>
-    /// <returns>An enumerable of annotations of the specified type.</returns>
+    /// <param name="annotations">The annotations to remove.</param>
+    /// <exception cref="ArgumentNullException">annotations is null.</exception>
     /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    public IEnumerable<T> GetAnnotations<T>() where T : PdfAnnotation
+    /// <exception cref="PdfException">Failed to remove one or more annotations.</exception>
+    public void RemoveAnnotations(params PdfAnnotation[] annotations)
     {
-        return GetAnnotations().OfType<T>();
-    }
+        if (annotations is null)
+            throw new ArgumentNullException(nameof(annotations));
 
-    /// <summary>
-    /// Removes an annotation from the page by its index.
-    /// </summary>
-    /// <param name="index">The zero-based index of the annotation to remove.</param>
-    /// <exception cref="ArgumentOutOfRangeException">index is negative.</exception>
-    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    /// <exception cref="PdfException">Failed to remove annotation.</exception>
-    public void RemoveAnnotation(int index)
-    {
-        if (index < 0)
-            throw new ArgumentOutOfRangeException(nameof(index), "Index must be non-negative.");
+        var indices = annotations
+            .Where(a => a != null && a.Index >= 0)
+            .Select(a => a.Index)
+            .ToArray();
 
-        ThrowIfDisposed();
-
-        var result = fpdf_annot.FPDFPageRemoveAnnot(_handle!, index);
-        if (result == 0)
+        if (indices.Length > 0)
         {
-            throw new PdfException($"Failed to remove annotation at index {index}.");
+            RemoveAnnotations(indices);
         }
     }
-
-    /// <summary>
-    /// Removes the specified annotation from the page.
-    /// </summary>
-    /// <param name="annotation">The annotation to remove.</param>
-    /// <exception cref="ArgumentNullException">annotation is null.</exception>
-    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    /// <exception cref="PdfException">Failed to remove annotation.</exception>
-    public void RemoveAnnotation(PdfAnnotation annotation)
-    {
-        if (annotation is null)
-            throw new ArgumentNullException(nameof(annotation));
-
-        if (annotation.Index < 0)
-            throw new ArgumentException("Annotation is not added to a page.", nameof(annotation));
-
-        RemoveAnnotation(annotation.Index);
-    }
-
     #endregion
 
     #region Content Editing

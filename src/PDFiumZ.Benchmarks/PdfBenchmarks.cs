@@ -64,7 +64,7 @@ public class PdfBenchmarks
             using var page = doc.CreatePage(595, 842); // A4 size
 
             // Add some text content for more realistic testing
-            var font = PdfFont.LoadStandardFont(doc, PdfStandardFont.Helvetica);
+            var font = PdfFont.Load(doc, PdfStandardFont.Helvetica);
             using var editor = page.BeginEdit();
 
             editor.AddText($"Page {i + 1}", 50, 750, font, 24);
@@ -79,7 +79,7 @@ public class PdfBenchmarks
             font.Dispose();
         }
 
-        doc.SaveToFile(path);
+        doc.Save(path);
     }
 
     // ===== Document Loading Benchmarks =====
@@ -209,11 +209,11 @@ public class PdfBenchmarks
         using var split = doc.Split(0, Math.Min(5, doc.PageCount));
     }
 
-    [Benchmark(Description = "Rotate all pages")]
-    public void RotateAllPages()
+    [Benchmark(Description = "Rotate pages")]
+    public void RotatePages()
     {
         using var doc = PdfDocument.Open(_mediumPdfPath);
-        doc.RotateAllPages(PdfRotation.Rotate90);
+        doc.RotatePages(PdfRotation.Rotate90);
     }
 
     // ===== Save Operations Benchmarks =====
@@ -223,7 +223,7 @@ public class PdfBenchmarks
     {
         using var doc = PdfDocument.Open(_smallPdfPath);
         var tempPath = Path.Combine("benchmark-temp", $"save-test-{Guid.NewGuid()}.pdf");
-        doc.SaveToFile(tempPath);
+        doc.Save(tempPath);
         File.Delete(tempPath);
     }
 
@@ -232,7 +232,7 @@ public class PdfBenchmarks
     {
         using var doc = PdfDocument.Open(_mediumPdfPath);
         var tempPath = Path.Combine("benchmark-temp", $"save-test-{Guid.NewGuid()}.pdf");
-        doc.SaveToFile(tempPath);
+        doc.Save(tempPath);
         File.Delete(tempPath);
     }
 
@@ -243,7 +243,7 @@ public class PdfBenchmarks
     {
         using var doc = PdfDocument.CreateNew();
         using var page = doc.CreatePage(595, 842);
-        var font = PdfFont.LoadStandardFont(doc, PdfStandardFont.Helvetica);
+        var font = PdfFont.Load(doc, PdfStandardFont.Helvetica);
 
         using (var editor = page.BeginEdit())
         {
@@ -299,7 +299,7 @@ public class PdfBenchmarks
             using var page = doc.GetPage(0);
             using var image = page.RenderToImage();
 
-            doc.SaveToFile(tempPath);
+            doc.Save(tempPath);
         }
 
         File.Delete(tempPath);
@@ -313,13 +313,14 @@ public class PdfBenchmarks
         using (var doc = PdfDocument.Open(_mediumPdfPath))
         {
             // Simulate typical document processing
-            doc.InsertBlankPage(0, 595, 842);
+            doc.CreatePage(595, 842, 0);
             doc.RotatePages(PdfRotation.Rotate90, 0);
             doc.AddTextWatermark("PROCESSED", WatermarkPosition.Center);
 
-            doc.SaveToFile(tempPath);
+            doc.Save(tempPath);
         }
 
         File.Delete(tempPath);
     }
 }
+

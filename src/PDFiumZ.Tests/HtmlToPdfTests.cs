@@ -43,7 +43,7 @@ public class HtmlToPdfTests : IDisposable
         using var page = document.CreatePageFromHtml(html);
 
         Assert.NotNull(page);
-        document.SaveToFile(Path.Combine(TestOutputDir, "html-with-styles.pdf"));
+        document.Save(Path.Combine(TestOutputDir, "html-with-styles.pdf"));
     }
 
     [Fact]
@@ -119,7 +119,7 @@ public class HtmlToPdfTests : IDisposable
         using var page = document.CreatePageFromHtml(html);
 
         Assert.NotNull(page);
-        document.SaveToFile(Path.Combine(TestOutputDir, "html-complex.pdf"));
+        document.Save(Path.Combine(TestOutputDir, "html-complex.pdf"));
     }
 
     [Fact]
@@ -139,7 +139,7 @@ public class HtmlToPdfTests : IDisposable
         using var page = document.CreatePageFromHtml(html);
 
         Assert.NotNull(page);
-        document.SaveToFile(Path.Combine(TestOutputDir, "html-ul.pdf"));
+        document.Save(Path.Combine(TestOutputDir, "html-ul.pdf"));
     }
 
     [Fact]
@@ -159,7 +159,7 @@ public class HtmlToPdfTests : IDisposable
         using var page = document.CreatePageFromHtml(html);
 
         Assert.NotNull(page);
-        document.SaveToFile(Path.Combine(TestOutputDir, "html-ol.pdf"));
+        document.Save(Path.Combine(TestOutputDir, "html-ol.pdf"));
     }
 
     [Fact]
@@ -184,7 +184,7 @@ public class HtmlToPdfTests : IDisposable
         using var page = document.CreatePageFromHtml(html);
 
         Assert.NotNull(page);
-        document.SaveToFile(Path.Combine(TestOutputDir, "html-nested-lists.pdf"));
+        document.Save(Path.Combine(TestOutputDir, "html-nested-lists.pdf"));
     }
 
     [Fact]
@@ -208,7 +208,7 @@ public class HtmlToPdfTests : IDisposable
         using var page = document.CreatePageFromHtml(html);
 
         Assert.NotNull(page);
-        document.SaveToFile(Path.Combine(TestOutputDir, "html-mixed-lists.pdf"));
+        document.Save(Path.Combine(TestOutputDir, "html-mixed-lists.pdf"));
     }
 
     [Fact]
@@ -229,6 +229,7 @@ public class HtmlToPdfTests : IDisposable
         using var page = document.CreatePageFromHtml(html);
 
         Assert.NotNull(page);
-        document.SaveToFile(Path.Combine(TestOutputDir, "html-lists-formatting.pdf"));
+        document.Save(Path.Combine(TestOutputDir, "html-lists-formatting.pdf"));
     }
 }
+

@@ -46,7 +46,7 @@ try
     
     using (var editor = page.BeginEdit())
     {
-        var helvetica = PdfFont.LoadStandardFont(document, PdfStandardFont.Helvetica);
+        var helvetica = PdfFont.Load(document, PdfStandardFont.Helvetica);
         editor.AddText("Direct Image Test", 50, 750, helvetica, 24);
         
         // Add image directly
@@ -57,10 +57,11 @@ try
         editor.GenerateContent();
     }
     
-    document.SaveToFile("output/direct-image-test.pdf");
+    document.Save("output/direct-image-test.pdf");
     Console.WriteLine("Saved: direct-image-test.pdf");
 }
 finally
 {
     PdfiumLibrary.Shutdown();
 }
+

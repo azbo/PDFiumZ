@@ -15,23 +15,14 @@ public sealed class PdfColumnDefinition
     public int Count => _columns.Count;
 
     /// <summary>
-    /// Adds a column with automatic width (equal distribution of remaining space).
+    /// Adds a column to the table.
     /// </summary>
+    /// <param name="width">Column width in points. Omit or set to null for automatic width.</param>
     /// <returns>This instance for fluent chaining.</returns>
-    public PdfColumnDefinition Add()
+    /// <exception cref="System.ArgumentOutOfRangeException">Width is not positive.</exception>
+    public PdfColumnDefinition Add(double? width = null)
     {
-        _columns.Add(null);
-        return this;
-    }
-
-    /// <summary>
-    /// Adds a column with fixed width in points.
-    /// </summary>
-    /// <param name="width">Column width in points.</param>
-    /// <returns>This instance for fluent chaining.</returns>
-    public PdfColumnDefinition Add(double width)
-    {
-        if (width <= 0)
+        if (width.HasValue && width.Value <= 0)
             throw new System.ArgumentOutOfRangeException(nameof(width), "Column width must be positive.");
 
         _columns.Add(width);

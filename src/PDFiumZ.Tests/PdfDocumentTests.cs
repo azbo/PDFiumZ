@@ -111,19 +111,16 @@ public class PdfDocumentTests : IDisposable
     }
 
     [Fact]
-    public void SaveToFile_ShouldCreateValidPDF()
+    public void Save_ShouldCreateValidPDF()
     {
-        // Arrange
         using var document = PdfDocument.CreateNew();
-        document.CreatePage(595, 842).Dispose();
-        var filePath = Path.Combine(TestOutputDir, "test-save.pdf");
+        using var page = document.CreatePage(595, 842);
 
-        // Act
-        document.SaveToFile(filePath);
+        var tempFile = Path.GetTempFileName();
+        document.Save(tempFile);
 
-        // Assert
-        Assert.True(File.Exists(filePath));
-        Assert.True(new FileInfo(filePath).Length > 0);
+        Assert.True(File.Exists(tempFile));
+        Assert.True(new FileInfo(tempFile).Length > 0);
     }
 
     [Fact]
@@ -137,14 +134,14 @@ public class PdfDocumentTests : IDisposable
         using (var doc1 = PdfDocument.CreateNew())
         {
             doc1.CreatePage(595, 842).Dispose();
-            doc1.SaveToFile(file1);
+            doc1.Save(file1);
         }
 
         using (var doc2 = PdfDocument.CreateNew())
         {
             doc2.CreatePage(595, 842).Dispose();
             doc2.CreatePage(595, 842).Dispose();
-            doc2.SaveToFile(file2);
+            doc2.Save(file2);
         }
 
         using (var doc3 = PdfDocument.CreateNew())
@@ -152,7 +149,7 @@ public class PdfDocumentTests : IDisposable
             doc3.CreatePage(595, 842).Dispose();
             doc3.CreatePage(595, 842).Dispose();
             doc3.CreatePage(595, 842).Dispose();
-            doc3.SaveToFile(file3);
+            doc3.Save(file3);
         }
 
         // Act
@@ -181,7 +178,7 @@ public class PdfDocumentTests : IDisposable
         }
 
         // Act
-        using var split = document.Split(2, 3); // Extract pages 2, 3, 4
+        using var split = document.Split(2, 3, 4); // Extract pages 2, 3, 4
 
         // Assert
         Assert.NotNull(split);
@@ -198,10 +195,9 @@ public class PdfDocumentTests : IDisposable
         document.CreatePage(595, 842).Dispose();
 
         // Act & Assert
-        Assert.Throws<ArgumentOutOfRangeException>(() => document.Split(-1, 1));
-        Assert.Throws<ArgumentOutOfRangeException>(() => document.Split(0, 0));
-        Assert.Throws<ArgumentOutOfRangeException>(() => document.Split(0, 10));
-        Assert.Throws<ArgumentOutOfRangeException>(() => document.Split(5, 1));
+        Assert.Throws<ArgumentOutOfRangeException>(() => document.Split(-1));
+        Assert.Throws<ArgumentOutOfRangeException>(() => document.Split(10));
+        Assert.Throws<ArgumentOutOfRangeException>(() => document.Split(5));
     }
 
     [Fact]
@@ -224,7 +220,7 @@ public class PdfDocumentTests : IDisposable
 
         // Save to verify
         var filePath = Path.Combine(TestOutputDir, "test-watermark.pdf");
-        document.SaveToFile(filePath);
+        document.Save(filePath);
 
         // Assert
         Assert.True(File.Exists(filePath));
@@ -259,7 +255,7 @@ public class PdfDocumentTests : IDisposable
     {
         using var document = PdfDocument.CreateNew();
         using var page = document.CreatePage(595, 842);
-        using var font = PdfFont.LoadStandardFont(document, PdfStandardFont.Helvetica);
+        using var font = PdfFont.Load(document, PdfStandardFont.Helvetica);
 
         using (var editor = page.BeginEdit())
         {
@@ -273,3 +269,4 @@ public class PdfDocumentTests : IDisposable
         Assert.Contains("Hello", text);
     }
 }
+
