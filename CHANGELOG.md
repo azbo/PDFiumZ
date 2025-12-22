@@ -11,7 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### HTML to PDF Conversion
 - **HtmlToPdfConverter**: Simple HTML to PDF conversion with inline CSS support
-  - **Supported HTML tags**: h1-h6, p, div, span, b, strong, i, em, u, br
+  - **Supported HTML tags**:
+    - Headings: h1, h2, h3, h4, h5, h6
+    - Text: p, div, span, b, strong, i, em, u, br
+    - Lists: ul, ol, li (with nested list support)
+    - Images: img (requires ImageLoader delegate)
   - **Supported CSS properties** (inline styles):
     - `font-size`: 10pt, 12px, 1.5em
     - `color`: Named colors (red, blue, etc.) or hex (#FF0000, #F00)
@@ -19,6 +23,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `font-weight`: bold, normal, or numeric (>=600 = bold)
     - `font-style`: italic, normal
     - `text-decoration`: underline
+    - `width`, `height`: For images (px, pt)
+  - **List Features**:
+    - Unordered lists with depth-based bullet styles (•, ◦, ▪)
+    - Ordered lists with automatic numbering (1., 2., 3., ...)
+    - Nested lists support (unlimited depth)
+    - Mixed list types (ul within ol, ol within ul)
+    - 20pt indentation per nesting level
+  - **Image Features**:
+    - Custom image loader via `ImageLoaderFunc` delegate
+    - Requires user to provide image decoder (e.g., SkiaSharp)
+    - Supports width/height attributes and style properties
+    - Automatic aspect ratio maintenance
+    - Text alignment support (left, center, right)
+    - Demo includes SkiaSharp-based image loader example
   - **Extension methods**:
     - `CreatePageFromHtml(html)` - Create page from HTML with default A4 size
     - `CreatePageFromHtml(html, marginLeft, marginRight, marginTop, marginBottom, pageWidth, pageHeight)` - With custom margins
@@ -27,9 +45,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Nested tag support (e.g., `<b><i>text</i></b>`)
     - Comment stripping (`<!-- comments -->`)
     - Font caching for performance
-  - **Limitations**: No external CSS, images, tables, or automatic page breaks
-  - Example:
+  - **Limitations**: No external CSS, tables, or automatic page breaks
+  - Examples:
     ```csharp
+    // Simple HTML
     using var document = PdfDocument.CreateNew();
     string html = @"
         <h1 style='color: #0066CC; text-align: center;'>Welcome</h1>
@@ -37,6 +56,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     ";
     document.CreatePageFromHtml(html);
     document.SaveToFile("from-html.pdf");
+
+    // Lists
+    string htmlWithLists = @"
+        <h1>Task List</h1>
+        <ol>
+            <li>Preparation
+                <ul>
+                    <li>Gather requirements</li>
+                    <li>Design solution</li>
+                </ul>
+            </li>
+            <li>Implementation</li>
+            <li>Testing</li>
+        </ol>
+    ";
+
+    // Images (requires ImageLoader)
+    using var converter = new HtmlToPdfConverter(document);
+    converter.ImageLoaderFunc = (src) => {
+        // Load and decode image using your preferred library (e.g., SkiaSharp)
+        // Return (bgraData, width, height) or null
+        return LoadImageToBGRA(src);
+    };
+    string htmlWithImages = @"
+        <h1>Report with Image</h1>
+        <div style='text-align: center;'>
+            <img src='chart.png' width='400' />
+        </div>
+    ";
     ```
 
 #### Enhanced Fluent API for Content Creation

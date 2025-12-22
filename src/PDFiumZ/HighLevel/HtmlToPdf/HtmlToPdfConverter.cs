@@ -22,6 +22,15 @@ public class HtmlToPdfConverter : IDisposable
     private double _marginBottom = 50;
 
     /// <summary>
+    /// Image loader delegate that converts image source to BGRA pixel data.
+    /// </summary>
+    /// <param name="src">Image source (file path, URL, or data URI).</param>
+    /// <returns>Tuple of (bgraData, width, height) or null if image cannot be loaded.</returns>
+    public delegate (byte[] bgraData, int width, int height)? ImageLoader(string src);
+
+    private ImageLoader? _imageLoader;
+
+    /// <summary>
     /// Gets or sets the left margin in points.
     /// </summary>
     public double MarginLeft
@@ -55,6 +64,16 @@ public class HtmlToPdfConverter : IDisposable
     {
         get => _marginBottom;
         set => _marginBottom = value;
+    }
+
+    /// <summary>
+    /// Gets or sets the image loader for loading and decoding images.
+    /// If not set, image tags will be ignored.
+    /// </summary>
+    public ImageLoader? ImageLoaderFunc
+    {
+        get => _imageLoader;
+        set => _imageLoader = value;
     }
 
     /// <summary>
@@ -262,6 +281,10 @@ public class HtmlToPdfConverter : IDisposable
         if (tagName == "br")
         {
             _currentY -= style.FontSize * style.LineHeight;
+        }
+        else if (tagName == "img")
+        {
+            ProcessImage(editor, attributes, style);
         }
     }
 
@@ -667,6 +690,120 @@ public class HtmlToPdfConverter : IDisposable
 
         // Add small spacing after list item
         _currentY -= style.FontSize * 0.2;
+    }
+
+    private void ProcessImage(PdfContentEditor editor, Dictionary<string, string> attributes, TextStyle style)
+    {
+        // Check if image loader is available
+        if (_imageLoader == null)
+        {
+            // No image loader provided, skip image
+            return;
+        }
+
+        // Get src attribute
+        if (!attributes.TryGetValue("src", out string? src) || string.IsNullOrWhiteSpace(src))
+        {
+            return;
+        }
+
+        // Load image using the provided loader
+        var imageData = _imageLoader(src);
+        if (imageData == null)
+        {
+            return;
+        }
+
+        var (bgraData, imgWidth, imgHeight) = imageData.Value;
+
+        // Parse width and height attributes (in pixels or points)
+        double width = imgWidth;
+        double height = imgHeight;
+
+        if (attributes.TryGetValue("width", out string? widthStr))
+        {
+            if (double.TryParse(widthStr.Replace("px", "").Replace("pt", ""), out double w))
+            {
+                width = w;
+                // Maintain aspect ratio if height not specified
+                if (!attributes.ContainsKey("height"))
+                {
+                    height = imgHeight * (width / imgWidth);
+                }
+            }
+        }
+
+        if (attributes.TryGetValue("height", out string? heightStr))
+        {
+            if (double.TryParse(heightStr.Replace("px", "").Replace("pt", ""), out double h))
+            {
+                height = h;
+                // Maintain aspect ratio if width not specified
+                if (!attributes.ContainsKey("width"))
+                {
+                    width = imgWidth * (height / imgHeight);
+                }
+            }
+        }
+
+        // Parse style attribute for dimensions
+        if (attributes.TryGetValue("style", out string? styleStr))
+        {
+            var declarations = styleStr.Split(';');
+            foreach (var declaration in declarations)
+            {
+                var parts = declaration.Split(':');
+                if (parts.Length != 2) continue;
+
+                string property = parts[0].Trim().ToLower();
+                string value = parts[1].Trim();
+
+                if (property == "width")
+                {
+                    if (double.TryParse(value.Replace("px", "").Replace("pt", ""), out double w))
+                    {
+                        width = w;
+                    }
+                }
+                else if (property == "height")
+                {
+                    if (double.TryParse(value.Replace("px", "").Replace("pt", ""), out double h))
+                    {
+                        height = h;
+                    }
+                }
+            }
+        }
+
+        // Calculate X position based on alignment
+        double x = _marginLeft;
+        double contentWidth = _pageWidth - _marginLeft - _marginRight;
+
+        if (style.Alignment.ToLower() == "center")
+        {
+            x = _marginLeft + (contentWidth - width) / 2;
+        }
+        else if (style.Alignment.ToLower() == "right")
+        {
+            x = _pageWidth - _marginRight - width;
+        }
+
+        // Check if we need a new page
+        if (_currentY - height < _marginBottom)
+        {
+            // Would need page break handling here
+            // For simplicity, just continue
+        }
+
+        // Calculate Y position (PDF coordinates are bottom-up)
+        double y = _currentY - height;
+
+        // Add image to page
+        var bounds = new PdfRectangle(x, y, width, height);
+        editor.AddImage(bgraData, imgWidth, imgHeight, bounds);
+
+        // Move Y position down
+        _currentY -= height + style.FontSize * 0.5; // Add some spacing after image
     }
 
     /// <summary>

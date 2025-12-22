@@ -1,0 +1,345 @@
+C:\work\net\PDFiumZ\src\PDFiumZDemo\Program.cs(1663,17): warning CS0618: “SKPaint.TextSize”已过时:“Use SKFont.Size instead.” [C:\work\net\PDFiumZ\src\PDFiumZDemo\PDFiumZDemo.csproj]
+C:\work\net\PDFiumZ\src\PDFiumZDemo\Program.cs(1665,17): warning CS0618: “SKPaint.TextAlign”已过时:“Use SKTextAlign method overloads instead.” [C:\work\net\PDFiumZ\src\PDFiumZDemo\PDFiumZDemo.csproj]
+C:\work\net\PDFiumZ\src\PDFiumZDemo\Program.cs(1668,59): warning CS0618: “SKPaint.TextSize”已过时:“Use SKFont.Size instead.” [C:\work\net\PDFiumZ\src\PDFiumZDemo\PDFiumZDemo.csproj]
+C:\work\net\PDFiumZ\src\PDFiumZDemo\Program.cs(1668,13): warning CS0618: “SKCanvas.DrawText(string, float, float, SKPaint)”已过时:“Use DrawText(string text, float x, float y, SKTextAlign textAlign, SKFont font, SKPaint paint) instead.” [C:\work\net\PDFiumZ\src\PDFiumZDemo\PDFiumZDemo.csproj]
+=== PDFiumZ High-Level API Demo ===
+
+0. Create New PDF Document (From Scratch)
+   Created new empty document
+   Created page 1: 595.0 x 842.0 points (A4)
+   Created page 2: 612.0 x 792.0 points (Letter)
+   Created page 3: 800.0 x 600.0 points (Custom)
+   Total pages: 3
+   Saved: new-document.pdf
+
+0.5. Add Watermarks to PDF
+   Loaded: 1 page(s)
+   Added CONFIDENTIAL watermark (center, 45° rotation, 30% opacity)
+   Saved: watermarked.pdf
+
+0.6. Merge and Split PDFs
+   Creating test documents...
+   Created: test-doc1.pdf (1 page), test-doc2.pdf (2 pages), test-doc3.pdf (3 pages)
+
+   Testing Merge...
+   Merged document has 6 pages (expected: 6)
+   Saved: merged.pdf
+
+   Testing Split...
+   Source document has 6 pages
+   Split 1: pages 0-2 → 3 pages
+   Saved: split-first3.pdf
+   Split 2: pages 3-5 → 3 pages
+   Saved: split-last3.pdf
+
+   Merge and Split operations completed successfully!
+
+0.7. Rotate PDF Pages
+   Creating test document with 4 pages...
+   Created document with 4 pages
+
+   Test 1: Rotating individual pages...
+      Page 0: Rotated 90° clockwise
+      Page 1: Rotated 180°
+      Page 2: Rotated 270° clockwise
+   Saved: rotated-individual.pdf
+
+   Test 2: Rotating all pages...
+      Rotated all 3 pages by 90°
+   Saved: rotated-all.pdf
+
+   Test 3: Reading page rotation...
+      Page 0 rotation: Rotate90
+      Page 1 rotation: Rotate180
+      Page 2 rotation: Rotate270
+      Page 3 rotation: None (no rotation)
+
+   Page rotation operations completed successfully!
+
+0.8. Enhanced Fluent API with Colors and Shapes
+   Created new document
+   Created A4 page
+
+   Testing fluent API features:
+      1. Using WithFont() and simplified Text()
+      2. Changing font size and adding description
+      3. Drawing shapes with predefined colors
+      4. Drawing circles
+      5. Drawing lines
+      6. Using hex colors
+      7. Demonstrating font sizes
+      8. Complex chained drawing
+      9. Committing changes
+
+   Saved: fluent-api-demo.pdf
+   Enhanced fluent API demo complete!
+
+0.9. HTML to PDF Conversion
+   Created new document
+
+   Example 1: Basic HTML
+      Created page from basic HTML
+
+   Example 2: Styled HTML
+      Created page with styled HTML
+
+   Example 3: Alignment and sizes
+      Created page with alignment examples
+
+   Example 4: Complex content
+      Created page with complex content
+
+   Saved: html-to-pdf-demo.pdf
+   HTML to PDF conversion demo complete!
+
+0.10. HTML Lists to PDF Conversion
+   Created new document
+
+   Example 1: Simple unordered list
+      Created page with unordered list
+
+   Example 2: Simple ordered list
+      Created page with ordered list
+
+   Example 3: Nested lists
+      Created page with nested lists
+
+   Example 4: Mixed lists with formatting
+      Created page with mixed formatted lists
+
+   Example 5: Complex nested lists
+      Created page with complex nested lists
+
+   Saved: html-lists-demo.pdf
+   HTML lists conversion demo complete!
+
+0.11. HTML with Images to PDF Conversion
+   Creating test images...
+      Created 3 test images
+   Set SkiaSharp image loader
+
+   Example 1: Simple image
+      Created page with single image
+
+   Example 2: Multiple images
+      Created page with multiple images
+
+   Example 3: Custom sized images
+      Created page with custom sized images
+
+   Example 4: Mixed content (text + lists + images)
+      Created page with mixed content
+
+   Saved: html-with-images.pdf
+   HTML with images conversion demo complete!
+
+1. Simple Rendering (High-Level API)
+   Loaded: 1 page(s)
+   Page size: 595.0 x 842.0 points
+   Rendered: 595 x 842 pixels
+   Saved: output.png
+
+2. Advanced Rendering (Fluent Options)
+   High DPI: 1239 x 1754 pixels @ 150 DPI
+   Saved: output-hires.png
+
+3. Text Extraction
+   Extracted 1073 characters
+   Preview: Adobe Acrobat PDF Files
+Adobe® Portable Document Format (PDF) is a universal file format that prese...
+
+4. Text Search
+   Searching for 'PDF' (case-insensitive):
+   Found 7 occurrence(s)
+      Match at char 14: "PDF"
+      Bounding boxes: 1
+         PdfRectangle { X = 319.0479431152344, Y = 757.040283203125, Width = 26.32220458984375, Height = 10.0526123046875, Right = 345.3701477050781, Bottom = 767.0928955078125 }
+      Match at char 58: "PDF"
+      Bounding boxes: 1
+         PdfRectangle { X = 272.77056884765625, Y = 729.3203125, Width = 21.290374755859375, Height = 7.94403076171875, Right = 294.0609436035156, Bottom = 737.2643432617188 }
+      Match at char 251: "PDF"
+      Bounding boxes: 1
+         PdfRectangle { X = 125.09140014648438, Y = 674.1203002929688, Width = 21.302398681640625, Height = 7.94403076171875, Right = 146.393798828125, Bottom = 682.0643310546875 }
+      Match at char 423: "PDF"
+      Bounding boxes: 1
+         PdfRectangle { X = 261.5805969238281, Y = 631.7603149414062, Width = 21.393585205078125, Height = 7.94403076171875, Right = 282.97418212890625, Bottom = 639.704345703125 }
+      Match at char 616: "PDF"
+      Bounding boxes: 1
+         PdfRectangle { X = 108.12460327148438, Y = 575.7203369140625, Width = 21.345596313476562, Height = 7.94403076171875, Right = 129.47019958496094, Bottom = 583.6643676757812 }
+      Match at char 676: "PDF"
+      Bounding boxes: 1
+         PdfRectangle { X = 108.1246109008789, Y = 547.1602783203125, Width = 21.333595275878906, Height = 7.94403076171875, Right = 129.4582061767578, Bottom = 555.1043090820312 }
+      Match at char 968: "PDF"
+      Bounding boxes: 1
+         PdfRectangle { X = 160.21420288085938, Y = 448.88031005859375, Width = 21.34320068359375, Height = 7.944000244140625, Right = 181.55740356445312, Bottom = 456.8243103027344 }
+
+   Searching for 'PDF' (case-sensitive):
+   Found 7 occurrence(s)
+
+5. Image Extraction
+   Page has 32 object(s)
+   Found 0 image(s)
+   (Note: pdf-sample.pdf may not contain embedded images)
+
+6. Document Metadata
+   Title: This is a test PDF file
+   Author: cdaily
+   Subject: (none)
+   Keywords: (none)
+   Creator: Microsoft Word 8.0
+   Producer: Acrobat Distiller 4.0 for Windows
+   Creation Date: D:20000629102108+11'00'
+   Modification Date: D:20131028152413-04'00'
+
+7. Page Labels
+   Document has 1 page(s)
+   Page labels:
+      Page 0 → "1"
+
+8. Page Manipulation
+   Original: 1 page(s)
+   After insert: 2 page(s)
+   After 2nd insert: 3 page(s)
+   After delete: 2 page(s)
+   Moved last page to position 1
+   Saved: output-modified.pdf (original page + blank page)
+
+9. Form Field Reading
+   No form fields found in this PDF
+   (Note: pdf-sample.pdf is a simple document without forms)
+
+10. Annotation Management
+   Original annotations: 0
+
+   Creating highlight annotation...
+      Created highlight at PdfRectangle { X = 100, Y = 700, Width = 200, Height = 20, Right = 300, Bottom = 720 }
+      Color: 0x80FFFF00 (ARGB)
+      Set 2 quad points
+
+   Creating text annotation...
+      Created text annotation at (50, 650)
+      Contents: "This is a test comment"
+      Author: "PDFiumZ Demo"
+
+   Creating stamp annotations...
+      Created DRAFT stamp at (350, 700)
+      Created APPROVED stamp at (350, 640)
+      Created CONFIDENTIAL stamp at (350, 580)
+
+   Saving document with annotations...
+      Saved: output-with-annotations.pdf
+
+   Total annotations now: 5
+
+   --- Reading annotations from saved PDF ---
+   Found 5 annotation(s)
+
+   Annotation 1:
+      Type: Highlight
+      Index: 0
+      Bounds: PdfRectangle { X = 100, Y = 700, Width = 200, Height = 20, Right = 300, Bottom = 720 }
+      Color: 0x80FFFF00
+      Quad points: 2
+
+   Annotation 2:
+      Type: Text
+      Index: 1
+      Bounds: PdfRectangle { X = 50, Y = 650, Width = 20, Height = 20, Right = 70, Bottom = 670 }
+      Color: 0xFF000000
+      Contents: "This is a test comment"
+      Author: "PDFiumZ Demo"
+
+   Annotation 3:
+      Type: Stamp
+      Index: 2
+      Bounds: PdfRectangle { X = 350, Y = 700, Width = 120, Height = 50, Right = 470, Bottom = 750 }
+      Color: 0xFF000000
+      Stamp type: Draft
+
+   Annotation 4:
+      Type: Stamp
+      Index: 3
+      Bounds: PdfRectangle { X = 350, Y = 640, Width = 120, Height = 50, Right = 470, Bottom = 690 }
+      Color: 0xFF000000
+      Stamp type: Approved
+
+   Annotation 5:
+      Type: Stamp
+      Index: 4
+      Bounds: PdfRectangle { X = 350, Y = 580, Width = 120, Height = 50, Right = 470, Bottom = 630 }
+      Color: 0xFF000000
+      Stamp type: Confidential
+
+   Highlights: 1
+   Text annotations: 1
+   Stamps: 3
+
+   Testing annotation removal...
+   Annotations before removal: 5
+   Removed annotation at index 0
+   Annotations after removal: 4
+   Saved: output-annotations-removed.pdf
+
+11. Content Creation
+   Created blank A4 page at beginning
+
+   Adding text content...
+      Loaded Helvetica font
+      Loaded Times-Roman Bold font
+      Added title text at (50, 750)
+      Added body text at (50, 700)
+      Added feature list
+
+   Adding shapes...
+      Added red rectangle (stroke only)
+      Added blue rectangle (filled, 50% opacity)
+      Added green rectangle (stroke + fill)
+      Added rectangle labels
+
+   Generating page content...
+   Saving document...
+      Saved: output-with-content.pdf
+
+   Content creation complete!
+   Open output-with-content.pdf to see the created content.
+
+12. Async Operations
+
+   Testing async document loading...
+      Loaded 1 pages asynchronously in 2ms
+
+   Testing async page rendering...
+      Rendered 595x842 image asynchronously in 3ms
+      Rendered 1239x1754 high-DPI image asynchronously in 3ms
+
+   Testing async document saving...
+      Saved document asynchronously in 2ms
+
+   Testing cancellation support...
+      Operation completed before cancellation
+
+   All async operations completed successfully!
+
+13. Batch Operations
+   Original: 1 page(s)
+
+   Testing GetPages (batch retrieval)...
+
+   Testing DeletePages (multiple indices)...
+      Added 5 blank pages: 6 total
+      Pages: [original content, blank, blank, blank, blank, blank]
+      Deleted pages at indices 2, 3, 5 (blank pages)
+      Result: 3 pages (was 6)
+      Remaining: [original content, blank, blank]
+
+   Testing DeletePages (range)...
+      Deleted pages 1-2 (last 2 blank pages)
+      Result: 1 pages (was 3)
+      Final: [original content page]
+
+   Saved batch operation result to: batch-result.pdf
+
+   All batch operations completed successfully!
+
+
+Demo completed successfully!

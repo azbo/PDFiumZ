@@ -139,6 +139,13 @@
             Supports basic HTML tags and CSS styles.
             </summary>
         </member>
+        <member name="T:PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter.ImageLoader">
+            <summary>
+            Image loader delegate that converts image source to BGRA pixel data.
+            </summary>
+            <param name="src">Image source (file path, URL, or data URI).</param>
+            <returns>Tuple of (bgraData, width, height) or null if image cannot be loaded.</returns>
+        </member>
         <member name="P:PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter.MarginLeft">
             <summary>
             Gets or sets the left margin in points.
@@ -157,6 +164,12 @@
         <member name="P:PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter.MarginBottom">
             <summary>
             Gets or sets the bottom margin in points.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter.ImageLoaderFunc">
+            <summary>
+            Gets or sets the image loader for loading and decoding images.
+            If not set, image tags will be ignored.
             </summary>
         </member>
         <member name="M:PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter.#ctor(PDFiumZ.HighLevel.PdfDocument)">
