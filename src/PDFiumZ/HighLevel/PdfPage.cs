@@ -17,6 +17,26 @@ public sealed unsafe class PdfPage : IDisposable
     private readonly int _index;
     internal readonly PdfDocument _document;
     private bool _disposed;
+    private FpdfTextpageT? _textPageHandle;
+
+    /// <summary>
+    /// Gets the internal text page handle, creating it if necessary.
+    /// The handle is cached until the page is disposed.
+    /// </summary>
+    internal FpdfTextpageT GetTextPageHandle()
+    {
+        ThrowIfDisposed();
+        if (_textPageHandle != null && _textPageHandle.__Instance != IntPtr.Zero)
+        {
+            return _textPageHandle;
+        }
+
+        _textPageHandle = fpdf_text.FPDFTextLoadPage(_handle!);
+        if (_textPageHandle is null || _textPageHandle.__Instance == IntPtr.Zero)
+            throw new PdfException($"Failed to load text for page {_index}.");
+
+        return _textPageHandle;
+    }
 
     /// <summary>
     /// Gets the zero-based page index.
@@ -208,31 +228,22 @@ public sealed unsafe class PdfPage : IDisposable
     {
         ThrowIfDisposed();
 
-        var textPage = fpdf_text.FPDFTextLoadPage(_handle!);
-        if (textPage is null || textPage.__Instance == IntPtr.Zero)
-            throw new PdfException($"Failed to load text for page {_index}.");
+        var textPage = GetTextPageHandle();
 
-        try
+        var charCount = fpdf_text.FPDFTextCountChars(textPage);
+        if (charCount == 0) return string.Empty;
+
+        // Allocate buffer (UTF-16 array)
+        var buffer = new ushort[charCount + 1];
+
+        var bytesWritten = fpdf_text.FPDFTextGetText(textPage, 0, charCount, ref buffer[0]);
+
+        if (bytesWritten <= 1) return string.Empty;
+
+        // Convert UTF-16 to .NET string (bytesWritten includes null terminator)
+        fixed (ushort* pBuffer = buffer)
         {
-            var charCount = fpdf_text.FPDFTextCountChars(textPage);
-            if (charCount == 0) return string.Empty;
-
-            // Allocate buffer (UTF-16 array)
-            var buffer = new ushort[charCount + 1];
-
-            var bytesWritten = fpdf_text.FPDFTextGetText(textPage, 0, charCount, ref buffer[0]);
-
-            if (bytesWritten <= 1) return string.Empty;
-
-            // Convert UTF-16 to .NET string (bytesWritten includes null terminator)
-            fixed (ushort* pBuffer = buffer)
-            {
-                return new string((char*)pBuffer, 0, bytesWritten - 1);
-            }
-        }
-        finally
-        {
-            fpdf_text.FPDFTextClosePage(textPage);
+            return new string((char*)pBuffer, 0, bytesWritten - 1);
         }
     }
 
@@ -257,65 +268,56 @@ public sealed unsafe class PdfPage : IDisposable
 
         var results = new List<PdfTextSearchResult>();
 
-        var textPage = fpdf_text.FPDFTextLoadPage(_handle!);
-        if (textPage is null || textPage.__Instance == IntPtr.Zero)
-            throw new PdfException($"Failed to load text for page {_index}.");
+        var textPage = GetTextPageHandle();
+
+        // Convert search text to UTF-16
+        var searchUtf16 = new ushort[searchText.Length + 1];
+        for (int i = 0; i < searchText.Length; i++)
+        {
+            searchUtf16[i] = searchText[i];
+        }
+        searchUtf16[searchText.Length] = 0; // Null terminator
+
+        // Build search flags
+        uint flags = 0;
+        if (matchCase)
+            flags |= 0x00000001; // FPDF_MATCHCASE
+        if (matchWholeWord)
+            flags |= 0x00000002; // FPDF_MATCHWHOLEWORD
+
+        // Start search
+        var searchHandle = fpdf_text.FPDFTextFindStart(textPage, ref searchUtf16[0], flags, 0);
+        if (searchHandle is null || searchHandle.__Instance == IntPtr.Zero)
+        {
+            return results;
+        }
 
         try
         {
-            // Convert search text to UTF-16
-            var searchUtf16 = new ushort[searchText.Length + 1];
-            for (int i = 0; i < searchText.Length; i++)
+            // Find all occurrences
+            while (fpdf_text.FPDFTextFindNext(searchHandle) != 0)
             {
-                searchUtf16[i] = searchText[i];
+                var charIndex = fpdf_text.FPDFTextGetSchResultIndex(searchHandle);
+                var charCount = fpdf_text.FPDFTextGetSchCount(searchHandle);
+
+                if (charIndex < 0 || charCount <= 0)
+                    continue;
+
+                // Get matched text
+                var matchedText = GetTextRange(textPage, charIndex, charCount);
+
+                // Get bounding rectangles
+                var rectangles = GetTextRectangles(textPage, charIndex, charCount);
+
+                results.Add(new PdfTextSearchResult(charIndex, charCount, matchedText, rectangles));
             }
-            searchUtf16[searchText.Length] = 0; // Null terminator
-
-            // Build search flags
-            uint flags = 0;
-            if (matchCase)
-                flags |= 0x00000001; // FPDF_MATCHCASE
-            if (matchWholeWord)
-                flags |= 0x00000002; // FPDF_MATCHWHOLEWORD
-
-            // Start search
-            var searchHandle = fpdf_text.FPDFTextFindStart(textPage, ref searchUtf16[0], flags, 0);
-            if (searchHandle is null || searchHandle.__Instance == IntPtr.Zero)
-            {
-                return results;
-            }
-
-            try
-            {
-                // Find all occurrences
-                while (fpdf_text.FPDFTextFindNext(searchHandle) != 0)
-                {
-                    var charIndex = fpdf_text.FPDFTextGetSchResultIndex(searchHandle);
-                    var charCount = fpdf_text.FPDFTextGetSchCount(searchHandle);
-
-                    if (charIndex < 0 || charCount <= 0)
-                        continue;
-
-                    // Get matched text
-                    var matchedText = GetTextRange(textPage, charIndex, charCount);
-
-                    // Get bounding rectangles
-                    var rectangles = GetTextRectangles(textPage, charIndex, charCount);
-
-                    results.Add(new PdfTextSearchResult(charIndex, charCount, matchedText, rectangles));
-                }
-            }
-            finally
-            {
-                fpdf_text.FPDFTextFindClose(searchHandle);
-            }
-
-            return results;
         }
         finally
         {
-            fpdf_text.FPDFTextClosePage(textPage);
+            fpdf_text.FPDFTextFindClose(searchHandle);
         }
+
+        return results;
     }
 
     /// <summary>
@@ -604,6 +606,12 @@ public sealed unsafe class PdfPage : IDisposable
     {
         if (_disposed) return;
 
+        if (_textPageHandle is not null)
+        {
+            fpdf_text.FPDFTextClosePage(_textPageHandle);
+            _textPageHandle = null;
+        }
+
         if (_handle is not null)
         {
             fpdfview.FPDF_ClosePage(_handle);
@@ -654,11 +662,13 @@ public sealed unsafe class PdfPage : IDisposable
             PdfAnnotationType.Highlight => new PdfHighlightAnnotation(handle, this, index),
             PdfAnnotationType.Text => new PdfTextAnnotation(handle, this, index),
             PdfAnnotationType.Stamp => new PdfStampAnnotation(handle, this, index),
-            PdfAnnotationType.Line => new PdfLineAnnotation(handle, this, index),
             PdfAnnotationType.Square => new PdfSquareAnnotation(handle, this, index),
             PdfAnnotationType.Circle => new PdfCircleAnnotation(handle, this, index),
+            PdfAnnotationType.Line => new PdfLineAnnotation(handle, this, index),
             PdfAnnotationType.Underline => new PdfUnderlineAnnotation(handle, this, index),
             PdfAnnotationType.StrikeOut => new PdfStrikeOutAnnotation(handle, this, index),
+            PdfAnnotationType.Ink => new PdfInkAnnotation(handle, this, index),
+            PdfAnnotationType.FreeText => new PdfFreeTextAnnotation(handle, this, index),
             // Add other annotation types as they are implemented
             _ => new GenericAnnotation(handle, this, annotType, index)
         };

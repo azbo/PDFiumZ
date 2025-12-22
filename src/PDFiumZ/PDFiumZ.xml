@@ -1266,6 +1266,39 @@
             Signature field (digital signature).
             </summary>
         </member>
+        <member name="T:PDFiumZ.HighLevel.PdfFreeTextAnnotation">
+            <summary>
+            Represents a free text annotation (text box) in a PDF document.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFreeTextAnnotation.Create(PDFiumZ.HighLevel.PdfPage,PDFiumZ.HighLevel.PdfRectangle,System.String)">
+            <summary>
+            Creates a new free text annotation on the specified page.
+            </summary>
+            <param name="page">The page to add the annotation to.</param>
+            <param name="rect">The bounding rectangle of the text box.</param>
+            <param name="text">The text content.</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfFreeTextAnnotation"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">page is null.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create annotation.</exception>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfFreeTextAnnotation.Text">
+            <summary>
+            Gets or sets the text content of the annotation.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFreeTextAnnotation.SetDefaultAppearance(System.String)">
+            <summary>
+            Sets the Default Appearance (DA) string for the annotation.
+            This controls font, size, and color of the text.
+            </summary>
+            <param name="da">The DA string (e.g., "0 0 0 rg /Helv 12 Tf").</param>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFreeTextAnnotation.GetDefaultAppearance">
+            <summary>
+            Gets the Default Appearance (DA) string.
+            </summary>
+        </member>
         <member name="T:PDFiumZ.HighLevel.PdfHighlightAnnotation">
             <summary>
             Represents a highlight annotation in a PDF document.
@@ -1386,6 +1419,35 @@
             Releases all resources used by the <see cref="T:PDFiumZ.HighLevel.PdfImage"/>.
             </summary>
         </member>
+        <member name="T:PDFiumZ.HighLevel.PdfInkAnnotation">
+            <summary>
+            Represents an ink annotation (freehand drawing) in a PDF document.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfInkAnnotation.Create(PDFiumZ.HighLevel.PdfPage,System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{System.ValueTuple{System.Double,System.Double}}},System.UInt32,System.Double)">
+            <summary>
+            Creates a new ink annotation on the specified page.
+            </summary>
+            <param name="page">The page to add the annotation to.</param>
+            <param name="paths">A collection of paths, where each path is a collection of points (X, Y).</param>
+            <param name="color">The ink color in ARGB format (default: solid red).</param>
+            <param name="width">The stroke width in points (default: 1.0).</param>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfInkAnnotation"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">page or paths is null.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create annotation.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfInkAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfInkAnnotation"/> class.
+            Internal constructor - use factory methods to create annotations.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfInkAnnotation.GetPaths">
+            <summary>
+            Gets the paths (strokes) of the ink annotation.
+            </summary>
+            <returns>A list of paths, where each path is a list of points.</returns>
+        </member>
         <member name="T:PDFiumZ.HighLevel.PdfiumLibrary">
             <summary>
             Manages PDFium library initialization and cleanup.
@@ -1414,33 +1476,6 @@
             <summary>
             For testing/advanced scenarios: force reset internal state.
             WARNING: Only use if you know all documents are disposed.
-            </summary>
-        </member>
-        <member name="T:PDFiumZ.HighLevel.PdfLineAnnotation">
-            <summary>
-            Represents a line annotation in a PDF document.
-            Line annotations draw a straight line between two points.
-            </summary>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfLineAnnotation.Create(PDFiumZ.HighLevel.PdfPage,System.Double,System.Double,System.Double,System.Double,System.UInt32,System.Double)">
-            <summary>
-            Creates a new line annotation on the specified page.
-            </summary>
-            <param name="page">The page to add the annotation to.</param>
-            <param name="startX">The X coordinate of the line start point.</param>
-            <param name="startY">The Y coordinate of the line start point.</param>
-            <param name="endX">The X coordinate of the line end point.</param>
-            <param name="endY">The Y coordinate of the line end point.</param>
-            <param name="color">The line color in ARGB format (default: solid red).</param>
-            <param name="width">The line width in points (default: 1.0).</param>
-            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfLineAnnotation"/> instance.</returns>
-            <exception cref="T:System.ArgumentNullException">page is null.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create annotation.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfLineAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,System.Int32)">
-            <summary>
-            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfLineAnnotation"/> class.
-            Internal constructor - use factory methods to create annotations.
             </summary>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfLink">
@@ -1591,6 +1626,12 @@
             <summary>
             Represents a single page in a PDF document.
             Must not outlive its parent PdfDocument.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfPage.GetTextPageHandle">
+            <summary>
+            Gets the internal text page handle, creating it if necessary.
+            The handle is cached until the page is disposed.
             </summary>
         </member>
         <member name="P:PDFiumZ.HighLevel.PdfPage.Index">
