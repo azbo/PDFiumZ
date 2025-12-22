@@ -4,6 +4,11 @@
         <name>PDFiumZ</name>
     </assembly>
     <members>
+        <member name="T:PDFiumZ.FPDFBitmapFormat">
+            <summary>
+            Specifies the pixel format for a PDFium bitmap.
+            </summary>
+        </member>
         <member name="F:PDFiumZ.FPDFBitmapFormat.Unknown">
             <summary>
             Unknown or unsupported format.
@@ -132,6 +137,11 @@
             <summary>
             Base class for all PDF annotations.
             Manages the lifecycle of a PDFium annotation handle and provides common functionality.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfAnnotation._page">
+            <summary>
+            Gets the page that owns this annotation.
             </summary>
         </member>
         <member name="P:PDFiumZ.HighLevel.PdfAnnotation.Index">
@@ -1476,6 +1486,26 @@
             <summary>
             For testing/advanced scenarios: force reset internal state.
             WARNING: Only use if you know all documents are disposed.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfLineAnnotation">
+            <summary>
+            Represents a line annotation.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfLineAnnotation.TryGetLine(System.ValueTuple{System.Double,System.Double}@,System.ValueTuple{System.Double,System.Double}@)">
+            <summary>
+            Tries to get the start and end points of the line in page coordinates.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfLineAnnotation.Start">
+            <summary>
+            Gets the start point of the line in page coordinates.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfLineAnnotation.End">
+            <summary>
+            Gets the end point of the line in page coordinates.
             </summary>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfLink">

@@ -9,6 +9,9 @@ namespace PDFiumZ.HighLevel;
 public abstract class PdfAnnotation : IDisposable
 {
     internal FpdfAnnotationT? _handle;
+    /// <summary>
+    /// Gets the page that owns this annotation.
+    /// </summary>
     protected readonly PdfPage _page;
     private bool _disposed;
     private int _index = -1;

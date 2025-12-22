@@ -1,4 +1,4 @@
-﻿using PDFiumZ;
+using PDFiumZ;
 using PDFiumZ.HighLevel;
 using PDFiumZ.SkiaSharp;
 using System;
@@ -13,6 +13,9 @@ namespace PDFiumZDemo
 
         private static string ResolveSamplePdfPath()
         {
+            // In the repo the sample PDF is under `src/`, but when running from a build output
+            // it may be copied next to the executable. Try a few common locations so the demo
+            // runs from either the repo root or the build output folder.
             var candidates = new[]
             {
                 "pdf-sample.pdf",
@@ -83,6 +86,7 @@ namespace PDFiumZDemo
                     editor.AddText("PDFiumZ Demo - New Document", 50, page1.Height - 80, helvetica, 24);
                     editor.AddText("Page 1 (A4)", 50, page1.Height - 120, helvetica, 14);
                     editor.AddText($"Size: {page1.Width:F0} x {page1.Height:F0} pt", 50, page1.Height - 145, helvetica, 12);
+                    // PDFium requires regenerating page content after edits, otherwise the page may save as blank.
                     editor.GenerateContent();
                 }
 
@@ -139,6 +143,7 @@ namespace PDFiumZDemo
                     {
                         using var editor = page.BeginEdit();
                         editor.AddText("Merge/Split Test - Doc1 - Page 1", 50, page.Height - 80, font, 18);
+                        // Add some visible content so merged/split PDFs are not visually blank.
                         editor.GenerateContent();
                     }
                     font.Dispose();
@@ -254,6 +259,7 @@ namespace PDFiumZDemo
                     using var editor = page.BeginEdit();
                     editor.AddText($"Rotate Test - Page {i + 1}", 50, page.Height - 80, font, 18);
                     editor.AddText("Use this label to verify rotation direction.", 50, page.Height - 110, font, 12);
+                    // Persist the added text so rotation output is easy to validate visually.
                     editor.GenerateContent();
                 }
                 font.Dispose();

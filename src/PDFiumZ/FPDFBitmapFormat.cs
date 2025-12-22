@@ -1,7 +1,10 @@
-﻿using System;
+using System;
 
 namespace PDFiumZ
 {
+    /// <summary>
+    /// Specifies the pixel format for a PDFium bitmap.
+    /// </summary>
     [Flags]
     public enum FPDFBitmapFormat
     {
