@@ -50,6 +50,40 @@ public class PdfDocumentTests : IDisposable
     }
 
     [Fact]
+    public void CreatePage_Default_ShouldCreateA4()
+    {
+        using var document = PdfDocument.CreateNew();
+
+        using var page = document.CreatePage();
+
+        Assert.NotNull(page);
+        Assert.Equal(1, document.PageCount);
+        Assert.Equal(595, page.Width, 0.1);
+        Assert.Equal(842, page.Height, 0.1);
+    }
+
+    [Fact]
+    public void CreatePage_StandardSize_ShouldWork()
+    {
+        using var document = PdfDocument.CreateNew();
+
+        using var page1 = document.CreatePage(PdfPageSize.A3);
+        using var page2 = document.CreatePage(PdfPageSize.A4);
+        using var page3 = document.CreatePage(PdfPageSize.Letter);
+        using var page4 = document.CreatePage(PdfPageSize.Tabloid);
+
+        Assert.Equal(4, document.PageCount);
+        Assert.Equal(842, page1.Width, 0.1);
+        Assert.Equal(1191, page1.Height, 0.1);
+        Assert.Equal(595, page2.Width, 0.1);
+        Assert.Equal(842, page2.Height, 0.1);
+        Assert.Equal(612, page3.Width, 0.1);
+        Assert.Equal(792, page3.Height, 0.1);
+        Assert.Equal(792, page4.Width, 0.1);
+        Assert.Equal(1224, page4.Height, 0.1);
+    }
+
+    [Fact]
     public void CreatePage_MultipleSizes_ShouldWork()
     {
         // Arrange

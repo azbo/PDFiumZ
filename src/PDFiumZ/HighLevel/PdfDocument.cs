@@ -430,6 +430,17 @@ public sealed class PdfDocument : IDisposable
         }
     }
 
+    public PdfPage CreatePage()
+    {
+        return CreatePage(PdfPageSize.A4);
+    }
+
+    public PdfPage CreatePage(PdfPageSize size)
+    {
+        var (width, height) = GetPageDimensions(size);
+        return CreatePage(width, height);
+    }
+
     /// <summary>
     /// Creates a new blank page and adds it to the document.
     /// </summary>
@@ -474,6 +485,57 @@ public sealed class PdfDocument : IDisposable
 
         _pageCountCache = pageIndex + 1;
         return new PdfPage(pageHandle, pageIndex, this);
+    }
+
+    private static (double Width, double Height) GetPageDimensions(PdfPageSize size)
+    {
+        return size switch
+        {
+            PdfPageSize.A0 => (2384, 3370),
+            PdfPageSize.A1 => (1684, 2384),
+            PdfPageSize.A2 => (1191, 1684),
+            PdfPageSize.A3 => (842, 1191),
+            PdfPageSize.A4 => (595, 842),
+            PdfPageSize.A5 => (420, 595),
+            PdfPageSize.A6 => (298, 420),
+            PdfPageSize.A7 => (210, 298),
+            PdfPageSize.A8 => (147, 210),
+            PdfPageSize.A9 => (105, 147),
+            PdfPageSize.A10 => (74, 105),
+
+            PdfPageSize.B0 => (2835, 4008),
+            PdfPageSize.B1 => (2004, 2835),
+            PdfPageSize.B2 => (1417, 2004),
+            PdfPageSize.B3 => (1001, 1417),
+            PdfPageSize.B4 => (709, 1001),
+            PdfPageSize.B5 => (499, 709),
+            PdfPageSize.B6 => (354, 499),
+            PdfPageSize.B7 => (249, 354),
+            PdfPageSize.B8 => (176, 249),
+            PdfPageSize.B9 => (125, 176),
+            PdfPageSize.B10 => (88, 125),
+
+            PdfPageSize.C0 => (2599, 3677),
+            PdfPageSize.C1 => (1837, 2599),
+            PdfPageSize.C2 => (1298, 1837),
+            PdfPageSize.C3 => (918, 1298),
+            PdfPageSize.C4 => (649, 918),
+            PdfPageSize.C5 => (459, 649),
+            PdfPageSize.C6 => (323, 459),
+            PdfPageSize.C7 => (230, 323),
+            PdfPageSize.C8 => (162, 230),
+            PdfPageSize.C9 => (113, 162),
+            PdfPageSize.C10 => (79, 113),
+
+            PdfPageSize.Letter => (612, 792),
+            PdfPageSize.Legal => (612, 1008),
+            PdfPageSize.Tabloid => (792, 1224),
+            PdfPageSize.Ledger => (1224, 792),
+            PdfPageSize.Executive => (522, 756),
+            PdfPageSize.Statement => (396, 612),
+            PdfPageSize.Folio => (612, 936),
+            _ => throw new ArgumentOutOfRangeException(nameof(size), size, "Unsupported page size.")
+        };
     }
 
     /// <summary>
