@@ -46,6 +46,7 @@ namespace PDFiumZDemo
             DemoRotatePages();  // NEW: Test page rotation
             DemoFluentAPI();  // NEW: Test enhanced fluent API with colors and shapes
             DemoHtmlToPdf();  // NEW: Test HTML to PDF conversion
+            DemoHtmlListsToPdf();  // NEW: Test HTML lists (ul, ol, li)
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
@@ -668,6 +669,152 @@ namespace PDFiumZDemo
                 document.SaveToFile("output/html-to-pdf-demo.pdf");
                 Console.WriteLine("\n   Saved: html-to-pdf-demo.pdf");
                 Console.WriteLine("   HTML to PDF conversion demo complete!\n");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\n   Error: {ex.Message}");
+                Console.WriteLine($"   Stack trace: {ex.StackTrace}\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates HTML lists (ul, ol, li) to PDF conversion.
+        /// </summary>
+        static void DemoHtmlListsToPdf()
+        {
+            Console.WriteLine("0.10. HTML Lists to PDF Conversion");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                using var document = PdfDocument.CreateNew();
+                Console.WriteLine("   Created new document");
+
+                // Example 1: Simple unordered list
+                string html1 = @"
+                    <h1 style='color: #2C3E50;'>Unordered Lists</h1>
+                    <p>A simple bullet list:</p>
+                    <ul>
+                        <li>First item</li>
+                        <li>Second item</li>
+                        <li>Third item</li>
+                    </ul>
+                ";
+
+                Console.WriteLine("\n   Example 1: Simple unordered list");
+                document.CreatePageFromHtml(html1);
+                Console.WriteLine("      Created page with unordered list");
+
+                // Example 2: Simple ordered list
+                string html2 = @"
+                    <h1 style='color: #E74C3C;'>Ordered Lists</h1>
+                    <p>A numbered list:</p>
+                    <ol>
+                        <li>First step</li>
+                        <li>Second step</li>
+                        <li>Third step</li>
+                        <li>Fourth step</li>
+                    </ol>
+                ";
+
+                Console.WriteLine("\n   Example 2: Simple ordered list");
+                document.CreatePageFromHtml(html2);
+                Console.WriteLine("      Created page with ordered list");
+
+                // Example 3: Nested lists
+                string html3 = @"
+                    <h1 style='color: #3498DB;'>Nested Lists</h1>
+                    <p>Lists within lists:</p>
+                    <ul>
+                        <li>Main item 1</li>
+                        <li>Main item 2
+                            <ul>
+                                <li>Sub item 2.1</li>
+                                <li>Sub item 2.2</li>
+                            </ul>
+                        </li>
+                        <li>Main item 3</li>
+                    </ul>
+                ";
+
+                Console.WriteLine("\n   Example 3: Nested lists");
+                document.CreatePageFromHtml(html3);
+                Console.WriteLine("      Created page with nested lists");
+
+                // Example 4: Mixed lists with formatting
+                string html4 = @"
+                    <h1 style='color: #27AE60; text-align: center;'>Mixed Lists Demo</h1>
+
+                    <h2 style='color: #E67E22;'>Todo List</h2>
+                    <ol>
+                        <li><b>Complete</b> the HTML converter</li>
+                        <li>Add <i>list support</i></li>
+                        <li>Test with <u>various browsers</u></li>
+                    </ol>
+
+                    <h2 style='color: #8E44AD;'>Features</h2>
+                    <ul>
+                        <li><b>Bold text</b> in lists</li>
+                        <li><i>Italic text</i> in lists</li>
+                        <li>Mixed <b><i>bold and italic</i></b></li>
+                        <li>Colors: <span style='color: red;'>red</span>,
+                            <span style='color: blue;'>blue</span>,
+                            <span style='color: green;'>green</span></li>
+                    </ul>
+                ";
+
+                Console.WriteLine("\n   Example 4: Mixed lists with formatting");
+                document.CreatePageFromHtml(html4);
+                Console.WriteLine("      Created page with mixed formatted lists");
+
+                // Example 5: Complex nested lists
+                string html5 = @"
+                    <h1 style='text-align: center; color: #34495E;'>Complex Nested Lists</h1>
+
+                    <h2>Project Structure</h2>
+                    <ol>
+                        <li>Backend
+                            <ul>
+                                <li>API endpoints</li>
+                                <li>Database
+                                    <ul>
+                                        <li>Users table</li>
+                                        <li>Products table</li>
+                                    </ul>
+                                </li>
+                                <li>Authentication</li>
+                            </ul>
+                        </li>
+                        <li>Frontend
+                            <ul>
+                                <li>Components</li>
+                                <li>Pages</li>
+                                <li>Styles</li>
+                            </ul>
+                        </li>
+                        <li>Testing
+                            <ol>
+                                <li>Unit tests</li>
+                                <li>Integration tests</li>
+                                <li>E2E tests</li>
+                            </ol>
+                        </li>
+                    </ol>
+                ";
+
+                Console.WriteLine("\n   Example 5: Complex nested lists");
+                document.CreatePageFromHtml(html5);
+                Console.WriteLine("      Created page with complex nested lists");
+
+                // Save document
+                document.SaveToFile("output/html-lists-demo.pdf");
+                Console.WriteLine("\n   Saved: html-lists-demo.pdf");
+                Console.WriteLine("   HTML lists conversion demo complete!\n");
             }
             catch (Exception ex)
             {

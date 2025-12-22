@@ -48,6 +48,21 @@ internal class TextStyle
     public double LineHeight { get; set; } = 1.2;
 
     /// <summary>
+    /// Current list depth level (0 = not in list, 1+ = nesting level).
+    /// </summary>
+    public int ListDepth { get; set; } = 0;
+
+    /// <summary>
+    /// Current list type (ul, ol, none).
+    /// </summary>
+    public string ListType { get; set; } = "none";
+
+    /// <summary>
+    /// Current list item index (for ordered lists).
+    /// </summary>
+    public int ListItemIndex { get; set; } = 0;
+
+    /// <summary>
     /// Creates a copy of this style.
     /// </summary>
     public TextStyle Clone()
@@ -61,7 +76,10 @@ internal class TextStyle
             IsItalic = IsItalic,
             IsUnderline = IsUnderline,
             Alignment = Alignment,
-            LineHeight = LineHeight
+            LineHeight = LineHeight,
+            ListDepth = ListDepth,
+            ListType = ListType,
+            ListItemIndex = ListItemIndex
         };
     }
 }
