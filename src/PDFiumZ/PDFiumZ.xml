@@ -4,6 +4,221 @@
         <name>PDFiumZ</name>
     </assembly>
     <members>
+        <member name="T:PDFiumZ.Fluent.Document.FluentDocument">
+            <summary>
+            Fluent document builder for creating PDFs using QuestPDF-style API.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.Fluent.Document.FluentDocument.WithFont(PDFiumZ.HighLevel.PdfFont)">
+            <summary>
+            Sets the default font for the document.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.Fluent.Document.FluentDocument.WithFontSize(System.Double)">
+            <summary>
+            Sets the default font size for the document.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.Fluent.Document.FluentDocument.Content(System.Action{PDFiumZ.Fluent.Document.IContainer})">
+            <summary>
+            Adds content to the document using a builder pattern.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.Fluent.Document.FluentDocument.Generate(System.Double,System.Double)">
+            <summary>
+            Generates the PDF document.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.Fluent.Document.FluentDocument.SaveToFile(System.String)">
+            <summary>
+            Saves the generated document to a file.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Document.IContainer">
+            <summary>
+            Container for building document content.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.ElementExtensions">
+            <summary>
+            Extension methods for fluent API composition.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Container">
+            <summary>
+            Base class for container elements that hold a single child.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.MultiContainer">
+            <summary>
+            Base class for container elements that hold multiple children.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.ContentFlow.PageBreakElement">
+            <summary>
+            Forces all subsequent content to be moved to the next page.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.ContentFlow.ShowIfElement">
+            <summary>
+            Conditionally displays its children based on a predicate.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.EmptyElement">
+            <summary>
+            Represents an empty element that takes no space.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.IElement">
+            <summary>
+            Base interface for all fluent document elements.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.Fluent.Elements.IElement.Measure(PDFiumZ.Fluent.MeasureContext)">
+            <summary>
+            Measures the element and returns a space plan indicating how it fits in the available space.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.Fluent.Elements.IElement.Render(PDFiumZ.Fluent.RenderContext)">
+            <summary>
+            Renders the element at the specified position.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Layout.ColumnElement">
+            <summary>
+            Places children vertically, one under another.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Layout.LayersElement">
+            <summary>
+            Layers multiple elements on top of each other.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Layout.RowElement">
+            <summary>
+            Places children horizontally, one alongside another.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Positional.HorizontalAlignment">
+            <summary>
+            Horizontal alignment options.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Positional.VerticalAlignment">
+            <summary>
+            Vertical alignment options.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Positional.AlignmentElement">
+            <summary>
+            Aligns its child within the available space.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Positional.AspectRatioElement">
+            <summary>
+            Reserves an area with a specified aspect ratio.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Positional.ExtendElement">
+            <summary>
+            Extends child size to fit the entire content area.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Positional.HeightElement">
+            <summary>
+            Applies height constraints to its child.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Positional.PaddingElement">
+            <summary>
+            Applies padding around its child.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Positional.WidthElement">
+            <summary>
+            Applies width constraints to its child.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Visual.BackgroundElement">
+            <summary>
+            Applies a background color to its child.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Visual.BorderElement">
+            <summary>
+            Applies a border around its child.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Visual.ImageElement">
+            <summary>
+            Renders an image from a file or byte array.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Visual.LineElement">
+            <summary>
+            Draws a horizontal or vertical line.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Visual.TextElement">
+            <summary>
+            Renders text content.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.MeasureContext">
+            <summary>
+            Context information for measuring elements.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.RenderContext">
+            <summary>
+            Context information for rendering elements.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Position">
+            <summary>
+            Represents a position with X and Y coordinates.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.Fluent.Position.#ctor(System.Double,System.Double)">
+            <summary>
+            Represents a position with X and Y coordinates.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Size">
+            <summary>
+            Represents a size with width and height.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.Fluent.Size.#ctor(System.Double,System.Double)">
+            <summary>
+            Represents a size with width and height.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.SpacePlanType">
+            <summary>
+            Represents the type of space plan result.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.Fluent.SpacePlanType.FullRender">
+            <summary>
+            The element can fit in the available space.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.Fluent.SpacePlanType.PartialRender">
+            <summary>
+            The element can partially fit in the available space.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.Fluent.SpacePlanType.Wrap">
+            <summary>
+            The element needs to wrap to the next container (e.g., next page).
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.SpacePlan">
+            <summary>
+            Represents the result of measuring an element in available space.
+            </summary>
+        </member>
         <member name="T:PDFiumZ.FPDFBitmapFormat">
             <summary>
             Specifies the pixel format for a PDFium bitmap.
@@ -1391,6 +1606,104 @@
             <param name="tag">Metadata tag (e.g., "Title", "Author", "Subject").</param>
             <param name="allowEmpty">If true, returns null for empty strings; otherwise returns empty string.</param>
             <returns>Metadata value or empty string/null if not available.</returns>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfDocumentImageExtensions">
+            <summary>
+            Extension methods for generating images from PDF documents.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.GenerateImages(PDFiumZ.HighLevel.PdfDocument,PDFiumZ.HighLevel.RenderOptions)">
+            <summary>
+            Generates images from all pages in the document.
+            </summary>
+            <param name="document">The PDF document.</param>
+            <param name="options">Optional render options. If null, uses default settings.</param>
+            <returns>An enumerable of PdfImage objects. Remember to dispose each image after use.</returns>
+            <exception cref="T:System.ArgumentNullException">document is null.</exception>
+            <exception cref="T:System.ObjectDisposedException">document has been disposed.</exception>
+            <example>
+            <code>
+            using var document = PdfDocument.Open("sample.pdf");
+            foreach (var image in document.GenerateImages())
+            {
+                using (image)
+                {
+                    // Process image...
+                    image.SaveAsSkiaPng($"page-{i}.png");
+                }
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.GenerateImages(PDFiumZ.HighLevel.PdfDocument,System.Int32,System.Int32,PDFiumZ.HighLevel.RenderOptions)">
+            <summary>
+            Generates images from a range of pages.
+            </summary>
+            <param name="document">The PDF document.</param>
+            <param name="startIndex">The zero-based starting page index.</param>
+            <param name="count">Number of pages to render.</param>
+            <param name="options">Optional render options.</param>
+            <returns>An enumerable of PdfImage objects.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.String,System.String,PDFiumZ.HighLevel.RenderOptions)">
+             <summary>
+             Saves all pages as image files to a directory with a specified format.
+             File names are automatically generated as "page-0.png", "page-1.png", etc.
+             </summary>
+             <param name="document">The PDF document.</param>
+             <param name="outputDirectory">Directory path where images will be saved.</param>
+             <param name="fileNamePattern">Optional file name pattern. Use {0} for page index. Default: "page-{0}.png"</param>
+             <param name="options">Optional render options.</param>
+             <returns>Array of generated file paths.</returns>
+             <exception cref="T:System.ArgumentNullException">document or outputDirectory is null.</exception>
+             <exception cref="T:System.ObjectDisposedException">document has been disposed.</exception>
+             <example>
+             <code>
+             // Save to output directory with default naming
+             document.SaveAsImages("output/");
+            
+             // Save with custom naming pattern
+             document.SaveAsImages("output/", "document-page-{0}.png");
+            
+             // Save with custom options
+             var options = RenderOptions.Default.WithDpi(150);
+             document.SaveAsImages("output/", options: options);
+             </code>
+             </example>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.String,System.Int32,System.Int32,System.String,PDFiumZ.HighLevel.RenderOptions)">
+            <summary>
+            Saves a range of pages as image files.
+            </summary>
+            <param name="document">The PDF document.</param>
+            <param name="outputDirectory">Directory path where images will be saved.</param>
+            <param name="startIndex">The zero-based starting page index.</param>
+            <param name="count">Number of pages to save.</param>
+            <param name="fileNamePattern">Optional file name pattern. Default: "page-{0}.png"</param>
+            <param name="options">Optional render options.</param>
+            <returns>Array of generated file paths.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.Func{System.Int32,System.String},PDFiumZ.HighLevel.RenderOptions)">
+             <summary>
+             Saves all pages as image files using a custom path generator function.
+             </summary>
+             <param name="document">The PDF document.</param>
+             <param name="filePathGenerator">Function that generates file path for each page index.</param>
+             <param name="options">Optional render options.</param>
+             <returns>Array of generated file paths.</returns>
+             <exception cref="T:System.ArgumentNullException">document or filePathGenerator is null.</exception>
+             <example>
+             <code>
+             // Generate custom file names
+             document.SaveAsImages(pageIndex => $"output/doc-{pageIndex:D3}.png");
+            
+             // With custom options
+             var options = RenderOptions.Default.WithDpi(300).WithTransparency();
+             document.SaveAsImages(
+                 pageIndex => $"highres/page-{pageIndex}.png",
+                 options);
+             </code>
+             </example>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfExtractedImage">
             <summary>
