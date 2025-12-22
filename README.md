@@ -10,7 +10,6 @@ PDFiumZ is multi-targeted:
 
 - `net10.0`
 - `net9.0`
-- `net8.0`
 - `netstandard2.1`
 - `netstandard2.0`
 
@@ -510,6 +509,18 @@ The low-level P/Invoke API is still available for advanced scenarios through the
 1. Clone the repository
 2. Run `dotnet build` in the `src` directory
 3. Run `dotnet pack` to create NuGet packages
+
+Build a single target framework:
+
+```bash
+dotnet build src/PDFiumZ/PDFiumZ.csproj -c Release -f netstandard2.0
+dotnet build src/PDFiumZ/PDFiumZ.csproj -c Release -f net9.0
+```
+
+Notes for contributors:
+
+- `netstandard2.0` builds pull in `System.Memory` to provide `Span<T>` support
+- `netstandard2.x` builds include an internal `IsExternalInit` shim for `init`/`record` support
 
 ## Performance Benchmarks
 
