@@ -11,6 +11,14 @@ public sealed unsafe class PdfContentEditor : IDisposable
     private readonly PdfPage _page;
     private bool _disposed;
 
+    // Default state for fluent API
+    private PdfFont? _defaultFont;
+    private double _defaultFontSize = 12;
+    private uint _defaultTextColor = PdfColor.Black;
+    private uint _defaultStrokeColor = PdfColor.Black;
+    private uint _defaultFillColor = PdfColor.Transparent;
+    private double _defaultLineWidth = 1.0;
+
     /// <summary>
     /// Gets the page being edited.
     /// </summary>
@@ -303,6 +311,23 @@ public sealed unsafe class PdfContentEditor : IDisposable
         return this;
     }
 
+    /// <summary>
+    /// Adds text to the page using current default font and size (fluent API).
+    /// </summary>
+    /// <param name="text">The text to add.</param>
+    /// <param name="x">X coordinate in page units.</param>
+    /// <param name="y">Y coordinate in page units.</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    /// <exception cref="InvalidOperationException">Default font is not set. Call WithFont first.</exception>
+    public PdfContentEditor Text(string text, double x, double y)
+    {
+        if (_defaultFont == null)
+            throw new InvalidOperationException("Default font is not set. Call WithFont(font) first.");
+
+        AddText(text, x, y, _defaultFont, _defaultFontSize);
+        return this;
+    }
+
     public PdfContentEditor Image(byte[] imageData, int width, int height, PdfRectangle bounds)
     {
         AddImage(imageData, width, height, bounds);
@@ -315,11 +340,289 @@ public sealed unsafe class PdfContentEditor : IDisposable
         return this;
     }
 
+    /// <summary>
+    /// Adds a rectangle using current default stroke and fill colors (fluent API).
+    /// </summary>
+    public PdfContentEditor Rectangle(PdfRectangle bounds)
+    {
+        AddRectangle(bounds, _defaultStrokeColor, _defaultFillColor);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a line between two points (fluent API).
+    /// </summary>
+    /// <param name="x1">Start X coordinate.</param>
+    /// <param name="y1">Start Y coordinate.</param>
+    /// <param name="x2">End X coordinate.</param>
+    /// <param name="y2">End Y coordinate.</param>
+    /// <param name="strokeColor">Line color in ARGB format. Use 0 or omit to use default stroke color.</param>
+    /// <param name="lineWidth">Line width. Use 0 or omit to use default line width.</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    public PdfContentEditor Line(double x1, double y1, double x2, double y2, uint strokeColor = 0, double lineWidth = 0)
+    {
+        ThrowIfDisposed();
+        _page.ThrowIfDisposed();
+
+        var color = strokeColor == 0 ? _defaultStrokeColor : strokeColor;
+        var width = lineWidth == 0 ? _defaultLineWidth : lineWidth;
+
+        // Create path object
+        var pathObj = fpdf_edit.FPDFPageObjCreateNewPath((float)x1, (float)y1);
+        if (pathObj is null || pathObj.__Instance == IntPtr.Zero)
+        {
+            throw new PdfException("Failed to create line path object.");
+        }
+
+        try
+        {
+            // Add line segment
+            fpdf_edit.FPDFPathLineTo(pathObj, (float)x2, (float)y2);
+
+            // Set stroke color
+            uint a = (color >> 24) & 0xFF;
+            uint r = (color >> 16) & 0xFF;
+            uint g = (color >> 8) & 0xFF;
+            uint b = color & 0xFF;
+
+            var result = fpdf_edit.FPDFPageObjSetStrokeColor(pathObj, r, g, b, a);
+            if (result == 0)
+            {
+                throw new PdfException("Failed to set line stroke color.");
+            }
+
+            // Set stroke width
+            fpdf_edit.FPDFPageObjSetStrokeWidth(pathObj, (float)width);
+
+            // Set draw mode to stroke only
+            fpdf_edit.FPDFPathSetDrawMode(pathObj, 1, 0); // stroke = 1, fill = 0
+
+            // Insert object into page
+            fpdf_edit.FPDFPageInsertObject(_page._handle!, pathObj);
+        }
+        catch
+        {
+            fpdf_edit.FPDFPageObjDestroy(pathObj);
+            throw;
+        }
+
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a circle (fluent API).
+    /// </summary>
+    /// <param name="centerX">Center X coordinate.</param>
+    /// <param name="centerY">Center Y coordinate.</param>
+    /// <param name="radius">Circle radius.</param>
+    /// <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke or omit to use default.</param>
+    /// <param name="fillColor">Fill color in ARGB format. Use 0 for no fill or omit to use default.</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    public PdfContentEditor Circle(double centerX, double centerY, double radius, uint strokeColor = 0, uint fillColor = 0)
+    {
+        var bounds = new PdfRectangle(
+            centerX - radius,
+            centerY - radius,
+            radius * 2,
+            radius * 2);
+
+        var stroke = strokeColor == 0 ? _defaultStrokeColor : strokeColor;
+        var fill = fillColor == 0 ? _defaultFillColor : fillColor;
+
+        return Ellipse(bounds, stroke, fill);
+    }
+
+    /// <summary>
+    /// Adds an ellipse (fluent API).
+    /// </summary>
+    /// <param name="bounds">Bounding rectangle for the ellipse.</param>
+    /// <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke or omit to use default.</param>
+    /// <param name="fillColor">Fill color in ARGB format. Use 0 for no fill or omit to use default.</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    public PdfContentEditor Ellipse(PdfRectangle bounds, uint strokeColor = 0, uint fillColor = 0)
+    {
+        ThrowIfDisposed();
+        _page.ThrowIfDisposed();
+
+        var stroke = strokeColor == 0 ? _defaultStrokeColor : strokeColor;
+        var fill = fillColor == 0 ? _defaultFillColor : fillColor;
+
+        // Create ellipse using Bezier curves
+        var pathObj = fpdf_edit.FPDFPageObjCreateNewPath(
+            (float)(bounds.X + bounds.Width / 2),
+            (float)(bounds.Y + bounds.Height));
+
+        if (pathObj is null || pathObj.__Instance == IntPtr.Zero)
+        {
+            throw new PdfException("Failed to create ellipse path object.");
+        }
+
+        try
+        {
+            var cx = bounds.X + bounds.Width / 2;
+            var cy = bounds.Y + bounds.Height / 2;
+            var rx = bounds.Width / 2;
+            var ry = bounds.Height / 2;
+
+            // Magic number for Bezier curve approximation of circle: 4/3 * (sqrt(2) - 1)
+            var kappa = 0.5522847498;
+            var ox = rx * kappa;
+            var oy = ry * kappa;
+
+            // Top
+            fpdf_edit.FPDFPathBezierTo(pathObj,
+                (float)(cx + ox), (float)(cy + ry),
+                (float)(cx + rx), (float)(cy + oy),
+                (float)(cx + rx), (float)cy);
+
+            // Right
+            fpdf_edit.FPDFPathBezierTo(pathObj,
+                (float)(cx + rx), (float)(cy - oy),
+                (float)(cx + ox), (float)(cy - ry),
+                (float)cx, (float)(cy - ry));
+
+            // Bottom
+            fpdf_edit.FPDFPathBezierTo(pathObj,
+                (float)(cx - ox), (float)(cy - ry),
+                (float)(cx - rx), (float)(cy - oy),
+                (float)(cx - rx), (float)cy);
+
+            // Left
+            fpdf_edit.FPDFPathBezierTo(pathObj,
+                (float)(cx - rx), (float)(cy + oy),
+                (float)(cx - ox), (float)(cy + ry),
+                (float)cx, (float)(cy + ry));
+
+            fpdf_edit.FPDFPathClose(pathObj);
+
+            // Set stroke color if specified
+            if (stroke != 0)
+            {
+                uint a = (stroke >> 24) & 0xFF;
+                uint r = (stroke >> 16) & 0xFF;
+                uint g = (stroke >> 8) & 0xFF;
+                uint b = stroke & 0xFF;
+
+                var result = fpdf_edit.FPDFPageObjSetStrokeColor(pathObj, r, g, b, a);
+                if (result == 0)
+                {
+                    throw new PdfException("Failed to set ellipse stroke color.");
+                }
+            }
+
+            // Set fill color if specified
+            if (fill != 0)
+            {
+                uint a = (fill >> 24) & 0xFF;
+                uint r = (fill >> 16) & 0xFF;
+                uint g = (fill >> 8) & 0xFF;
+                uint b = fill & 0xFF;
+
+                var result = fpdf_edit.FPDFPageObjSetFillColor(pathObj, r, g, b, a);
+                if (result == 0)
+                {
+                    throw new PdfException("Failed to set ellipse fill color.");
+                }
+            }
+
+            // Set draw mode
+            var hasStroke = stroke != 0 ? 1 : 0;
+            var hasFill = fill != 0 ? 1 : 0;
+            fpdf_edit.FPDFPathSetDrawMode(pathObj, hasStroke, hasFill);
+
+            // Insert object into page
+            fpdf_edit.FPDFPageInsertObject(_page._handle!, pathObj);
+        }
+        catch
+        {
+            fpdf_edit.FPDFPageObjDestroy(pathObj);
+            throw;
+        }
+
+        return this;
+    }
+
     public PdfContentEditor Remove(int index)
     {
         RemoveObject(index);
         return this;
     }
+
+    #region Fluent Configuration Methods
+
+    /// <summary>
+    /// Sets the default font for subsequent text operations (fluent API).
+    /// </summary>
+    /// <param name="font">The font to use as default.</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    public PdfContentEditor WithFont(PdfFont font)
+    {
+        _defaultFont = font ?? throw new ArgumentNullException(nameof(font));
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the default font size for subsequent text operations (fluent API).
+    /// </summary>
+    /// <param name="fontSize">Font size in points.</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    public PdfContentEditor WithFontSize(double fontSize)
+    {
+        if (fontSize <= 0)
+            throw new ArgumentOutOfRangeException(nameof(fontSize), "Font size must be positive.");
+
+        _defaultFontSize = fontSize;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the default text color for subsequent text operations (fluent API).
+    /// </summary>
+    /// <param name="color">Color in ARGB format (0xAARRGGBB).</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    public PdfContentEditor WithTextColor(uint color)
+    {
+        _defaultTextColor = color;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the default stroke color for subsequent shape operations (fluent API).
+    /// </summary>
+    /// <param name="color">Color in ARGB format (0xAARRGGBB).</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    public PdfContentEditor WithStrokeColor(uint color)
+    {
+        _defaultStrokeColor = color;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the default fill color for subsequent shape operations (fluent API).
+    /// </summary>
+    /// <param name="color">Color in ARGB format (0xAARRGGBB).</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    public PdfContentEditor WithFillColor(uint color)
+    {
+        _defaultFillColor = color;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the default line width for subsequent line/shape operations (fluent API).
+    /// </summary>
+    /// <param name="width">Line width in points.</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
+    public PdfContentEditor WithLineWidth(double width)
+    {
+        if (width < 0)
+            throw new ArgumentOutOfRangeException(nameof(width), "Line width cannot be negative.");
+
+        _defaultLineWidth = width;
+        return this;
+    }
+
+    #endregion
 
     public void Commit()
     {

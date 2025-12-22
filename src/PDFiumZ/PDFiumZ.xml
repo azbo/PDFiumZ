@@ -457,6 +457,153 @@
             <returns>The fill color in ARGB format.</returns>
             <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
         </member>
+        <member name="T:PDFiumZ.HighLevel.PdfColor">
+            <summary>
+            Provides color utilities and common predefined colors for PDF operations.
+            Colors are represented in ARGB format (0xAARRGGBB).
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfColor.FromArgb(System.Byte,System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Creates an ARGB color from individual components.
+            </summary>
+            <param name="r">Red component (0-255)</param>
+            <param name="g">Green component (0-255)</param>
+            <param name="b">Blue component (0-255)</param>
+            <param name="a">Alpha component (0-255). Default is 255 (fully opaque).</param>
+            <returns>ARGB color value</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfColor.FromRgb(System.Byte,System.Byte,System.Byte,System.Double)">
+            <summary>
+            Creates an ARGB color with specified opacity percentage.
+            </summary>
+            <param name="r">Red component (0-255)</param>
+            <param name="g">Green component (0-255)</param>
+            <param name="b">Blue component (0-255)</param>
+            <param name="opacity">Opacity as percentage (0.0 = transparent, 1.0 = opaque)</param>
+            <returns>ARGB color value</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfColor.FromHex(System.String,System.Double)">
+            <summary>
+            Creates a color from hex string (e.g., "#FF0000" or "FF0000" for red).
+            </summary>
+            <param name="hex">Hex color string (with or without # prefix)</param>
+            <param name="opacity">Opacity as percentage (0.0 = transparent, 1.0 = opaque)</param>
+            <returns>ARGB color value</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfColor.WithOpacity(System.UInt32,System.Double)">
+            <summary>
+            Adjusts the opacity of an existing ARGB color.
+            </summary>
+            <param name="color">Original ARGB color</param>
+            <param name="opacity">New opacity as percentage (0.0 = transparent, 1.0 = opaque)</param>
+            <returns>ARGB color with adjusted opacity</returns>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Transparent">
+            <summary>Transparent (0x00000000)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Black">
+            <summary>Black (0xFF000000)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.White">
+            <summary>White (0xFFFFFFFF)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Red">
+            <summary>Red (0xFFFF0000)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Green">
+            <summary>Green (0xFF00FF00)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Blue">
+            <summary>Blue (0xFF0000FF)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Yellow">
+            <summary>Yellow (0xFFFFFF00)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Cyan">
+            <summary>Cyan (0xFF00FFFF)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Magenta">
+            <summary>Magenta (0xFFFF00FF)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.DarkGray">
+            <summary>Dark Gray (0xFF404040)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Gray">
+            <summary>Gray (0xFF808080)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.LightGray">
+            <summary>Light Gray (0xFFC0C0C0)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Silver">
+            <summary>Silver (0xFFC0C0C0)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Orange">
+            <summary>Orange (0xFFFFA500)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Purple">
+            <summary>Purple (0xFF800080)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Pink">
+            <summary>Pink (0xFFFFC0CB)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Brown">
+            <summary>Brown (0xFFA52A2A)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Gold">
+            <summary>Gold (0xFFFFD700)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Navy">
+            <summary>Navy (0xFF000080)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Teal">
+            <summary>Teal (0xFF008080)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Olive">
+            <summary>Olive (0xFF808000)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Maroon">
+            <summary>Maroon (0xFF800000)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Lime">
+            <summary>Lime (0xFF00FF00)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Aqua">
+            <summary>Aqua (0xFF00FFFF)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.Fuchsia">
+            <summary>Fuchsia (0xFFFF00FF)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.HighlightYellow">
+            <summary>Light Yellow for highlighting (0x80FFFF00)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.HighlightGreen">
+            <summary>Light Green for highlighting (0x8000FF00)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.HighlightBlue">
+            <summary>Light Blue for highlighting (0x8000FFFF)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.HighlightPink">
+            <summary>Light Pink for highlighting (0x80FFCCE5)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.DarkRed">
+            <summary>Dark Red (0xFF8B0000)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.LightRed">
+            <summary>Light Red (0xFFFFCCCC)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.DarkGreen">
+            <summary>Dark Green (0xFF006400)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.LightGreen">
+            <summary>Light Green (0xFF90EE90)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.DarkBlue">
+            <summary>Dark Blue (0xFF00008B)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfColor.LightBlue">
+            <summary>Light Blue (0xFFADD8E6)</summary>
+        </member>
         <member name="T:PDFiumZ.HighLevel.PdfContentEditor">
             <summary>
             Provides methods for editing PDF page content by adding text, images, and shapes.
@@ -529,6 +676,95 @@
             </summary>
             <exception cref="T:System.ObjectDisposedException">Editor has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to generate content.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.Text(System.String,System.Double,System.Double)">
+            <summary>
+            Adds text to the page using current default font and size (fluent API).
+            </summary>
+            <param name="text">The text to add.</param>
+            <param name="x">X coordinate in page units.</param>
+            <param name="y">Y coordinate in page units.</param>
+            <returns>This editor instance for fluent chaining.</returns>
+            <exception cref="T:System.InvalidOperationException">Default font is not set. Call WithFont first.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.Rectangle(PDFiumZ.HighLevel.PdfRectangle)">
+            <summary>
+            Adds a rectangle using current default stroke and fill colors (fluent API).
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.Line(System.Double,System.Double,System.Double,System.Double,System.UInt32,System.Double)">
+            <summary>
+            Adds a line between two points (fluent API).
+            </summary>
+            <param name="x1">Start X coordinate.</param>
+            <param name="y1">Start Y coordinate.</param>
+            <param name="x2">End X coordinate.</param>
+            <param name="y2">End Y coordinate.</param>
+            <param name="strokeColor">Line color in ARGB format. Use 0 or omit to use default stroke color.</param>
+            <param name="lineWidth">Line width. Use 0 or omit to use default line width.</param>
+            <returns>This editor instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.Circle(System.Double,System.Double,System.Double,System.UInt32,System.UInt32)">
+            <summary>
+            Adds a circle (fluent API).
+            </summary>
+            <param name="centerX">Center X coordinate.</param>
+            <param name="centerY">Center Y coordinate.</param>
+            <param name="radius">Circle radius.</param>
+            <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke or omit to use default.</param>
+            <param name="fillColor">Fill color in ARGB format. Use 0 for no fill or omit to use default.</param>
+            <returns>This editor instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.Ellipse(PDFiumZ.HighLevel.PdfRectangle,System.UInt32,System.UInt32)">
+            <summary>
+            Adds an ellipse (fluent API).
+            </summary>
+            <param name="bounds">Bounding rectangle for the ellipse.</param>
+            <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke or omit to use default.</param>
+            <param name="fillColor">Fill color in ARGB format. Use 0 for no fill or omit to use default.</param>
+            <returns>This editor instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.WithFont(PDFiumZ.HighLevel.PdfFont)">
+            <summary>
+            Sets the default font for subsequent text operations (fluent API).
+            </summary>
+            <param name="font">The font to use as default.</param>
+            <returns>This editor instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.WithFontSize(System.Double)">
+            <summary>
+            Sets the default font size for subsequent text operations (fluent API).
+            </summary>
+            <param name="fontSize">Font size in points.</param>
+            <returns>This editor instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.WithTextColor(System.UInt32)">
+            <summary>
+            Sets the default text color for subsequent text operations (fluent API).
+            </summary>
+            <param name="color">Color in ARGB format (0xAARRGGBB).</param>
+            <returns>This editor instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.WithStrokeColor(System.UInt32)">
+            <summary>
+            Sets the default stroke color for subsequent shape operations (fluent API).
+            </summary>
+            <param name="color">Color in ARGB format (0xAARRGGBB).</param>
+            <returns>This editor instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.WithFillColor(System.UInt32)">
+            <summary>
+            Sets the default fill color for subsequent shape operations (fluent API).
+            </summary>
+            <param name="color">Color in ARGB format (0xAARRGGBB).</param>
+            <returns>This editor instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.WithLineWidth(System.Double)">
+            <summary>
+            Sets the default line width for subsequent line/shape operations (fluent API).
+            </summary>
+            <param name="width">Line width in points.</param>
+            <returns>This editor instance for fluent chaining.</returns>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfContentEditor.Dispose">
             <summary>
@@ -1104,6 +1340,60 @@
         </member>
         <member name="F:PDFiumZ.HighLevel.PdfStandardFont.ZapfDingbats">
             <summary>ZapfDingbats (decorative symbols)</summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfFontSize">
+            <summary>
+            Provides commonly used font sizes for PDF documents.
+            All sizes are in points.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.VerySmall">
+            <summary>Very small text (6pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.Small">
+            <summary>Small text (8pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.Footnote">
+            <summary>Footnote text (9pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.Normal">
+            <summary>Normal/body text (10pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.Default">
+            <summary>Default body text (12pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.Medium">
+            <summary>Medium text (14pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.Large">
+            <summary>Large text (16pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.Heading4">
+            <summary>Heading 4 (18pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.Heading3">
+            <summary>Heading 3 (20pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.Heading2">
+            <summary>Heading 2 (24pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.Heading1">
+            <summary>Heading 1 (28pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.ExtraLarge">
+            <summary>Extra large text (32pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.Display">
+            <summary>Display text (36pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.Title">
+            <summary>Title text (48pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.LargeTitle">
+            <summary>Large title text (60pt)</summary>
+        </member>
+        <member name="F:PDFiumZ.HighLevel.PdfFontSize.Giant">
+            <summary>Giant text (72pt)</summary>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfFormField">
             <summary>
