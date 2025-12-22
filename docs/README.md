@@ -3,6 +3,13 @@
 ## Contents
 
 - [Examples](#examples)
+  - [Create PDF from Scratch](#create-pdf-from-scratch)
+  - [Merge and Split PDFs](#merge-and-split-pdfs)
+  - [Add Watermarks](#add-watermarks)
+  - [Rotate Pages](#rotate-pages)
+  - [Check PDF Security and Permissions](#check-pdf-security-and-permissions)
+  - [Annotations](#annotations)
+  - [Enhanced Fluent API for Content Creation](#enhanced-fluent-api-for-content-creation)
 - [Features](#features)
 - [Building](#building)
 - [Benchmarks](#benchmarks)
@@ -133,6 +140,139 @@ using var image = PdfBitmap.Load("stamp.png");
 var stamp = PdfStampAnnotation.Create(page, new PdfRectangle(300, 100, 100, 100), image);
 ```
 
+### Enhanced Fluent API for Content Creation
+
+PDFiumZ provides a powerful fluent API for creating PDF content with predefined colors, font sizes, and shapes.
+
+#### Predefined Colors
+
+Use `PdfColor` for easy color management with 40+ predefined colors:
+
+```csharp
+using PDFiumZ.HighLevel;
+
+// Basic colors
+PdfColor.Black, PdfColor.White, PdfColor.Red, PdfColor.Green, PdfColor.Blue
+
+// Extended colors
+PdfColor.Orange, PdfColor.Purple, PdfColor.Pink, PdfColor.Brown, PdfColor.Gold
+
+// Shades
+PdfColor.DarkRed, PdfColor.LightRed, PdfColor.DarkBlue, PdfColor.LightBlue
+
+// Highlights (with transparency)
+PdfColor.HighlightYellow, PdfColor.HighlightGreen, PdfColor.HighlightBlue
+
+// Create custom colors
+var customColor = PdfColor.FromHex("#FF6B6B");
+var semiTransparent = PdfColor.FromRgb(255, 0, 0, opacity: 0.5);
+var adjusted = PdfColor.WithOpacity(PdfColor.Red, 0.3);
+```
+
+#### Predefined Font Sizes
+
+Use `PdfFontSize` constants for consistent typography:
+
+```csharp
+using PDFiumZ.HighLevel;
+
+PdfFontSize.VerySmall  // 6pt
+PdfFontSize.Small      // 8pt
+PdfFontSize.Normal     // 10pt
+PdfFontSize.Default    // 12pt
+PdfFontSize.Medium     // 14pt
+PdfFontSize.Large      // 16pt
+PdfFontSize.Heading4   // 18pt
+PdfFontSize.Heading3   // 20pt
+PdfFontSize.Heading2   // 24pt
+PdfFontSize.Heading1   // 28pt
+PdfFontSize.Title      // 48pt
+PdfFontSize.Giant      // 72pt
+```
+
+#### Fluent Content Creation
+
+Create complex PDF content with chainable methods:
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.CreateNew();
+using var page = document.CreatePage();
+using var font = PdfFont.LoadStandardFont(document, PdfStandardFont.Helvetica);
+
+using (var editor = page.BeginEdit())
+{
+    editor
+        // Set default styles
+        .WithFont(font)
+        .WithFontSize(PdfFontSize.Heading1)
+        .WithTextColor(PdfColor.DarkBlue)
+        .Text("Title", 50, 750)  // Simplified 3-parameter Text method
+
+        // Change styles and continue
+        .WithFontSize(PdfFontSize.Normal)
+        .WithTextColor(PdfColor.Black)
+        .Text("Body text with default font and size", 50, 700)
+
+        // Draw colored rectangles
+        .WithStrokeColor(PdfColor.Red)
+        .WithFillColor(PdfColor.WithOpacity(PdfColor.Red, 0.3))
+        .Rectangle(new PdfRectangle(50, 630, 100, 50))
+
+        // Draw lines
+        .WithLineWidth(2)
+        .Line(50, 600, 250, 600, PdfColor.Black)
+
+        // Draw circles and ellipses
+        .Circle(100, 550, 30, PdfColor.Blue, PdfColor.WithOpacity(PdfColor.Blue, 0.5))
+        .Ellipse(new PdfRectangle(200, 520, 80, 60), PdfColor.Green, PdfColor.Transparent)
+
+        // Use hex colors
+        .Rectangle(new PdfRectangle(50, 450, 60, 30),
+            PdfColor.FromHex("#FF6B6B"),
+            PdfColor.WithOpacity(PdfColor.FromHex("#FF6B6B"), 0.5))
+
+        // Commit all changes
+        .Commit();
+}
+
+document.SaveToFile("fluent-content.pdf");
+```
+
+#### Configuration Methods
+
+Set default styles for subsequent operations:
+
+- `WithFont(font)` - Set default font
+- `WithFontSize(fontSize)` - Set default font size
+- `WithTextColor(color)` - Set default text color
+- `WithStrokeColor(color)` - Set default stroke color for shapes
+- `WithFillColor(color)` - Set default fill color for shapes
+- `WithLineWidth(width)` - Set default line width
+
+#### Shape Methods
+
+Draw various shapes with ease:
+
+- `Line(x1, y1, x2, y2, color, width)` - Draw a straight line
+- `Rectangle(bounds)` - Draw rectangle with default colors
+- `Rectangle(bounds, strokeColor, fillColor)` - Draw rectangle with custom colors
+- `Circle(centerX, centerY, radius, strokeColor, fillColor)` - Draw a circle
+- `Ellipse(bounds, strokeColor, fillColor)` - Draw an ellipse
+
+#### Simplified Text Method
+
+After setting a default font with `WithFont()`, use the simplified 3-parameter `Text()` method:
+
+```csharp
+editor
+    .WithFont(font)
+    .WithFontSize(14)
+    .Text("Hello", 50, 700)  // Uses default font and size
+    .Text("World", 50, 680); // Still uses default font and size
+```
+
 ## Features
 
 ### High-Level API (Recommended)
@@ -174,6 +314,13 @@ finally
 
 - ✅ Modern C# API with `IDisposable` pattern
 - ✅ Fluent rendering options (`WithDpi()`, `WithScale()`, `WithTransparency()`)
+- ✅ **Enhanced fluent API for content creation**:
+  - Configuration methods (`WithFont`, `WithFontSize`, `WithTextColor`, `WithStrokeColor`, `WithFillColor`, `WithLineWidth`)
+  - Simplified text method using defaults (3-parameter `Text()`)
+  - Shape drawing (`Line`, `Circle`, `Ellipse`, enhanced `Rectangle`)
+  - Predefined colors (`PdfColor` with 40+ colors)
+  - Common font sizes (`PdfFontSize` with 15+ presets)
+  - Hex color support and opacity control
 - ✅ PDF creation from scratch
 - ✅ PDF merge and split
 - ✅ Page manipulation (insert, delete, move, import)

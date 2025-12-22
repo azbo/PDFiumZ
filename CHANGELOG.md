@@ -7,11 +7,59 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+#### Enhanced Fluent API for Content Creation
+- **PdfColor Helper Class**: Comprehensive color management utilities
+  - 40+ predefined colors: basic (Black, White, Red, etc.), extended (Orange, Purple, Pink, etc.), shades (DarkRed, LightBlue, etc.), and highlights
+  - `FromArgb(r, g, b, a)` - Create color from ARGB components
+  - `FromRgb(r, g, b, opacity)` - Create color from RGB with opacity percentage
+  - `FromHex(hex, opacity)` - Create color from hex string (e.g., "#FF0000")
+  - `WithOpacity(color, opacity)` - Adjust opacity of existing color
+  - Example: `PdfColor.Red`, `PdfColor.FromHex("#FF6B6B")`, `PdfColor.WithOpacity(PdfColor.Blue, 0.5)`
+
+- **PdfFontSize Constants**: 15+ predefined font sizes for consistent typography
+  - VerySmall (6pt), Small (8pt), Normal (10pt), Default (12pt)
+  - Heading sizes: Heading4 (18pt), Heading3 (20pt), Heading2 (24pt), Heading1 (28pt)
+  - Display sizes: Title (48pt), LargeTitle (60pt), Giant (72pt)
+  - Example: `PdfFontSize.Heading1`, `PdfFontSize.Normal`
+
+- **PdfContentEditor Enhanced Methods**:
+  - **Configuration Methods** (set defaults for subsequent operations):
+    - `WithFont(font)` - Set default font
+    - `WithFontSize(fontSize)` - Set default font size
+    - `WithTextColor(color)` - Set default text color
+    - `WithStrokeColor(color)` - Set default stroke color for shapes
+    - `WithFillColor(color)` - Set default fill color for shapes
+    - `WithLineWidth(width)` - Set default line width
+  - **Simplified Text Method**: `Text(text, x, y)` - 3-parameter overload using default font and size
+  - **Shape Drawing Methods**:
+    - `Line(x1, y1, x2, y2, color, width)` - Draw straight lines
+    - `Circle(centerX, centerY, radius, strokeColor, fillColor)` - Draw circles
+    - `Ellipse(bounds, strokeColor, fillColor)` - Draw ellipses with Bezier curves
+    - `Rectangle(bounds)` - Rectangle overload using default colors
+  - **Fluent Chaining**: All methods return `this` for method chaining
+  - Example:
+    ```csharp
+    editor
+        .WithFont(font)
+        .WithFontSize(PdfFontSize.Heading1)
+        .WithTextColor(PdfColor.DarkBlue)
+        .Text("Title", 50, 750)
+        .WithStrokeColor(PdfColor.Red)
+        .WithFillColor(PdfColor.WithOpacity(PdfColor.Red, 0.3))
+        .Rectangle(new PdfRectangle(50, 680, 100, 50))
+        .Line(50, 650, 250, 650, PdfColor.Black)
+        .Circle(100, 600, 30, PdfColor.Blue, PdfColor.WithOpacity(PdfColor.Blue, 0.5))
+        .Commit();
+    ```
+
 ### Changed
 - Multi-targeted `PDFiumZ` to support `net10.0`, `net9.0`, `net8.0`, `netstandard2.1`, and `netstandard2.0`
 
 ### Fixed
 - `netstandard2.x` build compatibility (`Span<T>`, `IsExternalInit`, and ink annotation interop)
+- Math.Clamp compatibility for .NET Standard 2.0 (replaced with Math.Min/Max)
 
 ## [145.1.0] - 2025-12-21
 

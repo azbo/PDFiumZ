@@ -135,7 +135,7 @@ document.AddHeaderFooter(
 document.SaveToFile("with-header-footer.pdf");
 ```
 
-### Create Content (Fluent)
+### Create Content (Fluent API)
 
 ```csharp
 using PDFiumZ.HighLevel;
@@ -147,8 +147,27 @@ using var font = PdfFont.LoadStandardFont(document, PdfStandardFont.Helvetica);
 using (var editor = page.BeginEdit())
 {
     editor
-        .Text("Hello", 50, 750, font, 14)
-        .Rectangle(new PdfRectangle(50, 700, 200, 40), strokeColor: 0xFFFF0000, fillColor: 0x2000FF00)
+        // Set defaults and use simplified methods
+        .WithFont(font)
+        .WithFontSize(PdfFontSize.Heading1)
+        .WithTextColor(PdfColor.DarkBlue)
+        .Text("Enhanced Fluent API", 50, 750)
+
+        // Draw colored shapes
+        .WithStrokeColor(PdfColor.Red)
+        .WithFillColor(PdfColor.WithOpacity(PdfColor.Red, 0.3))
+        .Rectangle(new PdfRectangle(50, 680, 100, 50))
+
+        // Draw lines and circles
+        .WithLineWidth(2)
+        .Line(50, 650, 250, 650, PdfColor.Black)
+        .Circle(100, 600, 30, PdfColor.Blue, PdfColor.WithOpacity(PdfColor.Blue, 0.5))
+
+        // Use hex colors
+        .Rectangle(new PdfRectangle(50, 520, 60, 30),
+            PdfColor.FromHex("#FF6B6B"),
+            PdfColor.WithOpacity(PdfColor.FromHex("#FF6B6B"), 0.5))
+
         .Commit();
 }
 
@@ -173,6 +192,13 @@ document.SaveToFile("content.pdf");
 - Render to bitmap and save as images (via extension packages)
 - Annotation support (highlight, underline, strikeout, notes, stamps, line, square, circle, ink, free text)
 - Content creation (add text/images/shapes) and font management
+- **Enhanced fluent API** with default styles, colors, and shapes:
+  - Configuration methods (`WithFont`, `WithFontSize`, `WithTextColor`, `WithStrokeColor`, `WithFillColor`, `WithLineWidth`)
+  - Simplified methods (`Text` with 3 parameters using defaults)
+  - Shape drawing (`Line`, `Circle`, `Ellipse`, enhanced `Rectangle`)
+  - Predefined colors (`PdfColor` - 40+ colors including basic, extended, highlights, and shades)
+  - Common font sizes (`PdfFontSize` - 15+ presets from 6pt to 72pt)
+  - Hex color support (`PdfColor.FromHex`, `WithOpacity`)
 - Security info reading (encryption + permissions)
 - Async APIs + batch operations
 - Multi-targeting: `net10.0`, `net9.0`, `net8.0`, `netstandard2.1`, `netstandard2.0`
