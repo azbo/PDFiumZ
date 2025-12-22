@@ -135,6 +135,26 @@ document.AddHeaderFooter(
 document.SaveToFile("with-header-footer.pdf");
 ```
 
+### Create Content (Fluent)
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.CreateNew();
+using var page = document.CreatePage();
+using var font = PdfFont.LoadStandardFont(document, PdfStandardFont.Helvetica);
+
+using (var editor = page.BeginEdit())
+{
+    editor
+        .Text("Hello", 50, 750, font, 14)
+        .Rectangle(new PdfRectangle(50, 700, 200, 40), strokeColor: 0xFFFF0000, fillColor: 0x2000FF00)
+        .Commit();
+}
+
+document.SaveToFile("content.pdf");
+```
+
 ## Documentation
 
 - Examples and extended snippets: `docs/README.md`

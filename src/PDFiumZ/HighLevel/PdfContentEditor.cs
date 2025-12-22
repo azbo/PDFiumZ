@@ -297,6 +297,35 @@ public sealed unsafe class PdfContentEditor : IDisposable
         }
     }
 
+    public PdfContentEditor Text(string text, double x, double y, PdfFont font, double fontSize)
+    {
+        AddText(text, x, y, font, fontSize);
+        return this;
+    }
+
+    public PdfContentEditor Image(byte[] imageData, int width, int height, PdfRectangle bounds)
+    {
+        AddImage(imageData, width, height, bounds);
+        return this;
+    }
+
+    public PdfContentEditor Rectangle(PdfRectangle bounds, uint strokeColor = 0, uint fillColor = 0)
+    {
+        AddRectangle(bounds, strokeColor, fillColor);
+        return this;
+    }
+
+    public PdfContentEditor Remove(int index)
+    {
+        RemoveObject(index);
+        return this;
+    }
+
+    public void Commit()
+    {
+        GenerateContent();
+    }
+
     /// <summary>
     /// Releases all resources used by the <see cref="PdfContentEditor"/>.
     /// </summary>
