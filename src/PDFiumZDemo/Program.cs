@@ -1857,8 +1857,8 @@ namespace PDFiumZDemo
 
                 // Example 1: Simple table
                 string html1 = @"
-                    <h1 style='color: #2C3E50;'>Simple Table</h1>
-                    <p>A basic 3x3 table:</p>
+                    <h1 style='color: #2C3E50;'>Simple Table (border='1')</h1>
+                    <p>A basic 3x3 table with 1pt border:</p>
                     <table border='1'>
                         <tr>
                             <th>Header 1</th>
@@ -1874,6 +1874,30 @@ namespace PDFiumZDemo
                             <td>Row 2, Col 1</td>
                             <td>Row 2, Col 2</td>
                             <td>Row 2, Col 3</td>
+                        </tr>
+                    </table>
+
+                    <h2 style='color: #E74C3C;'>Thick Border (border='3')</h2>
+                    <table border='3'>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                        </tr>
+                        <tr>
+                            <td>Widget A</td>
+                            <td>$19.99</td>
+                        </tr>
+                    </table>
+
+                    <h2 style='color: #3498DB;'>No Border (border='0')</h2>
+                    <table border='0'>
+                        <tr>
+                            <th>Name</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>Item 1</td>
+                            <td>100</td>
                         </tr>
                     </table>
                 ";
