@@ -48,6 +48,7 @@ namespace PDFiumZDemo
             DemoHtmlToPdf();  // NEW: Test HTML to PDF conversion
             DemoHtmlListsToPdf();  // NEW: Test HTML lists (ul, ol, li)
             DemoHtmlWithImages();  // NEW: Test HTML with images
+            DemoHtmlTablesToPdf();  // NEW: Test HTML tables (table, tr, td, th)
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
@@ -1827,6 +1828,188 @@ namespace PDFiumZDemo
                 document.SaveToFile("output/html-with-images.pdf");
                 Console.WriteLine("\n   Saved: html-with-images.pdf");
                 Console.WriteLine("   HTML with images conversion demo complete!\n");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\n   Error: {ex.Message}");
+                Console.WriteLine($"   Stack trace: {ex.StackTrace}\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates HTML to PDF conversion with tables.
+        /// </summary>
+        static void DemoHtmlTablesToPdf()
+        {
+            Console.WriteLine("0.12. HTML Tables to PDF Conversion");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                using var document = PdfDocument.CreateNew();
+                Console.WriteLine("   Created new document");
+
+                // Example 1: Simple table
+                string html1 = @"
+                    <h1 style='color: #2C3E50;'>Simple Table</h1>
+                    <p>A basic 3x3 table:</p>
+                    <table>
+                        <tr>
+                            <th>Header 1</th>
+                            <th>Header 2</th>
+                            <th>Header 3</th>
+                        </tr>
+                        <tr>
+                            <td>Row 1, Col 1</td>
+                            <td>Row 1, Col 2</td>
+                            <td>Row 1, Col 3</td>
+                        </tr>
+                        <tr>
+                            <td>Row 2, Col 1</td>
+                            <td>Row 2, Col 2</td>
+                            <td>Row 2, Col 3</td>
+                        </tr>
+                    </table>
+                ";
+
+                Console.WriteLine("\n   Example 1: Simple table");
+                document.CreatePageFromHtml(html1);
+                Console.WriteLine("      Created page with simple table");
+
+                // Example 2: Data table
+                string html2 = @"
+                    <h1 style='color: #E74C3C;'>Product Catalog</h1>
+                    <table>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <td>Widget A</td>
+                            <td>$19.99</td>
+                            <td>50</td>
+                            <td>Available</td>
+                        </tr>
+                        <tr>
+                            <td>Widget B</td>
+                            <td>$29.99</td>
+                            <td>30</td>
+                            <td>Available</td>
+                        </tr>
+                        <tr>
+                            <td>Widget C</td>
+                            <td>$39.99</td>
+                            <td>0</td>
+                            <td>Out of Stock</td>
+                        </tr>
+                        <tr>
+                            <td>Widget D</td>
+                            <td>$49.99</td>
+                            <td>15</td>
+                            <td>Limited</td>
+                        </tr>
+                    </table>
+                ";
+
+                Console.WriteLine("\n   Example 2: Product catalog table");
+                document.CreatePageFromHtml(html2);
+                Console.WriteLine("      Created page with product catalog");
+
+                // Example 3: Schedule table
+                string html3 = @"
+                    <h1 style='color: #3498DB; text-align: center;'>Weekly Schedule</h1>
+                    <table>
+                        <tr>
+                            <th>Time</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                        </tr>
+                        <tr>
+                            <td>9:00 AM</td>
+                            <td>Meeting</td>
+                            <td>Development</td>
+                            <td>Review</td>
+                            <td>Development</td>
+                            <td>Planning</td>
+                        </tr>
+                        <tr>
+                            <td>11:00 AM</td>
+                            <td>Development</td>
+                            <td>Testing</td>
+                            <td>Development</td>
+                            <td>Testing</td>
+                            <td>Review</td>
+                        </tr>
+                        <tr>
+                            <td>2:00 PM</td>
+                            <td>Documentation</td>
+                            <td>Meeting</td>
+                            <td>Development</td>
+                            <td>Documentation</td>
+                            <td>Release</td>
+                        </tr>
+                    </table>
+                ";
+
+                Console.WriteLine("\n   Example 3: Weekly schedule table");
+                document.CreatePageFromHtml(html3);
+                Console.WriteLine("      Created page with schedule table");
+
+                // Example 4: Mixed content with table
+                string html4 = @"
+                    <h1 style='color: #27AE60; text-align: center;'>Project Summary</h1>
+                    <p>This report summarizes the project status:</p>
+
+                    <h2 style='color: #E67E22;'>Team Members</h2>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Tasks</th>
+                        </tr>
+                        <tr>
+                            <td>Alice</td>
+                            <td>Lead Developer</td>
+                            <td>Architecture</td>
+                        </tr>
+                        <tr>
+                            <td>Bob</td>
+                            <td>Developer</td>
+                            <td>Implementation</td>
+                        </tr>
+                        <tr>
+                            <td>Carol</td>
+                            <td>Tester</td>
+                            <td>Quality Assurance</td>
+                        </tr>
+                    </table>
+
+                    <h2 style='color: #8E44AD;'>Milestones</h2>
+                    <ul>
+                        <li><b>Phase 1:</b> Design Complete</li>
+                        <li><b>Phase 2:</b> Development In Progress</li>
+                        <li><b>Phase 3:</b> Testing Pending</li>
+                    </ul>
+                ";
+
+                Console.WriteLine("\n   Example 4: Mixed content with table and lists");
+                document.CreatePageFromHtml(html4);
+                Console.WriteLine("      Created page with mixed content");
+
+                // Save document
+                document.SaveToFile("output/html-tables-demo.pdf");
+                Console.WriteLine("\n   Saved: html-tables-demo.pdf");
+                Console.WriteLine("   HTML tables conversion demo complete!\n");
             }
             catch (Exception ex)
             {

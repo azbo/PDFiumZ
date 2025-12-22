@@ -192,6 +192,21 @@
             Cleans up resources used by the converter.
             </summary>
         </member>
+        <member name="T:PDFiumZ.HighLevel.HtmlToPdf.CellInfo">
+            <summary>
+            Represents a table cell.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.HtmlToPdf.RowInfo">
+            <summary>
+            Represents a table row.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.HtmlToPdf.TableInfo">
+            <summary>
+            Represents a table with layout information.
+            </summary>
+        </member>
         <member name="T:PDFiumZ.HighLevel.HtmlToPdf.TextStyle">
             <summary>
             Represents text styling information for HTML to PDF conversion.

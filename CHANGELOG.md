@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Headings: h1, h2, h3, h4, h5, h6
     - Text: p, div, span, b, strong, i, em, u, br
     - Lists: ul, ol, li (with nested list support)
+    - Tables: table, tr, td, th
     - Images: img (requires ImageLoader delegate)
   - **Supported CSS properties** (inline styles):
     - `font-size`: 10pt, 12px, 1.5em
@@ -37,6 +38,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Automatic aspect ratio maintenance
     - Text alignment support (left, center, right)
     - Demo includes SkiaSharp-based image loader example
+  - **Table Features**:
+    - Basic table structure with headers (th) and data cells (td)
+    - Automatic column width calculation (equal distribution)
+    - Cell borders with customizable width and color
+    - Cell padding for content spacing
+    - Bold text for header cells (th tags)
+    - Support for multiple rows and columns
+    - Mixed content support (tables with text, lists, etc.)
   - **Extension methods**:
     - `CreatePageFromHtml(html)` - Create page from HTML with default A4 size
     - `CreatePageFromHtml(html, marginLeft, marginRight, marginTop, marginBottom, pageWidth, pageHeight)` - With custom margins
@@ -45,7 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Nested tag support (e.g., `<b><i>text</i></b>`)
     - Comment stripping (`<!-- comments -->`)
     - Font caching for performance
-  - **Limitations**: No external CSS, tables, or automatic page breaks
+  - **Limitations**: No external CSS, colspan/rowspan (basic support), or automatic page breaks
   - Examples:
     ```csharp
     // Simple HTML
@@ -85,6 +94,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
             <img src='chart.png' width='400' />
         </div>
     ";
+
+    // Tables
+    string htmlWithTables = @"
+        <h1>Product Catalog</h1>
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Stock</th>
+            </tr>
+            <tr>
+                <td>Widget A</td>
+                <td>$19.99</td>
+                <td>50</td>
+            </tr>
+            <tr>
+                <td>Widget B</td>
+                <td>$29.99</td>
+                <td>30</td>
+            </tr>
+        </table>
+    ";
+    document.CreatePageFromHtml(htmlWithTables);
     ```
 
 #### Enhanced Fluent API for Content Creation
