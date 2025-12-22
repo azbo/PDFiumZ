@@ -49,6 +49,7 @@ namespace PDFiumZDemo
             DemoHtmlListsToPdf();  // NEW: Test HTML lists (ul, ol, li)
             DemoHtmlWithImages();  // NEW: Test HTML with images
             DemoHtmlTablesToPdf();  // NEW: Test HTML tables (table, tr, td, th)
+            DemoFluentTableAPI();  // NEW: Test QuestPDF-style fluent table API
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
@@ -1858,7 +1859,7 @@ namespace PDFiumZDemo
                 string html1 = @"
                     <h1 style='color: #2C3E50;'>Simple Table</h1>
                     <p>A basic 3x3 table:</p>
-                    <table>
+                    <table border='1'>
                         <tr>
                             <th>Header 1</th>
                             <th>Header 2</th>
@@ -2010,6 +2011,189 @@ namespace PDFiumZDemo
                 document.SaveToFile("output/html-tables-demo.pdf");
                 Console.WriteLine("\n   Saved: html-tables-demo.pdf");
                 Console.WriteLine("   HTML tables conversion demo complete!\n");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\n   Error: {ex.Message}");
+                Console.WriteLine($"   Stack trace: {ex.StackTrace}\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates QuestPDF-style fluent table API.
+        /// </summary>
+        static void DemoFluentTableAPI()
+        {
+            Console.WriteLine("0.13. Fluent Table API (QuestPDF-style)");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                using var document = PdfDocument.CreateNew();
+                Console.WriteLine("   Created new document");
+
+                using var page = document.CreatePage(595, 842);
+                Console.WriteLine("   Created A4 page");
+
+                var helvetica = PdfFont.LoadStandardFont(document, PdfStandardFont.Helvetica);
+
+                using (var editor = page.BeginEdit())
+                {
+                    // Add title
+                    editor.WithFont(helvetica)
+                          .WithFontSize(PdfFontSize.Heading1)
+                          .WithTextColor(PdfColor.DarkBlue)
+                          .Text("Fluent Table API Demo", 50, 780);
+
+                    Console.WriteLine("\n   Example 1: Basic table with fixed and auto columns");
+
+                    // Example 1: Basic table
+                    editor.BeginTable()
+                        .Columns(cols => cols
+                            .Add(150)   // Fixed width: 150pt
+                            .Add()      // Auto width (equal distribution)
+                            .Add(120))  // Fixed width: 120pt
+                        .Header(header => header
+                            .Cell("Product")
+                            .Cell("Description")
+                            .Cell("Price"))
+                        .Row(row => row
+                            .Cell("Widget A")
+                            .Cell("High-quality widget")
+                            .Cell("$19.99"))
+                        .Row(row => row
+                            .Cell("Widget B")
+                            .Cell("Premium widget")
+                            .Cell("$29.99"))
+                        .Row(row => row
+                            .Cell("Widget C")
+                            .Cell("Deluxe widget")
+                            .Cell("$39.99"))
+                        .EndTable();
+
+                    Console.WriteLine("      Created basic table with 3 columns");
+
+                    // Move down for next table
+                    Console.WriteLine("\n   Example 2: Styled table with custom colors");
+
+                    // Example 2: Styled table (need to position manually for now)
+                    // Note: In production, you'd want BeginTable to accept Y position parameter
+                    var page2 = document.CreatePage(595, 842);
+                    using var editor2 = page2.BeginEdit();
+
+                    editor2.WithFont(helvetica)
+                           .WithFontSize(PdfFontSize.Heading2)
+                           .WithTextColor(PdfColor.DarkGreen)
+                           .Text("Employee Directory", 50, 780);
+
+                    editor2.BeginTable()
+                        .Columns(cols => cols
+                            .Add(120)
+                            .Add()
+                            .Add(100)
+                            .Add(80))
+                        .HeaderBackgroundColor(PdfColor.WithOpacity(PdfColor.Blue, 0.2))
+                        .HeaderTextColor(PdfColor.DarkBlue)
+                        .HeaderFontSize(14)
+                        .BorderColor(PdfColor.Gray)
+                        .CellPadding(8)
+                        .Header(header => header
+                            .Cell("Name")
+                            .Cell("Position")
+                            .Cell("Department")
+                            .Cell("Ext"))
+                        .Row(row => row
+                            .Cell("John Doe")
+                            .Cell("Senior Developer")
+                            .Cell("Engineering")
+                            .Cell("1234"))
+                        .Row(row => row
+                            .Cell("Jane Smith")
+                            .Cell("Product Manager")
+                            .Cell("Product")
+                            .Cell("5678"))
+                        .Row(row => row
+                            .Cell("Bob Johnson")
+                            .Cell("QA Engineer")
+                            .Cell("Quality")
+                            .Cell("9012"))
+                        .Row(row => row
+                            .Cell("Alice Williams")
+                            .Cell("UI Designer")
+                            .Cell("Design")
+                            .Cell("3456"))
+                        .EndTable();
+
+                    Console.WriteLine("      Created styled table with header background");
+
+                    // Example 3: Compact table
+                    Console.WriteLine("\n   Example 3: Compact table with minimal styling");
+
+                    var page3 = document.CreatePage(595, 842);
+                    using var editor3 = page3.BeginEdit();
+
+                    editor3.WithFont(helvetica)
+                           .WithFontSize(PdfFontSize.Heading2)
+                           .WithTextColor(PdfColor.DarkRed)
+                           .Text("Weekly Schedule", 50, 780);
+
+                    editor3.BeginTable()
+                        .Columns(cols => cols
+                            .Add(80)
+                            .Add()
+                            .Add()
+                            .Add()
+                            .Add()
+                            .Add())
+                        .CellPadding(4)
+                        .BorderWidth(0.5)
+                        .Header(header => header
+                            .Cell("Time")
+                            .Cell("Monday")
+                            .Cell("Tuesday")
+                            .Cell("Wednesday")
+                            .Cell("Thursday")
+                            .Cell("Friday"))
+                        .Row(row => row
+                            .Cell("9:00")
+                            .Cell("Meeting")
+                            .Cell("Dev")
+                            .Cell("Review")
+                            .Cell("Dev")
+                            .Cell("Planning"))
+                        .Row(row => row
+                            .Cell("11:00")
+                            .Cell("Dev")
+                            .Cell("Testing")
+                            .Cell("Dev")
+                            .Cell("Testing")
+                            .Cell("Review"))
+                        .Row(row => row
+                            .Cell("14:00")
+                            .Cell("Docs")
+                            .Cell("Meeting")
+                            .Cell("Dev")
+                            .Cell("Docs")
+                            .Cell("Release"))
+                        .EndTable();
+
+                    Console.WriteLine("      Created compact schedule table");
+
+                    editor.Commit();
+                    editor2.Commit();
+                    editor3.Commit();
+                }
+
+                helvetica.Dispose();
+
+                document.SaveToFile("output/fluent-table-demo.pdf");
+                Console.WriteLine("\n   Saved: fluent-table-demo.pdf");
+                Console.WriteLine("   Fluent table API demo complete!\n");
             }
             catch (Exception ex)
             {

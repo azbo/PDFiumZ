@@ -772,6 +772,36 @@
         <member name="F:PDFiumZ.HighLevel.PdfColor.LightBlue">
             <summary>Light Blue (0xFFADD8E6)</summary>
         </member>
+        <member name="T:PDFiumZ.HighLevel.PdfColumnDefinition">
+            <summary>
+            Defines column widths for a PDF table.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfColumnDefinition.Count">
+            <summary>
+            Gets the number of columns defined.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfColumnDefinition.Add">
+            <summary>
+            Adds a column with automatic width (equal distribution of remaining space).
+            </summary>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfColumnDefinition.Add(System.Double)">
+            <summary>
+            Adds a column with fixed width in points.
+            </summary>
+            <param name="width">Column width in points.</param>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfColumnDefinition.CalculateWidths(System.Double)">
+            <summary>
+            Calculates actual column widths based on available space.
+            </summary>
+            <param name="availableWidth">Total available width in points.</param>
+            <returns>Array of actual column widths.</returns>
+        </member>
         <member name="T:PDFiumZ.HighLevel.PdfContentEditor">
             <summary>
             Provides methods for editing PDF page content by adding text, images, and shapes.
@@ -933,6 +963,23 @@
             </summary>
             <param name="width">Line width in points.</param>
             <returns>This editor instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfContentEditor.BeginTable">
+            <summary>
+            Begins building a table with fluent API (QuestPDF-style).
+            </summary>
+            <returns>A table builder instance for configuring and rendering the table.</returns>
+            <exception cref="T:System.ObjectDisposedException">Editor has been disposed.</exception>
+            <example>
+            <code>
+            editor.BeginTable()
+                .Columns(cols => cols.Add(100).Add().Add(150))
+                .Header(header => header.Cell("Name").Cell("Age").Cell("Email"))
+                .Row(row => row.Cell("John").Cell("30").Cell("john@example.com"))
+                .Row(row => row.Cell("Jane").Cell("25").Cell("jane@example.com"))
+                .EndTable();
+            </code>
+            </example>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfContentEditor.Dispose">
             <summary>
@@ -2873,6 +2920,128 @@
             <summary>
             Creates a FS_QUADPOINTSF structure from a rectangle.
             </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfTableBuilder">
+            <summary>
+            Fluent API builder for creating PDF tables.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.#ctor(PDFiumZ.HighLevel.PdfContentEditor)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfTableBuilder"/> class.
+            </summary>
+            <param name="editor">The content editor to render the table on.</param>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.Columns(System.Action{PDFiumZ.HighLevel.PdfColumnDefinition})">
+            <summary>
+            Defines table columns using a configuration action.
+            </summary>
+            <param name="configureColumns">Action to configure columns.</param>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.Header(System.Action{PDFiumZ.HighLevel.PdfTableRowBuilder})">
+            <summary>
+            Defines the table header row.
+            </summary>
+            <param name="configureHeader">Action to configure header cells.</param>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.Row(System.Action{PDFiumZ.HighLevel.PdfTableRowBuilder})">
+            <summary>
+            Adds a data row to the table.
+            </summary>
+            <param name="configureRow">Action to configure row cells.</param>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.CellPadding(System.Double)">
+            <summary>
+            Sets the cell padding in points.
+            </summary>
+            <param name="padding">Padding in points (default: 5).</param>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.BorderWidth(System.Double)">
+            <summary>
+            Sets the border width in points.
+            </summary>
+            <param name="width">Border width in points (default: 1).</param>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.BorderColor(System.UInt32)">
+            <summary>
+            Sets the border color.
+            </summary>
+            <param name="color">Border color in ARGB format (default: Black).</param>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.HeaderBackgroundColor(System.UInt32)">
+            <summary>
+            Sets the header background color.
+            </summary>
+            <param name="color">Header background color in ARGB format.</param>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.HeaderTextColor(System.UInt32)">
+            <summary>
+            Sets the header text color.
+            </summary>
+            <param name="color">Header text color in ARGB format (default: Black).</param>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.HeaderFontSize(System.Double)">
+            <summary>
+            Sets the header font size.
+            </summary>
+            <param name="fontSize">Font size in points (default: 12).</param>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.HeaderBold(System.Boolean)">
+            <summary>
+            Sets whether header text should be bold.
+            </summary>
+            <param name="bold">True for bold header text (default: true).</param>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableBuilder.EndTable">
+            <summary>
+            Renders the table and returns the content editor for further operations.
+            </summary>
+            <returns>The content editor instance for fluent chaining.</returns>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfTableRowBuilder">
+            <summary>
+            Builder for constructing table rows with fluent API.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfTableRowBuilder.Cells">
+            <summary>
+            Gets the cell contents.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfTableRowBuilder.IsHeader">
+            <summary>
+            Gets whether this is a header row.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableRowBuilder.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfTableRowBuilder"/> class.
+            </summary>
+            <param name="isHeader">Whether this is a header row.</param>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableRowBuilder.Cell(System.String)">
+            <summary>
+            Adds a cell with text content.
+            </summary>
+            <param name="text">Cell text content.</param>
+            <returns>This instance for fluent chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTableRowBuilder.AddCells(System.String[])">
+            <summary>
+            Adds multiple cells from an array.
+            </summary>
+            <param name="texts">Array of cell texts.</param>
+            <returns>This instance for fluent chaining.</returns>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfTextAnnotation">
             <summary>

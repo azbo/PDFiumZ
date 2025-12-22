@@ -164,6 +164,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         .Commit();
     ```
 
+- **QuestPDF-Style Fluent Table API**: Modern table building with discoverable, chainable API
+  - **PdfTableBuilder**: Fluent table construction with method chaining
+  - **Column Configuration**:
+    - `Columns(cols => cols.Add(width))` - Fixed width columns
+    - `Columns(cols => cols.Add())` - Auto-width columns (equal distribution)
+    - Mix fixed and auto-width columns for flexible layouts
+  - **Row Configuration**:
+    - `Header(header => header.Cell("text"))` - Define header row with cells
+    - `Row(row => row.Cell("text"))` - Add data rows with cells
+    - Chain multiple `.Cell()` calls for multi-column rows
+  - **Styling Options**:
+    - `CellPadding(points)` - Set cell padding (default: 5pt)
+    - `BorderWidth(points)` - Set border width (default: 1pt)
+    - `BorderColor(color)` - Set border color (default: Black)
+    - `HeaderBackgroundColor(color)` - Set header background (default: Transparent)
+    - `HeaderTextColor(color)` - Set header text color (default: Black)
+    - `HeaderFontSize(size)` - Set header font size (default: 12pt)
+    - `HeaderBold(bool)` - Enable/disable bold headers (default: true)
+  - **Features**:
+    - Automatic column width calculation based on available space
+    - Header rows with customizable styling
+    - Cell borders and padding
+    - Background colors for headers
+    - Bold header text support
+    - Fluent method chaining for clean, readable code
+  - Example:
+    ```csharp
+    editor.BeginTable()
+        .Columns(cols => cols
+            .Add(150)   // Fixed: 150pt
+            .Add()      // Auto width
+            .Add(120))  // Fixed: 120pt
+        .HeaderBackgroundColor(PdfColor.WithOpacity(PdfColor.Blue, 0.2))
+        .HeaderTextColor(PdfColor.DarkBlue)
+        .CellPadding(8)
+        .Header(header => header
+            .Cell("Name")
+            .Cell("Position")
+            .Cell("Department"))
+        .Row(row => row
+            .Cell("John Doe")
+            .Cell("Senior Developer")
+            .Cell("Engineering"))
+        .Row(row => row
+            .Cell("Jane Smith")
+            .Cell("Product Manager")
+            .Cell("Product"))
+        .EndTable();
+    ```
+
 ### Changed
 - Multi-targeted `PDFiumZ` to support `net10.0`, `net9.0`, `net8.0`, `netstandard2.1`, and `netstandard2.0`
 
