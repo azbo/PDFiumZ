@@ -698,29 +698,23 @@ public class HtmlToPdfConverter : IDisposable
         if (_imageLoader == null)
         {
             // No image loader provided, skip image
-            Console.WriteLine("ProcessImage: No image loader provided");
             return;
         }
 
         // Get src attribute
         if (!attributes.TryGetValue("src", out string? src) || string.IsNullOrWhiteSpace(src))
         {
-            Console.WriteLine("ProcessImage: No src attribute");
             return;
         }
-
-        Console.WriteLine($"ProcessImage: Loading image from '{src}'");
 
         // Load image using the provided loader
         var imageData = _imageLoader(src);
         if (imageData == null)
         {
-            Console.WriteLine($"ProcessImage: Image loader returned null for '{src}'");
             return;
         }
 
         var (bgraData, imgWidth, imgHeight) = imageData.Value;
-        Console.WriteLine($"ProcessImage: Loaded image {imgWidth}x{imgHeight}, {bgraData.Length} bytes");
 
         // Parse width and height attributes (in pixels or points)
         double width = imgWidth;
@@ -804,13 +798,9 @@ public class HtmlToPdfConverter : IDisposable
         // Calculate Y position (PDF coordinates are bottom-up)
         double y = _currentY - height;
 
-        Console.WriteLine($"ProcessImage: Adding image at ({x}, {y}), size {width}x{height}");
-
         // Add image to page
         var bounds = new PdfRectangle(x, y, width, height);
         editor.AddImage(bgraData, imgWidth, imgHeight, bounds);
-
-        Console.WriteLine($"ProcessImage: Image added successfully");
 
         // Move Y position down
         _currentY -= height + style.FontSize * 0.5; // Add some spacing after image
