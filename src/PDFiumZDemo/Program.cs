@@ -49,7 +49,7 @@ namespace PDFiumZDemo
             DemoHtmlListsToPdf();  // NEW: Test HTML lists (ul, ol, li)
             DemoHtmlWithImages();  // NEW: Test HTML with images
             DemoHtmlTablesToPdf();  // NEW: Test HTML tables (table, tr, td, th)
-            DemoFluentTableAPI();  // NEW: Test QuestPDF-style fluent table API
+            DemoFluentTableAPI();  // NEW: Test fluent table API
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
@@ -2048,11 +2048,11 @@ namespace PDFiumZDemo
         }
 
         /// <summary>
-        /// Demonstrates QuestPDF-style fluent table API.
+        /// Demonstrates fluent table API.
         /// </summary>
         static void DemoFluentTableAPI()
         {
-            Console.WriteLine("0.13. Fluent Table API (QuestPDF-style)");
+            Console.WriteLine("0.13. Fluent Table API");
 
             PdfiumLibrary.Initialize();
 
