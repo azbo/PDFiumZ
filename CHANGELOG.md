@@ -9,6 +9,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+#### HTML to PDF Conversion
+- **HtmlToPdfConverter**: Simple HTML to PDF conversion with inline CSS support
+  - **Supported HTML tags**: h1-h6, p, div, span, b, strong, i, em, u, br
+  - **Supported CSS properties** (inline styles):
+    - `font-size`: 10pt, 12px, 1.5em
+    - `color`: Named colors (red, blue, etc.) or hex (#FF0000, #F00)
+    - `text-align`: left, center, right
+    - `font-weight`: bold, normal, or numeric (>=600 = bold)
+    - `font-style`: italic, normal
+    - `text-decoration`: underline
+  - **Extension methods**:
+    - `CreatePageFromHtml(html)` - Create page from HTML with default A4 size
+    - `CreatePageFromHtml(html, marginLeft, marginRight, marginTop, marginBottom, pageWidth, pageHeight)` - With custom margins
+  - **Features**:
+    - HTML entity decoding (`&lt;`, `&gt;`, `&amp;`, etc.)
+    - Nested tag support (e.g., `<b><i>text</i></b>`)
+    - Comment stripping (`<!-- comments -->`)
+    - Font caching for performance
+  - **Limitations**: No external CSS, images, tables, or automatic page breaks
+  - Example:
+    ```csharp
+    using var document = PdfDocument.CreateNew();
+    string html = @"
+        <h1 style='color: #0066CC; text-align: center;'>Welcome</h1>
+        <p>Convert <b>HTML</b> to PDF with ease!</p>
+    ";
+    document.CreatePageFromHtml(html);
+    document.SaveToFile("from-html.pdf");
+    ```
+
 #### Enhanced Fluent API for Content Creation
 - **PdfColor Helper Class**: Comprehensive color management utilities
   - 40+ predefined colors: basic (Black, White, Red, etc.), extended (Orange, Purple, Pink, etc.), shades (DarkRed, LightBlue, etc.), and highlights

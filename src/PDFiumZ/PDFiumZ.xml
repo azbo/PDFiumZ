@@ -133,6 +133,131 @@
             Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.GenericAnnotation"/> class.
             </summary>
         </member>
+        <member name="T:PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter">
+            <summary>
+            Converts simple HTML fragments to PDF content.
+            Supports basic HTML tags and CSS styles.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter.MarginLeft">
+            <summary>
+            Gets or sets the left margin in points.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter.MarginRight">
+            <summary>
+            Gets or sets the right margin in points.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter.MarginTop">
+            <summary>
+            Gets or sets the top margin in points.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter.MarginBottom">
+            <summary>
+            Gets or sets the bottom margin in points.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter.#ctor(PDFiumZ.HighLevel.PdfDocument)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter"/> class.
+            </summary>
+            <param name="document">The PDF document to add content to.</param>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter.ConvertToPdf(System.String,System.Double,System.Double)">
+            <summary>
+            Converts HTML content to PDF and adds it to a new page.
+            </summary>
+            <param name="html">The HTML content to convert.</param>
+            <param name="pageWidth">Page width in points (default: A4 width = 595).</param>
+            <param name="pageHeight">Page height in points (default: A4 height = 842).</param>
+            <returns>The created PDF page.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter.Dispose">
+            <summary>
+            Cleans up resources used by the converter.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.HtmlToPdf.TextStyle">
+            <summary>
+            Represents text styling information for HTML to PDF conversion.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.TextStyle.Font">
+            <summary>
+            Font to use for text rendering.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.TextStyle.FontSize">
+            <summary>
+            Font size in points.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.TextStyle.Color">
+            <summary>
+            Text color in ARGB format.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.TextStyle.IsBold">
+            <summary>
+            Whether text is bold.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.TextStyle.IsItalic">
+            <summary>
+            Whether text is italic.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.TextStyle.IsUnderline">
+            <summary>
+            Whether text is underlined.
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.TextStyle.Alignment">
+            <summary>
+            Text alignment (left, center, right).
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.HtmlToPdf.TextStyle.LineHeight">
+            <summary>
+            Line height multiplier (1.0 = single spacing).
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.HtmlToPdf.TextStyle.Clone">
+            <summary>
+            Creates a copy of this style.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.HtmlToPdfExtensions">
+            <summary>
+            Extension methods for HTML to PDF conversion.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.HtmlToPdfExtensions.CreatePageFromHtml(PDFiumZ.HighLevel.PdfDocument,System.String,System.Double,System.Double)">
+            <summary>
+            Creates a new page from HTML content.
+            </summary>
+            <param name="document">The PDF document.</param>
+            <param name="html">The HTML content to convert.</param>
+            <param name="pageWidth">Page width in points (default: A4 width = 595).</param>
+            <param name="pageHeight">Page height in points (default: A4 height = 842).</param>
+            <returns>The created PDF page.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.HtmlToPdfExtensions.CreatePageFromHtml(PDFiumZ.HighLevel.PdfDocument,System.String,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Creates a new page from HTML content with custom margins.
+            </summary>
+            <param name="document">The PDF document.</param>
+            <param name="html">The HTML content to convert.</param>
+            <param name="marginLeft">Left margin in points.</param>
+            <param name="marginRight">Right margin in points.</param>
+            <param name="marginTop">Top margin in points.</param>
+            <param name="marginBottom">Bottom margin in points.</param>
+            <param name="pageWidth">Page width in points (default: A4 width = 595).</param>
+            <param name="pageHeight">Page height in points (default: A4 height = 842).</param>
+            <returns>The created PDF page.</returns>
+        </member>
         <member name="T:PDFiumZ.HighLevel.PdfAnnotation">
             <summary>
             Base class for all PDF annotations.

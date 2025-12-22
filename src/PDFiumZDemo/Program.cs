@@ -45,6 +45,7 @@ namespace PDFiumZDemo
             DemoMergeAndSplit();  // NEW: Test Merge + Split
             DemoRotatePages();  // NEW: Test page rotation
             DemoFluentAPI();  // NEW: Test enhanced fluent API with colors and shapes
+            DemoHtmlToPdf();  // NEW: Test HTML to PDF conversion
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
@@ -561,6 +562,117 @@ namespace PDFiumZDemo
                 document.SaveToFile("output/fluent-api-demo.pdf");
                 Console.WriteLine("\n   Saved: fluent-api-demo.pdf");
                 Console.WriteLine("   Enhanced fluent API demo complete!\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates HTML to PDF conversion with various styles.
+        /// </summary>
+        static void DemoHtmlToPdf()
+        {
+            Console.WriteLine("0.9. HTML to PDF Conversion");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                using var document = PdfDocument.CreateNew();
+                Console.WriteLine("   Created new document");
+
+                // Example 1: Simple HTML with headings
+                string html1 = @"
+                    <h1>HTML to PDF Conversion Demo</h1>
+                    <p>This demonstrates converting HTML content to PDF with basic styling.</p>
+                    <h2>Features</h2>
+                    <p>Supports headings, paragraphs, and inline styles.</p>
+                ";
+
+                Console.WriteLine("\n   Example 1: Basic HTML");
+                document.CreatePageFromHtml(html1);
+                Console.WriteLine("      Created page from basic HTML");
+
+                // Example 2: HTML with inline styles
+                string html2 = @"
+                    <h1 style='color: #0066CC; text-align: center;'>Styled Content</h1>
+                    <p style='font-size: 14pt; text-align: center;'>This paragraph is centered with custom font size.</p>
+
+                    <h2 style='color: #FF6600;'>Text Formatting</h2>
+                    <p>This is <b>bold text</b>, this is <i>italic text</i>, and this is <u>underlined text</u>.</p>
+                    <p>You can also <b><i>combine</i></b> different styles.</p>
+
+                    <h3 style='color: #009933;'>Colors</h3>
+                    <p style='color: red;'>This text is red.</p>
+                    <p style='color: blue;'>This text is blue.</p>
+                    <p style='color: #FF6B6B;'>This text uses a hex color.</p>
+                ";
+
+                Console.WriteLine("\n   Example 2: Styled HTML");
+                document.CreatePageFromHtml(html2);
+                Console.WriteLine("      Created page with styled HTML");
+
+                // Example 3: HTML with different alignments
+                string html3 = @"
+                    <h1 style='text-align: center;'>Text Alignment Demo</h1>
+
+                    <p style='text-align: left;'>This paragraph is aligned to the left (default).</p>
+                    <p style='text-align: center;'>This paragraph is centered.</p>
+                    <p style='text-align: right;'>This paragraph is aligned to the right.</p>
+
+                    <h2 style='text-align: center; color: #6A0DAD;'>Multiple Font Sizes</h2>
+                    <p style='font-size: 10pt;'>Small text (10pt)</p>
+                    <p style='font-size: 12pt;'>Normal text (12pt)</p>
+                    <p style='font-size: 16pt;'>Large text (16pt)</p>
+                    <p style='font-size: 20pt;'>Extra large text (20pt)</p>
+                ";
+
+                Console.WriteLine("\n   Example 3: Alignment and sizes");
+                document.CreatePageFromHtml(html3);
+                Console.WriteLine("      Created page with alignment examples");
+
+                // Example 4: Complex content
+                string html4 = @"
+                    <h1 style='color: #2C3E50; text-align: center;'>PDFiumZ HTML Converter</h1>
+                    <p style='text-align: center; color: #7F8C8D; font-size: 11pt;'>
+                        A simple but powerful HTML to PDF converter
+                    </p>
+                    <br/>
+
+                    <h2 style='color: #E74C3C;'>Supported Tags</h2>
+                    <p>The converter supports the following HTML tags:</p>
+                    <p><b>Headings:</b> h1, h2, h3, h4, h5, h6</p>
+                    <p><b>Text:</b> p, div, span, b, strong, i, em, u</p>
+                    <p><b>Layout:</b> br (line break)</p>
+                    <br/>
+
+                    <h2 style='color: #3498DB;'>Supported CSS Properties</h2>
+                    <p><b>font-size:</b> 10pt, 12px, 1.5em</p>
+                    <p><b>color:</b> red, #FF0000, #F00</p>
+                    <p><b>text-align:</b> left, center, right</p>
+                    <p><b>font-weight:</b> bold, normal</p>
+                    <p><b>font-style:</b> italic, normal</p>
+                    <p><b>text-decoration:</b> underline</p>
+                    <br/>
+
+                    <h3 style='color: #27AE60; text-align: center;'>Thank you for using PDFiumZ!</h3>
+                ";
+
+                Console.WriteLine("\n   Example 4: Complex content");
+                document.CreatePageFromHtml(html4);
+                Console.WriteLine("      Created page with complex content");
+
+                // Save document
+                document.SaveToFile("output/html-to-pdf-demo.pdf");
+                Console.WriteLine("\n   Saved: html-to-pdf-demo.pdf");
+                Console.WriteLine("   HTML to PDF conversion demo complete!\n");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\n   Error: {ex.Message}");
+                Console.WriteLine($"   Stack trace: {ex.StackTrace}\n");
             }
             finally
             {

@@ -10,6 +10,7 @@
   - [Check PDF Security and Permissions](#check-pdf-security-and-permissions)
   - [Annotations](#annotations)
   - [Enhanced Fluent API for Content Creation](#enhanced-fluent-api-for-content-creation)
+  - [HTML to PDF Conversion](#html-to-pdf-conversion)
 - [Features](#features)
 - [Building](#building)
 - [Benchmarks](#benchmarks)
@@ -273,6 +274,133 @@ editor
     .Text("World", 50, 680); // Still uses default font and size
 ```
 
+### HTML to PDF Conversion
+
+PDFiumZ includes a built-in HTML to PDF converter that supports basic HTML tags and inline CSS styles.
+
+#### Supported HTML Tags
+
+- **Headings**: `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>`, `<h6>`
+- **Paragraphs**: `<p>`, `<div>`
+- **Text formatting**: `<b>`, `<strong>`, `<i>`, `<em>`, `<u>`, `<span>`
+- **Layout**: `<br>` (line break)
+
+#### Supported CSS Properties (inline styles)
+
+- **font-size**: `10pt`, `12px`, `1.5em`
+- **color**: Named colors (`red`, `blue`) or hex (`#FF0000`, `#F00`)
+- **text-align**: `left`, `center`, `right`
+- **font-weight**: `bold`, `normal`, or numeric (>=600 = bold)
+- **font-style**: `italic`, `normal`
+- **text-decoration**: `underline`
+
+#### Basic Usage
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.CreateNew();
+
+string html = @"
+    <h1>Welcome to PDFiumZ</h1>
+    <p>This is a simple HTML to PDF conversion example.</p>
+";
+
+document.CreatePageFromHtml(html);
+document.SaveToFile("from-html.pdf");
+```
+
+#### With Inline Styles
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.CreateNew();
+
+string html = @"
+    <h1 style='color: #0066CC; text-align: center;'>Styled Heading</h1>
+    <p style='font-size: 14pt; text-align: center;'>
+        This paragraph has custom font size and is centered.
+    </p>
+
+    <h2 style='color: #FF6600;'>Text Formatting</h2>
+    <p>
+        This is <b>bold text</b>, this is <i>italic text</i>,
+        and this is <u>underlined text</u>.
+    </p>
+    <p>You can also <b><i>combine styles</i></b>.</p>
+
+    <h3 style='color: #009933;'>Colors</h3>
+    <p style='color: red;'>This text is red.</p>
+    <p style='color: #6A0DAD;'>This text uses a hex color.</p>
+";
+
+document.CreatePageFromHtml(html);
+document.SaveToFile("styled-html.pdf");
+```
+
+#### With Custom Margins
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.CreateNew();
+
+string html = "<h1>Custom Margins</h1><p>This page has custom margins.</p>";
+
+// CreatePageFromHtml(html, marginLeft, marginRight, marginTop, marginBottom, pageWidth, pageHeight)
+document.CreatePageFromHtml(html, 30, 30, 40, 40, 595, 842);
+document.SaveToFile("custom-margins.pdf");
+```
+
+#### Complex Example
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.CreateNew();
+
+string html = @"
+    <h1 style='color: #2C3E50; text-align: center;'>PDFiumZ HTML Converter</h1>
+    <p style='text-align: center; color: #7F8C8D; font-size: 11pt;'>
+        A simple but powerful HTML to PDF converter
+    </p>
+    <br/>
+
+    <h2 style='color: #E74C3C;'>Supported Tags</h2>
+    <p><b>Headings:</b> h1, h2, h3, h4, h5, h6</p>
+    <p><b>Text:</b> p, div, span, b, strong, i, em, u</p>
+    <p><b>Layout:</b> br (line break)</p>
+    <br/>
+
+    <h2 style='color: #3498DB;'>Supported CSS Properties</h2>
+    <p><b>font-size:</b> 10pt, 12px, 1.5em</p>
+    <p><b>color:</b> red, #FF0000</p>
+    <p><b>text-align:</b> left, center, right</p>
+    <p><b>font-weight:</b> bold, normal</p>
+    <p><b>font-style:</b> italic, normal</p>
+    <p><b>text-decoration:</b> underline</p>
+    <br/>
+
+    <h3 style='color: #27AE60; text-align: center;'>
+        Thank you for using PDFiumZ!
+    </h3>
+";
+
+document.CreatePageFromHtml(html);
+document.SaveToFile("complex-html.pdf");
+```
+
+#### Limitations
+
+- No support for external CSS files (only inline styles)
+- No support for images, tables, lists (ul, ol, li)
+- No support for advanced layouts (flexbox, grid)
+- Text wrapping is basic (no word break support)
+- Single page output (no automatic page breaks)
+
+For complex HTML rendering, consider using a dedicated HTML to PDF library like wkhtmltopdf or headless browsers.
+
 ## Features
 
 ### High-Level API (Recommended)
@@ -321,6 +449,11 @@ finally
   - Predefined colors (`PdfColor` with 40+ colors)
   - Common font sizes (`PdfFontSize` with 15+ presets)
   - Hex color support and opacity control
+- ✅ **HTML to PDF conversion**:
+  - Support for common HTML tags (h1-h6, p, div, span, b, strong, i, em, u, br)
+  - Inline CSS styles (font-size, color, text-align, font-weight, font-style, text-decoration)
+  - Extension method (`CreatePageFromHtml`)
+  - Customizable margins
 - ✅ PDF creation from scratch
 - ✅ PDF merge and split
 - ✅ Page manipulation (insert, delete, move, import)
