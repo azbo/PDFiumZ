@@ -44,6 +44,7 @@ namespace PDFiumZDemo
             DemoWatermark();  // NEW: Test AddTextWatermark
             DemoMergeAndSplit();  // NEW: Test Merge + Split
             DemoRotatePages();  // NEW: Test page rotation
+            DemoFluentAPI();  // NEW: Test enhanced fluent API with colors and shapes
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
@@ -343,6 +344,223 @@ namespace PDFiumZDemo
                 // Save with watermark
                 document.SaveToFile("output/watermarked.pdf");
                 Console.WriteLine("   Saved: watermarked.pdf\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates the enhanced fluent API with colors, shapes, and default settings.
+        /// </summary>
+        static void DemoFluentAPI()
+        {
+            Console.WriteLine("0.8. Enhanced Fluent API with Colors and Shapes");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                // Create a new document
+                using var document = PdfDocument.CreateNew();
+                Console.WriteLine("   Created new document");
+
+                // Create A4 page
+                using var page = document.CreatePage(595, 842);
+                Console.WriteLine("   Created A4 page");
+
+                // Load fonts
+                var helvetica = PdfFont.LoadStandardFont(document, PdfStandardFont.Helvetica);
+                var helveticaBold = PdfFont.LoadStandardFont(document, PdfStandardFont.HelveticaBold);
+
+                // Use fluent API with default settings
+                using (var editor = page.BeginEdit())
+                {
+                    Console.WriteLine("\n   Testing fluent API features:");
+
+                    // 1. Set default font and size, then use simplified Text method
+                    Console.WriteLine("      1. Using WithFont() and simplified Text()");
+                    editor
+                        .WithFont(helveticaBold)
+                        .WithFontSize(PdfFontSize.Heading1)
+                        .WithTextColor(PdfColor.DarkBlue)
+                        .Text("Enhanced Fluent API Demo", 50, 780);
+
+                    // 2. Change font and add description
+                    Console.WriteLine("      2. Changing font size and adding description");
+                    editor
+                        .WithFont(helvetica)
+                        .WithFontSize(PdfFontSize.Normal)
+                        .WithTextColor(PdfColor.Black)
+                        .Text("Demonstrating predefined colors, font sizes, and shapes", 50, 750);
+
+                    // 3. Draw colored shapes section
+                    Console.WriteLine("      3. Drawing shapes with predefined colors");
+                    editor
+                        .WithFont(helvetica)
+                        .WithFontSize(PdfFontSize.Medium)
+                        .WithTextColor(PdfColor.DarkRed)
+                        .Text("Shapes with Predefined Colors:", 50, 700);
+
+                    // Rectangles with different colors
+                    editor
+                        .WithStrokeColor(PdfColor.Red)
+                        .WithFillColor(PdfColor.WithOpacity(PdfColor.Red, 0.3))
+                        .Rectangle(new PdfRectangle(50, 630, 80, 50))
+                        .Text("Red", 70, 645);
+
+                    editor
+                        .WithStrokeColor(PdfColor.Green)
+                        .WithFillColor(PdfColor.WithOpacity(PdfColor.Green, 0.3))
+                        .Rectangle(new PdfRectangle(150, 630, 80, 50))
+                        .Text("Green", 165, 645);
+
+                    editor
+                        .WithStrokeColor(PdfColor.Blue)
+                        .WithFillColor(PdfColor.WithOpacity(PdfColor.Blue, 0.3))
+                        .Rectangle(new PdfRectangle(250, 630, 80, 50))
+                        .Text("Blue", 270, 645);
+
+                    editor
+                        .WithStrokeColor(PdfColor.Orange)
+                        .WithFillColor(PdfColor.WithOpacity(PdfColor.Orange, 0.3))
+                        .Rectangle(new PdfRectangle(350, 630, 80, 50))
+                        .Text("Orange", 363, 645);
+
+                    // 4. Draw circles section
+                    Console.WriteLine("      4. Drawing circles");
+                    editor
+                        .WithFontSize(PdfFontSize.Medium)
+                        .WithTextColor(PdfColor.DarkGreen)
+                        .Text("Circles and Ellipses:", 50, 580);
+
+                    // Filled circles
+                    editor
+                        .WithStrokeColor(PdfColor.Purple)
+                        .WithFillColor(PdfColor.WithOpacity(PdfColor.Purple, 0.5))
+                        .Circle(90, 520, 30)
+                        .WithTextColor(PdfColor.Black)
+                        .WithFontSize(PdfFontSize.Small)
+                        .Text("Circle", 70, 480);
+
+                    editor
+                        .WithStrokeColor(PdfColor.Teal)
+                        .WithFillColor(PdfColor.WithOpacity(PdfColor.Teal, 0.5))
+                        .Ellipse(new PdfRectangle(150, 490, 80, 60))
+                        .Text("Ellipse", 170, 480);
+
+                    editor
+                        .WithStrokeColor(PdfColor.Maroon)
+                        .WithFillColor(PdfColor.Transparent)
+                        .Circle(290, 520, 30)
+                        .Text("Stroke Only", 257, 480);
+
+                    // 5. Draw lines section
+                    Console.WriteLine("      5. Drawing lines");
+                    editor
+                        .WithFontSize(PdfFontSize.Medium)
+                        .WithTextColor(PdfColor.DarkRed)
+                        .Text("Lines with Different Widths:", 50, 430);
+
+                    // Lines with different widths
+                    editor
+                        .WithLineWidth(1)
+                        .Line(50, 410, 200, 410, PdfColor.Black)
+                        .WithFontSize(PdfFontSize.Small)
+                        .Text("1pt", 210, 405);
+
+                    editor
+                        .WithLineWidth(2)
+                        .Line(50, 390, 200, 390, PdfColor.DarkBlue)
+                        .Text("2pt", 210, 385);
+
+                    editor
+                        .WithLineWidth(4)
+                        .Line(50, 370, 200, 370, PdfColor.DarkGreen)
+                        .Text("4pt", 210, 365);
+
+                    editor
+                        .WithLineWidth(6)
+                        .Line(50, 345, 200, 345, PdfColor.DarkRed)
+                        .Text("6pt", 210, 340);
+
+                    // 6. Hex color demonstration
+                    Console.WriteLine("      6. Using hex colors");
+                    editor
+                        .WithFontSize(PdfFontSize.Medium)
+                        .WithTextColor(PdfColor.Navy)
+                        .Text("Hex Colors:", 50, 300);
+
+                    var customColor1 = PdfColor.FromHex("#FF6B6B");  // Coral red
+                    var customColor2 = PdfColor.FromHex("#4ECDC4");  // Turquoise
+                    var customColor3 = PdfColor.FromHex("#95E1D3");  // Mint
+
+                    editor
+                        .Rectangle(new PdfRectangle(50, 250, 60, 30),
+                            customColor1, PdfColor.WithOpacity(customColor1, 0.5))
+                        .Text("#FF6B6B", 55, 260);
+
+                    editor
+                        .Rectangle(new PdfRectangle(130, 250, 60, 30),
+                            customColor2, PdfColor.WithOpacity(customColor2, 0.5))
+                        .Text("#4ECDC4", 135, 260);
+
+                    editor
+                        .Rectangle(new PdfRectangle(210, 250, 60, 30),
+                            customColor3, PdfColor.WithOpacity(customColor3, 0.5))
+                        .Text("#95E1D3", 215, 260);
+
+                    // 7. Font sizes demonstration
+                    Console.WriteLine("      7. Demonstrating font sizes");
+                    editor
+                        .WithTextColor(PdfColor.Black)
+                        .WithFontSize(PdfFontSize.Heading2)
+                        .Text("Font Sizes", 50, 200);
+
+                    var yPos = 175.0;
+                    var sizes = new[]
+                    {
+                        (PdfFontSize.Small, "Small (8pt)"),
+                        (PdfFontSize.Normal, "Normal (10pt)"),
+                        (PdfFontSize.Default, "Default (12pt)"),
+                        (PdfFontSize.Medium, "Medium (14pt)"),
+                        (PdfFontSize.Large, "Large (16pt)")
+                    };
+
+                    foreach (var (size, label) in sizes)
+                    {
+                        editor.WithFontSize(size).Text(label, 50, yPos);
+                        yPos -= 20;
+                    }
+
+                    // 8. Complex drawing using chaining
+                    Console.WriteLine("      8. Complex chained drawing");
+                    editor
+                        .WithTextColor(PdfColor.DarkBlue)
+                        .WithFontSize(PdfFontSize.Small)
+                        .Text("Complex chained operations:", 320, 180)
+                        .WithStrokeColor(PdfColor.Gold)
+                        .WithFillColor(PdfColor.WithOpacity(PdfColor.Gold, 0.3))
+                        .WithLineWidth(2)
+                        .Rectangle(new PdfRectangle(320, 130, 200, 40))
+                        .WithTextColor(PdfColor.Black)
+                        .WithFontSize(PdfFontSize.Normal)
+                        .Text("Fluent API is Powerful!", 335, 145);
+
+                    // Commit all changes
+                    Console.WriteLine("      9. Committing changes");
+                    editor.Commit();
+                }
+
+                // Dispose fonts
+                helvetica.Dispose();
+                helveticaBold.Dispose();
+
+                // Save document
+                document.SaveToFile("output/fluent-api-demo.pdf");
+                Console.WriteLine("\n   Saved: fluent-api-demo.pdf");
+                Console.WriteLine("   Enhanced fluent API demo complete!\n");
             }
             finally
             {
