@@ -47,6 +47,7 @@ namespace PDFiumZDemo
             DemoFluentAPI();  // NEW: Test enhanced fluent API with colors and shapes
             DemoHtmlToPdf();  // NEW: Test HTML to PDF conversion
             DemoHtmlListsToPdf();  // NEW: Test HTML lists (ul, ol, li)
+            DemoHtmlWithImages();  // NEW: Test HTML with images
             DemoHighLevelAPI();
             DemoAdvancedRendering();
             DemoTextExtraction();
@@ -1637,6 +1638,213 @@ namespace PDFiumZDemo
                 Console.WriteLine("\n   Saved batch operation result to: batch-result.pdf");
 
                 Console.WriteLine("\n   All batch operations completed successfully!\n");
+            }
+            finally
+            {
+                PdfiumLibrary.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Creates a simple test image using SkiaSharp.
+        /// </summary>
+        static void CreateTestImage(string outputPath, int width, int height, string text, SkiaSharp.SKColor bgColor, SkiaSharp.SKColor textColor)
+        {
+            using var surface = SkiaSharp.SKSurface.Create(new SkiaSharp.SKImageInfo(width, height));
+            var canvas = surface.Canvas;
+
+            // Fill background
+            canvas.Clear(bgColor);
+
+            // Create font and paint
+            float fontSize = Math.Min(width, height) / 4;
+            using var font = new SkiaSharp.SKFont
+            {
+                Size = fontSize
+            };
+            using var paint = new SkiaSharp.SKPaint
+            {
+                Color = textColor,
+                IsAntialias = true
+            };
+
+            // Measure text for centering
+            float textWidth = font.MeasureText(text);
+            float x = (width - textWidth) / 2;
+            float y = height / 2 + fontSize / 3;
+
+            canvas.DrawText(text, x, y, font, paint);
+
+            // Save image
+            using var image = surface.Snapshot();
+            using var data = image.Encode(SkiaSharp.SKEncodedImageFormat.Png, 100);
+            using var stream = System.IO.File.OpenWrite(outputPath);
+            data.SaveTo(stream);
+        }
+
+        /// <summary>
+        /// Image loader using SkiaSharp to load and decode images.
+        /// </summary>
+        static (byte[] bgraData, int width, int height)? SkiaSharpImageLoader(string src)
+        {
+            try
+            {
+                // For this demo, we only support file paths
+                if (!System.IO.File.Exists(src))
+                {
+                    Console.WriteLine($"      Warning: Image file not found: {src}");
+                    return null;
+                }
+
+                // Load image using SkiaSharp
+                using var bitmap = SkiaSharp.SKBitmap.Decode(src);
+                if (bitmap == null)
+                {
+                    Console.WriteLine($"      Warning: Failed to decode image: {src}");
+                    return null;
+                }
+
+                int width = bitmap.Width;
+                int height = bitmap.Height;
+
+                // Convert to BGRA format (required by PDFium)
+                byte[] bgraData = new byte[width * height * 4];
+
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+                        var pixel = bitmap.GetPixel(x, y);
+                        int index = (y * width + x) * 4;
+
+                        // BGRA format
+                        bgraData[index + 0] = pixel.Blue;
+                        bgraData[index + 1] = pixel.Green;
+                        bgraData[index + 2] = pixel.Red;
+                        bgraData[index + 3] = pixel.Alpha;
+                    }
+                }
+
+                return (bgraData, width, height);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"      Warning: Error loading image '{src}': {ex.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Demonstrates HTML to PDF conversion with images.
+        /// </summary>
+        static void DemoHtmlWithImages()
+        {
+            Console.WriteLine("0.11. HTML with Images to PDF Conversion");
+
+            PdfiumLibrary.Initialize();
+
+            try
+            {
+                // Create test images
+                Console.WriteLine("   Creating test images...");
+                CreateTestImage("output/test-image-red.png", 200, 100, "RED",
+                    SkiaSharp.SKColors.Red, SkiaSharp.SKColors.White);
+                CreateTestImage("output/test-image-blue.png", 200, 100, "BLUE",
+                    SkiaSharp.SKColors.Blue, SkiaSharp.SKColors.White);
+                CreateTestImage("output/test-image-green.png", 200, 100, "GREEN",
+                    SkiaSharp.SKColors.Green, SkiaSharp.SKColors.White);
+                Console.WriteLine("      Created 3 test images");
+
+                using var document = PdfDocument.CreateNew();
+                using var converter = new PDFiumZ.HighLevel.HtmlToPdf.HtmlToPdfConverter(document);
+
+                // Set image loader using SkiaSharp
+                converter.ImageLoaderFunc = SkiaSharpImageLoader;
+                Console.WriteLine("   Set SkiaSharp image loader\n");
+
+                // Example 1: Simple image
+                string html1 = @"
+                    <h1 style='color: #2C3E50; text-align: center;'>HTML Images Demo</h1>
+                    <p style='text-align: center;'>Images loaded from files:</p>
+                    <div style='text-align: center;'>
+                        <img src='output/test-image-red.png' />
+                    </div>
+                ";
+
+                Console.WriteLine("   Example 1: Simple image");
+                using (var page1 = converter.ConvertToPdf(html1))
+                {
+                    Console.WriteLine("      Created page with single image");
+                }
+
+                // Example 2: Multiple images
+                string html2 = @"
+                    <h1 style='color: #E74C3C; text-align: center;'>Multiple Images</h1>
+                    <p style='text-align: center;'>Three images in sequence:</p>
+                    <div style='text-align: center;'>
+                        <img src='output/test-image-red.png' />
+                        <img src='output/test-image-blue.png' />
+                        <img src='output/test-image-green.png' />
+                    </div>
+                ";
+
+                Console.WriteLine("\n   Example 2: Multiple images");
+                using (var page2 = converter.ConvertToPdf(html2))
+                {
+                    Console.WriteLine("      Created page with multiple images");
+                }
+
+                // Example 3: Images with custom sizes
+                string html3 = @"
+                    <h1 style='color: #3498DB; text-align: center;'>Custom Sized Images</h1>
+                    <p style='text-align: center;'>Images with width and height attributes:</p>
+                    <div style='text-align: center;'>
+                        <img src='output/test-image-red.png' width='300' />
+                        <p>Large image (300pt width)</p>
+                        <img src='output/test-image-blue.png' width='150' />
+                        <p>Medium image (150pt width)</p>
+                        <img src='output/test-image-green.png' width='100' />
+                        <p>Small image (100pt width)</p>
+                    </div>
+                ";
+
+                Console.WriteLine("\n   Example 3: Custom sized images");
+                using (var page3 = converter.ConvertToPdf(html3))
+                {
+                    Console.WriteLine("      Created page with custom sized images");
+                }
+
+                // Example 4: Mixed content
+                string html4 = @"
+                    <h1 style='color: #27AE60; text-align: center;'>Mixed Content</h1>
+                    <p>Combining text, lists, and images:</p>
+                    <ul>
+                        <li><b>Text formatting:</b> bold, italic, colors</li>
+                        <li><b>Lists:</b> ordered and unordered</li>
+                        <li><b>Images:</b> loaded from files</li>
+                    </ul>
+                    <div style='text-align: center;'>
+                        <img src='output/test-image-red.png' width='200' />
+                        <p style='text-align: center;'>A colorful image</p>
+                    </div>
+                    <p>All features work together seamlessly!</p>
+                ";
+
+                Console.WriteLine("\n   Example 4: Mixed content (text + lists + images)");
+                using (var page4 = converter.ConvertToPdf(html4))
+                {
+                    Console.WriteLine("      Created page with mixed content");
+                }
+
+                // Save document
+                document.SaveToFile("output/html-with-images.pdf");
+                Console.WriteLine("\n   Saved: html-with-images.pdf");
+                Console.WriteLine("   HTML with images conversion demo complete!\n");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\n   Error: {ex.Message}");
+                Console.WriteLine($"   Stack trace: {ex.StackTrace}\n");
             }
             finally
             {
