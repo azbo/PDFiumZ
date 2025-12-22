@@ -2,7 +2,7 @@
 
 PDFiumZ is a modern .NET wrapper for [PDFium](https://pdfium.googlesource.com/pdfium/) with a comprehensive high-level API. Built on [PDFium binaries](https://github.com/bblanchon/pdfium-binaries) with P/Invoke bindings. Supports Linux-x64, OSX-x64, Win-x64, Win-x86.
 
-**Current PDFium Version: 145.0.7578.0** (chromium/7578) - Includes improved text reading capabilities
+**Current PDFium Version: 145.0.7592.0** (chromium/7592) - Latest PDFium with enhanced rendering and stability
 
 ## Documentation
 
