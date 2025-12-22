@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net10.0;net9.0;net8.0;netstandard2.1;netstandard2.0</TargetFrameworks>
-    <Version>145.0.7592</Version>
+    <Version>145.0.7592.1</Version>
     <AssemblyName>PDFiumZ</AssemblyName>
     <PackageId>PDFiumZ</PackageId>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -16,7 +16,7 @@
     <PackageProjectUrl>https://github.com/azbo/PDFiumZ</PackageProjectUrl>
     <Description>PDFiumZ - Modern .NET wrapper for Google PDFium. Convert PDF to image, extract text, create PDF, edit PDF, render PDF pages, manipulate form fields, add annotations, bookmarks. High-level fluent API + low-level P/Invoke bindings. Cross-platform: Windows, Linux, macOS. Based on PDFium 145.0.7592 (Chromium 145). Supports .NET 10.0, 9.0, 8.0, .NET Standard 2.1, 2.0. QuestPDF-style declarative document generation. HTML to PDF conversion.</Description>
     <PackageTags>pdf pdfium pdf-rendering pdf-to-image pdf-viewer pdf-converter pdf-reader pdf-manipulation pdf-library text-extraction image-extraction form-filling pdf-forms annotations bookmarks dotnet csharp pinvoke cross-platform linux macos windows pdf-generation html-to-pdf document-processing</PackageTags>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile>README.nuget.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/azbo/PDFiumZ</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Authors>azbo</Authors>
@@ -50,6 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="icon.png" Pack="true" PackagePath="" />
-    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+    <None Include="..\..\README.nuget.md" Pack="true" PackagePath="" />
   </ItemGroup>
 </Project>
