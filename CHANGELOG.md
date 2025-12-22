@@ -31,10 +31,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Example: `document.AddTextWatermark("CONFIDENTIAL", WatermarkPosition.Center, new WatermarkOptions { Opacity = 0.3, Rotation = 45 });`
 
 #### Extended Annotation Support (Round 2)
-- **Line Annotations**: `PdfLineAnnotation.Create()` for drawing lines
-  - Specify start and end points (x1, y1, x2, y2)
-  - Custom line color and width
-  - Example: `PdfLineAnnotation.Create(page, 50, 550, 250, 550, 0xFFFF0000, 2.0);`
+- **Ink Annotations**: `PdfInkAnnotation.Create()` for freehand drawing
+  - Support for multiple strokes (paths)
+  - Custom ink color and width
+  - Example: `PdfInkAnnotation.Create(page, paths, 0xFF0000FF, 2.0);`
+- **FreeText Annotations**: `PdfFreeTextAnnotation.Create()` for text boxes
+  - Direct text input on page
+  - Custom font size and color
+  - Example: `PdfFreeTextAnnotation.Create(page, rect, "Hello World", 0xFF000000, 12);`
 - **Rectangle Annotations**: `PdfSquareAnnotation.Create()` with borders and fills
   - Separate border and fill colors
   - Border width customization
@@ -143,7 +147,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Document Creation Tests**: CreateNew, CreatePage validation
   - **Watermark Tests**: Position, opacity, rotation, font customization
   - **Merge & Split Tests**: Multi-document merging, page range extraction
-  - **Extended Annotation Tests**: Line, Square, Circle, Underline, StrikeOut annotations
+  - **Extended Annotation Tests**: Ink, FreeText, Square, Circle, Underline, StrikeOut annotations
   - **Page Rotation Tests**: Single page, multiple pages, all pages rotation
   - **Security Tests**: 8 tests covering:
     - Encryption detection for unencrypted documents

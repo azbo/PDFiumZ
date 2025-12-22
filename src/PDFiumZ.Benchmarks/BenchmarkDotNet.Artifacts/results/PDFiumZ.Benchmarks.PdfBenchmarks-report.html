@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>PDFiumZ.Benchmarks.PdfBenchmarks-20251221-124304</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 11 (10.0.26200.7462/25H2/2025Update/HudsonValley2)
+Intel Core i9-14900HX 2.20GHz, 1 CPU, 32 logical and 24 physical cores
+.NET SDK 10.0.101
+  [Host]     : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3
+  DefaultJob : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>Method                               </th><th>Mean  </th><th>Error</th><th>StdDev</th><th>Rank</th><th>Gen0</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>&#39;Load small PDF (1 page)&#39;</td><td>52.053 &mu;s</td><td>0.2784 &mu;s</td><td>0.2604 &mu;s</td><td>3</td><td>-</td><td>576 B</td>
+</tr><tr><td>&#39;Load medium PDF (10 pages)&#39;</td><td>64.980 &mu;s</td><td>0.5701 &mu;s</td><td>0.5054 &mu;s</td><td>5</td><td>-</td><td>584 B</td>
+</tr><tr><td>&#39;Get single page&#39;</td><td>545.104 &mu;s</td><td>3.5342 &mu;s</td><td>3.3059 &mu;s</td><td>9</td><td>-</td><td>656 B</td>
+</tr><tr><td>&#39;Get page and access properties&#39;</td><td>577.772 &mu;s</td><td>4.4737 &mu;s</td><td>3.7358 &mu;s</td><td>10</td><td>-</td><td>656 B</td>
+</tr><tr><td>&#39;Create new page&#39;</td><td>4.682 &mu;s</td><td>0.0431 &mu;s</td><td>0.0403 &mu;s</td><td>1</td><td>-</td><td>112 B</td>
+</tr><tr><td>&#39;Render page at 72 DPI&#39;</td><td>1,221.685 &mu;s</td><td>23.8762 &mu;s</td><td>24.5191 &mu;s</td><td>15</td><td>-</td><td>944 B</td>
+</tr><tr><td>&#39;Render page at 150 DPI&#39;</td><td>2,657.685 &mu;s</td><td>39.5329 &mu;s</td><td>36.9791 &mu;s</td><td>17</td><td>-</td><td>1024 B</td>
+</tr><tr><td>&#39;Render page at 300 DPI&#39;</td><td>8,663.995 &mu;s</td><td>169.5678 &mu;s</td><td>158.6138 &mu;s</td><td>19</td><td>-</td><td>1024 B</td>
+</tr><tr><td>&#39;Extract text from page&#39;</td><td>606.271 &mu;s</td><td>6.8646 &mu;s</td><td>6.4211 &mu;s</td><td>11</td><td>-</td><td>912 B</td>
+</tr><tr><td>&#39;Search text in page&#39;</td><td>617.754 &mu;s</td><td>8.8114 &mu;s</td><td>8.2421 &mu;s</td><td>11</td><td>-</td><td>1480 B</td>
+</tr><tr><td>&#39;Get multiple pages (batch)&#39;</td><td>1,143.475 &mu;s</td><td>4.2529 &mu;s</td><td>3.5513 &mu;s</td><td>14</td><td>-</td><td>1232 B</td>
+</tr><tr><td>&#39;Create 10 pages&#39;</td><td>21.964 &mu;s</td><td>0.1704 &mu;s</td><td>0.1594 &mu;s</td><td>2</td><td>0.0305</td><td>800 B</td>
+</tr><tr><td>&#39;Merge 3 documents&#39;</td><td>299.078 &mu;s</td><td>3.4444 &mu;s</td><td>3.2219 &mu;s</td><td>7</td><td>-</td><td>3200 B</td>
+</tr><tr><td>&#39;Split document&#39;</td><td>211.564 &mu;s</td><td>3.3865 &mu;s</td><td>3.1677 &mu;s</td><td>6</td><td>-</td><td>760 B</td>
+</tr><tr><td>&#39;Rotate all pages&#39;</td><td>1,873.929 &mu;s</td><td>16.7324 &mu;s</td><td>14.8329 &mu;s</td><td>16</td><td>-</td><td>1593 B</td>
+</tr><tr><td>&#39;Save small document&#39;</td><td>638.374 &mu;s</td><td>14.6213 &mu;s</td><td>40.0256 &mu;s</td><td>11</td><td>-</td><td>7368 B</td>
+</tr><tr><td>&#39;Save medium document&#39;</td><td>1,065.325 &mu;s</td><td>20.5563 &mu;s</td><td>23.6727 &mu;s</td><td>13</td><td>-</td><td>9664 B</td>
+</tr><tr><td>&#39;Add text with font&#39;</td><td>455.266 &mu;s</td><td>5.2186 &mu;s</td><td>4.8815 &mu;s</td><td>8</td><td>-</td><td>616 B</td>
+</tr><tr><td>&#39;Add watermark&#39;</td><td>967.347 &mu;s</td><td>7.2259 &mu;s</td><td>6.7591 &mu;s</td><td>12</td><td>-</td><td>1184 B</td>
+</tr><tr><td>&#39;Access document metadata&#39;</td><td>59.713 &mu;s</td><td>0.8794 &mu;s</td><td>0.6866 &mu;s</td><td>4</td><td>0.0610</td><td>2200 B</td>
+</tr><tr><td>&#39;Access security info&#39;</td><td>57.137 &mu;s</td><td>1.0349 &mu;s</td><td>0.9680 &mu;s</td><td>4</td><td>-</td><td>576 B</td>
+</tr><tr><td>&#39;Complete workflow: Load → Render → Save&#39;</td><td>2,527.937 &mu;s</td><td>107.3341 &mu;s</td><td>300.9763 &mu;s</td><td>17</td><td>-</td><td>7681 B</td>
+</tr><tr><td>&#39;Document processing: Load → Modify → Save&#39;</td><td>6,479.268 &mu;s</td><td>128.6200 &mu;s</td><td>171.7040 &mu;s</td><td>18</td><td>-</td><td>20861 B</td>
+</tr></tbody></table>
+</body>
+</html>

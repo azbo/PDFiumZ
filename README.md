@@ -148,6 +148,38 @@ Console.WriteLine($"Permission flags: 0x{permissions:X8}");
 
 **Note**: PDFiumZ can read PDF security information but does not support encrypting or password-protecting PDFs. For encryption, use external tools.
 
+### Annotations
+
+PDFiumZ supports creating various types of annotations:
+
+```csharp
+using var document = PdfDocument.CreateNew();
+using var page = document.CreatePage(595, 842);
+
+// 1. Text Markup Annotations (Highlight, Underline, StrikeOut)
+var highlight = PdfHighlightAnnotation.Create(page, new[] { new PdfRectangle(100, 700, 200, 20) }, 0xFFFFFF00);
+var underline = PdfUnderlineAnnotation.Create(page, new[] { new PdfRectangle(100, 650, 200, 20) });
+var strikeOut = PdfStrikeOutAnnotation.Create(page, new[] { new PdfRectangle(100, 600, 200, 20) });
+
+// 2. Shape Annotations (Square, Circle)
+var square = PdfSquareAnnotation.Create(page, new PdfRectangle(100, 500, 100, 50), 0xFFFF0000, 0x400000FF, 2.0);
+var circle = PdfCircleAnnotation.Create(page, new PdfRectangle(250, 500, 50, 50), 0xFF00FF00);
+
+// 3. Free Text Annotation
+var freeText = PdfFreeTextAnnotation.Create(page, new PdfRectangle(100, 400, 200, 50), "Hello PDFiumZ!", 0xFF000000, 12);
+
+// 4. Ink Annotation (Freehand drawing)
+var paths = new List<List<(double X, double Y)>>
+{
+    new() { (100, 300), (150, 350), (200, 300) }
+};
+var ink = PdfInkAnnotation.Create(page, paths, 0xFF0000FF, 2.0);
+
+// 5. Stamp Annotation
+using var image = PdfBitmap.Load("stamp.png");
+var stamp = PdfStampAnnotation.Create(page, new PdfRectangle(300, 100, 100, 100), image);
+```
+
 ## Features
 
 ### High-Level API (Recommended)

@@ -23,7 +23,7 @@
 - ✅ 单元测试覆盖 (37个测试，覆盖所有新功能)
 
 **第二轮新增** (v145.1.0):
-- ✅ 扩展注解类型 (Line, Square, Circle, Underline, StrikeOut)
+- ✅ 扩展注解类型 (Square, Circle, Underline, StrikeOut, Ink, FreeText)
 - ✅ 页面旋转 (RotatePage, RotateAllPages, RotatePages)
 - ✅ PDF 安全信息读取 (加密状态、权限检查)
 - ✅ 性能基准测试 (23个基准测试，完整性能分析)
@@ -76,8 +76,14 @@ var split = document.Split(0, 10); // 前10页
 
 ### 5. 更多注解类型 ⭐⭐
 **工作量**: 2-3天
+**状态**: ✅ 部分完成
 
-新增：墨迹、直线、矩形、圆形、下划线、删除线注解
+**已实现**：Square, Circle, Underline, StrikeOut, Ink, FreeText
+
+**计划中**：
+- Line (直线写入)
+- Polygon (多边形，评估可行性)
+- Polyline (折线，评估可行性)
 
 ### 6. PDF 安全功能 ⭐⭐
 **工作量**: 2-3天
@@ -98,6 +104,29 @@ Console.WriteLine($"Can Print: {security.CanPrint}");
 
 **已实现**：
 - ✅ 性能基准测试（23个基准测试）
+
+---
+
+## 📅 下一步计划 (Current Plan)
+
+**目标**: 完善注解支持与深度性能优化
+
+### 1. 墨迹注解 (Ink Annotation)
+**状态**: ✅ 已完成 (v145.1.0)
+实现 `PdfInkAnnotation`，支持手写/自由绘制路径。
+
+### 2. 文本操作性能优化
+**状态**: ✅ 已完成 (v145.1.0)
+缓存 `FPDF_TEXTPAGE` 对象，避免重复加载/解析页面文本，提高文本搜索和提取的性能。
+
+### 3. 更多注解类型 (Phase 2)
+**状态**: 🚧 开发中
+
+- **FreeText (文本框)**: ✅ 已完成 (v145.1.0)
+- **Polygon (多边形)**: ❌ 不支持 (Unsupported by PDFium binary)
+- **PolyLine (折线)**: ❌ 不支持 (Unsupported by PDFium binary)
+- **Line (直线)**: ✅ 已支持读取 (v145.1.0+)，写入待定
+
 - ✅ 性能分析报告（PERFORMANCE.md）
 - ✅ 优化建议和最佳实践
 - ✅ 内存使用分析
@@ -158,13 +187,13 @@ Console.WriteLine($"Can Print: {security.CanPrint}");
 
 **v145.1.0 收尾工作**:
 1. ✅ 更新 ROADMAP.md 反映实际进度
-2. 📝 创建 CHANGELOG.md（版本更新日志）
+2. ✅ 创建 CHANGELOG.md（版本更新日志）
 3. 🚀 准备 v145.1.0 发布到 NuGet
 
 **可选优化项**:
-- Ink 注解类型实现
 - 批量页面访问优化（性能提升）
 - 页面加载缓存机制
+- 页数缓存（减少重复 native 调用）
 
 **第三轮开发规划** (v146.0.0):
 - 文档比较功能

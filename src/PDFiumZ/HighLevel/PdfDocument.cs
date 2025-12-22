@@ -18,6 +18,7 @@ public sealed class PdfDocument : IDisposable
     private readonly string? _filePath;
     private bool _disposed;
     private PdfMetadata? _metadata;
+    private int? _pageCountCache;
 
     /// <summary>
     /// Gets the file path if document was loaded from file, null if from memory.
@@ -33,7 +34,9 @@ public sealed class PdfDocument : IDisposable
         get
         {
             ThrowIfDisposed();
-            return fpdfview.FPDF_GetPageCount(_handle!);
+            if (_pageCountCache is null)
+                _pageCountCache = fpdfview.FPDF_GetPageCount(_handle!);
+            return _pageCountCache.Value;
         }
     }
 
@@ -147,6 +150,7 @@ public sealed class PdfDocument : IDisposable
     {
         _handle = handle ?? throw new ArgumentNullException(nameof(handle));
         _filePath = filePath;
+        _pageCountCache = fpdfview.FPDF_GetPageCount(_handle);
     }
 
     /// <summary>
@@ -450,19 +454,25 @@ public sealed class PdfDocument : IDisposable
         if (height <= 0)
             throw new ArgumentOutOfRangeException(nameof(height), "Height must be positive.");
 
-        // Create page at the end of the document
         var pageIndex = PageCount;
         var pageHandle = fpdf_edit.FPDFPageNew(_handle!, pageIndex, width, height);
 
         if (pageHandle is null || pageHandle.__Instance == IntPtr.Zero)
             throw new PdfException($"Failed to create new page with dimensions {width}x{height}.");
 
-        // Generate content stream for the blank page
-        // This is required for the page to be properly saved and imported
-        var result = fpdf_edit.FPDFPageGenerateContent(pageHandle);
-        if (result == 0)
-            throw new PdfException("Failed to generate content for new page.");
+        try
+        {
+            var result = fpdf_edit.FPDFPageGenerateContent(pageHandle);
+            if (result == 0)
+                throw new PdfException("Failed to generate content for new page.");
+        }
+        catch
+        {
+            fpdfview.FPDF_ClosePage(pageHandle);
+            throw;
+        }
 
+        _pageCountCache = pageIndex + 1;
         return new PdfPage(pageHandle, pageIndex, this);
     }
 
@@ -541,9 +551,10 @@ public sealed class PdfDocument : IDisposable
     public void InsertBlankPage(int index, double width, double height)
     {
         ThrowIfDisposed();
-        if (index < 0 || index > PageCount)
+        var originalCount = PageCount;
+        if (index < 0 || index > originalCount)
             throw new ArgumentOutOfRangeException(nameof(index),
-                $"Insert index {index} is out of range (0-{PageCount}).");
+                $"Insert index {index} is out of range (0-{originalCount}).");
         if (width <= 0 || height <= 0)
             throw new ArgumentOutOfRangeException(nameof(width),
                 "Page dimensions must be positive.");
@@ -554,6 +565,7 @@ public sealed class PdfDocument : IDisposable
 
         // Close the page immediately as we don't need to return it
         fpdfview.FPDF_ClosePage(pageHandle);
+        _pageCountCache = originalCount + 1;
     }
 
     /// <summary>
@@ -565,11 +577,13 @@ public sealed class PdfDocument : IDisposable
     public void DeletePage(int index)
     {
         ThrowIfDisposed();
-        if (index < 0 || index >= PageCount)
+        var originalCount = PageCount;
+        if (index < 0 || index >= originalCount)
             throw new ArgumentOutOfRangeException(nameof(index),
-                $"Page index {index} is out of range (0-{PageCount - 1}).");
+                $"Page index {index} is out of range (0-{originalCount - 1}).");
 
         fpdf_edit.FPDFPageDelete(_handle!, index);
+        _pageCountCache = originalCount - 1;
     }
 
     /// <summary>
@@ -588,12 +602,13 @@ public sealed class PdfDocument : IDisposable
             throw new ArgumentException("Page indices array cannot be empty.", nameof(pageIndices));
 
         ThrowIfDisposed();
+        var originalCount = PageCount;
 
         // Validate all indices first
         foreach (var index in pageIndices)
         {
-            if (index < 0 || index >= PageCount)
-                throw new ArgumentException($"Page index {index} is out of range (0-{PageCount - 1}).", nameof(pageIndices));
+            if (index < 0 || index >= originalCount)
+                throw new ArgumentException($"Page index {index} is out of range (0-{originalCount - 1}).", nameof(pageIndices));
         }
 
         // Sort indices in descending order to avoid index shifts during deletion
@@ -604,6 +619,8 @@ public sealed class PdfDocument : IDisposable
         {
             fpdf_edit.FPDFPageDelete(_handle!, index);
         }
+
+        _pageCountCache = originalCount - sortedIndices.Length;
     }
 
     /// <summary>
@@ -616,23 +633,26 @@ public sealed class PdfDocument : IDisposable
     public void DeletePages(int startIndex, int count)
     {
         ThrowIfDisposed();
+        var originalCount = PageCount;
 
-        if (startIndex < 0 || startIndex >= PageCount)
+        if (startIndex < 0 || startIndex >= originalCount)
             throw new ArgumentOutOfRangeException(nameof(startIndex),
-                $"Start index {startIndex} is out of range (0-{PageCount - 1}).");
+                $"Start index {startIndex} is out of range (0-{originalCount - 1}).");
 
         if (count <= 0)
             throw new ArgumentOutOfRangeException(nameof(count), "Count must be positive.");
 
-        if (startIndex + count > PageCount)
+        if (startIndex + count > originalCount)
             throw new ArgumentOutOfRangeException(nameof(count),
-                $"Range ({startIndex} + {count}) exceeds page count ({PageCount}).");
+                $"Range ({startIndex} + {count}) exceeds page count ({originalCount}).");
 
         // Delete pages in descending order to avoid index shifts
         for (int i = startIndex + count - 1; i >= startIndex; i--)
         {
             fpdf_edit.FPDFPageDelete(_handle!, i);
         }
+
+        _pageCountCache = originalCount - count;
     }
 
     /// <summary>
@@ -684,13 +704,19 @@ public sealed class PdfDocument : IDisposable
             throw new ArgumentNullException(nameof(sourceDoc));
         if (sourceDoc._disposed)
             throw new ObjectDisposedException(nameof(sourceDoc), "Source document has been disposed.");
-        if (insertAtIndex < -1 || insertAtIndex > PageCount)
+        var originalCount = PageCount;
+        if (insertAtIndex < -1 || insertAtIndex > originalCount)
             throw new ArgumentOutOfRangeException(nameof(insertAtIndex),
-                $"Insert index {insertAtIndex} is out of range (-1 for end, 0-{PageCount}).");
+                $"Insert index {insertAtIndex} is out of range (-1 for end, 0-{originalCount}).");
 
         var result = fpdf_ppo.FPDF_ImportPages(_handle!, sourceDoc._handle!, pageRange, insertAtIndex);
         if (result == 0)
             throw new PdfException($"Failed to import pages from source document (range: {pageRange ?? "all"}).");
+
+        if (pageRange is null)
+            _pageCountCache = originalCount + sourceDoc.PageCount;
+        else
+            _pageCountCache = null;
     }
 
     /// <summary>
@@ -715,13 +741,16 @@ public sealed class PdfDocument : IDisposable
             throw new ArgumentNullException(nameof(pageIndices));
         if (pageIndices.Length == 0)
             throw new ArgumentException("Page indices array cannot be empty.", nameof(pageIndices));
-        if (insertAtIndex < -1 || insertAtIndex > PageCount)
+        var originalCount = PageCount;
+        if (insertAtIndex < -1 || insertAtIndex > originalCount)
             throw new ArgumentOutOfRangeException(nameof(insertAtIndex),
-                $"Insert index {insertAtIndex} is out of range (-1 for end, 0-{PageCount}).");
+                $"Insert index {insertAtIndex} is out of range (-1 for end, 0-{originalCount}).");
 
         var result = fpdf_ppo.FPDF_ImportPagesByIndex(_handle!, sourceDoc._handle!, ref pageIndices[0], (uint)pageIndices.Length, insertAtIndex);
         if (result == 0)
             throw new PdfException($"Failed to import {pageIndices.Length} page(s) from source document.");
+
+        _pageCountCache = originalCount + pageIndices.Length;
     }
 
     /// <summary>
@@ -782,8 +811,8 @@ public sealed class PdfDocument : IDisposable
 
         options ??= new WatermarkOptions();
 
-        // Add watermark to all pages
-        for (int i = 0; i < PageCount; i++)
+        var pageCount = PageCount;
+        for (int i = 0; i < pageCount; i++)
         {
             using var page = GetPage(i);
             AddTextWatermarkToPage(page, text, position, options);
