@@ -38,24 +38,22 @@ class Program
                 .WithStrokeColor(PdfColor.Red)
                 .WithLineWidth(2)
                 .Rectangle(new PdfRectangle(100, 500, 200, 100))
-                
                 .Commit();
                 
             Console.WriteLine("Saving generated document...");
-            doc.Save("demo_output.pdf");
 
             // 4. Open and process the generated document
             Console.WriteLine("Opening document for processing...");
-            using var openDoc = await PdfDocument.OpenAsync("demo_output.pdf");
+            using var openDoc = PdfDocument.Open("demo_output.pdf");
             using var openPage = openDoc.GetPage(0);
             
             // 5. Extract text
-            var text = await openPage.ExtractTextAsync();
+            var text = openPage.ExtractText();
             Console.WriteLine($"Extracted text: {text}");
             
             // 6. Render to image
             Console.WriteLine("Rendering to image...");
-            using var image = await openPage.RenderToImageAsync();
+            using var image = openPage.RenderToImage();
             image.SaveAsPng("demo_output.png");
             
             Console.WriteLine("Done! Check demo_output.pdf and demo_output.png");

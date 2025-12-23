@@ -158,13 +158,18 @@ public sealed class PdfDocument : IDisposable
     /// </summary>
     /// <param name="filePath">Path to the PDF file.</param>
     /// <param name="password">Optional password for encrypted PDFs (UTF-8 or Latin-1).</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
     /// <returns>A new <see cref="PdfDocument"/> instance.</returns>
     /// <exception cref="ArgumentNullException">filePath is null.</exception>
     /// <exception cref="FileNotFoundException">File does not exist.</exception>
     /// <exception cref="PdfLoadException">Failed to load PDF (invalid format, wrong password, etc.).</exception>
     /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
-    public static PdfDocument Open(string filePath, string? password = null)
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public static PdfDocument Open(string filePath, string? password = null, CancellationToken cancellationToken = default)
     {
+        if (cancellationToken.IsCancellationRequested)
+            cancellationToken.ThrowIfCancellationRequested();
+
         if (filePath is null)
             throw new ArgumentNullException(nameof(filePath));
         if (!File.Exists(filePath))
@@ -183,38 +188,22 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
-    /// Asynchronously opens a PDF document from a file path.
-    /// </summary>
-    /// <param name="filePath">Path to the PDF file.</param>
-    /// <param name="password">Optional password for encrypted PDFs (UTF-8 or Latin-1).</param>
-    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a new <see cref="PdfDocument"/> instance.</returns>
-    /// <exception cref="ArgumentNullException">filePath is null.</exception>
-    /// <exception cref="FileNotFoundException">File does not exist.</exception>
-    /// <exception cref="PdfLoadException">Failed to load PDF (invalid format, wrong password, etc.).</exception>
-    /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    public static Task<PdfDocument> OpenAsync(string filePath, string? password = null, CancellationToken cancellationToken = default)
-    {
-        return Task.Run(() =>
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-            return Open(filePath, password);
-        }, cancellationToken);
-    }
-
-    /// <summary>
     /// Opens a PDF document from a byte array in memory.
     /// </summary>
     /// <param name="data">PDF file content as byte array.</param>
     /// <param name="password">Optional password for encrypted PDFs.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
     /// <returns>A new <see cref="PdfDocument"/> instance.</returns>
     /// <exception cref="ArgumentNullException">data is null.</exception>
     /// <exception cref="ArgumentException">data is empty.</exception>
     /// <exception cref="PdfLoadException">Failed to load PDF.</exception>
     /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
-    public static PdfDocument Open(byte[] data, string? password = null)
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public static PdfDocument Open(byte[] data, string? password = null, CancellationToken cancellationToken = default)
     {
+        if (cancellationToken.IsCancellationRequested)
+            cancellationToken.ThrowIfCancellationRequested();
+
         if (data is null)
             throw new ArgumentNullException(nameof(data));
         if (data.Length == 0)
@@ -222,7 +211,6 @@ public sealed class PdfDocument : IDisposable
 
         EnsureLibraryInitialized();
 
-        // Pin memory and load
         var gcHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
         try
         {
@@ -246,64 +234,28 @@ public sealed class PdfDocument : IDisposable
     /// </summary>
     /// <param name="stream">Stream containing the PDF file data.</param>
     /// <param name="password">Optional password for encrypted PDFs.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
     /// <returns>A new <see cref="PdfDocument"/> instance.</returns>
     /// <exception cref="ArgumentNullException">stream is null.</exception>
     /// <exception cref="PdfLoadException">Failed to load PDF.</exception>
     /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
-    public static PdfDocument Open(Stream stream, string? password = null)
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public static PdfDocument Open(Stream stream, string? password = null, CancellationToken cancellationToken = default)
     {
+        if (cancellationToken.IsCancellationRequested)
+            cancellationToken.ThrowIfCancellationRequested();
+
         if (stream is null)
             throw new ArgumentNullException(nameof(stream));
 
         if (stream is MemoryStream ms)
         {
-            return Open(ms.ToArray(), password);
+            return Open(ms.ToArray(), password, cancellationToken);
         }
 
         using var memoryStream = new MemoryStream();
         stream.CopyTo(memoryStream);
-        return Open(memoryStream.ToArray(), password);
-    }
-
-    /// <summary>
-    /// Asynchronously opens a PDF document from a byte array in memory.
-    /// </summary>
-    /// <param name="data">PDF file content as byte array.</param>
-    /// <param name="password">Optional password for encrypted PDFs.</param>
-    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a new <see cref="PdfDocument"/> instance.</returns>
-    /// <exception cref="ArgumentNullException">data is null.</exception>
-    /// <exception cref="ArgumentException">data is empty.</exception>
-    /// <exception cref="PdfLoadException">Failed to load PDF.</exception>
-    /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    public static Task<PdfDocument> OpenAsync(byte[] data, string? password = null, CancellationToken cancellationToken = default)
-    {
-        return Task.Run(() =>
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-            return Open(data, password);
-        }, cancellationToken);
-    }
-
-    /// <summary>
-    /// Asynchronously opens a PDF document from a stream.
-    /// </summary>
-    /// <param name="stream">Stream containing the PDF file data.</param>
-    /// <param name="password">Optional password for encrypted PDFs.</param>
-    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a new <see cref="PdfDocument"/> instance.</returns>
-    /// <exception cref="ArgumentNullException">stream is null.</exception>
-    /// <exception cref="PdfLoadException">Failed to load PDF.</exception>
-    /// <exception cref="InvalidOperationException">PDFium library not initialized.</exception>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    public static Task<PdfDocument> OpenAsync(Stream stream, string? password = null, CancellationToken cancellationToken = default)
-    {
-        return Task.Run(() =>
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-            return Open(stream, password);
-        }, cancellationToken);
+        return Open(memoryStream.ToArray(), password, cancellationToken);
     }
 
     /// <summary>

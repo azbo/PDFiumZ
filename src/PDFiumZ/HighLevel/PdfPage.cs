@@ -194,47 +194,31 @@ public sealed unsafe class PdfPage : IDisposable
     /// <summary>
     /// Extracts text content from the page.
     /// </summary>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
     /// <returns>Extracted text as a string.</returns>
     /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
     /// <exception cref="PdfException">Failed to load text from the page.</exception>
-    public string ExtractText()
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public string ExtractText(CancellationToken cancellationToken = default)
     {
         ThrowIfDisposed();
+        cancellationToken.ThrowIfCancellationRequested();
 
         var textPage = GetTextPageHandle();
 
         var charCount = fpdf_text.FPDFTextCountChars(textPage);
         if (charCount == 0) return string.Empty;
 
-        // Allocate buffer (UTF-16 array)
         var buffer = new ushort[charCount + 1];
 
         var bytesWritten = fpdf_text.FPDFTextGetText(textPage, 0, charCount, ref buffer[0]);
 
         if (bytesWritten <= 1) return string.Empty;
 
-        // Convert UTF-16 to .NET string (bytesWritten includes null terminator)
         fixed (ushort* pBuffer = buffer)
         {
             return new string((char*)pBuffer, 0, bytesWritten - 1);
         }
-    }
-
-    /// <summary>
-    /// Asynchronously extracts text content from the page.
-    /// </summary>
-    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the extracted text.</returns>
-    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    /// <exception cref="PdfException">Failed to load text from the page.</exception>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    public Task<string> ExtractTextAsync(CancellationToken cancellationToken = default)
-    {
-        return Task.Run(() =>
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-            return ExtractText();
-        }, cancellationToken);
     }
 
     /// <summary>
@@ -243,14 +227,17 @@ public sealed unsafe class PdfPage : IDisposable
     /// <param name="searchText">Text to search for.</param>
     /// <param name="matchCase">If true, performs case-sensitive search.</param>
     /// <param name="matchWholeWord">If true, only matches whole words.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
     /// <returns>A list of search results with position information.</returns>
     /// <exception cref="ArgumentNullException">searchText is null.</exception>
     /// <exception cref="ArgumentException">searchText is empty.</exception>
     /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
     /// <exception cref="PdfException">Failed to load text or perform search.</exception>
-    public IReadOnlyList<PdfTextSearchResult> SearchText(string searchText, bool matchCase = false, bool matchWholeWord = false)
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public IReadOnlyList<PdfTextSearchResult> SearchText(string searchText, bool matchCase = false, bool matchWholeWord = false, CancellationToken cancellationToken = default)
     {
         ThrowIfDisposed();
+        cancellationToken.ThrowIfCancellationRequested();
         if (searchText is null)
             throw new ArgumentNullException(nameof(searchText));
         if (string.IsNullOrEmpty(searchText))
@@ -260,22 +247,19 @@ public sealed unsafe class PdfPage : IDisposable
 
         var textPage = GetTextPageHandle();
 
-        // Convert search text to UTF-16
         var searchUtf16 = new ushort[searchText.Length + 1];
         for (int i = 0; i < searchText.Length; i++)
         {
             searchUtf16[i] = searchText[i];
         }
-        searchUtf16[searchText.Length] = 0; // Null terminator
+        searchUtf16[searchText.Length] = 0;
 
-        // Build search flags
         uint flags = 0;
         if (matchCase)
-            flags |= 0x00000001; // FPDF_MATCHCASE
+            flags |= 0x00000001;
         if (matchWholeWord)
-            flags |= 0x00000002; // FPDF_MATCHWHOLEWORD
+            flags |= 0x00000002;
 
-        // Start search
         var searchHandle = fpdf_text.FPDFTextFindStart(textPage, ref searchUtf16[0], flags, 0);
         if (searchHandle is null || searchHandle.__Instance == IntPtr.Zero)
         {
@@ -284,7 +268,6 @@ public sealed unsafe class PdfPage : IDisposable
 
         try
         {
-            // Find all occurrences
             while (fpdf_text.FPDFTextFindNext(searchHandle) != 0)
             {
                 var charIndex = fpdf_text.FPDFTextGetSchResultIndex(searchHandle);
@@ -293,10 +276,7 @@ public sealed unsafe class PdfPage : IDisposable
                 if (charIndex < 0 || charCount <= 0)
                     continue;
 
-                // Get matched text
                 var matchedText = GetTextRange(textPage, charIndex, charCount);
-
-                // Get bounding rectangles
                 var rectangles = GetTextRectangles(textPage, charIndex, charCount);
 
                 results.Add(new PdfTextSearchResult(charIndex, charCount, matchedText, rectangles));
@@ -308,28 +288,6 @@ public sealed unsafe class PdfPage : IDisposable
         }
 
         return results;
-    }
-
-    /// <summary>
-    /// Asynchronously searches for text on the page and returns all matches.
-    /// </summary>
-    /// <param name="searchText">Text to search for.</param>
-    /// <param name="matchCase">If true, performs case-sensitive search.</param>
-    /// <param name="matchWholeWord">If true, only matches whole words.</param>
-    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of search results.</returns>
-    /// <exception cref="ArgumentNullException">searchText is null.</exception>
-    /// <exception cref="ArgumentException">searchText is empty.</exception>
-    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
-    /// <exception cref="PdfException">Failed to load text or perform search.</exception>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    public Task<IReadOnlyList<PdfTextSearchResult>> SearchTextAsync(string searchText, bool matchCase = false, bool matchWholeWord = false, CancellationToken cancellationToken = default)
-    {
-        return Task.Run(() =>
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-            return SearchText(searchText, matchCase, matchWholeWord);
-        }, cancellationToken);
     }
 
     /// <summary>

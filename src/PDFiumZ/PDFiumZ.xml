@@ -1283,77 +1283,42 @@
             Internal constructor - factory methods only.
             </summary>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.Open(System.String,System.String)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.Open(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Opens a PDF document from a file path.
             </summary>
             <param name="filePath">Path to the PDF file.</param>
             <param name="password">Optional password for encrypted PDFs (UTF-8 or Latin-1).</param>
-            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> instance.</returns>
-            <exception cref="T:System.ArgumentNullException">filePath is null.</exception>
-            <exception cref="T:System.IO.FileNotFoundException">File does not exist.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfLoadException">Failed to load PDF (invalid format, wrong password, etc.).</exception>
-            <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.OpenAsync(System.String,System.String,System.Threading.CancellationToken)">
-            <summary>
-            Asynchronously opens a PDF document from a file path.
-            </summary>
-            <param name="filePath">Path to the PDF file.</param>
-            <param name="password">Optional password for encrypted PDFs (UTF-8 or Latin-1).</param>
             <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-            <returns>A task that represents the asynchronous operation. The task result contains a new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> instance.</returns>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> instance.</returns>
             <exception cref="T:System.ArgumentNullException">filePath is null.</exception>
             <exception cref="T:System.IO.FileNotFoundException">File does not exist.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfLoadException">Failed to load PDF (invalid format, wrong password, etc.).</exception>
             <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
             <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.Open(System.Byte[],System.String)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.Open(System.Byte[],System.String,System.Threading.CancellationToken)">
             <summary>
             Opens a PDF document from a byte array in memory.
             </summary>
             <param name="data">PDF file content as byte array.</param>
             <param name="password">Optional password for encrypted PDFs.</param>
-            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> instance.</returns>
-            <exception cref="T:System.ArgumentNullException">data is null.</exception>
-            <exception cref="T:System.ArgumentException">data is empty.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfLoadException">Failed to load PDF.</exception>
-            <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.Open(System.IO.Stream,System.String)">
-            <summary>
-            Opens a PDF document from a stream.
-            </summary>
-            <param name="stream">Stream containing the PDF file data.</param>
-            <param name="password">Optional password for encrypted PDFs.</param>
-            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> instance.</returns>
-            <exception cref="T:System.ArgumentNullException">stream is null.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfLoadException">Failed to load PDF.</exception>
-            <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.OpenAsync(System.Byte[],System.String,System.Threading.CancellationToken)">
-            <summary>
-            Asynchronously opens a PDF document from a byte array in memory.
-            </summary>
-            <param name="data">PDF file content as byte array.</param>
-            <param name="password">Optional password for encrypted PDFs.</param>
             <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-            <returns>A task that represents the asynchronous operation. The task result contains a new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> instance.</returns>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> instance.</returns>
             <exception cref="T:System.ArgumentNullException">data is null.</exception>
             <exception cref="T:System.ArgumentException">data is empty.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfLoadException">Failed to load PDF.</exception>
             <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
             <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocument.OpenAsync(System.IO.Stream,System.String,System.Threading.CancellationToken)">
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.Open(System.IO.Stream,System.String,System.Threading.CancellationToken)">
             <summary>
-            Asynchronously opens a PDF document from a stream.
+            Opens a PDF document from a stream.
             </summary>
             <param name="stream">Stream containing the PDF file data.</param>
             <param name="password">Optional password for encrypted PDFs.</param>
             <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-            <returns>A task that represents the asynchronous operation. The task result contains a new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> instance.</returns>
+            <returns>A new <see cref="T:PDFiumZ.HighLevel.PdfDocument"/> instance.</returns>
             <exception cref="T:System.ArgumentNullException">stream is null.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfLoadException">Failed to load PDF.</exception>
             <exception cref="T:System.InvalidOperationException">PDFium library not initialized.</exception>
@@ -2520,46 +2485,25 @@
             <exception cref="T:PDFiumZ.HighLevel.PdfRenderException">Rendering failed.</exception>
             <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.ExtractText">
+        <member name="M:PDFiumZ.HighLevel.PdfPage.ExtractText(System.Threading.CancellationToken)">
             <summary>
             Extracts text content from the page.
             </summary>
-            <returns>Extracted text as a string.</returns>
-            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load text from the page.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.ExtractTextAsync(System.Threading.CancellationToken)">
-            <summary>
-            Asynchronously extracts text content from the page.
-            </summary>
             <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-            <returns>A task that represents the asynchronous operation. The task result contains the extracted text.</returns>
+            <returns>Extracted text as a string.</returns>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load text from the page.</exception>
             <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.SearchText(System.String,System.Boolean,System.Boolean)">
+        <member name="M:PDFiumZ.HighLevel.PdfPage.SearchText(System.String,System.Boolean,System.Boolean,System.Threading.CancellationToken)">
             <summary>
             Searches for text on the page and returns all matches.
             </summary>
             <param name="searchText">Text to search for.</param>
             <param name="matchCase">If true, performs case-sensitive search.</param>
             <param name="matchWholeWord">If true, only matches whole words.</param>
-            <returns>A list of search results with position information.</returns>
-            <exception cref="T:System.ArgumentNullException">searchText is null.</exception>
-            <exception cref="T:System.ArgumentException">searchText is empty.</exception>
-            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
-            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load text or perform search.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfPage.SearchTextAsync(System.String,System.Boolean,System.Boolean,System.Threading.CancellationToken)">
-            <summary>
-            Asynchronously searches for text on the page and returns all matches.
-            </summary>
-            <param name="searchText">Text to search for.</param>
-            <param name="matchCase">If true, performs case-sensitive search.</param>
-            <param name="matchWholeWord">If true, only matches whole words.</param>
             <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-            <returns>A task that represents the asynchronous operation. The task result contains a list of search results.</returns>
+            <returns>A list of search results with position information.</returns>
             <exception cref="T:System.ArgumentNullException">searchText is null.</exception>
             <exception cref="T:System.ArgumentException">searchText is empty.</exception>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>

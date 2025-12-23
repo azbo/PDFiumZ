@@ -273,7 +273,7 @@ var stamp = PdfStampAnnotation.Create(page,
 
 // Don't forget to dispose annotations
 highlight.Dispose();
-underline.Dispose();
+        .Commit();
 // ... dispose others
 
 document.Save("annotated.pdf");
