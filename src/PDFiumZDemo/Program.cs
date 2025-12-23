@@ -1,9 +1,6 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using PDFiumZ;
 using PDFiumZ.HighLevel;
-using PDFiumZ.SkiaSharp;
+using System;
+using System.Threading.Tasks;
 
 namespace PDFiumZDemo;
 
@@ -59,7 +56,7 @@ class Program
             // 6. Render to image
             Console.WriteLine("Rendering to image...");
             using var image = await openPage.RenderToImageAsync();
-            image.SaveAsSkiaPng("demo_output.png");
+            image.SaveAsPng("demo_output.png");
             
             Console.WriteLine("Done! Check demo_output.pdf and demo_output.png");
         }
