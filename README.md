@@ -57,14 +57,37 @@ finally
 
 ## Key Features
 
-- **High-Level API**: Easy to use classes for documents, pages, annotations, and forms.
-- **Content Creation**: Add text, images, and shapes with a powerful fluent editor.
-- **Fluent Document Generation**: QuestPDF-style declarative API for complex layouts.
-- **Image Generation**: Simple, high-performance PDF to image conversion.
-- **HTML to PDF**: Convert simple HTML/CSS to PDF documents.
-- **Annotation Support**: Comprehensive support for 10+ types of PDF annotations.
-- **Cross-Platform**: Works on Windows, Linux, and macOS.
-- **Async Support**: Modern async/await APIs for I/O bound operations.
+### Core Functionality
+- **High-Level API**: Easy to use classes for documents, pages, annotations, and forms
+- **Cross-Platform**: Works on Windows, Linux, and macOS
+- **Async Support**: Modern async/await APIs for I/O bound operations
+- **Multi-Framework**: Supports .NET 10/9/8 and .NET Standard 2.0/2.1
+
+### Document Operations
+- **Create PDFs**: Generate new PDF documents from scratch
+- **Merge & Split**: Combine multiple PDFs or extract specific pages
+- **Rotate Pages**: Rotate individual pages or entire documents (90°, 180°, 270°)
+- **Watermarks**: Add text watermarks with custom opacity, rotation, and position
+- **Security Info**: Read encryption status and document permissions
+
+### Content Creation & Editing
+- **Content Editor**: Add text, images, shapes, and paths with a powerful fluent API
+- **Fluent Document Generation**: QuestPDF-style declarative API for complex layouts
+- **HTML to PDF**: Convert simple HTML/CSS to PDF documents
+- **Table Builder**: Create complex tables with fluent API
+
+### Annotations (10+ Types)
+- **Text Markup**: Highlight, Underline, StrikeOut
+- **Shapes**: Square, Circle, Line
+- **Text**: Sticky Notes, Free Text boxes
+- **Drawing**: Ink (freehand), Stamps
+- **Form Fields**: Read and write form field values
+
+### Rendering & Extraction
+- **Image Generation**: Simple, high-performance PDF to image conversion
+- **Text Extraction**: Extract plain text with positions and formatting
+- **Image Extraction**: Extract embedded images from PDF pages
+- **Search**: Find text with position information
 
 ## Building
 

@@ -15,8 +15,13 @@ This document provides detailed examples and usage guides for PDFiumZ.
   - [Extract Images](#extract-images)
 - [Advanced Features](#advanced-features)
   - [Forms and Annotations](#forms-and-annotations)
+    - [Form Fields](#form-fields)
+    - [Annotations - Reading](#annotations---reading)
+    - [Annotations - Creating](#annotations---creating)
+    - [Advanced Annotation Features](#advanced-annotation-features)
   - [Watermarks, Headers, and Footers](#watermarks-headers-and-footers)
   - [HTML to PDF Conversion](#html-to-pdf-conversion)
+  - [PDF Security Information](#pdf-security-information)
 - [Document Generation](#document-generation)
   - [Low-Level Content Editor](#low-level-content-editor)
   - [QuestPDF-Style Fluent API](#questpdf-style-fluent-api)
@@ -169,13 +174,15 @@ foreach (var img in images)
 
 ### Forms and Annotations
 
+#### Form Fields
+
 ```csharp
 using PDFiumZ.HighLevel;
 
 using var document = PdfDocument.Open("form.pdf");
 using var page = document.GetPage(0);
 
-// Form Fields
+// Get all form fields
 var allFields = page.GetFormFields();
 foreach (var field in allFields)
 {
@@ -183,17 +190,116 @@ foreach (var field in allFields)
     if (field.Type == FormFieldType.TextField)
         field.SetValue("Updated Value");
 }
+```
 
-// Annotations
-var annotCount = page.AnnotationCount;
+#### Annotations - Reading
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.Open("annotated.pdf");
+using var page = document.GetPage(0);
+
+// Get annotation count
+var count = page.AnnotationCount;
+
+// Get all annotations
 var allAnnots = page.GetAnnotations();
 
-// Filter by type
+// Filter by specific type
 var highlights = page.GetAnnotations<PdfHighlightAnnotation>();
 foreach (var h in highlights)
 {
-    h.Color = PdfColor.Yellow;
+    Console.WriteLine($"Highlight at: {h.Bounds}");
+    h.Color = PdfColor.Yellow; // Modify color
+
+    // Get highlighted regions
+    var regions = h.GetQuadPoints();
 }
+```
+
+#### Annotations - Creating
+
+PDFiumZ supports 10+ annotation types:
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.Open("document.pdf");
+using var page = document.GetPage(0);
+
+// Text Markup Annotations
+var highlight = PdfHighlightAnnotation.Create(page,
+    new PdfRectangle(100, 700, 200, 20),
+    color: 0x80FFFF00); // Semi-transparent yellow
+
+var underline = PdfUnderlineAnnotation.Create(page,
+    new PdfRectangle(100, 650, 200, 20));
+
+var strikeout = PdfStrikeOutAnnotation.Create(page,
+    new PdfRectangle(100, 600, 200, 20));
+
+// Shape Annotations
+var square = PdfSquareAnnotation.Create(page,
+    new PdfRectangle(50, 500, 100, 100),
+    strokeColor: PdfColor.Red,
+    fillColor: PdfColor.TransparentRed);
+
+var circle = PdfCircleAnnotation.Create(page,
+    new PdfRectangle(200, 500, 100, 100),
+    strokeColor: PdfColor.Blue);
+
+// Text Annotations (sticky notes)
+var note = PdfTextAnnotation.Create(page,
+    new PdfRectangle(400, 700, 20, 20),
+    "This is a note");
+
+// Free Text Annotations
+var textBox = PdfFreeTextAnnotation.Create(page,
+    new PdfRectangle(50, 300, 200, 50),
+    "Editable text box");
+
+// Ink Annotations (freehand drawing)
+var ink = PdfInkAnnotation.Create(page);
+ink.AddStroke(new[] {
+    new PointF(100, 200), new PointF(150, 250),
+    new PointF(200, 200)
+});
+
+// Stamp Annotations
+var stamp = PdfStampAnnotation.Create(page,
+    new PdfRectangle(400, 100, 150, 50),
+    PdfStampType.Approved);
+
+// Don't forget to dispose annotations
+highlight.Dispose();
+underline.Dispose();
+// ... dispose others
+
+document.Save("annotated.pdf");
+```
+
+#### Advanced Annotation Features
+
+```csharp
+// Working with quad points (text markup regions)
+var highlight = PdfHighlightAnnotation.Create(page, bounds);
+
+// Set multiple highlighted regions
+highlight.SetQuadPoints(new[] {
+    new PdfRectangle(100, 700, 200, 20),
+    new PdfRectangle(100, 680, 150, 20)
+});
+
+// Add regions incrementally
+highlight.AddQuadPoint(new PdfRectangle(100, 660, 180, 20));
+
+// Get all regions
+var regions = highlight.GetQuadPoints();
+
+// Modify annotation properties (inherited from PdfAnnotation base class)
+highlight.Color = PdfColor.Yellow;
+highlight.Bounds = new PdfRectangle(100, 700, 250, 40);
 ```
 
 ### Watermarks, Headers, and Footers
@@ -246,6 +352,37 @@ document.CreatePageFromHtml(html, new HtmlToPdfOptions {
 
 document.Save("html-output.pdf");
 ```
+
+### PDF Security Information
+
+PDFiumZ can read PDF security settings including encryption status and permissions.
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.Open("protected.pdf");
+var security = document.Security;
+
+// Check encryption status
+Console.WriteLine($"Encrypted: {security.IsEncrypted}");
+Console.WriteLine($"User Password: {security.HasUserPassword}");
+Console.WriteLine($"Owner Password: {security.HasOwnerPassword}");
+
+// Check permissions (what operations are allowed)
+Console.WriteLine($"Can Print: {security.CanPrint}");
+Console.WriteLine($"Can Modify: {security.CanModify}");
+Console.WriteLine($"Can Copy: {security.CanCopy}");
+Console.WriteLine($"Can Annotate: {security.CanAnnotate}");
+Console.WriteLine($"Can Fill Forms: {security.CanFillForms}");
+Console.WriteLine($"Can Extract: {security.CanExtractContent}");
+Console.WriteLine($"Can Assemble: {security.CanAssembleDocument}");
+Console.WriteLine($"Can Print High Quality: {security.CanPrintHighQuality}");
+
+// Get raw permission flags
+PdfPermissions permissions = security.Permissions;
+```
+
+**Note**: PDFium only supports **reading** security information, not setting passwords or encryption. This is a PDFium limitation.
 
 ---
 
