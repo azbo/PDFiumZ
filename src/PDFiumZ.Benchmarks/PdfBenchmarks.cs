@@ -67,13 +67,14 @@ public class PdfBenchmarks
             var font = PdfFont.Load(doc, PdfStandardFont.Helvetica);
             using var editor = page.BeginEdit();
 
-            editor.AddText($"Page {i + 1}", 50, 750, font, 24);
-            editor.AddText($"This is test content for page {i + 1}.", 50, 700, font, 14);
+            editor.WithFont(font)
+                .Text($"Page {i + 1}", 50, 750, fontSize: 24)
+                .Text($"This is test content for page {i + 1}.", 50, 700, fontSize: 14);
 
             // Add some rectangles for visual content
-            editor.AddRectangle(new PdfRectangle(50, 600, 100, 50), 0xFFFF0000, 0x80FF0000);
-            editor.AddRectangle(new PdfRectangle(170, 600, 100, 50), 0xFF00FF00, 0x8000FF00);
-            editor.AddRectangle(new PdfRectangle(290, 600, 100, 50), 0xFF0000FF, 0x800000FF);
+            editor.Rectangle(new PdfRectangle(50, 600, 100, 50), 0xFFFF0000, 0x80FF0000)
+                .Rectangle(new PdfRectangle(170, 600, 100, 50), 0xFF00FF00, 0x8000FF00)
+                .Rectangle(new PdfRectangle(290, 600, 100, 50), 0xFF0000FF, 0x800000FF);
 
             editor.GenerateContent();
             font.Dispose();
@@ -247,7 +248,7 @@ public class PdfBenchmarks
 
         using (var editor = page.BeginEdit())
         {
-            editor.AddText("Test Text", 50, 750, font, 14);
+            editor.WithFont(font).Text("Test Text", 50, 750, fontSize: 14);
             editor.GenerateContent();
         }
 

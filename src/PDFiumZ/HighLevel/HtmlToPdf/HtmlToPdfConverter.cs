@@ -1094,7 +1094,7 @@ public class HtmlToPdfConverter : IDisposable
 
         // Add image to page
         var bounds = new PdfRectangle(x, y, width, height);
-        editor.AddImage(bgraData, imgWidth, imgHeight, bounds);
+        editor.Image(bgraData, imgWidth, imgHeight, bounds);
 
         // Move Y position down
         _currentY -= height + style.FontSize * 0.5; // Add some spacing after image

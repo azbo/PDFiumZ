@@ -37,23 +37,7 @@ public sealed unsafe class PdfContentEditor : IDisposable
         _page = page ?? throw new ArgumentNullException(nameof(page));
     }
 
-    /// <summary>
-    /// Adds text to the page at the specified position.
-    /// </summary>
-    /// <param name="text">The text to add.</param>
-    /// <param name="x">X coordinate in page units.</param>
-    /// <param name="y">Y coordinate in page units.</param>
-    /// <param name="font">The font to use.</param>
-    /// <param name="fontSize">Font size in points.</param>
-    /// <returns>The created text object handle for further manipulation if needed.</returns>
-    /// <exception cref="ArgumentNullException">text or font is null.</exception>
-    /// <exception cref="ObjectDisposedException">Editor has been disposed.</exception>
-    /// <exception cref="PdfException">Failed to create or add text object.</exception>
-    /// <remarks>
-    /// This method is deprecated. Use the fluent <see cref="Text"/> method instead for better API experience.
-    /// </remarks>
-    [Obsolete("Use Text() fluent method instead. This method will be removed in v146.")]
-    public FpdfPageobjectT AddText(string text, double x, double y, PdfFont font, double fontSize)
+    private FpdfPageobjectT AddTextInternal(string text, double x, double y, PdfFont font, double fontSize)
     {
         if (text is null)
             throw new ArgumentNullException(nameof(text));
@@ -110,23 +94,7 @@ public sealed unsafe class PdfContentEditor : IDisposable
         }
     }
 
-    /// <summary>
-    /// Adds an image to the page from raw bitmap data.
-    /// </summary>
-    /// <param name="imageData">Raw BGRA bitmap data (4 bytes per pixel).</param>
-    /// <param name="width">Image width in pixels.</param>
-    /// <param name="height">Image height in pixels.</param>
-    /// <param name="bounds">Position and size on the page.</param>
-    /// <returns>The created image object handle.</returns>
-    /// <exception cref="ArgumentNullException">imageData is null.</exception>
-    /// <exception cref="ArgumentException">imageData size doesn't match width*height*4.</exception>
-    /// <exception cref="ObjectDisposedException">Editor has been disposed.</exception>
-    /// <exception cref="PdfException">Failed to create or add image object.</exception>
-    /// <remarks>
-    /// This method is deprecated. Use the fluent <see cref="Image"/> method instead for better API experience.
-    /// </remarks>
-    [Obsolete("Use Image() fluent method instead. This method will be removed in v146.")]
-    public FpdfPageobjectT AddImage(byte[] imageData, int width, int height, PdfRectangle bounds)
+    private FpdfPageobjectT AddImageInternal(byte[] imageData, int width, int height, PdfRectangle bounds)
     {
         if (imageData is null)
             throw new ArgumentNullException(nameof(imageData));
@@ -202,20 +170,7 @@ public sealed unsafe class PdfContentEditor : IDisposable
         }
     }
 
-    /// <summary>
-    /// Adds a rectangle to the page.
-    /// </summary>
-    /// <param name="bounds">Rectangle position and size.</param>
-    /// <param name="strokeColor">Stroke color in ARGB format (0xAARRGGBB). Use 0 for no stroke.</param>
-    /// <param name="fillColor">Fill color in ARGB format (0xAARRGGBB). Use 0 for no fill.</param>
-    /// <returns>The created rectangle object handle.</returns>
-    /// <exception cref="ObjectDisposedException">Editor has been disposed.</exception>
-    /// <exception cref="PdfException">Failed to create or add rectangle object.</exception>
-    /// <remarks>
-    /// This method is deprecated. Use the fluent <see cref="Rectangle"/> method instead for better API experience.
-    /// </remarks>
-    [Obsolete("Use Rectangle() fluent method instead. This method will be removed in v146.")]
-    public FpdfPageobjectT AddRectangle(PdfRectangle bounds, uint strokeColor, uint fillColor)
+    private FpdfPageobjectT AddRectangleInternal(PdfRectangle bounds, uint strokeColor, uint fillColor)
     {
         ThrowIfDisposed();
         _page.ThrowIfDisposed();
@@ -235,21 +190,7 @@ public sealed unsafe class PdfContentEditor : IDisposable
         return PrepareAndInsertObject(rectObj, strokeColor, fillColor);
     }
 
-    /// <summary>
-    /// Adds a line between two points.
-    /// </summary>
-    /// <param name="x1">Start X coordinate.</param>
-    /// <param name="y1">Start Y coordinate.</param>
-    /// <param name="x2">End X coordinate.</param>
-    /// <param name="y2">End Y coordinate.</param>
-    /// <param name="strokeColor">Line color in ARGB format. Use 0 for no stroke.</param>
-    /// <param name="lineWidth">Line width. Use 0 for default.</param>
-    /// <returns>The created line object handle.</returns>
-    /// <remarks>
-    /// This method is deprecated. Use the fluent <see cref="Line"/> method instead for better API experience.
-    /// </remarks>
-    [Obsolete("Use Line() fluent method instead. This method will be removed in v146.")]
-    public FpdfPageobjectT AddLine(double x1, double y1, double x2, double y2, uint strokeColor, double lineWidth)
+    private FpdfPageobjectT AddLineInternal(double x1, double y1, double x2, double y2, uint strokeColor, double lineWidth)
     {
         ThrowIfDisposed();
         _page.ThrowIfDisposed();
@@ -275,36 +216,12 @@ public sealed unsafe class PdfContentEditor : IDisposable
         }
     }
 
-    /// <summary>
-    /// Adds a circle to the page.
-    /// </summary>
-    /// <param name="centerX">Center X coordinate.</param>
-    /// <param name="centerY">Center Y coordinate.</param>
-    /// <param name="radius">Circle radius.</param>
-    /// <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke.</param>
-    /// <param name="fillColor">Fill color in ARGB format. Use 0 for no fill.</param>
-    /// <returns>The created circle object handle.</returns>
-    /// <remarks>
-    /// This method is deprecated. Use the fluent <see cref="Circle"/> method instead for better API experience.
-    /// </remarks>
-    [Obsolete("Use Circle() fluent method instead. This method will be removed in v146.")]
-    public FpdfPageobjectT AddCircle(double centerX, double centerY, double radius, uint strokeColor, uint fillColor)
+    private FpdfPageobjectT AddCircleInternal(double centerX, double centerY, double radius, uint strokeColor, uint fillColor)
     {
-        return AddEllipse(new PdfRectangle(centerX - radius, centerY - radius, radius * 2, radius * 2), strokeColor, fillColor);
+        return AddEllipseInternal(new PdfRectangle(centerX - radius, centerY - radius, radius * 2, radius * 2), strokeColor, fillColor);
     }
 
-    /// <summary>
-    /// Adds an ellipse to the page.
-    /// </summary>
-    /// <param name="bounds">Bounding rectangle for the ellipse.</param>
-    /// <param name="strokeColor">Stroke color in ARGB format. Use 0 for no stroke.</param>
-    /// <param name="fillColor">Fill color in ARGB format. Use 0 for no fill.</param>
-    /// <returns>The created ellipse object handle.</returns>
-    /// <remarks>
-    /// This method is deprecated. Use the fluent <see cref="Ellipse"/> method instead for better API experience.
-    /// </remarks>
-    [Obsolete("Use Ellipse() fluent method instead. This method will be removed in v146.")]
-    public FpdfPageobjectT AddEllipse(PdfRectangle bounds, uint strokeColor, uint fillColor)
+    private FpdfPageobjectT AddEllipseInternal(PdfRectangle bounds, uint strokeColor, uint fillColor)
     {
         ThrowIfDisposed();
         _page.ThrowIfDisposed();
@@ -420,19 +337,7 @@ public sealed unsafe class PdfContentEditor : IDisposable
         }
     }
 
-    /// <summary>
-    /// Removes page objects at the specified indices.
-    /// Indices are processed in descending order to maintain correct mapping during removal.
-    /// </summary>
-    /// <param name="indices">The zero-based indices of the objects to remove.</param>
-    /// <exception cref="ArgumentNullException">indices is null.</exception>
-    /// <exception cref="ObjectDisposedException">Editor has been disposed.</exception>
-    /// <exception cref="PdfException">Failed to remove one or more objects.</exception>
-    /// <remarks>
-    /// This method is deprecated. Use the fluent <see cref="Remove"/> method instead for better API experience.
-    /// </remarks>
-    [Obsolete("Use Remove() fluent method instead. This method will be removed in v146.")]
-    public void RemoveObjects(params int[] indices)
+    private void RemoveObjectsInternal(params int[] indices)
     {
         if (indices is null)
             throw new ArgumentNullException(nameof(indices));
@@ -501,13 +406,21 @@ public sealed unsafe class PdfContentEditor : IDisposable
         var targetFont = font ?? _defaultFont ?? throw new InvalidOperationException("Font is not specified and no default font is set. Call WithFont(font) first.");
         var targetSize = fontSize > 0 ? fontSize : _defaultFontSize;
 
-        AddText(text, x, y, targetFont, targetSize);
+        AddTextInternal(text, x, y, targetFont, targetSize);
         return this;
     }
 
+    /// <summary>
+    /// Adds an image to the page (fluent API).
+    /// </summary>
+    /// <param name="imageData">Raw BGRA bitmap data (4 bytes per pixel).</param>
+    /// <param name="width">Image width in pixels.</param>
+    /// <param name="height">Image height in pixels.</param>
+    /// <param name="bounds">Position and size on the page.</param>
+    /// <returns>This editor instance for fluent chaining.</returns>
     public PdfContentEditor Image(byte[] imageData, int width, int height, PdfRectangle bounds)
     {
-        AddImage(imageData, width, height, bounds);
+        AddImageInternal(imageData, width, height, bounds);
         return this;
     }
 
@@ -522,7 +435,7 @@ public sealed unsafe class PdfContentEditor : IDisposable
     {
         var stroke = strokeColor == 0 ? _defaultStrokeColor : strokeColor;
         var fill = fillColor == 0 ? _defaultFillColor : fillColor;
-        AddRectangle(bounds, stroke, fill);
+        AddRectangleInternal(bounds, stroke, fill);
         return this;
     }
 
@@ -541,7 +454,7 @@ public sealed unsafe class PdfContentEditor : IDisposable
         var color = strokeColor == 0 ? _defaultStrokeColor : strokeColor;
         var width = lineWidth == 0 ? _defaultLineWidth : lineWidth;
 
-        AddLine(x1, y1, x2, y2, color, width);
+        AddLineInternal(x1, y1, x2, y2, color, width);
         return this;
     }
 
@@ -559,7 +472,7 @@ public sealed unsafe class PdfContentEditor : IDisposable
         var stroke = strokeColor == 0 ? _defaultStrokeColor : strokeColor;
         var fill = fillColor == 0 ? _defaultFillColor : fillColor;
 
-        AddCircle(centerX, centerY, radius, stroke, fill);
+        AddCircleInternal(centerX, centerY, radius, stroke, fill);
         return this;
     }
 
@@ -575,7 +488,7 @@ public sealed unsafe class PdfContentEditor : IDisposable
         var stroke = strokeColor == 0 ? _defaultStrokeColor : strokeColor;
         var fill = fillColor == 0 ? _defaultFillColor : fillColor;
 
-        AddEllipse(bounds, stroke, fill);
+        AddEllipseInternal(bounds, stroke, fill);
         return this;
     }
 
@@ -586,7 +499,7 @@ public sealed unsafe class PdfContentEditor : IDisposable
     /// <returns>This editor instance for fluent chaining.</returns>
     public PdfContentEditor Remove(params int[] indices)
     {
-        RemoveObjects(indices);
+        RemoveObjectsInternal(indices);
         return this;
     }
 

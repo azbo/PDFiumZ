@@ -113,8 +113,7 @@ namespace PDFiumZ.SkiaSharp
             if (bitmap is null) throw new ArgumentNullException(nameof(bitmap));
 
             var bgraData = bitmap.ToBgraBytes();
-            editor.AddImage(bgraData, bitmap.Width, bitmap.Height, bounds);
-            return editor;
+            return editor.Image(bgraData, bitmap.Width, bitmap.Height, bounds);
         }
 
         /// <summary>
@@ -267,7 +266,7 @@ namespace PDFiumZ.SkiaSharp
                 float scaleX = (float)targetWidth / svgWidth;
                 float scaleY = (float)targetHeight / svgHeight;
                 var matrix = SKMatrix.CreateScale(scaleX, scaleY);
-                canvas.DrawPicture(svg.Picture, ref matrix);
+                canvas.DrawPicture(svg.Picture, in matrix);
             }
 
             return bitmap;
