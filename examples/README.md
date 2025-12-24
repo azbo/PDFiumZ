@@ -54,6 +54,15 @@ Advanced configuration and fluent APIs.
 |---------|------|
 | [Options Config](./en-US/04-AdvancedOptions/OptionsConfig.cs) | [选项配置](./zh-CN/04-AdvancedOptions/OptionsConfig.cs) |
 
+### 05-Annotations | 注解功能
+PDF annotation creation and manipulation.
+
+PDF 注解创建和操作功能。
+
+| Example | 示例 |
+|---------|------|
+| [Link Annotations](./en-US/05-Annotations/LinkAnnotations.cs) | [链接注解](./zh-CN/05-Annotations/LinkAnnotations.cs) |
+
 ---
 
 ## 🚀 Running Examples | 运行示例

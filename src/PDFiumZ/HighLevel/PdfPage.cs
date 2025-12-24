@@ -710,6 +710,7 @@ public sealed unsafe class PdfPage : IDisposable
             PdfAnnotationType.Ink => new PdfInkAnnotation(handle, this, index),
             PdfAnnotationType.FreeText => new PdfFreeTextAnnotation(handle, this, index),
             PdfAnnotationType.Widget => new PdfFormField(handle, _document.CreateFormHandle(), this, index),
+            PdfAnnotationType.Link => new PdfLinkAnnotation(handle, this, index),
             // Add other annotation types as they are implemented
             _ => new GenericAnnotation(handle, this, annotType, index)
         };
