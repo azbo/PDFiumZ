@@ -1,62 +1,153 @@
-# PDFiumZ Documentation & Examples
+# PDFiumZ 文档与示例 📚
 
-This document provides detailed examples and usage guides for PDFiumZ.
+PDFiumZ 是一个现代化的 .NET PDF 处理库，提供完整的高阶 API 和丰富的示例代码。
 
-## Contents
+## 🚀 快速开始
 
-- [Core Operations](#core-operations)
-  - [Async Operations](#async-operations)
-  - [Create PDF from Scratch](#create-pdf-from-scratch)
-  - [Merge and Split PDFs](#merge-and-split-pdfs)
-  - [Rotate Pages](#rotate-pages)
-- [Content Extraction & Rendering](#content-extraction--rendering)
-  - [Render and Extract Text](#render-and-extract-text)
-  - [Save All Pages as Images](#save-all-pages-as-images)
-  - [Extract Images](#extract-images)
-- [Advanced Features](#advanced-features)
-  - [Forms and Annotations](#forms-and-annotations)
-    - [Form Fields](#form-fields)
-    - [Annotations - Reading](#annotations---reading)
-    - [Annotations - Creating](#annotations---creating)
-    - [Advanced Annotation Features](#advanced-annotation-features)
-  - [Watermarks, Headers, and Footers](#watermarks-headers-and-footers)
-  - [HTML to PDF Conversion](#html-to-pdf-conversion)
-  - [PDF Security Information](#pdf-security-information)
-- [Document Generation](#document-generation)
-  - [Low-Level Content Editor](#low-level-content-editor)
-  - [QuestPDF-Style Fluent API](#questpdf-style-fluent-api)
-- [Integrations](#integrations)
-  - [SkiaSharp Integration](#skiasharp-integration)
+### 安装
+```bash
+dotnet add package PDFiumZ
+```
+
+### 基础使用
+```csharp
+using PDFiumZ;
+using PDFiumZ.HighLevel;
+
+// 初始化库
+PdfiumLibrary.Initialize();
+
+try
+{
+    // 打开并渲染 PDF
+    using var document = PdfDocument.Open("sample.pdf");
+    using var page = document.GetPage(0);
+    using var image = page.RenderToImage();
+
+    // 保存为 PNG
+    image.SaveAsSkiaPng("output.png");
+
+    // 提取文本
+    var text = page.ExtractText();
+}
+finally
+{
+    PdfiumLibrary.Shutdown();
+}
+```
+
+## 📑 目录结构
+
+### 完整示例代码
+每个示例都是独立可运行的项目，包含详细的中文注释：
+
+- **[01-Basics](../examples/01-Basics/)** - 基础入门
+  - `GettingStarted.cs` - 快速入门和基础操作演示
+
+- **[02-Rendering](../examples/02-Rendering/)** - 渲染功能
+  - `ImageGeneration.cs` - 将 PDF 页面渲染为图像
+  - `Thumbnails.cs` - 生成页面缩略图（支持多种规格和质量）
+
+- **[03-PageManipulation](../examples/03-PageManipulation/)** - 页面操作
+  - `MergeSplit.cs` - 合并和拆分 PDF 文档
+  - `RangeOperations.cs` - 使用 .NET 8+ Range 语法操作页面
+
+- **[04-AdvancedOptions](../examples/04-AdvancedOptions/)** - 高级选项
+  - `OptionsConfig.cs` - 使用选项类进行精细控制
+
+### 功能文档
+按主题分类的详细文档：
+
+#### 核心功能
+- [异步操作](#异步操作) - 现代 async/await API
+- [创建 PDF](#创建-pdf) - 从零开始生成文档
+- [合并与拆分](#合并与拆分) - 文档组合操作
+- [页面旋转](#页面旋转) - 页面方向调整
+
+#### 内容处理
+- [渲染与文本提取](#渲染与文本提取) - 页面渲染和内容提取
+- [图像生成](#图像生成) - 批量导出页面为图像
+- [缩略图生成](#缩略图生成) - 快速预览缩略图
+- [图像提取](#图像提取) - 提取嵌入的图片
+
+#### 高级功能
+- [表单处理](#表单处理) - 读取和填写表单字段
+- [注释功能](#注释功能) - 10+ 种注释类型
+- [水印与页眉页脚](#水印与页眉页脚) - 文档标记和装饰
+- [HTML 转 PDF](#html-转-pdf) - HTML 内容转换
+- [安全信息](#安全信息) - 加密和权限读取
+
+#### 文档生成
+- [内容编辑器](#内容编辑器) - 低级内容控制
+- [Fluent API](#fluent-api) - 声明式文档生成
+
+#### 集成
+- [SkiaSharp 集成](#skiasharp-集成) - 图像格式支持
+- [Range 语法](#range-语法) - .NET 8+ 现代语法支持
+
+## 🎯 按需求导航
+
+### 我想要...
+
+#### 渲染 PDF 为图像
+👉 查看 **[图像生成文档](#图像生成)**
+👉 运行 **[02-Rendering/ImageGeneration.cs](../examples/02-Rendering/ImageGeneration.cs)**
+
+#### 生成页面缩略图
+👉 查看 **[缩略图生成文档](#缩略图生成)**
+👉 运行 **[02-Rendering/Thumbnails.cs](../examples/02-Rendering/Thumbnails.cs)**
+
+#### 合并或拆分 PDF
+👉 查看 **[合并与拆分文档](#合并与拆分)**
+👉 运行 **[03-PageManipulation/MergeSplit.cs](../examples/03-PageManipulation/MergeSplit.cs)**
+
+#### 使用 Range 语法 (.NET 8+)
+👉 查看 **[Range 语法文档](#range-语法)**
+👉 运行 **[03-PageManipulation/RangeOperations.cs](../examples/03-PageManipulation/RangeOperations.cs)**
+
+#### 使用高级配置选项
+👉 查看 **[选项类参考](#选项类参考)**
+👉 运行 **[04-AdvancedOptions/OptionsConfig.cs](../examples/04-AdvancedOptions/OptionsConfig.cs)**
+
+#### 从头创建 PDF
+👉 查看 **[Fluent API](#fluent-api)**
+
+#### 处理表单和注释
+👉 查看 **[表单处理](#表单处理)** 和 **[注释功能](#注释功能)**
+
+## 📚 功能详解
 
 ---
 
-## Core Operations
+### 异步操作
 
-### Async Operations
-
-PDFiumZ provides asynchronous versions for most long-running operations.
+PDFiumZ 为大多数长时间运行的操作提供异步版本。
 
 ```csharp
 using PDFiumZ.HighLevel;
 
-// Open document asynchronously
+// 异步打开文档
 using var document = await PdfDocument.OpenAsync("sample.pdf");
 using var page = document.GetPage(0);
 
-// Extract and search text asynchronously
+// 异步提取和搜索文本
 var text = await page.ExtractTextAsync();
 var results = await page.SearchTextAsync("PDFiumZ");
 
-// Render to image asynchronously
+// 异步渲染为图像
 using var image = await page.RenderToImageAsync();
 image.SaveAsSkiaPng("output.png");
 
-// Add watermark asynchronously
+// 异步添加水印
 await document.AddTextWatermarkAsync("DRAFT", WatermarkPosition.Center);
 await document.SaveAsync("output.pdf");
 ```
 
-### Create PDF from Scratch
+---
+
+### 创建 PDF
+
+从零开始创建 PDF 文档。
 
 ```csharp
 using PDFiumZ.HighLevel;
@@ -64,43 +155,55 @@ using PDFiumZ.HighLevel;
 using var document = PdfDocument.CreateNew();
 using var page1 = document.CreatePage(PdfPageSize.A4);
 using var page2 = document.CreatePage(PdfPageSize.Letter);
-using var page3 = document.CreatePage(800, 600);   // Custom size
+using var page3 = document.CreatePage(800, 600);   // 自定义尺寸
 
-Console.WriteLine($"Created document with {document.PageCount} pages");
+Console.WriteLine($"创建了 {document.PageCount} 页的文档");
 document.Save("new-document.pdf");
 ```
 
-### Merge and Split PDFs
+**相关示例**: [01-Basics/GettingStarted.cs](../examples/01-Basics/GettingStarted.cs)
+
+---
+
+### 合并与拆分
+
+合并多个 PDF 或提取特定页面。
 
 ```csharp
 using PDFiumZ.HighLevel;
 
-// Merge multiple files
+// 合并多个文件
 using var merged = PdfDocument.Merge("doc1.pdf", "doc2.pdf", "doc3.pdf");
-Console.WriteLine($"Merged document has {merged.PageCount} pages");
+Console.WriteLine($"合并后文档有 {merged.PageCount} 页");
 merged.Save("merged.pdf");
 
-// Split/Extract pages
+// 拆分/提取页面
 using var source = PdfDocument.Open("large.pdf");
-// Extract pages 0, 1, and 2
+// 提取页面 0, 1, 和 2
 using var first3 = source.Split(0, 1, 2);
 first3.Save("first-3-pages.pdf");
 ```
 
-### Rotate Pages
+**相关示例**: [03-PageManipulation/MergeSplit.cs](../examples/03-PageManipulation/MergeSplit.cs)
+
+---
+
+### 页面旋转
+
+调整页面方向。
 
 ```csharp
 using PDFiumZ.HighLevel;
 
 using var document = PdfDocument.Open("document.pdf");
 
-// Rotate specific pages (0, 2, 4) by 90 degrees
+// 旋转特定页面 (0, 2, 4) 90 度
 document.RotatePages(PdfRotation.Rotate90, 0, 2, 4);
 
-// Rotate all pages by 180 degrees
+// 旋转所有页面 180 度
 document.RotatePages(PdfRotation.Rotate180);
 
-// Rotate a single page via property
+// 通过属性旋转单个页面
 using var page = document.GetPage(0);
 page.Rotation = PdfRotation.Rotate270;
 
@@ -109,9 +212,9 @@ document.Save("rotated.pdf");
 
 ---
 
-## Content Extraction & Rendering
+### 渲染与文本提取
 
-### Render and Extract Text
+渲染页面为图像并提取文本内容。
 
 ```csharp
 using PDFiumZ.HighLevel;
@@ -119,51 +222,59 @@ using PDFiumZ.HighLevel;
 using var document = PdfDocument.Open("sample.pdf");
 using var page = document.GetPage(0);
 
-// Render to image with custom DPI
+// 使用自定义 DPI 渲染为图像
 using var image = page.RenderToImage(RenderOptions.Default.WithDpi(150));
 image.SaveAsSkiaPng("page-0.png");
 
-// Extract plain text
+// 提取纯文本
 var text = page.ExtractText();
 
-// Extract text with positions and formatting
+// 提取带位置和格式的文本
 var textPage = page.GetTextPage();
 var charCount = textPage.CharCount;
 ```
 
-### Save All Pages as Images
+---
 
-For more details, see [Image Generation Guide](./IMAGE_GENERATION.md).
+### 图像生成
+
+将 PDF 页面批量导出为图像。
 
 ```csharp
 using PDFiumZ.HighLevel;
 
 using var document = PdfDocument.Open("sample.pdf");
 
-// Simplest way: auto-naming (page-0.png, page-1.png, ...)
+// 最简单方式：自动命名 (page-0.png, page-1.png, ...)
 document.SaveAsImages("output/");
 
-// Custom file name pattern
+// 自定义文件名模式
 document.SaveAsImages("output/", "document-page-{0}.png");
 
-// High-DPI rendering (300 DPI)
+// 高 DPI 渲染 (300 DPI)
 var options = RenderOptions.Default.WithDpi(300);
 document.SaveAsImages("highres/", options: options);
 ```
 
-### Generate Page Thumbnails ✨ **NEW**
+**相关文档**: [IMAGE_GENERATION.md](./IMAGE_GENERATION.md)
+
+---
+
+### 缩略图生成 ✨ **新功能**
+
+生成页面缩略图，支持多种规格和质量。
 
 ```csharp
 using PDFiumZ.HighLevel;
 
 using var document = PdfDocument.Open("sample.pdf");
 
-// Generate thumbnail for a single page
+// 为单个页面生成缩略图
 using var page = document.GetPage(0);
 using var thumbnail = page.GenerateThumbnail(maxWidth: 200);
 thumbnail.SaveAsSkiaPng("thumb-page-0.png");
 
-// Generate thumbnails for all pages
+// 为所有页面生成缩略图
 var thumbnails = document.GenerateAllThumbnails(maxWidth: 150, quality: 1);
 int pageNum = 0;
 foreach (var thumb in thumbnails)
@@ -174,20 +285,26 @@ foreach (var thumb in thumbnails)
     }
 }
 
-// Generate thumbnails for specific pages
+// 为指定页面生成缩略图
 var selectedThumbs = document.GenerateThumbnails(
     pageIndices: new[] { 0, 5, 10 },
     maxWidth: 200,
-    quality: 2  // 0=low/fast, 1=medium, 2=high
+    quality: 2  // 0=低速/低质, 1=中等, 2=高质量
 );
 
-// Different quality levels
-using var lowQuality = page.GenerateThumbnail(maxWidth: 150, quality: 0);    // Fast
-using var mediumQuality = page.GenerateThumbnail(maxWidth: 150, quality: 1);  // Default
-using var highQuality = page.GenerateThumbnail(maxWidth: 150, quality: 2);    // Best
+// 不同质量级别
+using var lowQuality = page.GenerateThumbnail(maxWidth: 150, quality: 0);    // 快速
+using var mediumQuality = page.GenerateThumbnail(maxWidth: 150, quality: 1);  // 默认
+using var highQuality = page.GenerateThumbnail(maxWidth: 150, quality: 2);    // 最佳
 ```
 
-### Extract Images
+**相关示例**: [02-Rendering/Thumbnails.cs](../examples/02-Rendering/Thumbnails.cs)
+
+---
+
+### 图像提取
+
+从 PDF 页面提取嵌入的图像。
 
 ```csharp
 using PDFiumZ.HighLevel;
@@ -195,22 +312,20 @@ using PDFiumZ.HighLevel;
 using var document = PdfDocument.Open("sample.pdf");
 using var page = document.GetPage(0);
 
-// Extract all images embedded in the page
+// 提取页面中所有嵌入的图像
 var images = page.ExtractImages();
 foreach (var img in images)
 {
-    // img.Image contains the PdfImage object
-    // img.Bounds contains the location on page
+    // img.Image 包含 PdfImage 对象
+    // img.Bounds 包含页面上的位置信息
 }
 ```
 
 ---
 
-## Advanced Features
+### 表单处理
 
-### Forms and Annotations
-
-#### Form Fields
+读取和填写 PDF 表单字段。
 
 ```csharp
 using PDFiumZ.HighLevel;
@@ -218,17 +333,23 @@ using PDFiumZ.HighLevel;
 using var document = PdfDocument.Open("form.pdf");
 using var page = document.GetPage(0);
 
-// Get all form fields
+// 获取所有表单字段
 var allFields = page.GetFormFields();
 foreach (var field in allFields)
 {
-    Console.WriteLine($"Field: {field.Name}, Type: {field.Type}, Value: {field.Value}");
+    Console.WriteLine($"字段: {field.Name}, 类型: {field.Type}, 值: {field.Value}");
     if (field.Type == FormFieldType.TextField)
-        field.SetValue("Updated Value");
+        field.SetValue("更新后的值");
 }
 ```
 
-#### Annotations - Reading
+---
+
+### 注释功能
+
+支持 10+ 种注释类型。
+
+#### 读取注释
 
 ```csharp
 using PDFiumZ.HighLevel;
@@ -236,27 +357,25 @@ using PDFiumZ.HighLevel;
 using var document = PdfDocument.Open("annotated.pdf");
 using var page = document.GetPage(0);
 
-// Get annotation count
+// 获取注释数量
 var count = page.AnnotationCount;
 
-// Get all annotations
+// 获取所有注释
 var allAnnots = page.GetAnnotations();
 
-// Filter by specific type
+// 按类型过滤
 var highlights = page.GetAnnotations<PdfHighlightAnnotation>();
 foreach (var h in highlights)
 {
-    Console.WriteLine($"Highlight at: {h.Bounds}");
-    h.Color = PdfColor.Yellow; // Modify color
+    Console.WriteLine($"高亮位置: {h.Bounds}");
+    h.Color = PdfColor.Yellow; // 修改颜色
 
-    // Get highlighted regions
+    // 获取高亮区域
     var regions = h.GetQuadPoints();
 }
 ```
 
-#### Annotations - Creating
-
-PDFiumZ supports 10+ annotation types:
+#### 创建注释
 
 ```csharp
 using PDFiumZ.HighLevel;
@@ -264,10 +383,10 @@ using PDFiumZ.HighLevel;
 using var document = PdfDocument.Open("document.pdf");
 using var page = document.GetPage(0);
 
-// Text Markup Annotations
+// 文本标记注释
 var highlight = PdfHighlightAnnotation.Create(page,
     new PdfRectangle(100, 700, 200, 20),
-    color: 0x80FFFF00); // Semi-transparent yellow
+    color: 0x80FFFF00); // 半透明黄色
 
 var underline = PdfUnderlineAnnotation.Create(page,
     new PdfRectangle(100, 650, 200, 20));
@@ -275,7 +394,7 @@ var underline = PdfUnderlineAnnotation.Create(page,
 var strikeout = PdfStrikeOutAnnotation.Create(page,
     new PdfRectangle(100, 600, 200, 20));
 
-// Shape Annotations
+// 形状注释
 var square = PdfSquareAnnotation.Create(page,
     new PdfRectangle(50, 500, 100, 100),
     strokeColor: PdfColor.Red,
@@ -285,69 +404,49 @@ var circle = PdfCircleAnnotation.Create(page,
     new PdfRectangle(200, 500, 100, 100),
     strokeColor: PdfColor.Blue);
 
-// Text Annotations (sticky notes)
+// 文本注释（便签）
 var note = PdfTextAnnotation.Create(page,
     new PdfRectangle(400, 700, 20, 20),
-    "This is a note");
+    "这是一个便签");
 
-// Free Text Annotations
+// 自由文本注释
 var textBox = PdfFreeTextAnnotation.Create(page,
     new PdfRectangle(50, 300, 200, 50),
-    "Editable text box");
+    "可编辑文本框");
 
-// Ink Annotations (freehand drawing)
+// 墨迹注释（手绘）
 var ink = PdfInkAnnotation.Create(page);
 ink.AddStroke(new[] {
     new PointF(100, 200), new PointF(150, 250),
     new PointF(200, 200)
 });
 
-// Stamp Annotations
+// 图章注释
 var stamp = PdfStampAnnotation.Create(page,
     new PdfRectangle(400, 100, 150, 50),
     PdfStampType.Approved);
 
-// Don't forget to dispose annotations
+// 不要忘记释放注释
 highlight.Dispose();
-        .Commit();
-// ... dispose others
+// ... 释放其他注释
 
 document.Save("annotated.pdf");
 ```
 
-#### Advanced Annotation Features
+---
 
-```csharp
-// Working with quad points (text markup regions)
-var highlight = PdfHighlightAnnotation.Create(page, bounds);
+### 水印与页眉页脚
 
-// Set multiple highlighted regions
-highlight.SetQuadPoints(new[] {
-    new PdfRectangle(100, 700, 200, 20),
-    new PdfRectangle(100, 680, 150, 20)
-});
-
-// Add regions incrementally
-highlight.AddQuadPoint(new PdfRectangle(100, 660, 180, 20));
-
-// Get all regions
-var regions = highlight.GetQuadPoints();
-
-// Modify annotation properties (inherited from PdfAnnotation base class)
-highlight.Color = PdfColor.Yellow;
-highlight.Bounds = new PdfRectangle(100, 700, 250, 40);
-```
-
-### Watermarks, Headers, and Footers
+添加水印、页眉和页脚。
 
 ```csharp
 using PDFiumZ.HighLevel;
 
 using var document = PdfDocument.Open("document.pdf");
 
-// Text Watermark
+// 文本水印
 document.AddTextWatermark(
-    "CONFIDENTIAL",
+    "机密",
     WatermarkPosition.Center,
     new WatermarkOptions
     {
@@ -357,16 +456,20 @@ document.AddTextWatermark(
         Color = PdfColor.Red
     });
 
-// Header and Footer
+// 页眉和页脚
 document.AddHeaderFooter(
-    headerText: "Internal Report — Page {page} of {pages}",
-    footerText: "© 2023 Company Inc.",
+    headerText: "内部报告 — 第 {page} 页，共 {pages} 页",
+    footerText: "© 2023 公司名称",
     options: new HeaderFooterOptions { FontSize = 10, Margin = 36 });
 
 document.Save("protected.pdf");
 ```
 
-### HTML to PDF Conversion
+---
+
+### HTML 转 PDF
+
+将 HTML/CSS 转换为 PDF 文档。
 
 ```csharp
 using PDFiumZ.HighLevel;
@@ -374,24 +477,26 @@ using PDFiumZ.HighLevel;
 using var document = PdfDocument.CreateNew();
 
 string html = @"
-    <h1 style='color: #0066CC;'>Welcome to PDFiumZ</h1>
-    <p>Convert <b>HTML</b> to <i>PDF</i> easily!</p>
+    <h1 style='color: #0066CC;'>欢迎使用 PDFiumZ</h1>
+    <p>轻松将 <b>HTML</b> 转换为 <i>PDF</i>！</p>
     <table border='1'>
-        <tr><th>Item</th><th>Price</th></tr>
-        <tr><td>Widget</td><td>$10</td></tr>
+        <tr><th>项目</th><th>价格</th></tr>
+        <tr><td>组件</td><td>¥10</td></tr>
     </table>";
 
-document.CreatePageFromHtml(html, new HtmlToPdfOptions { 
+document.CreatePageFromHtml(html, new HtmlToPdfOptions {
     Margin = new PdfMargins(36),
-    PageSize = PdfPageSize.A4 
+    PageSize = PdfPageSize.A4
 });
 
 document.Save("html-output.pdf");
 ```
 
-### PDF Security Information
+---
 
-PDFiumZ can read PDF security settings including encryption status and permissions.
+### 安全信息
+
+读取 PDF 安全设置，包括加密状态和权限。
 
 ```csharp
 using PDFiumZ.HighLevel;
@@ -399,34 +504,32 @@ using PDFiumZ.HighLevel;
 using var document = PdfDocument.Open("protected.pdf");
 var security = document.Security;
 
-// Check encryption status
-Console.WriteLine($"Encrypted: {security.IsEncrypted}");
-Console.WriteLine($"User Password: {security.HasUserPassword}");
-Console.WriteLine($"Owner Password: {security.HasOwnerPassword}");
+// 检查加密状态
+Console.WriteLine($"已加密: {security.IsEncrypted}");
+Console.WriteLine($"用户密码: {security.HasUserPassword}");
+Console.WriteLine($"所有者密码: {security.HasOwnerPassword}");
 
-// Check permissions (what operations are allowed)
-Console.WriteLine($"Can Print: {security.CanPrint}");
-Console.WriteLine($"Can Modify: {security.CanModify}");
-Console.WriteLine($"Can Copy: {security.CanCopy}");
-Console.WriteLine($"Can Annotate: {security.CanAnnotate}");
-Console.WriteLine($"Can Fill Forms: {security.CanFillForms}");
-Console.WriteLine($"Can Extract: {security.CanExtractContent}");
-Console.WriteLine($"Can Assemble: {security.CanAssembleDocument}");
-Console.WriteLine($"Can Print High Quality: {security.CanPrintHighQuality}");
+// 检查权限（允许的操作）
+Console.WriteLine($"可打印: {security.CanPrint}");
+Console.WriteLine($"可修改: {security.CanModify}");
+Console.WriteLine($"可复制: {security.CanCopy}");
+Console.WriteLine($"可注释: {security.CanAnnotate}");
+Console.WriteLine($"可填写表单: {security.CanFillForms}");
+Console.WriteLine($"可提取内容: {security.CanExtractContent}");
+Console.WriteLine($"可组装文档: {security.CanAssembleDocument}");
+Console.WriteLine($"可高质量打印: {security.CanPrintHighQuality}");
 
-// Get raw permission flags
+// 获取原始权限标志
 PdfPermissions permissions = security.Permissions;
 ```
 
-**Note**: PDFium only supports **reading** security information, not setting passwords or encryption. This is a PDFium limitation.
+**注意**: PDFium 仅支持**读取**安全信息，不支持设置密码或加密。这是 PDFium 的限制。
 
 ---
 
-## Document Generation
+### 内容编辑器
 
-### Low-Level Content Editor
-
-Use `PdfContentEditor` for precise control over page content.
+使用 `PdfContentEditor` 进行精确的页面内容控制。
 
 ```csharp
 using PDFiumZ.HighLevel;
@@ -442,17 +545,19 @@ using (var editor = page.BeginEdit())
         .WithFontSize(24)
         .WithTextColor(PdfColor.DarkBlue)
         .Text("Hello World", 50, 750)
-        
+
         .WithStrokeColor(PdfColor.Red)
         .Rectangle(50, 700, 100, 50)
-        
+
         .Commit();
 }
 ```
 
-### QuestPDF-Style Fluent API
+---
 
-For high-level declarative document generation. See [Fluent API Guide](./FLUENT_API.md).
+### Fluent API
+
+用于高级声明式文档生成。详见 [Fluent API 指南](./FLUENT_API.md)。
 
 ```csharp
 using PDFiumZ.Fluent;
@@ -461,9 +566,9 @@ using PDFiumZ.Fluent.Document;
 using var document = new FluentDocument();
 document.Content(page => {
     page.Column(col => {
-        col.Item().Text("Title").FontSize(20).SemiBold();
+        col.Item().Text("标题").FontSize(20).SemiBold();
         col.Item().PaddingVertical(10).LineHorizontal(1);
-        col.Item().Text("This is a declarative document generation example.");
+        col.Item().Text("这是一个声明式文档生成示例。");
     });
 });
 document.Generate();
@@ -472,11 +577,35 @@ document.Save("fluent.pdf");
 
 ---
 
-## Integrations
+### Range 语法 (.NET 8+)
 
-### SkiaSharp Integration
+使用现代 Range 语法进行页面操作。
 
-PDFiumZ uses SkiaSharp for rendering and image handling.
+```csharp
+// 获取前 10 页
+using var pages = document.GetPages(..10);
+
+// 获取最后 5 页
+using var pages = document.GetPages(^5..);
+
+// 获取页面 5-15
+using var pages = document.GetPages(5..15);
+
+// 删除前 3 页
+document.DeletePages(..3);
+
+// 移动最后 5 页到开头
+document.MovePages(0, ^5..);
+```
+
+**相关文档**: [RangeSupportExamples.md](./RangeSupportExamples.md)
+**相关示例**: [03-PageManipulation/RangeOperations.cs](../examples/03-PageManipulation/RangeOperations.cs)
+
+---
+
+### SkiaSharp 集成
+
+PDFiumZ 使用 SkiaSharp 进行渲染和图像处理。
 
 ```csharp
 using PDFiumZ.HighLevel;
@@ -487,10 +616,42 @@ using var document = PdfDocument.Open("sample.pdf");
 using var page = document.GetPage(0);
 using var image = page.RenderToImage();
 
-// Save in different formats
+// 保存为不同格式
 image.SaveAsSkiaJpeg("output.jpg", quality: 90);
 image.SaveAsSkiaWebP("output.webp");
 
-// Use SKBitmap directly
+// 直接使用 SKBitmap
 SKBitmap bitmap = image.ToSKBitmap();
 ```
+
+---
+
+## 🎯 学习路径
+
+### 初学者
+1. **[01-Basics/GettingStarted.cs](../examples/01-Basics/GettingStarted.cs)** - 运行基础示例
+2. 阅读本文档的"快速开始"部分
+3. 尝试修改示例代码
+
+### 进阶开发者
+1. **[02-Rendering/](../examples/02-Rendering/)** - 渲染相关示例
+2. **[03-PageManipulation/](../examples/03-PageManipulation/)** - 页面操作示例
+3. 阅读 [IMAGE_GENERATION.md](./IMAGE_GENERATION.md)
+
+### 高级用户
+1. **[04-AdvancedOptions/](../examples/04-AdvancedOptions/)** - 高级选项示例
+2. 阅读 [FLUENT_API.md](./FLUENT_API.md)
+3. 探索 [RangeSupportExamples.md](./RangeSupportExamples.md)
+
+---
+
+## 🔗 相关资源
+
+- **[GitHub 仓库](https://github.com/yourusername/PDFiumZ)** - 源代码和问题追踪
+- **[完整示例代码](../examples/)** - 所有示例项目
+- **[API 快速参考](./Reference/API_Quick_Reference.md)** - 常用 API 查询
+- **[更新日志](../CHANGELOG.md)** - 版本更新历史
+
+---
+
+**PDFiumZ** - .NET 的现代化 PDF 处理库
