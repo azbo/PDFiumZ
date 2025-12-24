@@ -58,6 +58,127 @@ public sealed class ImageSaveOptions
     public RenderOptions? RenderOptions { get; set; }
 
     /// <summary>
+    /// Sets the pages to save by indices.
+    /// </summary>
+    /// <param name="pageIndices">The zero-based page indices to save.</param>
+    /// <returns>This <see cref="ImageSaveOptions"/> instance for method chaining.</returns>
+    public ImageSaveOptions WithPages(int[] pageIndices)
+    {
+        PageIndices = pageIndices ?? throw new ArgumentNullException(nameof(pageIndices));
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the start index and count for saving a range of pages.
+    /// </summary>
+    /// <param name="startIndex">The zero-based index of the first page.</param>
+    /// <param name="count">The number of pages to save.</param>
+    /// <returns>This <see cref="ImageSaveOptions"/> instance for method chaining.</returns>
+    public ImageSaveOptions WithRange(int startIndex, int count)
+    {
+        StartIndex = startIndex;
+        Count = count;
+        PageIndices = null;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the output directory path.
+    /// </summary>
+    /// <param name="outputDirectory">The directory path where images will be saved.</param>
+    /// <returns>This <see cref="ImageSaveOptions"/> instance for method chaining.</returns>
+    public ImageSaveOptions WithOutputDirectory(string outputDirectory)
+    {
+        OutputDirectory = outputDirectory ?? throw new ArgumentNullException(nameof(outputDirectory));
+        PathGenerator = null;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the custom path generator function for each page.
+    /// </summary>
+    /// <param name="pathGenerator">Function that generates a file path for a given page index.</param>
+    /// <returns>This <see cref="ImageSaveOptions"/> instance for method chaining.</returns>
+    public ImageSaveOptions WithCustomPathGenerator(Func<int, string> pathGenerator)
+    {
+        PathGenerator = pathGenerator ?? throw new ArgumentNullException(nameof(pathGenerator));
+        OutputDirectory = null;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the file name pattern for output files.
+    /// </summary>
+    /// <param name="fileNamePattern">The file name pattern. Use {0} as placeholder for page index.</param>
+    /// <returns>This <see cref="ImageSaveOptions"/> instance for method chaining.</returns>
+    public ImageSaveOptions WithFileNamePattern(string fileNamePattern)
+    {
+        FileNamePattern = fileNamePattern ?? throw new ArgumentNullException(nameof(fileNamePattern));
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the render options for controlling image quality and appearance.
+    /// </summary>
+    /// <param name="renderOptions">The render options.</param>
+    /// <returns>This <see cref="ImageSaveOptions"/> instance for method chaining.</returns>
+    public ImageSaveOptions WithRenderOptions(RenderOptions renderOptions)
+    {
+        RenderOptions = renderOptions ?? throw new ArgumentNullException(nameof(renderOptions));
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the DPI (dots per inch) for rendering, which automatically calculates the scale factor.
+    /// </summary>
+    /// <param name="dpi">The DPI value (must be positive).</param>
+    /// <returns>This <see cref="ImageSaveOptions"/> instance for method chaining.</returns>
+    public ImageSaveOptions WithDpi(int dpi)
+    {
+        if (dpi <= 0)
+            throw new ArgumentOutOfRangeException(nameof(dpi), "DPI must be positive.");
+
+        RenderOptions = (RenderOptions ?? RenderOptions.Default).WithDpi(dpi);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the scale factor for rendering.
+    /// </summary>
+    /// <param name="scale">The scale factor (must be positive).</param>
+    /// <returns>This <see cref="ImageSaveOptions"/> instance for method chaining.</returns>
+    public ImageSaveOptions WithScale(double scale)
+    {
+        if (scale <= 0)
+            throw new ArgumentOutOfRangeException(nameof(scale), "Scale must be positive.");
+
+        RenderOptions = (RenderOptions ?? RenderOptions.Default).WithScale(scale);
+        return this;
+    }
+
+    /// <summary>
+    /// Enables transparent background rendering.
+    /// </summary>
+    /// <param name="enabled">Whether to enable transparency (default: true).</param>
+    /// <returns>This <see cref="ImageSaveOptions"/> instance for method chaining.</returns>
+    public ImageSaveOptions WithTransparency(bool enabled = true)
+    {
+        RenderOptions = (RenderOptions ?? RenderOptions.Default).WithTransparency(enabled);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the background color for rendering (disables transparency).
+    /// </summary>
+    /// <param name="color">The background color in ARGB format.</param>
+    /// <returns>This <see cref="ImageSaveOptions"/> instance for method chaining.</returns>
+    public ImageSaveOptions WithBackgroundColor(uint color)
+    {
+        RenderOptions = (RenderOptions ?? RenderOptions.Default).WithBackgroundColor(color);
+        return this;
+    }
+
+    /// <summary>
     /// Creates options for saving specific pages by indices to a directory.
     /// </summary>
     /// <param name="outputDirectory">The output directory path.</param>

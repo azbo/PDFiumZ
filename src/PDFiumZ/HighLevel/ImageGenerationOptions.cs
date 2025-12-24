@@ -40,6 +40,92 @@ public sealed class ImageGenerationOptions
     public RenderOptions? RenderOptions { get; set; }
 
     /// <summary>
+    /// Sets the pages to render by indices.
+    /// </summary>
+    /// <param name="pageIndices">The zero-based page indices to render.</param>
+    /// <returns>This <see cref="ImageGenerationOptions"/> instance for method chaining.</returns>
+    public ImageGenerationOptions WithPages(int[] pageIndices)
+    {
+        PageIndices = pageIndices ?? throw new ArgumentNullException(nameof(pageIndices));
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the start index and count for rendering a range of pages.
+    /// </summary>
+    /// <param name="startIndex">The zero-based index of the first page.</param>
+    /// <param name="count">The number of pages to render.</param>
+    /// <returns>This <see cref="ImageGenerationOptions"/> instance for method chaining.</returns>
+    public ImageGenerationOptions WithRange(int startIndex, int count)
+    {
+        StartIndex = startIndex;
+        Count = count;
+        PageIndices = null;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the render options for controlling image quality and appearance.
+    /// </summary>
+    /// <param name="renderOptions">The render options.</param>
+    /// <returns>This <see cref="ImageGenerationOptions"/> instance for method chaining.</returns>
+    public ImageGenerationOptions WithRenderOptions(RenderOptions renderOptions)
+    {
+        RenderOptions = renderOptions ?? throw new ArgumentNullException(nameof(renderOptions));
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the DPI (dots per inch) for rendering, which automatically calculates the scale factor.
+    /// </summary>
+    /// <param name="dpi">The DPI value (must be positive).</param>
+    /// <returns>This <see cref="ImageGenerationOptions"/> instance for method chaining.</returns>
+    public ImageGenerationOptions WithDpi(int dpi)
+    {
+        if (dpi <= 0)
+            throw new ArgumentOutOfRangeException(nameof(dpi), "DPI must be positive.");
+
+        RenderOptions = (RenderOptions ?? RenderOptions.Default).WithDpi(dpi);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the scale factor for rendering.
+    /// </summary>
+    /// <param name="scale">The scale factor (must be positive).</param>
+    /// <returns>This <see cref="ImageGenerationOptions"/> instance for method chaining.</returns>
+    public ImageGenerationOptions WithScale(double scale)
+    {
+        if (scale <= 0)
+            throw new ArgumentOutOfRangeException(nameof(scale), "Scale must be positive.");
+
+        RenderOptions = (RenderOptions ?? RenderOptions.Default).WithScale(scale);
+        return this;
+    }
+
+    /// <summary>
+    /// Enables transparent background rendering.
+    /// </summary>
+    /// <param name="enabled">Whether to enable transparency (default: true).</param>
+    /// <returns>This <see cref="ImageGenerationOptions"/> instance for method chaining.</returns>
+    public ImageGenerationOptions WithTransparency(bool enabled = true)
+    {
+        RenderOptions = (RenderOptions ?? RenderOptions.Default).WithTransparency(enabled);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the background color for rendering (disables transparency).
+    /// </summary>
+    /// <param name="color">The background color in ARGB format.</param>
+    /// <returns>This <see cref="ImageGenerationOptions"/> instance for method chaining.</returns>
+    public ImageGenerationOptions WithBackgroundColor(uint color)
+    {
+        RenderOptions = (RenderOptions ?? RenderOptions.Default).WithBackgroundColor(color);
+        return this;
+    }
+
+    /// <summary>
     /// Creates options for rendering specific pages by indices.
     /// </summary>
     /// <param name="pageIndices">The zero-based page indices to render.</param>

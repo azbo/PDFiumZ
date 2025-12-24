@@ -553,6 +553,56 @@
             If null, uses <see cref="F:PDFiumZ.HighLevel.RenderOptions.Default"/>.
             </summary>
         </member>
+        <member name="M:PDFiumZ.HighLevel.ImageGenerationOptions.WithPages(System.Int32[])">
+            <summary>
+            Sets the pages to render by indices.
+            </summary>
+            <param name="pageIndices">The zero-based page indices to render.</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageGenerationOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageGenerationOptions.WithRange(System.Int32,System.Int32)">
+            <summary>
+            Sets the start index and count for rendering a range of pages.
+            </summary>
+            <param name="startIndex">The zero-based index of the first page.</param>
+            <param name="count">The number of pages to render.</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageGenerationOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageGenerationOptions.WithRenderOptions(PDFiumZ.HighLevel.RenderOptions)">
+            <summary>
+            Sets the render options for controlling image quality and appearance.
+            </summary>
+            <param name="renderOptions">The render options.</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageGenerationOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageGenerationOptions.WithDpi(System.Int32)">
+            <summary>
+            Sets the DPI (dots per inch) for rendering, which automatically calculates the scale factor.
+            </summary>
+            <param name="dpi">The DPI value (must be positive).</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageGenerationOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageGenerationOptions.WithScale(System.Double)">
+            <summary>
+            Sets the scale factor for rendering.
+            </summary>
+            <param name="scale">The scale factor (must be positive).</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageGenerationOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageGenerationOptions.WithTransparency(System.Boolean)">
+            <summary>
+            Enables transparent background rendering.
+            </summary>
+            <param name="enabled">Whether to enable transparency (default: true).</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageGenerationOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageGenerationOptions.WithBackgroundColor(System.UInt32)">
+            <summary>
+            Sets the background color for rendering (disables transparency).
+            </summary>
+            <param name="color">The background color in ARGB format.</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageGenerationOptions"/> instance for method chaining.</returns>
+        </member>
         <member name="M:PDFiumZ.HighLevel.ImageGenerationOptions.ForPages(System.Int32[],PDFiumZ.HighLevel.RenderOptions)">
             <summary>
             Creates options for rendering specific pages by indices.
@@ -655,6 +705,77 @@
             Gets or sets the render options for controlling image quality and appearance.
             If null, uses <see cref="F:PDFiumZ.HighLevel.RenderOptions.Default"/>.
             </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageSaveOptions.WithPages(System.Int32[])">
+            <summary>
+            Sets the pages to save by indices.
+            </summary>
+            <param name="pageIndices">The zero-based page indices to save.</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageSaveOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageSaveOptions.WithRange(System.Int32,System.Int32)">
+            <summary>
+            Sets the start index and count for saving a range of pages.
+            </summary>
+            <param name="startIndex">The zero-based index of the first page.</param>
+            <param name="count">The number of pages to save.</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageSaveOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageSaveOptions.WithOutputDirectory(System.String)">
+            <summary>
+            Sets the output directory path.
+            </summary>
+            <param name="outputDirectory">The directory path where images will be saved.</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageSaveOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageSaveOptions.WithCustomPathGenerator(System.Func{System.Int32,System.String})">
+            <summary>
+            Sets the custom path generator function for each page.
+            </summary>
+            <param name="pathGenerator">Function that generates a file path for a given page index.</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageSaveOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageSaveOptions.WithFileNamePattern(System.String)">
+            <summary>
+            Sets the file name pattern for output files.
+            </summary>
+            <param name="fileNamePattern">The file name pattern. Use {0} as placeholder for page index.</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageSaveOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageSaveOptions.WithRenderOptions(PDFiumZ.HighLevel.RenderOptions)">
+            <summary>
+            Sets the render options for controlling image quality and appearance.
+            </summary>
+            <param name="renderOptions">The render options.</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageSaveOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageSaveOptions.WithDpi(System.Int32)">
+            <summary>
+            Sets the DPI (dots per inch) for rendering, which automatically calculates the scale factor.
+            </summary>
+            <param name="dpi">The DPI value (must be positive).</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageSaveOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageSaveOptions.WithScale(System.Double)">
+            <summary>
+            Sets the scale factor for rendering.
+            </summary>
+            <param name="scale">The scale factor (must be positive).</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageSaveOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageSaveOptions.WithTransparency(System.Boolean)">
+            <summary>
+            Enables transparent background rendering.
+            </summary>
+            <param name="enabled">Whether to enable transparency (default: true).</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageSaveOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ImageSaveOptions.WithBackgroundColor(System.UInt32)">
+            <summary>
+            Sets the background color for rendering (disables transparency).
+            </summary>
+            <param name="color">The background color in ARGB format.</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ImageSaveOptions"/> instance for method chaining.</returns>
         </member>
         <member name="M:PDFiumZ.HighLevel.ImageSaveOptions.ForPages(System.String,System.Int32[],PDFiumZ.HighLevel.RenderOptions)">
             <summary>
@@ -3923,6 +4044,51 @@
             Gets or sets the zero-based indices of pages to generate thumbnails for.
             If null, generates thumbnails for all pages.
             </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ThumbnailOptions.WithMaxWidth(System.Int32)">
+            <summary>
+            Sets the maximum width of each thumbnail.
+            </summary>
+            <param name="maxWidth">The maximum width in pixels (must be positive).</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ThumbnailOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ThumbnailOptions.WithQuality(System.Int32)">
+            <summary>
+            Sets the rendering quality level.
+            </summary>
+            <param name="quality">The quality level (0=low, 1=medium, 2=high).</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ThumbnailOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ThumbnailOptions.WithLowQuality">
+            <summary>
+            Sets low quality rendering (fastest, skips annotations).
+            </summary>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ThumbnailOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ThumbnailOptions.WithMediumQuality">
+            <summary>
+            Sets medium quality rendering (balanced, default settings).
+            </summary>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ThumbnailOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ThumbnailOptions.WithHighQuality">
+            <summary>
+            Sets high quality rendering (slowest, includes LCD text optimization).
+            </summary>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ThumbnailOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ThumbnailOptions.WithPages(System.Int32[])">
+            <summary>
+            Sets the pages to generate thumbnails for by indices.
+            </summary>
+            <param name="pageIndices">The zero-based page indices.</param>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ThumbnailOptions"/> instance for method chaining.</returns>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.ThumbnailOptions.ForAllPages">
+            <summary>
+            Sets to generate thumbnails for all pages.
+            </summary>
+            <returns>This <see cref="T:PDFiumZ.HighLevel.ThumbnailOptions"/> instance for method chaining.</returns>
         </member>
         <member name="M:PDFiumZ.HighLevel.ThumbnailOptions.Validate">
             <summary>
