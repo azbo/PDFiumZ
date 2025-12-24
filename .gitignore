@@ -16,8 +16,13 @@
 !**/docs/**/*.jpg
 
 # Legacy solution files
-PDFiumCore.sln
-/src/output
-src/CppSharp
-/examples/bin/Debug/net10.0
+/examples/bin
 /examples/obj
+/examples/02-Rendering/obj
+/examples/03-PageManipulation/obj
+/examples/04-AdvancedOptions/obj
+/examples/02-Rendering/bin
+/examples/03-PageManipulation/bin
+/examples/04-AdvancedOptions/bin
+/examples/01-Basics/obj
+/examples/01-Basics/bin/Debug/net10.0
