@@ -4,14 +4,45 @@ PDFiumZ is a modern .NET wrapper for [PDFium](https://pdfium.googlesource.com/pd
 
 **Current PDFium Version: 145.0.7592.0** (chromium/7592) - Latest PDFium with enhanced rendering and stability
 
-## Documentation
+## 📚 Documentation | 文档
 
-- 🚀 **[Quick Start & Examples](./docs/README.md)** - Get up and running in minutes
-- 🖼️ **[Image Generation Guide](./docs/IMAGE_GENERATION.md)** - Convert PDF pages to images with one line of code
-- 📝 **[Fluent API Guide](./docs/FLUENT_API.md)** - QuestPDF-style declarative document generation
-- 📈 **[Performance Analysis](./PERFORMANCE.md)** - Memory and speed benchmarks
-- 📜 **[Changelog](./CHANGELOG.md)** - Recent updates and breaking changes
-- 🗺️ **[Roadmap](./ROADMAP.md)** - Future plans and upcoming features
+**Choose Your Language | 选择语言:**
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🇺🇸 English Documentation
+
+- 📖 **[Complete Documentation](./docs/en-US/README.md)**
+- 🚀 **[Quick Start Guide](./docs/en-US/README.md#quick-start)**
+- 🖼️ **[Image Generation](./docs/en-US/IMAGE_GENERATION.md)**
+- 📝 **[Fluent API Guide](./docs/en-US/FLUENT_API.md)**
+- 🔢 **[Range Syntax](./docs/en-US/Range-Syntax.md)**
+- 💻 **[Code Examples](./examples/en-US/)**
+
+</td>
+<td width="50%" valign="top">
+
+### 🇨🇳 中文文档
+
+- 📖 **[完整文档](./docs/zh-CN/README.md)**
+- 🚀 **[快速开始](./docs/zh-CN/README.md#快速开始)**
+- 🖼️ **[图像生成](./docs/zh-CN/IMAGE_GENERATION.md)**
+- 📝 **[Fluent API 指南](./docs/zh-CN/FLUENT_API.md)**
+- 🔢 **[Range 语法](./docs/zh-CN/Range-Syntax.md)**
+- 💻 **[代码示例](./examples/zh-CN/)**
+
+</td>
+</tr>
+</table>
+
+---
+
+**Project Resources | 项目资源:**
+- 📈 **[Performance Analysis](./PERFORMANCE.md)** | **[性能分析](./PERFORMANCE.md)**
+- 📜 **[Changelog](./CHANGELOG.md)** | **[更新日志](./CHANGELOG.md)**
+- 🗺️ **[Roadmap](./ROADMAP.md)** | **[开发路线图](./ROADMAP.md)**
 
 ## Supported Frameworks
 
