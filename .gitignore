@@ -18,3 +18,4 @@
 # Legacy solution files
 PDFiumCore.sln
 /src/output
+src/CppSharp
