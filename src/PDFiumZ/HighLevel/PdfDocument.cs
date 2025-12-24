@@ -303,44 +303,24 @@ public sealed class PdfDocument : IDisposable
                 throw new FileNotFoundException($"PDF file not found: {path}", path);
         }
 
-        // Create new document to hold merged content
-        var mergedDoc = CreateNew();
-
-        try
-        {
-            // Import pages from each source document
-            foreach (var filePath in filePaths)
-            {
-                using var sourceDoc = Open(filePath);
-                mergedDoc.ImportPages(sourceDoc, mergedDoc.PageCount);
-            }
-
-            return mergedDoc;
-        }
-        catch
-        {
-            mergedDoc.Dispose();
-            throw;
-        }
-    }
-
-    /// <summary>
-    /// Resolves ambiguity when calling Merge with no arguments.
-    /// </summary>
-    /// <exception cref="ArgumentException">Always thrown.</exception>
-    public static PdfDocument Merge()
-    {
-        throw new ArgumentException("At least one document or file path must be provided.");
+        return MergeDocuments(
+            filePaths.Select(p => Open(p)).ToArray(),
+            ownsDocuments: true
+        );
     }
 
     /// <summary>
     /// Merges multiple PDF documents into a single document.
     /// </summary>
-    /// <param name="documents">The documents to merge.</param>
+    /// <param name="documents">The documents to merge. Null entries are skipped.</param>
     /// <returns>A new <see cref="PdfDocument"/> containing all pages from the source documents.</returns>
     /// <exception cref="ArgumentNullException">documents is null.</exception>
-    /// <exception cref="ArgumentException">documents is empty.</exception>
+    /// <exception cref="ArgumentException">documents is empty or contains only null entries.</exception>
     /// <exception cref="PdfException">Failed to merge documents.</exception>
+    /// <remarks>
+    /// This method does not dispose the input documents. The caller is responsible for disposing them.
+    /// For merging files from disk, use <see cref="Merge(string[])"/> instead.
+    /// </remarks>
     public static PdfDocument Merge(params PdfDocument[] documents)
     {
         if (documents is null)
@@ -350,14 +330,42 @@ public sealed class PdfDocument : IDisposable
 
         EnsureLibraryInitialized();
 
+        // Filter out null entries
+        var validDocs = documents.Where(d => d != null).ToArray();
+        if (validDocs.Length == 0)
+            throw new ArgumentException("At least one non-null document must be provided.", nameof(documents));
+
+        return MergeDocuments(validDocs, ownsDocuments: false);
+    }
+
+    /// <summary>
+    /// Core merge implementation that handles the actual merging logic.
+    /// </summary>
+    /// <param name="documents">The documents to merge.</param>
+    /// <param name="ownsDocuments">If true, disposes documents after merging (for file-based merge).</param>
+    /// <returns>A new merged document.</returns>
+    private static PdfDocument MergeDocuments(PdfDocument[] documents, bool ownsDocuments)
+    {
+        if (documents.Length == 0)
+            throw new ArgumentException("At least one document must be provided.", nameof(documents));
+
         var mergedDoc = CreateNew();
         try
         {
             foreach (var doc in documents)
             {
-                if (doc == null) continue;
                 mergedDoc.ImportPages(doc, mergedDoc.PageCount);
             }
+
+            // Dispose source documents if we own them (file-based merge)
+            if (ownsDocuments)
+            {
+                foreach (var doc in documents)
+                {
+                    doc.Dispose();
+                }
+            }
+
             return mergedDoc;
         }
         catch
@@ -457,6 +465,39 @@ public sealed class PdfDocument : IDisposable
         }
     }
 
+#if NET8_0_OR_GREATER || NET9_0_OR_GREATER || NET10_0_OR_GREATER
+    /// <summary>
+    /// Gets pages specified by a <see cref="Range"/> expression.
+    /// </summary>
+    /// <param name="range">The range of pages to get.</param>
+    /// <returns>An enumerable of <see cref="PdfPage"/> instances that must be disposed.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">The range is invalid.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to load one or more pages.</exception>
+    /// <example>
+    /// <code>
+    /// // Get first 10 pages
+    /// var pages = document.GetPages(..10);
+    ///
+    /// // Get pages 5-15
+    /// var pages = document.GetPages(5..15);
+    ///
+    /// // Get last 5 pages
+    /// var pages = document.GetPages(^5..);
+    ///
+    /// // Get all pages except last 5
+    /// var pages = document.GetPages(..^5);
+    /// </code>
+    /// </example>
+    public IEnumerable<PdfPage> GetPages(Range range)
+    {
+        ThrowIfDisposed();
+
+        var (offset, length) = range.GetOffsetAndLength(PageCount);
+        return GetPages(offset, length);
+    }
+#endif
+
     /// <summary>
     /// Gets specific pages by their indices.
     /// </summary>
@@ -480,6 +521,71 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
+    /// Generates thumbnail images for the document using the specified options.
+    /// This is the recommended method for thumbnail generation.
+    /// </summary>
+    /// <param name="options">Options specifying thumbnail size, quality, and which pages to generate.</param>
+    /// <returns>An enumerable collection of <see cref="PdfImage"/> thumbnails.</returns>
+    /// <exception cref="ArgumentNullException">options is null.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">options.MaxWidth or options.Quality is invalid, or any page index is out of range.</exception>
+    /// <exception cref="PdfRenderException">Thumbnail generation failed for one or more pages.</exception>
+    /// <remarks>
+    /// This method lazily generates thumbnails as they are enumerated.
+    /// Each thumbnail must be disposed after use.
+    /// </remarks>
+    /// <example>
+    /// <code>
+    /// // Generate thumbnails for all pages with default options
+    /// var options = ThumbnailOptions.Default;
+    /// foreach (var thumb in document.GenerateThumbnails(options))
+    /// {
+    ///     thumb.Dispose();
+    /// }
+    ///
+    /// // Generate high-quality thumbnails for specific pages
+    /// var customOptions = new ThumbnailOptions
+    /// {
+    ///     MaxWidth = 400,
+    ///     Quality = 2,
+    ///     PageIndices = new[] { 0, 2, 4 }
+    /// };
+    /// </code>
+    /// </example>
+    public IEnumerable<PdfImage> GenerateThumbnails(ThumbnailOptions options)
+    {
+        if (options == null)
+            throw new ArgumentNullException(nameof(options));
+
+        ThrowIfDisposed();
+        options.Validate();
+
+        // Determine which pages to process
+        int[]? indices = options.PageIndices;
+        if (indices == null)
+        {
+            indices = new int[PageCount];
+            for (int i = 0; i < PageCount; i++)
+                indices[i] = i;
+        }
+
+        // Validate indices
+        foreach (var index in indices)
+        {
+            if (index < 0 || index >= PageCount)
+                throw new ArgumentOutOfRangeException(nameof(options.PageIndices),
+                    $"Page index {index} is out of range (0-{PageCount - 1}).");
+        }
+
+        // Generate thumbnails
+        foreach (var index in indices)
+        {
+            using var page = GetPage(index);
+            yield return page.GenerateThumbnail(options.MaxWidth, options.Quality);
+        }
+    }
+
+    /// <summary>
     /// Generates thumbnail images for all pages in the document.
     /// </summary>
     /// <param name="maxWidth">Maximum width of each thumbnail in pixels (default: 200).</param>
@@ -488,22 +594,10 @@ public sealed class PdfDocument : IDisposable
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException">maxWidth must be positive.</exception>
     /// <exception cref="PdfRenderException">Thumbnail generation failed for one or more pages.</exception>
-    /// <remarks>
-    /// This method lazily generates thumbnails as they are enumerated.
-    /// Each thumbnail must be disposed after use.
-    /// </remarks>
+    [Obsolete("Use GenerateThumbnails(new ThumbnailOptions { MaxWidth = maxWidth, Quality = quality }) instead.")]
     public IEnumerable<PdfImage> GenerateAllThumbnails(int maxWidth = 200, int quality = 1)
     {
-        ThrowIfDisposed();
-
-        if (maxWidth <= 0)
-            throw new ArgumentOutOfRangeException(nameof(maxWidth), "Maximum width must be positive.");
-
-        for (int i = 0; i < PageCount; i++)
-        {
-            using var page = GetPage(i);
-            yield return page.GenerateThumbnail(maxWidth, quality);
-        }
+        return GenerateThumbnails(new ThumbnailOptions { MaxWidth = maxWidth, Quality = quality });
     }
 
     /// <summary>
@@ -517,21 +611,10 @@ public sealed class PdfDocument : IDisposable
     /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException">maxWidth must be positive or any page index is out of range.</exception>
     /// <exception cref="PdfRenderException">Thumbnail generation failed for one or more pages.</exception>
+    [Obsolete("Use GenerateThumbnails(new ThumbnailOptions { PageIndices = pageIndices, MaxWidth = maxWidth, Quality = quality }) instead.")]
     public IEnumerable<PdfImage> GenerateThumbnails(int[] pageIndices, int maxWidth = 200, int quality = 1)
     {
-        if (pageIndices is null)
-            throw new ArgumentNullException(nameof(pageIndices));
-
-        ThrowIfDisposed();
-
-        if (maxWidth <= 0)
-            throw new ArgumentOutOfRangeException(nameof(maxWidth), "Maximum width must be positive.");
-
-        foreach (var index in pageIndices)
-        {
-            using var page = GetPage(index);
-            yield return page.GenerateThumbnail(maxWidth, quality);
-        }
+        return GenerateThumbnails(new ThumbnailOptions { PageIndices = pageIndices, MaxWidth = maxWidth, Quality = quality });
     }
 
     /// <summary>
@@ -727,6 +810,52 @@ public sealed class PdfDocument : IDisposable
         _pageCountCache = originalCount - sortedIndices.Length;
     }
 
+#if NET8_0_OR_GREATER || NET9_0_OR_GREATER || NET10_0_OR_GREATER
+    /// <summary>
+    /// Deletes pages specified by a <see cref="Range"/> expression.
+    /// </summary>
+    /// <param name="range">The range of pages to delete.</param>
+    /// <exception cref="ArgumentOutOfRangeException">The range is invalid.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to delete one or more pages.</exception>
+    /// <example>
+    /// <code>
+    /// // Delete first 10 pages
+    /// document.DeletePages(..10);
+    ///
+    /// // Delete pages 5-15
+    /// document.DeletePages(5..15);
+    ///
+    /// // Delete last 5 pages
+    /// document.DeletePages(^5..);
+    ///
+    /// // Delete all pages except first 5
+    /// document.DeletePages(5..);
+    /// </code>
+    /// </example>
+    public void DeletePages(Range range)
+    {
+        ThrowIfDisposed();
+
+        var (offset, length) = range.GetOffsetAndLength(PageCount);
+
+        // Build array of indices to delete
+        var indices = new int[length];
+        for (int i = 0; i < length; i++)
+        {
+            indices[i] = offset + i;
+        }
+
+        // Delete in reverse order to maintain index validity
+        for (int i = indices.Length - 1; i >= 0; i--)
+        {
+            fpdf_edit.FPDFPageDelete(_handle!, indices[i]);
+        }
+
+        _pageCountCache = PageCount - length;
+    }
+#endif
+
     /// <summary>
     /// Moves pages to a new position within the document.
     /// </summary>
@@ -759,6 +888,50 @@ public sealed class PdfDocument : IDisposable
             throw new PdfException($"Failed to move {pageIndices.Length} page(s) to index {destIndex}.");
     }
 
+#if NET8_0_OR_GREATER || NET9_0_OR_GREATER || NET10_0_OR_GREATER
+    /// <summary>
+    /// Moves pages specified by a <see cref="Range"/> expression to a new position.
+    /// </summary>
+    /// <param name="destIndex">Destination index where pages will be moved.</param>
+    /// <param name="range">The range of pages to move.</param>
+    /// <exception cref="ArgumentOutOfRangeException">The range or destination index is invalid.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="PdfException">Failed to move pages.</exception>
+    /// <example>
+    /// <code>
+    /// // Move first 10 pages to the end
+    /// document.MovePages(document.PageCount - 10, ..10);
+    ///
+    /// // Move pages 5-15 to the beginning
+    /// document.MovePages(0, 5..15);
+    ///
+    /// // Move last 5 pages after page 10
+    /// document.MovePages(10, ^5..);
+    /// </code>
+    /// </example>
+    public void MovePages(int destIndex, Range range)
+    {
+        ThrowIfDisposed();
+
+        var (offset, length) = range.GetOffsetAndLength(PageCount);
+
+        // Build array of indices to move
+        var indices = new int[length];
+        for (int i = 0; i < length; i++)
+        {
+            indices[i] = offset + i;
+        }
+
+        if (destIndex < 0 || destIndex >= PageCount)
+            throw new ArgumentOutOfRangeException(nameof(destIndex),
+                $"Destination index {destIndex} is out of range (0-{PageCount - 1}).");
+
+        var result = fpdf_edit.FPDF_MovePages(_handle!, ref indices[0], (uint)indices.Length, destIndex);
+        if (result == 0)
+            throw new PdfException($"Failed to move {indices.Length} page(s) to index {destIndex}.");
+    }
+#endif
+
     /// <summary>
     /// Imports pages from another document using a page range string.
     /// </summary>
@@ -771,22 +944,14 @@ public sealed class PdfDocument : IDisposable
     /// <exception cref="PdfException">Failed to import pages.</exception>
     public void ImportPages(PdfDocument sourceDoc, int insertAtIndex = -1, string? pageRange = null)
     {
-        ThrowIfDisposed();
-        if (sourceDoc is null)
-            throw new ArgumentNullException(nameof(sourceDoc));
-        if (sourceDoc._disposed)
-            throw new ObjectDisposedException(nameof(sourceDoc), "Source document has been disposed.");
-        var originalCount = PageCount;
-        if (insertAtIndex < -1 || insertAtIndex > originalCount)
-            throw new ArgumentOutOfRangeException(nameof(insertAtIndex),
-                $"Insert index {insertAtIndex} is out of range (-1 for end, 0-{originalCount}).");
+        ValidateImportParameters(sourceDoc, insertAtIndex, out var originalCount);
 
-        var result = fpdf_ppo.FPDF_ImportPages(_handle!, sourceDoc._handle!, pageRange, insertAtIndex);
+        var result = fpdf_ppo.FPDF_ImportPages(_handle!, sourceDoc!._handle!, pageRange, insertAtIndex);
         if (result == 0)
             throw new PdfException($"Failed to import pages from source document (range: {pageRange ?? "all"}).");
 
         if (pageRange is null)
-            _pageCountCache = originalCount + sourceDoc.PageCount;
+            _pageCountCache = originalCount + sourceDoc!.PageCount;
         else
             _pageCountCache = null;
     }
@@ -806,28 +971,37 @@ public sealed class PdfDocument : IDisposable
         if (pageIndices is null)
             throw new ArgumentNullException(nameof(pageIndices));
 
+        // Empty array means import all pages
         if (pageIndices.Length == 0)
         {
             ImportPages(sourceDoc, insertAtIndex, (string?)null);
             return;
         }
 
+        ValidateImportParameters(sourceDoc, insertAtIndex, out var originalCount);
+
+        var result = fpdf_ppo.FPDF_ImportPagesByIndex(_handle!, sourceDoc!._handle!, ref pageIndices[0], (uint)pageIndices.Length, insertAtIndex);
+        if (result == 0)
+            throw new PdfException($"Failed to import {pageIndices.Length} page(s) from source document.");
+
+        _pageCountCache = originalCount + pageIndices.Length;
+    }
+
+    /// <summary>
+    /// Validates common parameters for ImportPages methods.
+    /// </summary>
+    private void ValidateImportParameters(PdfDocument? sourceDoc, int insertAtIndex, out int originalCount)
+    {
         ThrowIfDisposed();
         if (sourceDoc is null)
             throw new ArgumentNullException(nameof(sourceDoc));
         if (sourceDoc._disposed)
             throw new ObjectDisposedException(nameof(sourceDoc), "Source document has been disposed.");
 
-        var originalCount = PageCount;
+        originalCount = PageCount;
         if (insertAtIndex < -1 || insertAtIndex > originalCount)
             throw new ArgumentOutOfRangeException(nameof(insertAtIndex),
                 $"Insert index {insertAtIndex} is out of range (-1 for end, 0-{originalCount}).");
-
-        var result = fpdf_ppo.FPDF_ImportPagesByIndex(_handle!, sourceDoc._handle!, ref pageIndices[0], (uint)pageIndices.Length, insertAtIndex);
-        if (result == 0)
-            throw new PdfException($"Failed to import {pageIndices.Length} page(s) from source document.");
-
-        _pageCountCache = originalCount + pageIndices.Length;
     }
 
     /// <summary>
