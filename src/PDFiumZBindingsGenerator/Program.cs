@@ -17,6 +17,7 @@ namespace PDFiumZBindingsGenerator
     {
         private static readonly HttpClient _httpClient = new HttpClient();
 
+        private static bool download = false;
         private class LibInfo
         {
             public string PackageName { get; }
@@ -81,8 +82,15 @@ namespace PDFiumZBindingsGenerator
 
             Console.WriteLine("Complete.");
 
-            if(Directory.Exists(destinationLibraryPath))
-                Directory.Delete(destinationLibraryPath, true);
+            if (Directory.Exists(destinationLibraryPath))
+            {
+                if(download)
+                    Directory.Delete(destinationLibraryPath, true);
+            }
+            else
+            {
+                download = true;
+            }
 
             Directory.CreateDirectory(destinationLibraryPath);
 
@@ -178,6 +186,9 @@ namespace PDFiumZBindingsGenerator
             var filename = Path.GetFileName(uri.LocalPath);
             var fullFilePath = Path.Combine(baseDestination, filename);
             var destinationDirPath = Path.Combine(baseDestination, Path.GetFileNameWithoutExtension(filename));
+
+            if (!download)
+                return destinationDirPath;
 
             if (File.Exists(fullFilePath))
                 File.Delete(fullFilePath);
