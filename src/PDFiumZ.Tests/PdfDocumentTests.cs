@@ -164,7 +164,7 @@ public class PdfDocumentTests : IDisposable
     public void Merge_WithNoFiles_ShouldThrowException()
     {
         // Act & Assert
-        Assert.Throws<ArgumentException>(() => PdfDocument.Merge());
+        Assert.Throws<ArgumentException>(() => PdfDocument.Merge(Array.Empty<string>()));
     }
 
     [Fact]
