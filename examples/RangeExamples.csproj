@@ -27,11 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="RangeExamples.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="RangeExamples.csproj" />
+    <Compile Remove="OptionsExamples.cs" />
   </ItemGroup>
 
 </Project>

@@ -30,7 +30,7 @@ public class RangeExamples
         // Show what's possible
         ShowSyntaxExamples();
 
-        PdfiumLibrary.Dispose();
+        PdfiumLibrary.Shutdown();
     }
 
     private static async Task RunAllExamples()
@@ -106,12 +106,14 @@ public class RangeExamples
 
         // Traditional: GetPages(5, 10) - start at 5, get 10 pages
         // Modern: 5..15 - from page 5 up to (but not including) page 15
-        using var pages = document.GetPages(5..15);
+        var pages = document.GetPages(5..15);
 
         Console.WriteLine($"  Got {pages.Count()} pages");
 
-        // Save as a new document
-        using var extractedDoc = document.Split(5..15);
+        // Save as a new document (convert Range to page indices)
+        var (offset, length) = (5..15).GetOffsetAndLength(document.PageCount);
+        var pageIndices = Enumerable.Range(offset, length).ToArray();
+        using var extractedDoc = document.Split(pageIndices);
         string outputPath = Path.Combine(outputDir, "pages_5_to_15.pdf");
         extractedDoc.Save(outputPath);
 
@@ -173,11 +175,13 @@ public class RangeExamples
         string thumbDir = Path.Combine(outputDir, "thumbnails");
         Directory.CreateDirectory(thumbDir);
 
+        int pageIndex = 0;
         await foreach (var image in document.GenerateImagesAsync(options))
         {
-            string outputPath = Path.Combine(thumbDir, $"page_{image.PageIndex}.png");
+            string outputPath = Path.Combine(thumbDir, $"page_{pageIndex}.png");
             image.SaveAsPng(outputPath);
             image.Dispose();
+            pageIndex++;
         }
 
         Console.WriteLine($"  Generated thumbnails in {thumbDir}\n");
