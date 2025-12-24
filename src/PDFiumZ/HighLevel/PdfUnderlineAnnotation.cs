@@ -7,7 +7,7 @@ namespace PDFiumZ.HighLevel;
 /// Represents an underline annotation in a PDF document.
 /// Underline annotations mark selected text with an underline.
 /// </summary>
-public sealed class PdfUnderlineAnnotation : PdfAnnotation
+public sealed class PdfUnderlineAnnotation : PdfTextMarkupAnnotation
 {
     /// <summary>
     /// Creates a new underline annotation on the specified page.
@@ -20,30 +20,12 @@ public sealed class PdfUnderlineAnnotation : PdfAnnotation
     /// <exception cref="PdfException">Failed to create annotation.</exception>
     public static PdfUnderlineAnnotation Create(PdfPage page, PdfRectangle bounds, uint color = 0xFFFF0000)
     {
-        if (page is null)
-            throw new ArgumentNullException(nameof(page));
-
-        page.ThrowIfDisposed();
-
-        // Create underline annotation (type 10)
-        var handle = fpdf_annot.FPDFPageCreateAnnot(page._handle!, (int)PdfAnnotationType.Underline);
-        if (handle is null || handle.__Instance == IntPtr.Zero)
-        {
-            throw new PdfException("Failed to create underline annotation.");
-        }
-
-        var annotation = new PdfUnderlineAnnotation(handle, page, -1);
-
-        // Set bounds
-        annotation.Bounds = bounds;
-
-        // Set color
-        annotation.Color = color;
-
-        // Set default quad points (single rectangle matching bounds)
-        annotation.SetQuadPoints(new[] { bounds });
-
-        return annotation;
+        return CreateMarkup(
+            page,
+            bounds,
+            color,
+            PdfAnnotationType.Underline,
+            (handle, pg, index) => new PdfUnderlineAnnotation(handle, pg, index));
     }
 
     /// <summary>

@@ -7,7 +7,7 @@ namespace PDFiumZ.HighLevel;
 /// Represents a strikeout annotation in a PDF document.
 /// Strikeout annotations mark selected text with a line through it.
 /// </summary>
-public sealed class PdfStrikeOutAnnotation : PdfAnnotation
+public sealed class PdfStrikeOutAnnotation : PdfTextMarkupAnnotation
 {
     /// <summary>
     /// Creates a new strikeout annotation on the specified page.
@@ -20,30 +20,12 @@ public sealed class PdfStrikeOutAnnotation : PdfAnnotation
     /// <exception cref="PdfException">Failed to create annotation.</exception>
     public static PdfStrikeOutAnnotation Create(PdfPage page, PdfRectangle bounds, uint color = 0xFFFF0000)
     {
-        if (page is null)
-            throw new ArgumentNullException(nameof(page));
-
-        page.ThrowIfDisposed();
-
-        // Create strikeout annotation (type 12)
-        var handle = fpdf_annot.FPDFPageCreateAnnot(page._handle!, (int)PdfAnnotationType.StrikeOut);
-        if (handle is null || handle.__Instance == IntPtr.Zero)
-        {
-            throw new PdfException("Failed to create strikeout annotation.");
-        }
-
-        var annotation = new PdfStrikeOutAnnotation(handle, page, -1);
-
-        // Set bounds
-        annotation.Bounds = bounds;
-
-        // Set color
-        annotation.Color = color;
-
-        // Set default quad points (single rectangle matching bounds)
-        annotation.SetQuadPoints(new[] { bounds });
-
-        return annotation;
+        return CreateMarkup(
+            page,
+            bounds,
+            color,
+            PdfAnnotationType.StrikeOut,
+            (handle, pg, index) => new PdfStrikeOutAnnotation(handle, pg, index));
     }
 
     /// <summary>

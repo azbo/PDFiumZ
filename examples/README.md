@@ -1,129 +1,103 @@
-# PDFiumZ 示例代码
+# PDFiumZ Examples | PDFiumZ 示例代码
 
-本目录包含 PDFiumZ 的完整示例代码，按功能模块分类组织。
+Complete, runnable examples demonstrating PDFiumZ features.
 
-## 📑 目录结构
+完整的、可运行的示例代码，演示 PDFiumZ 的各项功能。
 
-### [01-Basics](./01-Basics/) - 基础示例
-PDFiumZ 入门和基础操作
-- **GettingStarted**: PDFiumZ 快速入门
+## 📚 Choose Your Language | 选择语言
 
-### [02-Rendering](./02-Rendering/) - 渲染功能
-PDF 页面渲染和图像生成
-- **ImageGeneration**: 将 PDF 页面渲染为图像
-- **Thumbnails**: 生成页面缩略图
+### [🇨🇳 中文示例](./zh-CN/)
+包含详细中文注释的完整示例代码。
 
-### [03-PageManipulation](./03-PageManipulation/) - 页面操作
-PDF 文档的页面操作功能
-- **RangeOperations**: 使用 Range 语法进行页面操作
-- **MergeSplit**: 合并和拆分 PDF 文档
-
-### [04-AdvancedOptions](./04-AdvancedOptions/) - 高级选项
-高级配置选项和流畅 API
-- **OptionsConfig**: 使用选项类进行精细控制
+### [🇺🇸 English Examples](./en-US/)
+Complete examples with detailed English comments.
 
 ---
 
-## 🚀 快速开始
+## 📑 Example Categories | 示例分类
 
-### 运行单个示例
+### 01-Basics | 基础示例
+Getting started with PDFiumZ fundamentals.
 
-每个示例都是独立的可执行项目，可以直接运行：
+PDFiumZ 基础入门示例。
+
+| Example | 示例 |
+|---------|------|
+| [Getting Started](./en-US/01-Basics/) | [快速入门](./zh-CN/01-Basics/) |
+
+### 02-Rendering | 渲染功能
+PDF page rendering and image generation.
+
+PDF 页面渲染和图像生成。
+
+| Example | 示例 |
+|---------|------|
+| [Image Generation](./en-US/02-Rendering/ImageGeneration.cs) | [图像生成](./zh-CN/02-Rendering/ImageGeneration.cs) |
+| [Thumbnails](./en-US/02-Rendering/Thumbnails.cs) | [缩略图](./zh-CN/02-Rendering/Thumbnails.cs) |
+
+### 03-Page Manipulation | 页面操作
+Document and page manipulation operations.
+
+文档和页面操作功能。
+
+| Example | 示例 |
+|---------|------|
+| [Merge & Split](./en-US/03-PageManipulation/MergeSplit.cs) | [合并与拆分](./zh-CN/03-PageManipulation/MergeSplit.cs) |
+| [Range Operations](./en-US/03-PageManipulation/RangeOperations.cs) | [Range 操作](./zh-CN/03-PageManipulation/RangeOperations.cs) |
+
+### 04-Advanced Options | 高级选项
+Advanced configuration and fluent APIs.
+
+高级配置选项和流畅 API。
+
+| Example | 示例 |
+|---------|------|
+| [Options Config](./en-US/04-AdvancedOptions/OptionsConfig.cs) | [选项配置](./zh-CN/04-AdvancedOptions/OptionsConfig.cs) |
+
+---
+
+## 🚀 Running Examples | 运行示例
+
+### Prerequisites | 前提条件
+- .NET 8.0 SDK or later | .NET 8.0 SDK 或更高版本
+- PDFiumZ NuGet package | PDFiumZ NuGet 包
+
+### How to Run | 如何运行
 
 ```bash
-# 进入示例目录
-cd examples/01-Basics
+# Navigate to any example directory
+# 进入任意示例目录
+cd examples/zh-CN/01-Basics
+# or | 或者
+cd examples/en-US/01-Basics
 
+# Run the example
 # 运行示例
 dotnet run
 
-# 或者编译后运行
+# Or build first
+# 或者先编译
 dotnet build
 dotnet run --no-build
 ```
 
-### 示例项目结构
+---
 
-每个示例目录包含：
-```
-01-Basics/
-├── GettingStarted.csproj    # 项目配置文件
-├── GettingStarted.cs         # 示例代码
-├── README.md                 # 示例说明
-└── bin/                      # 编译输出（自动生成）
-```
+## 📚 Related Documentation | 相关文档
+
+- [Main Documentation](../docs/) | [主文档](../docs/)
+- [API Reference](../docs/zh-CN/README.md) | [API 参考](../docs/zh-CN/README.md)
+- [GitHub Repository](https://github.com/yourusername/PDFiumZ)
 
 ---
 
-## 📚 示例说明
+## 💡 Tips | 提示
 
-### 基础示例 (01-Basics)
-
-适合初学者的入门示例，演示：
-- 初始化 PDFium 库
-- 打开 PDF 文档
-- 读取页面信息
-- 资源清理
-
-### 渲染示例 (02-Rendering)
-
-演示 PDF 渲染功能：
-- 将页面渲染为图像（PNG、JPEG 等）
-- 自定义渲染质量和 DPI
-- 批量生成页面图像
-- 生成预览缩略图
-
-### 页面操作示例 (03-PageManipulation)
-
-演示文档操作功能：
-- 使用现代 Range 语法（.NET 8+）
-- 提取指定页面
-- 旋转页面
-- 合并多个文档
-- 拆分文档
-
-### 高级选项示例 (04-AdvancedOptions)
-
-演示高级配置选项：
-- ImageGenerationOptions：控制页面渲染
-- ImageSaveOptions：控制图像保存
-- ThumbnailOptions：控制缩略图生成
-- 流畅 API 链式调用
+- ✅ **All examples are self-contained** | **所有示例都是独立完整的**
+- ✅ **Detailed comments in both languages** | **双语详细注释**
+- ✅ **Copy and modify for your needs** | **可复制和修改以满足您的需求**
+- ✅ **Best practices demonstrated** | **展示最佳实践**
 
 ---
 
-## 💡 使用建议
-
-### 学习路径
-
-1. **初学者**: 01-Basics → 02-Rendering → 03-PageManipulation
-2. **有经验开发者**: 直接查看感兴趣的功能模块
-3. **深入学习**: 阅读 04-AdvancedOptions 了解最佳实践
-
-### 示例代码特点
-
-- ✅ **独立可运行**: 每个示例都是完整的项目
-- ✅ **详细注释**: 代码中有充分的中文注释
-- ✅ **多种场景**: 覆盖常见使用场景
-- ✅ **最佳实践**: 展示推荐的 API 使用方式
-
----
-
-## 🔗 相关文档
-
-- [主文档](../docs/README.md) - 完整的 API 文档
-- [快速开始](../docs/Getting_Started/Quick_Start.md) - 快速入门指南
-- [API 参考](../docs/API_Reference.md) - API 快速参考
-
----
-
-## 💬 反馈与贡献
-
-如果发现问题或有改进建议，欢迎：
-- 提交 Issue
-- 发起 Pull Request
-- 在讨论区交流
-
----
-
-**PDFiumZ** - .NET 的现代化 PDF 处理库
+**PDFiumZ** - Modern .NET PDF Library | 现代化的 .NET PDF 处理库

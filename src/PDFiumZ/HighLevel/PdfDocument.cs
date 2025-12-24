@@ -1,10 +1,12 @@
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using PDFiumZ.Utilities;
 
 namespace PDFiumZ.HighLevel;
 
@@ -758,16 +760,27 @@ public sealed class PdfDocument : IDisposable
                 continue;
             }
 
-            var buffer = new ushort[bufferSize / 2];
-            fixed (ushort* pBuffer = buffer)
+            // Use ArrayPool for buffer reuse
+            var buffer = ArrayPool<ushort>.Shared.Rent((int)(bufferSize / 2));
+            try
             {
-                var bytesWritten = fpdf_doc.FPDF_GetPageLabel(
-                    _handle!, index, (IntPtr)pBuffer, bufferSize);
+                unsafe
+                {
+                    fixed (ushort* pBuffer = buffer)
+                    {
+                        var bytesWritten = fpdf_doc.FPDF_GetPageLabel(
+                            _handle!, index, (IntPtr)pBuffer, bufferSize);
 
-                if (bytesWritten <= 2)
-                    labels[index] = (index + 1).ToString();
-                else
-                    labels[index] = new string((char*)pBuffer, 0, (int)(bytesWritten / 2) - 1);
+                        if (bytesWritten <= 2)
+                            labels[index] = (index + 1).ToString();
+                        else
+                            labels[index] = new string((char*)pBuffer, 0, (int)(bytesWritten / 2) - 1);
+                    }
+                }
+            }
+            finally
+            {
+                ArrayPool<ushort>.Shared.Return(buffer);
             }
         }
 
@@ -1214,13 +1227,8 @@ public sealed class PdfDocument : IDisposable
 
             try
             {
-                // Set text content (UTF-16LE)
-                var utf16Array = new ushort[text.Length + 1];
-                for (int i = 0; i < text.Length; i++)
-                {
-                    utf16Array[i] = text[i];
-                }
-                utf16Array[text.Length] = 0;
+                // Set text content (UTF-16LE) - optimized
+                var utf16Array = text.ToNullTerminatedUtf16Array();
 
                 var result = fpdf_edit.FPDFTextSetText(textObj, ref utf16Array[0]);
                 if (result == 0)
@@ -1367,12 +1375,7 @@ public sealed class PdfDocument : IDisposable
 
         try
         {
-            var utf16Array = new ushort[text.Length + 1];
-            for (int i = 0; i < text.Length; i++)
-            {
-                utf16Array[i] = text[i];
-            }
-            utf16Array[text.Length] = 0;
+            var utf16Array = text.ToNullTerminatedUtf16Array();
 
             var result = fpdf_edit.FPDFTextSetText(textObj, ref utf16Array[0]);
             if (result == 0)
@@ -1537,13 +1540,8 @@ public sealed class PdfDocument : IDisposable
         if (title is null)
             throw new ArgumentNullException(nameof(title));
 
-        // Convert string to UTF-16 (ushort array)
-        var titleUtf16 = new ushort[title.Length + 1];
-        for (int i = 0; i < title.Length; i++)
-        {
-            titleUtf16[i] = title[i];
-        }
-        titleUtf16[title.Length] = 0; // Null terminator
+        // Convert string to UTF-16 (ushort array) - optimized
+        var titleUtf16 = title.ToNullTerminatedUtf16Array();
 
         var bookmarkHandle = fpdf_doc.FPDFBookmarkFind(_handle!, ref titleUtf16[0]);
         if (bookmarkHandle is null || bookmarkHandle.__Instance == IntPtr.Zero)

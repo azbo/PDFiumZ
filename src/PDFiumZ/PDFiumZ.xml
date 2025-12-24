@@ -2153,99 +2153,6 @@
              </code>
              </example>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.GenerateImages(PDFiumZ.HighLevel.PdfDocument,System.Int32[])">
-            <summary>
-            Generates images from the specified page indices.
-            </summary>
-            <param name="document">The PDF document.</param>
-            <param name="pageIndices">Zero-based indices of pages to render.</param>
-            <returns>An enumerable of PdfImage objects. Remember to dispose each image after use.</returns>
-            <exception cref="T:System.ArgumentNullException">document or pageIndices is null.</exception>
-            <exception cref="T:System.ObjectDisposedException">document has been disposed.</exception>
-            <exception cref="T:System.ArgumentOutOfRangeException">Any index is out of range.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.GenerateImages(PDFiumZ.HighLevel.PdfDocument,System.Int32,System.Int32,PDFiumZ.HighLevel.RenderOptions)">
-            <summary>
-            Generates images from a range of pages.
-            </summary>
-            <param name="document">The PDF document.</param>
-            <param name="startIndex">Zero-based index of the first page to render.</param>
-            <param name="count">Number of pages to render.</param>
-            <param name="options">Optional render options.</param>
-            <returns>An enumerable of PdfImage objects.</returns>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.GenerateImages(PDFiumZ.HighLevel.PdfDocument,PDFiumZ.HighLevel.RenderOptions)">
-            <summary>
-            Generates images for all pages in the document.
-            </summary>
-            <param name="document">The PDF document.</param>
-            <param name="options">Optional render options.</param>
-            <returns>An enumerable of PdfImage objects.</returns>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.GenerateImages(PDFiumZ.HighLevel.PdfDocument,System.Int32[],PDFiumZ.HighLevel.RenderOptions)">
-            <summary>
-            Generates images from the specified page indices with custom options.
-            </summary>
-            <param name="document">The PDF document.</param>
-            <param name="pageIndices">Zero-based indices of pages to render.</param>
-            <param name="options">Optional render options. If null, uses default settings.</param>
-            <returns>An enumerable of PdfImage objects. Remember to dispose each image after use.</returns>
-            <exception cref="T:System.ArgumentNullException">document or pageIndices is null.</exception>
-            <exception cref="T:System.ObjectDisposedException">document has been disposed.</exception>
-            <exception cref="T:System.ArgumentOutOfRangeException">Any index is out of range.</exception>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.String,PDFiumZ.HighLevel.RenderOptions)">
-            <summary>
-            Saves all pages as image files to a directory.
-            </summary>
-            <param name="document">The PDF document.</param>
-            <param name="outputDirectory">Directory path where images will be saved.</param>
-            <param name="options">Optional render options.</param>
-            <returns>Array of generated file paths.</returns>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.String,System.Int32,System.Int32,System.String,PDFiumZ.HighLevel.RenderOptions)">
-            <summary>
-            Saves a range of pages as image files to a directory.
-            </summary>
-            <param name="document">The PDF document.</param>
-            <param name="outputDirectory">Directory path where images will be saved.</param>
-            <param name="startIndex">Zero-based index of the first page to save.</param>
-            <param name="count">Number of pages to save.</param>
-            <param name="fileNamePattern">Optional file name pattern. Use {0} for page index. Default: "page-{0}.png"</param>
-            <param name="options">Optional render options.</param>
-            <returns>Array of generated file paths.</returns>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.String,System.Int32[])">
-            <summary>
-            Saves the specified pages as image files to a directory.
-            </summary>
-            <param name="document">The PDF document.</param>
-            <param name="outputDirectory">Directory path where images will be saved.</param>
-            <param name="pageIndices">Zero-based indices of pages to save.</param>
-            <returns>Array of generated file paths.</returns>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.String,System.Int32[],System.String,PDFiumZ.HighLevel.RenderOptions)">
-            <summary>
-            Saves the specified pages as image files to a directory.
-            </summary>
-            <param name="document">The PDF document.</param>
-            <param name="outputDirectory">Directory path where images will be saved.</param>
-            <param name="pageIndices">Zero-based indices of pages to save.</param>
-            <param name="fileNamePattern">Optional file name pattern. Use {0} for page index. Default: "page-{0}.png"</param>
-            <param name="options">Optional render options.</param>
-            <returns>Array of generated file paths.</returns>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfDocumentImageExtensions.SaveAsImages(PDFiumZ.HighLevel.PdfDocument,System.Func{System.Int32,System.String},System.Nullable{System.Int32},System.Nullable{System.Int32},PDFiumZ.HighLevel.RenderOptions)">
-            <summary>
-            Saves pages as image files using a custom path generator.
-            </summary>
-            <param name="document">The PDF document.</param>
-            <param name="pathGenerator">Function that generates a file path for a given page index.</param>
-            <param name="startIndex">Zero-based index of the first page to save. Defaults to 0.</param>
-            <param name="count">Number of pages to save. Defaults to all remaining pages.</param>
-            <param name="options">Optional render options.</param>
-            <returns>Array of generated file paths.</returns>
-        </member>
         <member name="T:PDFiumZ.HighLevel.PdfExtractedImage">
             <summary>
             Represents an image extracted from a PDF page.
@@ -3829,6 +3736,33 @@
             Gets or sets the author of the annotation.
             </summary>
             <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfTextMarkupAnnotation">
+            <summary>
+            Abstract base class for text markup annotations (highlight, underline, strikeout).
+            Provides common creation logic for text markup types.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTextMarkupAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,PDFiumZ.HighLevel.PdfAnnotationType,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfTextMarkupAnnotation"/> class.
+            Internal constructor - use factory methods in derived classes to create annotations.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTextMarkupAnnotation.CreateMarkup``1(PDFiumZ.HighLevel.PdfPage,PDFiumZ.HighLevel.PdfRectangle,System.UInt32,PDFiumZ.HighLevel.PdfAnnotationType,System.Func{PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,System.Int32,``0})">
+            <summary>
+            Core factory method for creating text markup annotations.
+            Used by derived classes to avoid code duplication.
+            </summary>
+            <param name="page">The page to add the annotation to.</param>
+            <param name="bounds">The bounding rectangle of the markup.</param>
+            <param name="color">The markup color in ARGB format.</param>
+            <param name="annotationType">The specific type of text markup annotation.</param>
+            <param name="factory">Factory function to create the annotation instance.</param>
+            <typeparam name="T">The concrete annotation type.</typeparam>
+            <returns>A new text markup annotation instance.</returns>
+            <exception cref="T:System.ArgumentNullException">page is null.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create annotation.</exception>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfTextSearchResult">
             <summary>
@@ -9767,6 +9701,72 @@
             <summary>
             FPDF_RENDER_NO_SMOOTHPATH: Set to disable anti-aliasing on paths.
             </summary>
+        </member>
+        <member name="T:PDFiumZ.Utilities.Utf16Helper">
+            <summary>
+            Provides optimized UTF-16 string conversion utilities for PDFium interop.
+            PDFium uses null-terminated UTF-16 (ushort[]) for string parameters.
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.Utilities.Utf16Helper.StackAllocThreshold">
+            <summary>
+            Maximum size for stack allocation (characters).
+            Strings longer than this will be heap-allocated.
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.Utilities.Utf16Helper.ToNullTerminatedUtf16(System.String,System.Span{System.UInt16})">
+            <summary>
+            Converts a string to null-terminated UTF-16 on the stack (for small strings).
+            Use this method when the string length is known to be small (&lt;128 characters).
+            </summary>
+            <param name="text">The string to convert.</param>
+            <param name="destination">The destination span to write to. Must have length >= text.Length + 1.</param>
+            <exception cref="T:System.ArgumentException">Destination span is too small.</exception>
+            <example>
+            <code>
+            Span&lt;ushort&gt; utf16 = stackalloc ushort[text.Length + 1];
+            Utf16Helper.ToNullTerminatedUtf16(text, utf16);
+            </code>
+            </example>
+        </member>
+        <member name="M:PDFiumZ.Utilities.Utf16Helper.ToNullTerminatedUtf16Array(System.String)">
+            <summary>
+            Converts a string to null-terminated UTF-16 array (heap allocation).
+            Use this extension method for convenience when performance is not critical
+            or when string length is unknown.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>A null-terminated UTF-16 array.</returns>
+            <example>
+            <code>
+            var utf16 = searchText.ToNullTerminatedUtf16Array();
+            var handle = fpdf_text.FPDFTextFindStart(textPage, ref utf16[0], flags, 0);
+            </code>
+            </example>
+        </member>
+        <member name="M:PDFiumZ.Utilities.Utf16Helper.UseNullTerminatedUtf16``1(System.String,PDFiumZ.Utilities.Utf16Helper.Utf16Action{``0})">
+            <summary>
+            Converts a string to null-terminated UTF-16 with automatic stack/heap selection.
+            Small strings (&lt;128 chars) use stack allocation, large strings use heap.
+            This method requires a callback to use the UTF-16 buffer.
+            </summary>
+            <typeparam name="TResult">The result type of the operation.</typeparam>
+            <param name="text">The string to convert.</param>
+            <param name="action">The action to perform with the UTF-16 buffer. First parameter is ref to first element.</param>
+            <returns>The result of the action.</returns>
+            <example>
+            <code>
+            var result = text.UseNullTerminatedUtf16(
+                (ref ushort utf16) => fpdf_text.FPDFTextFindStart(textPage, ref utf16, flags, 0));
+            </code>
+            </example>
+        </member>
+        <member name="T:PDFiumZ.Utilities.Utf16Helper.Utf16Action`1">
+            <summary>
+            Delegate for actions that use a UTF-16 buffer reference.
+            </summary>
+            <typeparam name="TResult">The result type.</typeparam>
+            <param name="utf16">Reference to the first element of the UTF-16 buffer.</param>
         </member>
     </members>
 </doc>

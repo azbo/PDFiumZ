@@ -1,9 +1,11 @@
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using PDFiumZ.Utilities;
 
 namespace PDFiumZ.HighLevel;
 
@@ -269,15 +271,25 @@ public sealed unsafe class PdfPage : IDisposable
         var charCount = fpdf_text.FPDFTextCountChars(textPage);
         if (charCount == 0) return string.Empty;
 
-        var buffer = new ushort[charCount + 1];
-
-        var bytesWritten = fpdf_text.FPDFTextGetText(textPage, 0, charCount, ref buffer[0]);
-
-        if (bytesWritten <= 1) return string.Empty;
-
-        fixed (ushort* pBuffer = buffer)
+        // Use ArrayPool to avoid allocating large arrays on the heap
+        var buffer = ArrayPool<ushort>.Shared.Rent(charCount + 1);
+        try
         {
-            return new string((char*)pBuffer, 0, bytesWritten - 1);
+            var bytesWritten = fpdf_text.FPDFTextGetText(textPage, 0, charCount, ref buffer[0]);
+
+            if (bytesWritten <= 1) return string.Empty;
+
+            unsafe
+            {
+                fixed (ushort* pBuffer = buffer)
+                {
+                    return new string((char*)pBuffer, 0, bytesWritten - 1);
+                }
+            }
+        }
+        finally
+        {
+            ArrayPool<ushort>.Shared.Return(buffer);
         }
     }
 
@@ -307,18 +319,14 @@ public sealed unsafe class PdfPage : IDisposable
 
         var textPage = GetTextPageHandle();
 
-        var searchUtf16 = new ushort[searchText.Length + 1];
-        for (int i = 0; i < searchText.Length; i++)
-        {
-            searchUtf16[i] = searchText[i];
-        }
-        searchUtf16[searchText.Length] = 0;
-
         uint flags = 0;
         if (matchCase)
             flags |= 0x00000001;
         if (matchWholeWord)
             flags |= 0x00000002;
+
+        // Use optimized UTF-16 conversion
+        var searchUtf16 = searchText.ToNullTerminatedUtf16Array();
 
         var searchHandle = fpdf_text.FPDFTextFindStart(textPage, ref searchUtf16[0], flags, 0);
         if (searchHandle is null || searchHandle.__Instance == IntPtr.Zero)
@@ -355,15 +363,26 @@ public sealed unsafe class PdfPage : IDisposable
     /// </summary>
     private string GetTextRange(FpdfTextpageT textPage, int startIndex, int count)
     {
-        var buffer = new ushort[count + 1];
-        var bytesWritten = fpdf_text.FPDFTextGetText(textPage, startIndex, count, ref buffer[0]);
-
-        if (bytesWritten <= 1)
-            return string.Empty;
-
-        fixed (ushort* pBuffer = buffer)
+        // Use ArrayPool for buffer reuse
+        var buffer = ArrayPool<ushort>.Shared.Rent(count + 1);
+        try
         {
-            return new string((char*)pBuffer, 0, bytesWritten - 1);
+            var bytesWritten = fpdf_text.FPDFTextGetText(textPage, startIndex, count, ref buffer[0]);
+
+            if (bytesWritten <= 1)
+                return string.Empty;
+
+            unsafe
+            {
+                fixed (ushort* pBuffer = buffer)
+                {
+                    return new string((char*)pBuffer, 0, bytesWritten - 1);
+                }
+            }
+        }
+        finally
+        {
+            ArrayPool<ushort>.Shared.Return(buffer);
         }
     }
 
