@@ -5,7 +5,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <RestoreSources>
       $(RestoreSources);
-      $(ProjectDir)......rtifacts\;
+      $(ProjectDir)..\..\..\artifacts\;
       https://api.nuget.org/v3/index.json;
     </RestoreSources>
   </PropertyGroup>
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="......srcPDFiumZPDFiumZ.csproj" />
+    <ProjectReference Include="..\..\..\src\PDFiumZ\PDFiumZ.csproj" />
   </ItemGroup>
 
 </Project>
