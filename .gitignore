@@ -19,3 +19,5 @@
 PDFiumCore.sln
 /src/output
 src/CppSharp
+/examples/bin/Debug/net10.0
+/examples/obj
