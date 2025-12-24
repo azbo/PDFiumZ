@@ -151,6 +151,42 @@ var options = RenderOptions.Default.WithDpi(300);
 document.SaveAsImages("highres/", options: options);
 ```
 
+### Generate Page Thumbnails ✨ **NEW**
+
+```csharp
+using PDFiumZ.HighLevel;
+
+using var document = PdfDocument.Open("sample.pdf");
+
+// Generate thumbnail for a single page
+using var page = document.GetPage(0);
+using var thumbnail = page.GenerateThumbnail(maxWidth: 200);
+thumbnail.SaveAsSkiaPng("thumb-page-0.png");
+
+// Generate thumbnails for all pages
+var thumbnails = document.GenerateAllThumbnails(maxWidth: 150, quality: 1);
+int pageNum = 0;
+foreach (var thumb in thumbnails)
+{
+    using (thumb)
+    {
+        thumb.SaveAsSkiaPng($"thumbnail-{pageNum++}.png");
+    }
+}
+
+// Generate thumbnails for specific pages
+var selectedThumbs = document.GenerateThumbnails(
+    pageIndices: new[] { 0, 5, 10 },
+    maxWidth: 200,
+    quality: 2  // 0=low/fast, 1=medium, 2=high
+);
+
+// Different quality levels
+using var lowQuality = page.GenerateThumbnail(maxWidth: 150, quality: 0);    // Fast
+using var mediumQuality = page.GenerateThumbnail(maxWidth: 150, quality: 1);  // Default
+using var highQuality = page.GenerateThumbnail(maxWidth: 150, quality: 2);    // Best
+```
+
 ### Extract Images
 
 ```csharp

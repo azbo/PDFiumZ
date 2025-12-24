@@ -192,6 +192,66 @@ public sealed unsafe class PdfPage : IDisposable
     }
 
     /// <summary>
+    /// Generates a thumbnail image of the page with specified maximum width.
+    /// Height is calculated to maintain aspect ratio.
+    /// </summary>
+    /// <param name="maxWidth">Maximum width of the thumbnail in pixels (default: 200).</param>
+    /// <param name="quality">Rendering quality: 0 (low/fast) to 2 (high/slow) (default: 1).</param>
+    /// <returns>A <see cref="PdfImage"/> containing the thumbnail.</returns>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">maxWidth must be positive.</exception>
+    /// <exception cref="PdfRenderException">Thumbnail generation failed.</exception>
+    public PdfImage GenerateThumbnail(int maxWidth = 200, int quality = 1)
+    {
+        ThrowIfDisposed();
+
+        if (maxWidth <= 0)
+            throw new ArgumentOutOfRangeException(nameof(maxWidth), "Maximum width must be positive.");
+
+        if (quality < 0 || quality > 2)
+            throw new ArgumentOutOfRangeException(nameof(quality), "Quality must be between 0 (low) and 2 (high).");
+
+        // Calculate scale to fit within maxWidth while maintaining aspect ratio
+        var scale = maxWidth / Width;
+
+        // Build render options based on quality level
+        var options = quality switch
+        {
+            0 => RenderOptions.Default
+                .WithScale(scale)
+                .RemoveFlags(RenderFlags.RenderAnnotations), // Low quality: skip annotations
+            1 => RenderOptions.Default
+                .WithScale(scale), // Medium quality: default settings
+            2 => RenderOptions.Default
+                .WithScale(scale)
+                .AddFlags(RenderFlags.OptimizeTextForLcd), // High quality: LCD text rendering
+            _ => RenderOptions.Default.WithScale(scale)
+        };
+
+        return RenderToImage(options);
+    }
+
+    /// <summary>
+    /// Asynchronously generates a thumbnail image of the page with specified maximum width.
+    /// </summary>
+    /// <param name="maxWidth">Maximum width of the thumbnail in pixels (default: 200).</param>
+    /// <param name="quality">Rendering quality: 0 (low/fast) to 2 (high/slow) (default: 1).</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the thumbnail image.</returns>
+    /// <exception cref="ObjectDisposedException">The page has been disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">maxWidth must be positive.</exception>
+    /// <exception cref="PdfRenderException">Thumbnail generation failed.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    public Task<PdfImage> GenerateThumbnailAsync(int maxWidth = 200, int quality = 1, CancellationToken cancellationToken = default)
+    {
+        return Task.Run(() =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            return GenerateThumbnail(maxWidth, quality);
+        }, cancellationToken);
+    }
+
+    /// <summary>
     /// Extracts text content from the page.
     /// </summary>
     /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>

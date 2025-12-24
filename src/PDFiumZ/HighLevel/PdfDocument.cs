@@ -480,6 +480,61 @@ public sealed class PdfDocument : IDisposable
     }
 
     /// <summary>
+    /// Generates thumbnail images for all pages in the document.
+    /// </summary>
+    /// <param name="maxWidth">Maximum width of each thumbnail in pixels (default: 200).</param>
+    /// <param name="quality">Rendering quality: 0 (low/fast) to 2 (high/slow) (default: 1).</param>
+    /// <returns>An enumerable collection of <see cref="PdfImage"/> thumbnails, one per page.</returns>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">maxWidth must be positive.</exception>
+    /// <exception cref="PdfRenderException">Thumbnail generation failed for one or more pages.</exception>
+    /// <remarks>
+    /// This method lazily generates thumbnails as they are enumerated.
+    /// Each thumbnail must be disposed after use.
+    /// </remarks>
+    public IEnumerable<PdfImage> GenerateAllThumbnails(int maxWidth = 200, int quality = 1)
+    {
+        ThrowIfDisposed();
+
+        if (maxWidth <= 0)
+            throw new ArgumentOutOfRangeException(nameof(maxWidth), "Maximum width must be positive.");
+
+        for (int i = 0; i < PageCount; i++)
+        {
+            using var page = GetPage(i);
+            yield return page.GenerateThumbnail(maxWidth, quality);
+        }
+    }
+
+    /// <summary>
+    /// Generates thumbnail images for specified pages in the document.
+    /// </summary>
+    /// <param name="pageIndices">Zero-based indices of pages to generate thumbnails for.</param>
+    /// <param name="maxWidth">Maximum width of each thumbnail in pixels (default: 200).</param>
+    /// <param name="quality">Rendering quality: 0 (low/fast) to 2 (high/slow) (default: 1).</param>
+    /// <returns>An enumerable collection of <see cref="PdfImage"/> thumbnails for the specified pages.</returns>
+    /// <exception cref="ArgumentNullException">pageIndices is null.</exception>
+    /// <exception cref="ObjectDisposedException">Document has been disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">maxWidth must be positive or any page index is out of range.</exception>
+    /// <exception cref="PdfRenderException">Thumbnail generation failed for one or more pages.</exception>
+    public IEnumerable<PdfImage> GenerateThumbnails(int[] pageIndices, int maxWidth = 200, int quality = 1)
+    {
+        if (pageIndices is null)
+            throw new ArgumentNullException(nameof(pageIndices));
+
+        ThrowIfDisposed();
+
+        if (maxWidth <= 0)
+            throw new ArgumentOutOfRangeException(nameof(maxWidth), "Maximum width must be positive.");
+
+        foreach (var index in pageIndices)
+        {
+            using var page = GetPage(index);
+            yield return page.GenerateThumbnail(maxWidth, quality);
+        }
+    }
+
+    /// <summary>
     /// Creates a new blank page and adds it to the document.
     /// </summary>
     /// <param name="width">Page width in points (1/72 inch). Default is A4 width.</param>

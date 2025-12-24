@@ -85,6 +85,7 @@ finally
 
 ### Rendering & Extraction
 - **Image Generation**: Simple, high-performance PDF to image conversion
+- **Thumbnail Generation**: Generate page thumbnails with customizable size and quality ✨ **NEW**
 - **Text Extraction**: Extract plain text with positions and formatting
 - **Image Extraction**: Extract embedded images from PDF pages
 - **Search**: Find text with position information

@@ -1392,6 +1392,34 @@
             <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to load one or more pages.</exception>
         </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.GenerateAllThumbnails(System.Int32,System.Int32)">
+            <summary>
+            Generates thumbnail images for all pages in the document.
+            </summary>
+            <param name="maxWidth">Maximum width of each thumbnail in pixels (default: 200).</param>
+            <param name="quality">Rendering quality: 0 (low/fast) to 2 (high/slow) (default: 1).</param>
+            <returns>An enumerable collection of <see cref="T:PDFiumZ.HighLevel.PdfImage"/> thumbnails, one per page.</returns>
+            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">maxWidth must be positive.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfRenderException">Thumbnail generation failed for one or more pages.</exception>
+            <remarks>
+            This method lazily generates thumbnails as they are enumerated.
+            Each thumbnail must be disposed after use.
+            </remarks>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfDocument.GenerateThumbnails(System.Int32[],System.Int32,System.Int32)">
+            <summary>
+            Generates thumbnail images for specified pages in the document.
+            </summary>
+            <param name="pageIndices">Zero-based indices of pages to generate thumbnails for.</param>
+            <param name="maxWidth">Maximum width of each thumbnail in pixels (default: 200).</param>
+            <param name="quality">Rendering quality: 0 (low/fast) to 2 (high/slow) (default: 1).</param>
+            <returns>An enumerable collection of <see cref="T:PDFiumZ.HighLevel.PdfImage"/> thumbnails for the specified pages.</returns>
+            <exception cref="T:System.ArgumentNullException">pageIndices is null.</exception>
+            <exception cref="T:System.ObjectDisposedException">Document has been disposed.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">maxWidth must be positive or any page index is out of range.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfRenderException">Thumbnail generation failed for one or more pages.</exception>
+        </member>
         <member name="M:PDFiumZ.HighLevel.PdfDocument.CreatePage(System.Double,System.Double,System.Int32)">
             <summary>
             Creates a new blank page and adds it to the document.
@@ -2483,6 +2511,31 @@
             <returns>A task that represents the asynchronous operation. The task result contains a <see cref="T:PDFiumZ.HighLevel.PdfImage"/> with the rendered result.</returns>
             <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
             <exception cref="T:PDFiumZ.HighLevel.PdfRenderException">Rendering failed.</exception>
+            <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfPage.GenerateThumbnail(System.Int32,System.Int32)">
+            <summary>
+            Generates a thumbnail image of the page with specified maximum width.
+            Height is calculated to maintain aspect ratio.
+            </summary>
+            <param name="maxWidth">Maximum width of the thumbnail in pixels (default: 200).</param>
+            <param name="quality">Rendering quality: 0 (low/fast) to 2 (high/slow) (default: 1).</param>
+            <returns>A <see cref="T:PDFiumZ.HighLevel.PdfImage"/> containing the thumbnail.</returns>
+            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">maxWidth must be positive.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfRenderException">Thumbnail generation failed.</exception>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfPage.GenerateThumbnailAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously generates a thumbnail image of the page with specified maximum width.
+            </summary>
+            <param name="maxWidth">Maximum width of the thumbnail in pixels (default: 200).</param>
+            <param name="quality">Rendering quality: 0 (low/fast) to 2 (high/slow) (default: 1).</param>
+            <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+            <returns>A task that represents the asynchronous operation. The task result contains the thumbnail image.</returns>
+            <exception cref="T:System.ObjectDisposedException">The page has been disposed.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">maxWidth must be positive.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfRenderException">Thumbnail generation failed.</exception>
             <exception cref="T:System.OperationCanceledException">The operation was canceled.</exception>
         </member>
         <member name="M:PDFiumZ.HighLevel.PdfPage.ExtractText(System.Threading.CancellationToken)">

@@ -268,5 +268,72 @@ public class PdfDocumentTests : IDisposable
         var text = page.ExtractText();
         Assert.Contains("Hello", text);
     }
+
+    [Fact]
+    public void GenerateAllThumbnails_ShouldCreateThumbnailForEachPage()
+    {
+        // Arrange
+        using var document = PdfDocument.CreateNew();
+        document.CreatePage(600, 800).Dispose();
+        document.CreatePage(800, 600).Dispose();
+        document.CreatePage(700, 700).Dispose();
+
+        // Act
+        var thumbnails = document.GenerateAllThumbnails(maxWidth: 150).ToList();
+
+        // Assert
+        Assert.Equal(3, thumbnails.Count);
+        Assert.All(thumbnails, thumb =>
+        {
+            Assert.NotNull(thumb);
+            Assert.True(thumb.Width <= 150);
+        });
+
+        // Cleanup
+        foreach (var thumb in thumbnails)
+        {
+            thumb.Dispose();
+        }
+    }
+
+    [Fact]
+    public void GenerateThumbnails_WithSpecificPages_ShouldCreateSelectedThumbnails()
+    {
+        // Arrange
+        using var document = PdfDocument.CreateNew();
+        document.CreatePage(600, 800).Dispose();
+        document.CreatePage(800, 600).Dispose();
+        document.CreatePage(700, 700).Dispose();
+        document.CreatePage(500, 500).Dispose();
+
+        // Act - Generate thumbnails for pages 0 and 2
+        var thumbnails = document.GenerateThumbnails(new[] { 0, 2 }, maxWidth: 150).ToList();
+
+        // Assert
+        Assert.Equal(2, thumbnails.Count);
+        Assert.All(thumbnails, thumb =>
+        {
+            Assert.NotNull(thumb);
+            Assert.True(thumb.Width <= 150);
+        });
+
+        // Cleanup
+        foreach (var thumb in thumbnails)
+        {
+            thumb.Dispose();
+        }
+    }
+
+    [Fact]
+    public void GenerateAllThumbnails_InvalidMaxWidth_ShouldThrow()
+    {
+        // Arrange
+        using var document = PdfDocument.CreateNew();
+        document.CreatePage(600, 800).Dispose();
+
+        // Act & Assert
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            document.GenerateAllThumbnails(maxWidth: -1).ToList());
+    }
 }
 

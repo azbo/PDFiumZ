@@ -9,6 +9,69 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+#### Page Thumbnail Generation ✨ NEW
+- **PdfPage Thumbnail Generation**: Generate optimized thumbnail images of PDF pages
+  - `GenerateThumbnail(maxWidth, quality)` - Generate thumbnail with aspect ratio preservation
+    - `maxWidth` parameter controls maximum width in pixels (default: 200)
+    - `quality` parameter controls rendering quality (0=low/fast, 1=medium, 2=high, default: 1)
+    - Height automatically calculated to maintain aspect ratio
+    - Quality levels use different rendering flags:
+      - Level 0 (low): Skips annotations for faster rendering
+      - Level 1 (medium): Default rendering settings
+      - Level 2 (high): Adds LCD text optimization for best quality
+  - `GenerateThumbnailAsync(maxWidth, quality, cancellationToken)` - Async thumbnail generation
+  - Returns `PdfImage` that can be saved using SkiaSharp extension methods
+
+- **PdfDocument Batch Thumbnail Generation**: Generate thumbnails for multiple pages efficiently
+  - `GenerateAllThumbnails(maxWidth, quality)` - Generate thumbnails for all pages
+    - Uses lazy enumeration (`yield return`) for memory efficiency
+    - Ideal for generating preview galleries
+  - `GenerateThumbnails(pageIndices, maxWidth, quality)` - Generate thumbnails for specific pages
+    - Allows selective thumbnail generation (e.g., first page only, every 10th page)
+    - Useful for custom preview requirements
+
+- **Features**:
+  - Aspect ratio preservation - thumbnails maintain original page proportions
+  - Quality control - trade-off between speed and visual quality
+  - Memory efficient - lazy enumeration for batch operations
+  - Async support - non-blocking operations for UI responsiveness
+  - Integration with existing rendering pipeline - reuses `RenderToImage()` with calculated scale
+
+- **Example Usage**:
+  ```csharp
+  using PDFiumZ.HighLevel;
+
+  using var document = PdfDocument.Open("sample.pdf");
+
+  // Generate thumbnail for single page
+  using var page = document.GetPage(0);
+  using var thumbnail = page.GenerateThumbnail(maxWidth: 200, quality: 1);
+  thumbnail.SaveAsSkiaPng("thumb-page-0.png");
+
+  // Generate thumbnails for all pages
+  var thumbnails = document.GenerateAllThumbnails(maxWidth: 150, quality: 1);
+  int pageNum = 0;
+  foreach (var thumb in thumbnails)
+  {
+      using (thumb)
+      {
+          thumb.SaveAsSkiaPng($"thumbnail-{pageNum++}.png");
+      }
+  }
+
+  // Generate thumbnails for specific pages
+  var selectedThumbs = document.GenerateThumbnails(
+      pageIndices: new[] { 0, 5, 10 },
+      maxWidth: 200,
+      quality: 2  // High quality
+  );
+
+  // Different quality levels
+  using var lowQuality = page.GenerateThumbnail(maxWidth: 150, quality: 0);    // Fast
+  using var mediumQuality = page.GenerateThumbnail(maxWidth: 150, quality: 1);  // Default
+  using var highQuality = page.GenerateThumbnail(maxWidth: 150, quality: 2);    // Best
+  ```
+
 #### API Simplification & Consolidation (Merge Similar APIs)
 - **PdfDocument**: Unified document management methods
   - Added `GetPages` methods (range-based and index-based) for more flexible page access.

@@ -170,5 +170,84 @@ public class PdfPageTests : IDisposable
         Assert.Equal(612.0, size.Width, 0.1);
         Assert.Equal(792.0, size.Height, 0.1);
     }
+
+    [Fact]
+    public void GenerateThumbnail_ShouldCreateSmallerImage()
+    {
+        // Arrange
+        using var document = PdfDocument.CreateNew();
+        using var page = document.CreatePage(600, 800);
+
+        // Act
+        using var thumbnail = page.GenerateThumbnail(maxWidth: 200);
+
+        // Assert
+        Assert.NotNull(thumbnail);
+        Assert.True(thumbnail.Width <= 200);
+        Assert.True(thumbnail.Height > 0);
+        // Aspect ratio should be maintained: 600:800 = 3:4
+        var expectedHeight = 200 * (800.0 / 600.0);
+        Assert.Equal(expectedHeight, (double)thumbnail.Height, 2.0);  // Tolerance of 2 pixels
+    }
+
+    [Fact]
+    public void GenerateThumbnail_WithDifferentQuality_ShouldWork()
+    {
+        // Arrange
+        using var document = PdfDocument.CreateNew();
+        using var page = document.CreatePage(600, 800);
+
+        // Act - Test all quality levels
+        using var lowQuality = page.GenerateThumbnail(maxWidth: 150, quality: 0);
+        using var mediumQuality = page.GenerateThumbnail(maxWidth: 150, quality: 1);
+        using var highQuality = page.GenerateThumbnail(maxWidth: 150, quality: 2);
+
+        // Assert
+        Assert.NotNull(lowQuality);
+        Assert.NotNull(mediumQuality);
+        Assert.NotNull(highQuality);
+        Assert.True(lowQuality.Width <= 150);
+        Assert.True(mediumQuality.Width <= 150);
+        Assert.True(highQuality.Width <= 150);
+    }
+
+    [Fact]
+    public void GenerateThumbnail_InvalidMaxWidth_ShouldThrow()
+    {
+        // Arrange
+        using var document = PdfDocument.CreateNew();
+        using var page = document.CreatePage(600, 800);
+
+        // Act & Assert
+        Assert.Throws<ArgumentOutOfRangeException>(() => page.GenerateThumbnail(maxWidth: 0));
+        Assert.Throws<ArgumentOutOfRangeException>(() => page.GenerateThumbnail(maxWidth: -100));
+    }
+
+    [Fact]
+    public void GenerateThumbnail_InvalidQuality_ShouldThrow()
+    {
+        // Arrange
+        using var document = PdfDocument.CreateNew();
+        using var page = document.CreatePage(600, 800);
+
+        // Act & Assert
+        Assert.Throws<ArgumentOutOfRangeException>(() => page.GenerateThumbnail(quality: -1));
+        Assert.Throws<ArgumentOutOfRangeException>(() => page.GenerateThumbnail(quality: 3));
+    }
+
+    [Fact]
+    public async Task GenerateThumbnailAsync_ShouldCreateThumbnail()
+    {
+        // Arrange
+        using var document = PdfDocument.CreateNew();
+        using var page = document.CreatePage(600, 800);
+
+        // Act
+        using var thumbnail = await page.GenerateThumbnailAsync(maxWidth: 200);
+
+        // Assert
+        Assert.NotNull(thumbnail);
+        Assert.True(thumbnail.Width <= 200);
+    }
 }
 
