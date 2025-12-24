@@ -18,3 +18,4 @@
 # Example build outputs (all languages)
 /examples/**/bin/
 /examples/**/obj/
+.workflow/
