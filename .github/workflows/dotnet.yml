@@ -33,7 +33,7 @@ jobs:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         
     - name: Download libraries
-      run: ./download_package.sh
+      run: bash download_package.sh
 
     - name: Build
       run: dotnet build src/PDFiumZ -c Release
