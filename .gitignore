@@ -15,22 +15,6 @@
 !**/docs/**/*.png
 !**/docs/**/*.jpg
 
-# Legacy solution files
-/examples/bin
-/examples/obj
-/examples/02-Rendering/obj
-/examples/03-PageManipulation/obj
-/examples/04-AdvancedOptions/obj
-/examples/02-Rendering/bin
-/examples/03-PageManipulation/bin
-/examples/04-AdvancedOptions/bin
-/examples/01-Basics/obj
-/examples/01-Basics/bin
-/examples/zh-CN/01-Basics/bin/Debug/net10.0
-/examples/zh-CN/01-Basics/obj
-/examples/zh-CN/02-Rendering/bin/Debug/net10.0
-/examples/zh-CN/02-Rendering/obj
-/examples/zh-CN/03-PageManipulation/bin/Debug/net10.0
-/examples/zh-CN/03-PageManipulation/obj
-/examples/zh-CN/04-AdvancedOptions/bin/Debug/net10.0
-/examples/zh-CN/04-AdvancedOptions/obj
+# Example build outputs (all languages)
+/examples/**/bin/
+/examples/**/obj/
