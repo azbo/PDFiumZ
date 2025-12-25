@@ -64,7 +64,7 @@ public abstract class PdfTextMarkupAnnotation : PdfAnnotation
         annotation.Color = color;
 
         // Set default quad points (single rectangle matching bounds)
-        annotation.SetQuadPoints(new[] { bounds });
+        annotation.SetQuadPoints([bounds]);
 
         return annotation;
     }

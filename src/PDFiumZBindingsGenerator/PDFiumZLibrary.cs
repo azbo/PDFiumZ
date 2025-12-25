@@ -51,7 +51,7 @@ namespace PDFiumZBindingsGenerator
             // Ensure that the win32 includes are ignored.
             module.Undefines.Add("_WIN32");
 
-            module.IncludeDirs.Add(Path.Combine(_exeLocation, "lib/clang/18/include"));
+            module.IncludeDirs.Add(Path.Combine(_exeLocation, "lib/clang/19/include"));
             module.IncludeDirs.Add(includeDirectory);
             module.IncludeDirs.Add(Path.Combine(includeDirectory, "cpp"));
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PDFiumZ.Utilities;
 
 namespace PDFiumZ.HighLevel;
 
@@ -121,12 +122,7 @@ public sealed unsafe class PdfFormField : PdfAnnotation
             ThrowIfDisposed();
 
             // Convert to UTF-16LE (ushort array)
-            var utf16Array = new ushort[value.Length + 1]; // +1 for null terminator
-            for (int i = 0; i < value.Length; i++)
-            {
-                utf16Array[i] = value[i];
-            }
-            utf16Array[value.Length] = 0; // Null terminator
+            var utf16Array = value.ToNullTerminatedUtf16Array();
 
             // Set the "V" (Value) key using FPDFAnnotSetStringValue
             var result = fpdf_annot.FPDFAnnotSetStringValue(_handle!, "V", ref utf16Array[0]);
@@ -166,12 +162,7 @@ public sealed unsafe class PdfFormField : PdfAnnotation
             // For checkboxes and radio buttons, we set the appearance state (AS)
             // "Yes" or "Off" are common values, but we need to check what values this field supports
             var stateValue = value ? "Yes" : "Off";
-            var utf16Array = new ushort[stateValue.Length + 1];
-            for (int i = 0; i < stateValue.Length; i++)
-            {
-                utf16Array[i] = stateValue[i];
-            }
-            utf16Array[stateValue.Length] = 0;
+            var utf16Array = stateValue.ToNullTerminatedUtf16Array();
 
             var result = fpdf_annot.FPDFAnnotSetStringValue(_handle!, "AS", ref utf16Array[0]);
             if (result == 0)

@@ -25,7 +25,7 @@ public static class PdfDocumentImageExtensions
     /// <example>
     /// <code>
     /// // Generate images for specific pages
-    /// var options = ImageGenerationOptions.ForPages(new[] { 0, 2, 4 });
+    /// var options = ImageGenerationOptions.ForPages([0, 2, 4]);
     /// foreach (var image in document.GenerateImages(options))
     /// {
     ///     // Use image
@@ -89,7 +89,7 @@ public static class PdfDocumentImageExtensions
     /// <example>
     /// <code>
     /// // Save specific pages to a directory
-    /// var options = ImageSaveOptions.ForPages("output", new[] { 0, 2, 4 });
+    /// var options = ImageSaveOptions.ForPages("output", [0, 2, 4]);
     /// var paths = document.SaveAsImages(options);
     ///
     /// // Save all pages with custom naming

@@ -552,7 +552,7 @@ public sealed unsafe class PdfPage : IDisposable
         if (index.HasValue)
         {
             var extracted = ExtractImage(index.Value);
-            return extracted != null ? new[] { extracted } : Array.Empty<PdfExtractedImage>();
+            return extracted != null ? [extracted] : Array.Empty<PdfExtractedImage>();
         }
 
         var images = new List<PdfExtractedImage>();

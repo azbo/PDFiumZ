@@ -550,7 +550,7 @@ public sealed class PdfDocument : IDisposable
     /// {
     ///     MaxWidth = 400,
     ///     Quality = 2,
-    ///     PageIndices = new[] { 0, 2, 4 }
+    ///     PageIndices = [0, 2, 4]
     /// };
     /// </code>
     /// </example>

@@ -529,7 +529,7 @@ public class HtmlToPdfConverter : IDisposable
         if (isSelfClosing)
             tagContent = tagContent.Substring(0, tagContent.Length - 1).Trim();
 
-        var parts = tagContent.Split(new[] { ' ' }, 2);
+        var parts = tagContent.Split([' '], 2);
         string tagName = parts[0].ToLower();
         var attributes = new Dictionary<string, string>();
 

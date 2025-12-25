@@ -62,6 +62,7 @@ PDF 注解创建和操作功能。
 | Example | 示例 |
 |---------|------|
 | [Link Annotations](./en-US/05-Annotations/LinkAnnotations.cs) | [链接注解](./zh-CN/05-Annotations/LinkAnnotations.cs) |
+| [Text Markup Annotations](./en-US/05-Annotations/TextMarkupAnnotations.cs) | [文本标记注解](./zh-CN/05-Annotations/TextMarkupAnnotations.cs) |
 
 ---
 

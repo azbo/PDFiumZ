@@ -1,4 +1,5 @@
 using System;
+using PDFiumZ.Utilities;
 
 namespace PDFiumZ.HighLevel;
 
@@ -89,12 +90,7 @@ public sealed unsafe class PdfTextAnnotation : PdfAnnotation
                 value = string.Empty;
 
             // Convert to UTF-16LE (ushort array)
-            var utf16Array = new ushort[value.Length + 1]; // +1 for null terminator
-            for (int i = 0; i < value.Length; i++)
-            {
-                utf16Array[i] = value[i];
-            }
-            utf16Array[value.Length] = 0; // Null terminator
+            var utf16Array = value.ToNullTerminatedUtf16Array();
 
             var result = fpdf_annot.FPDFAnnotSetStringValue(_handle!, "Contents", ref utf16Array[0]);
             if (result == 0)
@@ -137,12 +133,7 @@ public sealed unsafe class PdfTextAnnotation : PdfAnnotation
                 value = string.Empty;
 
             // Convert to UTF-16LE (ushort array)
-            var utf16Array = new ushort[value.Length + 1]; // +1 for null terminator
-            for (int i = 0; i < value.Length; i++)
-            {
-                utf16Array[i] = value[i];
-            }
-            utf16Array[value.Length] = 0; // Null terminator
+            var utf16Array = value.ToNullTerminatedUtf16Array();
 
             var result = fpdf_annot.FPDFAnnotSetStringValue(_handle!, "T", ref utf16Array[0]);
             if (result == 0)

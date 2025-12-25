@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using PDFiumZ.Utilities;
 
 namespace PDFiumZ.HighLevel;
 
@@ -61,12 +62,7 @@ public sealed unsafe class PdfContentEditor : IDisposable
         try
         {
             // Set text content (UTF-16LE)
-            var utf16Array = new ushort[text.Length + 1];
-            for (int i = 0; i < text.Length; i++)
-            {
-                utf16Array[i] = text[i];
-            }
-            utf16Array[text.Length] = 0;
+            var utf16Array = text.ToNullTerminatedUtf16Array();
 
             var result = fpdf_edit.FPDFTextSetText(textObj, ref utf16Array[0]);
             if (result == 0)

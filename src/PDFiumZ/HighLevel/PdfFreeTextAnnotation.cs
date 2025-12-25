@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using PDFiumZ.Utilities;
 
 namespace PDFiumZ.HighLevel;
 
@@ -78,11 +79,8 @@ public sealed unsafe class PdfFreeTextAnnotation : PdfAnnotation
         {
             ThrowIfDisposed();
             var str = value ?? string.Empty;
-            
-            var utf16Array = new ushort[str.Length + 1];
-            for (int i = 0; i < str.Length; i++)
-                utf16Array[i] = str[i];
-            utf16Array[str.Length] = 0;
+
+            var utf16Array = str.ToNullTerminatedUtf16Array();
 
             fpdf_annot.FPDFAnnotSetStringValue(_handle!, "Contents", ref utf16Array[0]);
         }
@@ -113,11 +111,8 @@ public sealed unsafe class PdfFreeTextAnnotation : PdfAnnotation
         {
             ThrowIfDisposed();
             var str = value ?? string.Empty;
-            
-            var utf16Array = new ushort[str.Length + 1];
-            for (int i = 0; i < str.Length; i++)
-                utf16Array[i] = str[i];
-            utf16Array[str.Length] = 0;
+
+            var utf16Array = str.ToNullTerminatedUtf16Array();
 
             fpdf_annot.FPDFAnnotSetStringValue(_handle!, "DA", ref utf16Array[0]);
         }

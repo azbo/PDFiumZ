@@ -1,4 +1,5 @@
 using System;
+using PDFiumZ.Utilities;
 
 namespace PDFiumZ.HighLevel;
 
@@ -140,12 +141,7 @@ public sealed unsafe class PdfStampAnnotation : PdfAnnotation
         };
 
         // Convert to UTF-16LE (ushort array)
-        var utf16Array = new ushort[iconName.Length + 1]; // +1 for null terminator
-        for (int i = 0; i < iconName.Length; i++)
-        {
-            utf16Array[i] = iconName[i];
-        }
-        utf16Array[iconName.Length] = 0; // Null terminator
+        var utf16Array = iconName.ToNullTerminatedUtf16Array();
 
         // Set the icon name using the "Name" key
         fpdf_annot.FPDFAnnotSetStringValue(_handle!, "Name", ref utf16Array[0]);

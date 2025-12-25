@@ -1750,7 +1750,7 @@
              {
                  MaxWidth = 400,
                  Quality = 2,
-                 PageIndices = new[] { 0, 2, 4 }
+                 PageIndices = [0, 2, 4]
              };
              </code>
              </example>
@@ -2114,7 +2114,7 @@
              <example>
              <code>
              // Generate images for specific pages
-             var options = ImageGenerationOptions.ForPages(new[] { 0, 2, 4 });
+             var options = ImageGenerationOptions.ForPages([0, 2, 4]);
              foreach (var image in document.GenerateImages(options))
              {
                  // Use image
@@ -2140,7 +2140,7 @@
              <example>
              <code>
              // Save specific pages to a directory
-             var options = ImageSaveOptions.ForPages("output", new[] { 0, 2, 4 });
+             var options = ImageSaveOptions.ForPages("output", [0, 2, 4]);
              var paths = document.SaveAsImages(options);
             
              // Save all pages with custom naming
@@ -2738,6 +2738,57 @@
         <member name="M:PDFiumZ.HighLevel.PdfLink.Dispose">
             <summary>
             Releases all resources used by the <see cref="T:PDFiumZ.HighLevel.PdfLink"/>.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.HighLevel.PdfLinkAnnotation">
+            <summary>
+            Represents a link annotation in a PDF document.
+            Supports external URI links (web URLs, email links, etc.).
+            </summary>
+            <remarks>
+            Link annotations create clickable areas on PDF pages that can open external URIs.
+            Note: PDFium 145 does not support creating internal page destination links programmatically.
+            </remarks>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfLinkAnnotation.CreateExternal(PDFiumZ.HighLevel.PdfPage,PDFiumZ.HighLevel.PdfRectangle,System.String,System.UInt32)">
+             <summary>
+             Creates an external link annotation that opens a URI when clicked.
+             </summary>
+             <param name="page">The page to add the link to.</param>
+             <param name="bounds">The clickable area of the link in page coordinates.</param>
+             <param name="uri">The URI to open (e.g., "https://example.com", "mailto:user@example.com").</param>
+             <param name="color">The link border color in ARGB format (default: transparent blue 0x400000FF).</param>
+             <returns>A new link annotation.</returns>
+             <exception cref="T:System.ArgumentNullException">page or uri is null.</exception>
+             <exception cref="T:System.ObjectDisposedException">page has been disposed.</exception>
+             <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to create link annotation or set URI.</exception>
+             <example>
+             <code>
+             using var doc = PdfDocument.CreateNew();
+             using var page = doc.CreatePage();
+            
+             // Create a clickable link to a website
+             var bounds = new PdfRectangle(50, 700, 200, 30);
+             using var link = PdfLinkAnnotation.CreateExternal(page, bounds, "https://github.com/casbin-net/pdfiumz");
+             </code>
+             </example>
+        </member>
+        <member name="P:PDFiumZ.HighLevel.PdfLinkAnnotation.Uri">
+            <summary>
+            Sets the URI target of this link annotation.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">The annotation has been disposed.</exception>
+            <exception cref="T:System.ArgumentNullException">Value is null when setting.</exception>
+            <exception cref="T:PDFiumZ.HighLevel.PdfException">Failed to set URI.</exception>
+            <remarks>
+            This property is write-only. PDFium does not provide a direct API to read the URI back from a link annotation.
+            To read existing link URIs, use the PdfLink class and its Destination property instead.
+            </remarks>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfLinkAnnotation.#ctor(PDFiumZ.FpdfAnnotationT,PDFiumZ.HighLevel.PdfPage,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfLinkAnnotation"/> class.
+            Internal constructor - created by factory methods or PdfPage only.
             </summary>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfLinkDestination">
@@ -3769,6 +3820,11 @@
             Represents a single text search result with position and bounding rectangles.
             </summary>
         </member>
+        <member name="M:PDFiumZ.HighLevel.PdfTextSearchResult.#ctor(System.Int32,System.Int32,System.String,System.Collections.Generic.IReadOnlyList{PDFiumZ.HighLevel.PdfRectangle})">
+            <summary>
+            Represents a single text search result with position and bounding rectangles.
+            </summary>
+        </member>
         <member name="P:PDFiumZ.HighLevel.PdfTextSearchResult.CharIndex">
             <summary>
             Gets the zero-based character index of the first character in the search result.
@@ -3789,15 +3845,6 @@
             Gets the bounding rectangles for the search result.
             Multiple rectangles occur when text spans multiple lines.
             </summary>
-        </member>
-        <member name="M:PDFiumZ.HighLevel.PdfTextSearchResult.#ctor(System.Int32,System.Int32,System.String,System.Collections.Generic.IReadOnlyList{PDFiumZ.HighLevel.PdfRectangle})">
-            <summary>
-            Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfTextSearchResult"/> class.
-            </summary>
-            <param name="charIndex">Character index of the match.</param>
-            <param name="charCount">Number of characters in the match.</param>
-            <param name="text">Matched text content.</param>
-            <param name="boundingRectangles">Bounding rectangles for the match.</param>
         </member>
         <member name="T:PDFiumZ.HighLevel.PdfUnderlineAnnotation">
             <summary>
