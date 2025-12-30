@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net10.0;net9.0;net8.0;netstandard2.1;netstandard2.0</TargetFrameworks>
-    <Version>145.0.7606.2</Version>
+    <Version>145.0.7606.3</Version>
     <AssemblyName>PDFiumZ</AssemblyName>
     <PackageId>PDFiumZ</PackageId>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
