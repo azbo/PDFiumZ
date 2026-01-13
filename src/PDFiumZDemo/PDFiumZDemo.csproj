@@ -19,7 +19,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="SkiaSharp" Version="3.119.1" />
-    <PackageReference Include="Svg.Skia" Version="3.4.0" />
+    <PackageReference Include="Svg.Skia" Version="3.4.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +31,5 @@
   <ItemGroup>
     <ProjectReference Include="..\PDFiumZ\PDFiumZ.csproj" />
   </ItemGroup>
-
-
 
 </Project>
