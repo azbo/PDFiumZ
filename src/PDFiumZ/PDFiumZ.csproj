@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net10.0;net9.0;net8.0;netstandard2.1;netstandard2.0</TargetFrameworks>
-    <Version>145.0.7630.0</Version>
+    <Version>146.0.7643.0</Version>
     <AssemblyName>PDFiumZ</AssemblyName>
     <PackageId>PDFiumZ</PackageId>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -14,7 +14,7 @@
     <NoWarn>$(NoWarn);CS8632;SYSLIB0003;CS1591;CS8981</NoWarn>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/azbo/PDFiumZ</PackageProjectUrl>
-    <Description>PDFiumZ - Modern .NET wrapper for Google PDFium. Convert PDF to image, extract text, create PDF, edit PDF, render PDF pages, manipulate form fields, add annotations, bookmarks. High-level fluent API + low-level P/Invoke bindings. Cross-platform: Windows, Linux, macOS. Based on PDFium 145.0.7630 (Chromium 145). Supports .NET 10.0, 9.0, 8.0, .NET Standard 2.1, 2.0. QuestPDF-style declarative document generation. HTML to PDF conversion.</Description>
+    <Description>PDFiumZ - Modern .NET wrapper for Google PDFium. Convert PDF to image, extract text, create PDF, edit PDF, render PDF pages, manipulate form fields, add annotations, bookmarks. High-level fluent API + low-level P/Invoke bindings. Cross-platform: Windows, Linux, macOS. Based on PDFium 146.0.7643 (Chromium 146). Supports .NET 10.0, 9.0, 8.0, .NET Standard 2.1, 2.0. QuestPDF-style declarative document generation. HTML to PDF conversion.</Description>
     <PackageTags>pdf pdfium pdf-rendering pdf-to-image pdf-viewer pdf-converter pdf-reader pdf-manipulation pdf-library text-extraction image-extraction form-filling pdf-forms annotations bookmarks dotnet csharp pinvoke cross-platform linux macos windows pdf-generation html-to-pdf document-processing</PackageTags>
     <PackageReadmeFile>README.nuget.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/azbo/PDFiumZ</RepositoryUrl>
@@ -32,9 +32,9 @@
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="bblanchon.PDFium.Linux" Version="145.0.7630" PrivateAssets="analyzers" />
-    <PackageReference Include="bblanchon.PDFium.macOS" Version="145.0.7630" PrivateAssets="analyzers" />
-    <PackageReference Include="bblanchon.PDFium.Win32" Version="145.0.7630" PrivateAssets="analyzers" />
+    <PackageReference Include="bblanchon.PDFium.Linux" Version="146.0.7643" PrivateAssets="analyzers" />
+    <PackageReference Include="bblanchon.PDFium.macOS" Version="146.0.7643" PrivateAssets="analyzers" />
+    <PackageReference Include="bblanchon.PDFium.Win32" Version="146.0.7643" PrivateAssets="analyzers" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" PrivateAssets="All" Condition="'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netstandard2.1'" />
     <PackageReference Include="System.Memory" Version="4.6.3" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
