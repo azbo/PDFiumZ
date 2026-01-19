@@ -9,13 +9,14 @@ namespace PDFiumZBindingsGenerator
     class PDFiumZLibrary : ILibrary
     {
         private readonly string _directoryName;
+        private readonly string _includeDirectory;
         private readonly string _exeLocation;
 
-        public PDFiumZLibrary(string directoryName)
+        public PDFiumZLibrary(string directoryName, string includeDirectory = null)
         {
             _directoryName = directoryName;
+            _includeDirectory = includeDirectory ?? Path.Combine(directoryName, "include");
             _exeLocation = Path.GetDirectoryName(typeof(PDFiumZLibrary).Assembly.Location);
-
         }
 
 
@@ -33,7 +34,6 @@ namespace PDFiumZBindingsGenerator
 
         public void Setup(Driver driver)
         {
-            var includeDirectory = Path.Combine(_directoryName, "include");
             driver.ParserOptions.SetupMSVC(VisualStudioVersion.Latest);
             var options = driver.Options;
             options.GeneratorKind = GeneratorKind.CSharp;
@@ -52,11 +52,11 @@ namespace PDFiumZBindingsGenerator
             module.Undefines.Add("_WIN32");
 
             module.IncludeDirs.Add(Path.Combine(_exeLocation, "lib/clang/19/include"));
-            module.IncludeDirs.Add(includeDirectory);
-            module.IncludeDirs.Add(Path.Combine(includeDirectory, "cpp"));
+            module.IncludeDirs.Add(_includeDirectory);
+            module.IncludeDirs.Add(Path.Combine(_includeDirectory, "cpp"));
 
-            var dirinfo = new DirectoryInfo(includeDirectory);
-            
+            var dirinfo = new DirectoryInfo(_includeDirectory);
+
             foreach (var file in dirinfo.GetFiles("*.h"))
             {
                 if(file.Name == "fpdf_ext.h")

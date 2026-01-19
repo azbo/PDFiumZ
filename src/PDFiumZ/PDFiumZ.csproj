@@ -35,7 +35,7 @@
     <PackageReference Include="bblanchon.PDFium.Linux" Version="146.0.7643" PrivateAssets="analyzers" />
     <PackageReference Include="bblanchon.PDFium.macOS" Version="146.0.7643" PrivateAssets="analyzers" />
     <PackageReference Include="bblanchon.PDFium.Win32" Version="146.0.7643" PrivateAssets="analyzers" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.102" PrivateAssets="All" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" PrivateAssets="All" Condition="'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netstandard2.1'" />
     <PackageReference Include="System.Memory" Version="4.6.3" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>

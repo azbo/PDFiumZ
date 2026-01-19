@@ -51,8 +51,8 @@ public sealed unsafe class PdfLink : IDisposable
         var action = fpdf_doc.FPDFLinkGetAction(_linkHandle!);
         if (action != null && action.__Instance != IntPtr.Zero)
         {
-            // Get action type
-            var actionType = fpdf_doc.FPDFActionGetType(action);
+            // Get action type - pass the pointer value as uint due to CppSharp binding issue
+            var actionType = fpdf_doc.FPDFActionGetType((uint)action.__Instance.ToInt64());
 
             // Type 3 = URI
             if (actionType == 3)

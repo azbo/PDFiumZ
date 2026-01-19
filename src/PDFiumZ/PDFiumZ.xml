@@ -6549,7 +6549,7 @@
             <para>associated with |bookmark|.</para>
             </summary>
         </member>
-        <member name="M:PDFiumZ.fpdf_doc.FPDFBookmarkGetAction(PDFiumZ.FpdfBookmarkT)">
+        <member name="M:PDFiumZ.fpdf_doc.FPDFBookmarkGetAction(System.String)">
             <summary>
             <para>Get the action associated with |bookmark|.</para>
             <para>bookmark - handle to the bookmark.</para>
@@ -6561,7 +6561,7 @@
             <para>the |bookmark| destination data.</para>
             </summary>
         </member>
-        <member name="M:PDFiumZ.fpdf_doc.FPDFActionGetType(PDFiumZ.FpdfActionT)">
+        <member name="M:PDFiumZ.fpdf_doc.FPDFActionGetType(System.UInt32)">
             <summary>
             <para>Get the type of |action|.</para>
             <para>action - handle to the action.</para>
@@ -6758,7 +6758,7 @@
             <para>valid.</para>
             </summary>
         </member>
-        <member name="M:PDFiumZ.fpdf_doc.FPDF_GetFileIdentifier(PDFiumZ.FpdfDocumentT,PDFiumZ.FPDF_FILEIDTYPE,System.IntPtr,System.UInt32)">
+        <member name="M:PDFiumZ.fpdf_doc.FPDF_GetFileIdentifier(PDFiumZ.FpdfDocumentT,PDFiumZ.FpdfFormHandleT,System.IntPtr,System.UInt32)">
             <summary>
             <para>Experimental API.</para>
             <para>Get the file identifer defined in the trailer of |document|.</para>
@@ -6846,17 +6846,17 @@
             <para>indeterminate state.</para>
             <para>Example: The PDF document starts out with pages [A, B, C, D], with indices</para>
             <para>[0, 1, 2, 3].</para>
-            <para>Move(doc, [3, 2], 2, 1); // returns true</para>
-            <para>// The document has pages [A, D, C, B].</para>
-            <para></para>
-            <para>Move(doc, [0, 4, 3], 3, 1); // returns false</para>
-            <para>// Returned false because index 4 is out of range.</para>
-            <para></para>
-            <para>Move(doc, [0, 3, 1], 3, 2); // returns false</para>
-            <para>// Returned false because index 2 is out of range for 3 page indices.</para>
-            <para></para>
-            <para>Move(doc, [2, 2], 2, 0); // returns false</para>
-            <para>// Returned false because [2, 2] contains duplicates.</para>
+            <para>&gt;  Move(doc, [3, 2], 2, 1); // returns true</para>
+            <para>&gt;  // The document has pages [A, D, C, B].</para>
+            <para>&gt;</para>
+            <para>&gt;  Move(doc, [0, 4, 3], 3, 1); // returns false</para>
+            <para>&gt;  // Returned false because index 4 is out of range.</para>
+            <para>&gt;</para>
+            <para>&gt;  Move(doc, [0, 3, 1], 3, 2); // returns false</para>
+            <para>&gt;  // Returned false because index 2 is out of range for 3 page indices.</para>
+            <para>&gt;</para>
+            <para>&gt;  Move(doc, [2, 2], 2, 0); // returns false</para>
+            <para>&gt;  // Returned false because [2, 2] contains duplicates.</para>
             </summary>
         </member>
         <member name="M:PDFiumZ.fpdf_edit.FPDFPageGetRotation(PDFiumZ.FpdfPageT)">
@@ -8241,7 +8241,7 @@
             <para>Returns TRUE on success.</para>
             </summary>
         </member>
-        <member name="M:PDFiumZ.fpdf_progressive.FPDF_RenderPageBitmapWithColorSchemeStart(PDFiumZ.FpdfBitmapT,PDFiumZ.FpdfPageT,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,PDFiumZ.FPDF_COLORSCHEME_,PDFiumZ.IFSDK_PAUSE)">
+        <member name="M:PDFiumZ.fpdf_progressive.FPDF_RenderPageBitmapWithColorSchemeStart(PDFiumZ.FpdfBitmapT,PDFiumZ.FpdfPageT,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,PDFiumZ.FpdfPageobjectT,PDFiumZ.IFSDK_PAUSE)">
             <summary>
             <para>Function: FPDF_RenderPageBitmapWithColorScheme_Start</para>
             <para>Start to render page contents to a device independent bitmap</para>
