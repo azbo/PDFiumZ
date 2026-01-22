@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using PDFiumZ.HighLevel;
 using PDFiumZ.Fluent.Elements;
+using PDFiumZ.Fluent.Elements.Visual;
 
 namespace PDFiumZ.Fluent.Document;
 
@@ -128,11 +129,30 @@ public class FluentDocument : IDisposable
 public interface IContainer
 {
     void Text(string text);
+    void SpanText(Action<ISpanTextContainer> builder);
+    void HtmlText(string html, List<string>? highlightWords = null);
+    void Table(Action<ITableContainer> builder);
     void Column(Action<IColumnContainer> builder);
     void Row(Action<IRowContainer> builder);
     void Padding(double all, Action<IContainer> content);
     void Background(uint color, Action<IContainer> content);
     void Border(uint color, double width, Action<IContainer> content);
+}
+
+public interface ISpanTextContainer
+{
+    void Span(string text, uint color = 0, double fontSize = 0);
+}
+
+public interface ITableContainer
+{
+    void Header(Action<ITableRowContainer> builder);
+    void Row(Action<ITableRowContainer> builder);
+}
+
+public interface ITableRowContainer
+{
+    void Cell(string text);
 }
 
 public interface IColumnContainer
@@ -153,7 +173,30 @@ internal class DocumentContainer : IContainer
 
     public void Text(string text)
     {
-        _element = new Elements.Visual.TextElement(text);
+        _element = new TextElement(text);
+    }
+
+    public void SpanText(Action<ISpanTextContainer> builder)
+    {
+        var container = new SpanTextContainer();
+        builder(container);
+        _element = container.GetElement();
+    }
+
+    public void HtmlText(string html, List<string>? highlightWords = null)
+    {
+        _element = new HtmlTextElement
+        {
+            HtmlContent = html,
+            HighlightWords = highlightWords ?? new List<string>()
+        };
+    }
+
+    public void Table(Action<ITableContainer> builder)
+    {
+        var container = new TableContainer();
+        builder(container);
+        _element = container.GetElement();
     }
 
     public void Column(Action<IColumnContainer> builder)
@@ -198,6 +241,51 @@ internal class DocumentContainer : IContainer
         var border = new Elements.Visual.BorderElement(color, width);
         border.Child = innerContainer.GetElement();
         _element = border;
+    }
+}
+
+internal class SpanTextContainer : ISpanTextContainer
+{
+    private readonly SpanTextElement _element = new();
+
+    public IElement GetElement() => _element;
+
+    public void Span(string text, uint color = 0, double fontSize = 0)
+    {
+        _element.Spans.Add(new TextSpan(text, color, fontSize));
+    }
+}
+
+internal class TableContainer : ITableContainer
+{
+    private readonly TableElement _element = new();
+
+    public IElement GetElement() => _element;
+
+    public void Header(Action<ITableRowContainer> builder)
+    {
+        var container = new TableRowContainer();
+        builder(container);
+        _element.Headers = container.GetCells();
+    }
+
+    public void Row(Action<ITableRowContainer> builder)
+    {
+        var container = new TableRowContainer();
+        builder(container);
+        _element.Rows.Add(container.GetCells());
+    }
+}
+
+internal class TableRowContainer : ITableRowContainer
+{
+    private readonly List<TableCell> _cells = new();
+
+    public List<TableCell> GetCells() => _cells;
+
+    public void Cell(string text)
+    {
+        _cells.Add(new TableCell(text));
     }
 }
 

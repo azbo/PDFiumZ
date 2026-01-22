@@ -149,6 +149,11 @@
             Applies a border around its child.
             </summary>
         </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Visual.FooterElement">
+            <summary>
+            Footer element that displays page numbers.
+            </summary>
+        </member>
         <member name="T:PDFiumZ.Fluent.Elements.Visual.ImageElement">
             <summary>
             Renders an image from a file or byte array.
@@ -157,6 +162,33 @@
         <member name="T:PDFiumZ.Fluent.Elements.Visual.LineElement">
             <summary>
             Draws a horizontal or vertical line.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Visual.SpanTextElement">
+            <summary>
+            Renders text with inline spans that have different styles (colors, bold, etc.).
+            Similar to HTML span tags within a text block.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Visual.TextSpan">
+            <summary>
+            Represents a text span with specific styling.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Visual.HtmlTextElement">
+            <summary>
+            Renders HTML-like text with basic formatting support.
+            Supports: &lt;br&gt;, &lt;b&gt;, &lt;span color="#"&gt;, &amp;nbsp;, &amp;emsp;, &amp;mdash;, etc.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Visual.TableElement">
+            <summary>
+            Renders a table with headers and rows.
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.Fluent.Elements.Visual.TableCell">
+            <summary>
+            Represents a table cell.
             </summary>
         </member>
         <member name="T:PDFiumZ.Fluent.Elements.Visual.TextElement">
