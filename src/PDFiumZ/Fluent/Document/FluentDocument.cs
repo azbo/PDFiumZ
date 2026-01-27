@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using PDFiumZ.HighLevel;
 using PDFiumZ.Fluent.Elements;
 using PDFiumZ.Fluent.Elements.Visual;
@@ -76,6 +77,10 @@ public class FluentDocument : IDisposable
         // Create a new page
         using var page = _document.CreatePage(pageSize.Width, pageSize.Height);
         using var editor = page.BeginEdit();
+
+        // Fill page with white background
+        var pageBounds = new PdfRectangle(0, 0, pageSize.Width, pageSize.Height);
+        editor.Rectangle(pageBounds, PdfColor.Transparent, PdfColor.White);
 
         var measureContext = new MeasureContext
         {
@@ -314,5 +319,79 @@ internal class RowContainer : IRowContainer
         var container = new DocumentContainer();
         content(container);
         _row.AddChild(container.GetElement());
+    }
+}
+
+/// <summary>
+/// 辅助类，用于加载中文字体
+/// </summary>
+public static class FontHelper
+{
+    /// <summary>
+    /// 加载中文字体（自动检测系统字体）
+    /// </summary>
+    public static PdfFont LoadChineseFont(PdfDocument document)
+    {
+        // Windows 系统字体路径（优先使用 TTF 而不是 TTC）
+        string[] fontPaths = new[]
+        {
+            @"C:\Windows\Fonts\simhei.ttf",    // 黑体 (TTF - 优先)
+            @"C:\Windows\Fonts\simsun.ttf",    // 宋体 (TTF)
+            @"C:\Windows\Fonts\msyh.ttf",      // 微软雅黑 (TTF，如果存在)
+            @"C:\Windows\Fonts\msyh.ttc",      // 微软雅黑 (TTC)
+            @"C:\Windows\Fonts\msyhbd.ttc",    // 微软雅黑粗体 (TTC)
+            @"C:\Windows\Fonts\simsun.ttc",    // 宋体 (TTC)
+            @"/System/Library/Fonts/PingFang.ttc",  // macOS
+            @"/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf"  // Linux
+        };
+
+        foreach (var fontPath in fontPaths)
+        {
+            if (File.Exists(fontPath))
+            {
+                try
+                {
+                    return PdfFont.Load(document, fontPath, isCidFont: true);
+                }
+                catch (PdfException)
+                {
+                    // TTC 字体可能加载失败，继续尝试下一个
+                    continue;
+                }
+            }
+        }
+
+        // 如果找不到中文字体，抛出异常
+        throw new FileNotFoundException(
+            "找不到中文字体文件。请确保系统已安装中文字体（如黑体、宋体、微软雅黑等）。" +
+            Environment.NewLine +
+            "支持的字体路径: " + string.Join(", ", fontPaths));
+    }
+
+    /// <summary>
+    /// 从指定路径加载自定义字体
+    /// </summary>
+    public static PdfFont LoadCustomFont(PdfDocument document, string fontPath)
+    {
+        if (!File.Exists(fontPath))
+            throw new FileNotFoundException($"字体文件不存在: {fontPath}");
+
+        return PdfFont.Load(document, fontPath, isCidFont: true);
+    }
+
+    /// <summary>
+    /// 尝试加载中文字体，如果失败则回退到标准字体
+    /// </summary>
+    public static PdfFont LoadChineseFontOrDefault(PdfDocument document, PdfStandardFont defaultFont = PdfStandardFont.Helvetica)
+    {
+        try
+        {
+            return LoadChineseFont(document);
+        }
+        catch (FileNotFoundException)
+        {
+            // 回退到标准字体
+            return PdfFont.Load(document, defaultFont);
+        }
     }
 }

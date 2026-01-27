@@ -38,7 +38,7 @@ public sealed unsafe class PdfContentEditor : IDisposable
         _page = page ?? throw new ArgumentNullException(nameof(page));
     }
 
-    private FpdfPageobjectT AddTextInternal(string text, double x, double y, PdfFont font, double fontSize)
+    private FpdfPageobjectT AddTextInternal(string text, double x, double y, PdfFont font, double fontSize, uint textColor = 0xFF000000)
     {
         if (text is null)
             throw new ArgumentNullException(nameof(text));
@@ -48,11 +48,25 @@ public sealed unsafe class PdfContentEditor : IDisposable
         ThrowIfDisposed();
         _page.ThrowIfDisposed();
 
-        // Create text object
-        var textObj = fpdf_edit.FPDFPageObjNewTextObj(
-            _page._document._handle!,
-            font.Name,
-            (float)fontSize);
+        FpdfPageobjectT textObj;
+
+        // Use different API based on font type
+        if (font.IsCustomFont)
+        {
+            // For custom fonts (TrueType/OpenType), use FPDFPageObjCreateTextObj with font handle
+            textObj = fpdf_edit.FPDFPageObjCreateTextObj(
+                _page._document._handle!,
+                font.Handle,
+                (float)fontSize);
+        }
+        else
+        {
+            // For standard fonts, use FPDFPageObjNewTextObj with font name
+            textObj = fpdf_edit.FPDFPageObjNewTextObj(
+                _page._document._handle!,
+                font.Name,
+                (float)fontSize);
+        }
 
         if (textObj is null || textObj.__Instance == IntPtr.Zero)
         {
@@ -69,6 +83,13 @@ public sealed unsafe class PdfContentEditor : IDisposable
             {
                 throw new PdfException("Failed to set text content.");
             }
+
+            // Set text fill color (ARGB to RGB)
+            uint a = (textColor >> 24) & 0xFF;
+            uint r = (textColor >> 16) & 0xFF;
+            uint g = (textColor >> 8) & 0xFF;
+            uint b = textColor & 0xFF;
+            fpdf_edit.FPDFPageObjSetFillColor(textObj, r, g, b, a);
 
             // Position the text object using transformation matrix
             // Matrix: [a b c d e f] where:
@@ -401,8 +422,9 @@ public sealed unsafe class PdfContentEditor : IDisposable
     {
         var targetFont = font ?? _defaultFont ?? throw new InvalidOperationException("Font is not specified and no default font is set. Call WithFont(font) first.");
         var targetSize = fontSize > 0 ? fontSize : _defaultFontSize;
+        var targetColor = _defaultTextColor;
 
-        AddTextInternal(text, x, y, targetFont, targetSize);
+        AddTextInternal(text, x, y, targetFont, targetSize, targetColor);
         return this;
     }
 

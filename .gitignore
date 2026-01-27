@@ -18,4 +18,5 @@
 # Example build outputs (all languages)
 /examples/**/bin/
 /examples/**/obj/
+/examples/**/output/
 .workflow/

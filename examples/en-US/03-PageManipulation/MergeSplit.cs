@@ -12,8 +12,14 @@ namespace MergeSplitExample;
 /// </summary>
 class Program
 {
+    // Output directory for generated PDF files
+    private const string OutputDir = "output";
+
     static void Main(string[] args)
     {
+        // Ensure output directory exists
+        Directory.CreateDirectory(OutputDir);
+
         Console.WriteLine("=== PDFiumZ Document Merge and Split Examples ===\n");
 
         // Initialize PDFium
@@ -25,9 +31,9 @@ class Program
             // Prepare sample files
             // ============================================
             Console.WriteLine("Preparing sample files...");
-            string samplePdf1 = "sample1.pdf";
-            string samplePdf2 = "sample2.pdf";
-            string samplePdf3 = "sample3.pdf";
+            string samplePdf1 = Path.Combine(OutputDir, "sample1.pdf");
+            string samplePdf2 = Path.Combine(OutputDir, "sample2.pdf");
+            string samplePdf3 = Path.Combine(OutputDir, "sample3.pdf");
 
             // Create sample files
             CreateSamplePdf(samplePdf1, "Document 1", 3);
@@ -47,14 +53,15 @@ class Program
             // Example 2: Split PDF - Extract specific pages
             // ============================================
             Console.WriteLine("Example 2: Split PDF - Extract specific pages");
-            Example2_SplitDocument("merged.pdf");
+            string mergedPath = Path.Combine(OutputDir, "merged.pdf");
+            Example2_SplitDocument(mergedPath);
             Console.WriteLine();
 
             // ============================================
             // Example 3: Split each page into separate files
             // ============================================
             Console.WriteLine("Example 3: Split each page into separate files");
-            Example3_SplitAllPages("merged.pdf");
+            Example3_SplitAllPages(mergedPath);
             Console.WriteLine();
 
             // ============================================
@@ -62,7 +69,7 @@ class Program
             // ============================================
             Console.WriteLine("Example 4: Split using Range syntax");
 #if NET8_0_OR_GREATER
-            Example4_SplitWithRange("merged.pdf");
+            Example4_SplitWithRange(mergedPath);
 #else
             Console.WriteLine("  (Requires .NET 8+ support)");
 #endif
@@ -72,18 +79,18 @@ class Program
             // Example 5: Rotate and save
             // ============================================
             Console.WriteLine("Example 5: Rotate pages and save");
-            Example5_RotateAndSave("merged.pdf");
+            Example5_RotateAndSave(mergedPath);
             Console.WriteLine();
 
             // ============================================
             // Example 6: Delete pages and save
             // ============================================
             Console.WriteLine("Example 6: Delete specific pages");
-            Example6_DeletePages("merged.pdf");
+            Example6_DeletePages(mergedPath);
             Console.WriteLine();
 
             Console.WriteLine("=== All examples completed ===");
-            Console.WriteLine("\nGenerated files:");
+            Console.WriteLine($"\nGenerated files in '{OutputDir}/':");
             Console.WriteLine("  - sample1.pdf, sample2.pdf, sample3.pdf (sample source files)");
             Console.WriteLine("  - merged.pdf (merged document)");
             Console.WriteLine("  - split_first3.pdf (first 3 pages)");
@@ -121,8 +128,9 @@ class Program
         using var merged = PdfDocument.Merge(files);
         Console.WriteLine($"  ✓ Merge completed, total {merged.PageCount} pages");
 
-        merged.Save("merged.pdf");
-        Console.WriteLine("  ✓ Saved as: merged.pdf");
+        string mergedOutput = Path.Combine(OutputDir, "merged.pdf");
+        merged.Save(mergedOutput);
+        Console.WriteLine($"  ✓ Saved as: {mergedOutput}");
     }
 
     /// <summary>
@@ -136,14 +144,16 @@ class Program
         // Extract first 3 pages
         Console.WriteLine("  Extracting first 3 pages...");
         using var first3 = document.Split(0, 1, 2);
-        first3.Save("split_first3.pdf");
-        Console.WriteLine($"  ✓ Saved as: split_first3.pdf ({first3.PageCount} pages)");
+        string first3Output = Path.Combine(OutputDir, "split_first3.pdf");
+        first3.Save(first3Output);
+        Console.WriteLine($"  ✓ Saved as: {first3Output} ({first3.PageCount} pages)");
 
         // Extract last 2 pages
         Console.WriteLine("  Extracting last 2 pages...");
         using var last2 = document.Split(document.PageCount - 2, document.PageCount - 1);
-        last2.Save("split_last2.pdf");
-        Console.WriteLine($"  ✓ Saved as: split_last2.pdf ({last2.PageCount} pages)");
+        string last2Output = Path.Combine(OutputDir, "split_last2.pdf");
+        last2.Save(last2Output);
+        Console.WriteLine($"  ✓ Saved as: {last2Output} ({last2.PageCount} pages)");
     }
 
     /// <summary>
@@ -152,8 +162,8 @@ class Program
     private static void Example3_SplitAllPages(string sourceFile)
     {
         using var document = PdfDocument.Open(sourceFile);
-        string outputDir = "split_pages";
-        Directory.CreateDirectory(outputDir);
+        string splitPagesDir = Path.Combine(OutputDir, "split_pages");
+        Directory.CreateDirectory(splitPagesDir);
 
         Console.WriteLine($"  Splitting {document.PageCount} pages into separate files...");
 
@@ -164,11 +174,11 @@ class Program
             using var newPage = singlePage.CreatePage(page.Width, page.Height);
 
             // Copy page content (simplified example, actual implementation needs complete copy)
-            string outputPath = Path.Combine(outputDir, $"page_{i + 1}.pdf");
+            string outputPath = Path.Combine(splitPagesDir, $"page_{i + 1}.pdf");
             singlePage.Save(outputPath);
         }
 
-        Console.WriteLine($"  ✓ Saved to: {outputDir}/");
+        Console.WriteLine($"  ✓ Saved to: {splitPagesDir}/");
     }
 
     /// <summary>
@@ -187,8 +197,9 @@ class Program
         Console.WriteLine($"  Extracting page range: {range} (index {offset}, {length} pages total)");
 
         using var extracted = document.Split(pageIndices);
-        extracted.Save("split_range.pdf");
-        Console.WriteLine($"  ✓ Saved as: split_range.pdf ({extracted.PageCount} pages)");
+        string rangeOutput = Path.Combine(OutputDir, "split_range.pdf");
+        extracted.Save(rangeOutput);
+        Console.WriteLine($"  ✓ Saved as: {rangeOutput} ({extracted.PageCount} pages)");
     }
 #endif
 
@@ -204,8 +215,9 @@ class Program
         Console.WriteLine("  Rotating first 3 pages by 90 degrees...");
         document.RotatePages(PdfRotation.Rotate90, 0, 1, 2);
 
-        document.Save("rotated.pdf");
-        Console.WriteLine("  ✓ Saved as: rotated.pdf");
+        string rotatedOutput = Path.Combine(OutputDir, "rotated.pdf");
+        document.Save(rotatedOutput);
+        Console.WriteLine($"  ✓ Saved as: {rotatedOutput}");
     }
 
     /// <summary>
@@ -221,8 +233,9 @@ class Program
         Console.WriteLine("  Deleting page 2...");
         document.DeletePages(1);
 
-        document.Save("deleted.pdf");
-        Console.WriteLine($"  ✓ Saved as: deleted.pdf (original {originalCount} pages → current {document.PageCount} pages)");
+        string deletedOutput = Path.Combine(OutputDir, "deleted.pdf");
+        document.Save(deletedOutput);
+        Console.WriteLine($"  ✓ Saved as: {deletedOutput} (original {originalCount} pages → current {document.PageCount} pages)");
     }
 
     /// <summary>

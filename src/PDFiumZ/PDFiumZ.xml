@@ -39,6 +39,26 @@
             Container for building document content.
             </summary>
         </member>
+        <member name="T:PDFiumZ.Fluent.Document.FontHelper">
+            <summary>
+            辅助类，用于加载中文字体
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.Fluent.Document.FontHelper.LoadChineseFont(PDFiumZ.HighLevel.PdfDocument)">
+            <summary>
+            加载中文字体（自动检测系统字体）
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.Fluent.Document.FontHelper.LoadCustomFont(PDFiumZ.HighLevel.PdfDocument,System.String)">
+            <summary>
+            从指定路径加载自定义字体
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.Fluent.Document.FontHelper.LoadChineseFontOrDefault(PDFiumZ.HighLevel.PdfDocument,PDFiumZ.HighLevel.PdfStandardFont)">
+            <summary>
+            尝试加载中文字体，如果失败则回退到标准字体
+            </summary>
+        </member>
         <member name="T:PDFiumZ.Fluent.ElementExtensions">
             <summary>
             Extension methods for fluent API composition.
@@ -2249,7 +2269,12 @@
             Gets the base font name.
             </summary>
         </member>
-        <member name="M:PDFiumZ.HighLevel.PdfFont.#ctor(PDFiumZ.FpdfFontT,PDFiumZ.HighLevel.PdfDocument,System.String)">
+        <member name="P:PDFiumZ.HighLevel.PdfFont.IsCustomFont">
+            <summary>
+            Gets a value indicating whether this is a custom loaded font (TrueType/OpenType).
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.HighLevel.PdfFont.#ctor(PDFiumZ.FpdfFontT,PDFiumZ.HighLevel.PdfDocument,System.String,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:PDFiumZ.HighLevel.PdfFont"/> class.
             Internal constructor - use factory methods to create fonts.

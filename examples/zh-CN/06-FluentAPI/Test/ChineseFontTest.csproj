@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\PDFiumZ\PDFiumZ.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="bblanchon.PDFium.Win32" Version="146.0.7643" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ChineseFontTest.cs;ChineseTextExtractionTest.cs;ChineseFontVerify.cs" />
+  </ItemGroup>
+
+</Project>

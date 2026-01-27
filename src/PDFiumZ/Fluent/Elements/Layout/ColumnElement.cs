@@ -51,14 +51,15 @@ public class ColumnElement : MultiContainer
         for (int i = 0; i < Children.Count; i++)
         {
             if (i > 0)
-                currentY += Spacing;
+                currentY -= Spacing;  // PDF Y coordinates decrease going down
 
-            if (currentY >= context.Position.Y + availableHeight)
+            // Check if we've gone below the bottom of available space
+            if (context.Position.Y - currentY >= availableHeight)
                 break;
 
             var childContext = context.Clone();
             childContext.Position = new Position(context.Position.X, currentY);
-            childContext.AvailableSpace = new Size(context.AvailableSpace.Width, availableHeight - (currentY - context.Position.Y));
+            childContext.AvailableSpace = new Size(context.AvailableSpace.Width, availableHeight - (context.Position.Y - currentY));
 
             var childPlan = Children[i].Measure(new MeasureContext
             {
@@ -72,7 +73,7 @@ public class ColumnElement : MultiContainer
                 break;
 
             Children[i].Render(childContext);
-            currentY += childPlan.Size.Height;
+            currentY -= childPlan.Size.Height;  // Move down for next element (Y decreases)
         }
     }
 

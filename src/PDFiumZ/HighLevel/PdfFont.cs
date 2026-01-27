@@ -19,14 +19,20 @@ public sealed unsafe class PdfFont : IDisposable
     public string Name { get; }
 
     /// <summary>
+    /// Gets a value indicating whether this is a custom loaded font (TrueType/OpenType).
+    /// </summary>
+    public bool IsCustomFont { get; }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="PdfFont"/> class.
     /// Internal constructor - use factory methods to create fonts.
     /// </summary>
-    internal PdfFont(FpdfFontT handle, PdfDocument document, string name)
+    internal PdfFont(FpdfFontT handle, PdfDocument document, string name, bool isCustomFont = false)
     {
         _handle = handle ?? throw new ArgumentNullException(nameof(handle));
         _document = document ?? throw new ArgumentNullException(nameof(document));
         Name = name ?? throw new ArgumentNullException(nameof(name));
+        IsCustomFont = isCustomFont;
     }
 
     /// <summary>
@@ -122,7 +128,7 @@ public sealed unsafe class PdfFont : IDisposable
             throw new PdfException("Failed to load TrueType font from byte data.");
         }
 
-        return new PdfFont(handle, document, "CustomFont");
+        return new PdfFont(handle, document, "CustomFont", isCustomFont: true);
     }
 
     /// <summary>

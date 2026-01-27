@@ -10,8 +10,14 @@ namespace GettingStartedExample;
 /// </summary>
 class Program
 {
+    // Output directory for generated PDF files
+    private const string OutputDir = "output";
+
     static void Main(string[] args)
     {
+        // Ensure output directory exists
+        System.IO.Directory.CreateDirectory(OutputDir);
+
         // ============================================
         // Step 1: Initialize PDFium library
         // ============================================
@@ -63,7 +69,7 @@ class Program
             // Step 3: Save document
             // ============================================
             Console.WriteLine("Step 3: Saving document...");
-            string outputPath = "getting-started-output.pdf";
+            string outputPath = System.IO.Path.Combine(OutputDir, "getting-started-output.pdf");
             document.Save(outputPath);
             Console.WriteLine($"✓ Document saved to: {outputPath}\n");
 
@@ -101,7 +107,7 @@ class Program
             Console.WriteLine("Step 5: Rendering page to image...");
 
             using var image = firstPage.RenderToImage(RenderOptions.Default.WithDpi(150));
-            string imagePath = "getting-started-output.png";
+            string imagePath = System.IO.Path.Combine(OutputDir, "getting-started-output.png");
             image.SaveAsPng(imagePath);
             Console.WriteLine($"✓ Page rendered to image: {imagePath}");
             Console.WriteLine($"  Image size: {image.Width} x {image.Height} pixels\n");
@@ -128,7 +134,7 @@ class Program
             Console.WriteLine($"✓ Page 2 rotated 90 degrees\n");
 
             // Save modified document
-            string modifiedPath = "getting-started-modified.pdf";
+            string modifiedPath = System.IO.Path.Combine(OutputDir, "getting-started-modified.pdf");
             document.Save(modifiedPath);
             Console.WriteLine($"✓ Modified document saved: {modifiedPath}\n");
 
@@ -144,10 +150,10 @@ class Program
             Console.WriteLine("  ✓ How to read document information");
             Console.WriteLine("  ✓ How to render pages to images");
             Console.WriteLine("  ✓ How to manipulate pages (add, rotate)");
-            Console.WriteLine("\nGenerated files:");
-            Console.WriteLine($"  - {outputPath}");
-            Console.WriteLine($"  - {imagePath}");
-            Console.WriteLine($"  - {modifiedPath}");
+            Console.WriteLine($"\nGenerated files in '{OutputDir}/':");
+            Console.WriteLine($"  - {System.IO.Path.GetFileName(outputPath)}");
+            Console.WriteLine($"  - {System.IO.Path.GetFileName(imagePath)}");
+            Console.WriteLine($"  - {System.IO.Path.GetFileName(modifiedPath)}");
         }
         catch (Exception ex)
         {
