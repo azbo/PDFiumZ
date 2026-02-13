@@ -113,7 +113,7 @@ class Program
 
         var settings = new ImageGenerationSettings
         {
-            ImageFormat = ImageFormat.Png,
+            ImageFormat = ImageFormat.Jpeg,
             ImageCompressionQuality = ImageCompressionQuality.High,
             RasterDpi = 300
         };

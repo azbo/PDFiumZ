@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11506.43 insiders
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PDFiumZBindingsGenerator", "PDFiumZBindingsGenerator\PDFiumZBindingsGenerator.csproj", "{E7E472C6-A024-4CA9-BB40-90538B6D9781}"
 EndProject
@@ -92,6 +92,18 @@ Global
 		{1109268D-B0ED-46A6-917F-B408CEAE7EB6}.Release|x64.Build.0 = Release|Any CPU
 		{1109268D-B0ED-46A6-917F-B408CEAE7EB6}.Release|x86.ActiveCfg = Release|Any CPU
 		{1109268D-B0ED-46A6-917F-B408CEAE7EB6}.Release|x86.Build.0 = Release|Any CPU
+		{1457F204-93A8-47A7-9CBA-1B01B3A731B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1457F204-93A8-47A7-9CBA-1B01B3A731B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1457F204-93A8-47A7-9CBA-1B01B3A731B7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1457F204-93A8-47A7-9CBA-1B01B3A731B7}.Debug|x64.Build.0 = Debug|Any CPU
+		{1457F204-93A8-47A7-9CBA-1B01B3A731B7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1457F204-93A8-47A7-9CBA-1B01B3A731B7}.Debug|x86.Build.0 = Debug|Any CPU
+		{1457F204-93A8-47A7-9CBA-1B01B3A731B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1457F204-93A8-47A7-9CBA-1B01B3A731B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1457F204-93A8-47A7-9CBA-1B01B3A731B7}.Release|x64.ActiveCfg = Release|Any CPU
+		{1457F204-93A8-47A7-9CBA-1B01B3A731B7}.Release|x64.Build.0 = Release|Any CPU
+		{1457F204-93A8-47A7-9CBA-1B01B3A731B7}.Release|x86.ActiveCfg = Release|Any CPU
+		{1457F204-93A8-47A7-9CBA-1B01B3A731B7}.Release|x86.Build.0 = Release|Any CPU
 		{8D1C9491-6088-4AF9-86A2-E45E264315A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8D1C9491-6088-4AF9-86A2-E45E264315A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D1C9491-6088-4AF9-86A2-E45E264315A2}.Debug|x64.ActiveCfg = Debug|Any CPU
