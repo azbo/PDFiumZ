@@ -241,5 +241,88 @@ public class PdfDocument : IDisposable
             fpdfview.FPDF_DestroyLibrary();
             _isInitialized = false;
         }
+
+    // ==================== 表单操作 ===================
+
+    /// <summary>
+    /// 获取所有表单字段
+    /// </summary>
+    public System.Collections.Generic.List<PdfFormField> GetFormFields()
+    {
+        var fields = new System.Collections.Generic.List<PdfFormField>();
+
+        for (int i = 0; i < PageCount; i++)
+        {
+            using var page = Pages[i];
+            FpdfPageT pageHandle = fpdfview.FPDF_LoadPage(Handle, i);
+            if (pageHandle == null)
+                continue;
+
+            try
+            {
+                int fieldCount = fpdfview.FPDFPageGetFormFieldCount(pageHandle);
+
+                for (int j = 0; j < fieldCount; j++)
+                {
+                    // 获取字段类型
+                    int fieldType = fpdfview.FPDFPageGetFormFieldType(pageHandle, j);
+                    string name = GetFormFieldName(pageHandle, j);
+
+                    fields.Add(new PdfFormField((PdfFormFieldType)fieldType, name));
+                }
+            }
+            finally
+            {
+                fpdfview.FPDF_ClosePage(pageHandle);
+            }
+        }
+
+        return fields;
+    }
+
+    /// <summary>
+    /// 获取表单字段名称
+    /// </summary>
+    private string GetFormFieldName(FpdfPageT pageHandle, int fieldIndex)
+    {
+        // 首先获取名称长度
+        unsafe
+        {
+            ushort len = fpdfview.FPDFPageGetFormFieldFullName(pageHandle, fieldIndex, null, 0);
+            if (len == 0)
+                return string.Empty;
+
+            // 分配缓冲区
+            var buffer = new char[len];
+            fixed (char* ptr = buffer)
+            {
+                fpdfview.FPDFPageGetFormFieldFullName(pageHandle, fieldIndex, new IntPtr(ptr), len);
+            }
+
+            return new string(buffer).TrimEnd('\0');
+        }
+    }
+
+    /// <summary>
+    /// 获取表单字段值
+    /// </summary>
+    private string? GetFormFieldValue(FpdfPageT pageHandle, int fieldIndex)
+    {
+        // 首先获取值长度
+        unsafe
+        {
+            ushort len = fpdfview.FPDFPageGetFormFieldValue(pageHandle, fieldIndex, null, 0);
+            if (len == 0)
+                return null;
+
+            // 分配缓冲区
+            var buffer = new char[len];
+            fixed (char* ptr = buffer)
+            {
+                fpdfview.FPDFPageGetFormFieldValue(pageHandle, fieldIndex, new IntPtr(ptr), len);
+            }
+
+            return new string(buffer).TrimEnd('\0');
+        }
     }
 }
