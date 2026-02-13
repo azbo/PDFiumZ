@@ -1,0 +1,1 @@
+C:\work\net\PDFium.Z\src\PDFiumZ.HighLevel\Types\PdfAnnotationType.cs

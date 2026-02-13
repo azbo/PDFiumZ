@@ -326,3 +326,65 @@ public class PdfDocument : IDisposable
         }
     }
 }
+
+    // ==================== 注释操作 ===================
+
+    /// <summary>
+    /// 获取页面注释数量
+    /// </summary>
+    public int GetAnnotationCount(int pageIndex)
+    {
+        FpdfPageT pageHandle = GetPageHandle(pageIndex);
+        if (pageHandle == null)
+            return 0;
+        return fpdfview.FPDFPageGetAnnotCount(pageHandle);
+    }
+
+    /// <summary>
+    /// 获取指定索引的注释
+    /// </summary>
+    public FpdfAnnotationT GetAnnotation(int pageIndex, int index)
+    {
+        FpdfPageT pageHandle = GetPageHandle(pageIndex);
+        if (pageHandle == null)
+            return null;
+
+        return fpdfview.FPDFPageGetAnnot(pageHandle, index);
+    }
+
+    /// <summary>
+    /// 创建新的注释
+    /// </summary>
+    public FpdfAnnotationT CreateAnnotation(int pageIndex, PdfAnnotationSubtype subtype)
+    {
+        FpdfPageT pageHandle = GetPageHandle(pageIndex);
+        if (pageHandle == null)
+            return null;
+
+        return fpdfview.FPDFPageCreateAnnot(pageHandle, subtype);
+    }
+
+    /// <summary>
+    /// 删除注释
+    /// </summary>
+    public void RemoveAnnotation(int pageIndex, FpdfAnnotationT annot)
+    {
+        FpdfPageT pageHandle = GetPageHandle(pageIndex);
+        if (pageHandle == null)
+            return;
+
+        fpdfview.FPDFPageCloseAnnot(annot);
+    }
+
+    /// <summary>
+    /// 设置注释内容
+    /// </summary>
+    public void SetAnnotationContent(int pageIndex, FpdfAnnotationT annot, string content)
+    {
+        FpdfPageT pageHandle = GetPageHandle(pageIndex);
+        if (pageHandle == null)
+            return;
+
+        fpdfview.FPDFPageSetAnnotContent(annot, content);
+    }
+}
