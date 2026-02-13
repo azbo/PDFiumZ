@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(dotnet new:*)",
+      "Bash(dotnet add:*)",
+      "Bash(dotnet sln:*)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet run:*)",
+      "Bash(dotnet restore:*)",
+      "Bash(ls:*)",
+      "Bash(dotnet test:*)",
+      "Bash(objdump:*)",
+      "Bash(powershell.exe:*)",
+      "Bash(dotnet clean:*)"
+    ]
+  }
+}

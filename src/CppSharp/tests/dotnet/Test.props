@@ -1,0 +1,22 @@
+<Project>
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <OutputPath>$(GenDir)$(TestName)</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(TestName).Tests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(TestName).CSharp.csproj" Condition="$(MSBuildProjectName.EndsWith('CSharp')) AND $(TestName) != 'NamespacesDerived'" />
+    <ProjectReference Include="$(NativeProjectsDir)$(TestName).Native.vcxproj" Condition="$(IsWindows)" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="$(NativeProjectsDir)$(TestName).CLI.vcxproj" Condition="$(MSBuildProjectName.EndsWith('CLI')) AND $(IsWindows)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+  </ItemGroup>
+</Project>

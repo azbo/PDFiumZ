@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net9.0;net10.0;netstandard2.1;netstandard2.0</TargetFrameworks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Dtronix/PDFiumZ</PackageProjectUrl>
+    <Description>PDFiumZ is a wrapper for pinvoke bindings to allow for direct PDFium usage in all languages which support .NET Standard 2.1. Includes the runtime native binary files for Linux-x64, Osx-x64, Win-x86 &amp; Win-x64 targets.</Description>
+    <PackageTags>pinvoke dotnet interop pdf pdfium</PackageTags>
+    <RepositoryUrl>https://github.com/Dtronix/PDFiumZ</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Authors>DJGosnell</Authors>
+	<PackageIcon>icon.png</PackageIcon>
+    <DocumentationFile>PDFiumZ.xml</DocumentationFile>
+    <OutputPath>$(SolutionDir)../artifacts/</OutputPath>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="bblanchon.PDFium.Linux" Version="$(PDFiumVersion)" PrivateAssets="analyzers" />
+    <PackageReference Include="bblanchon.PDFium.macOS" Version="$(PDFiumVersion)" PrivateAssets="analyzers" />
+    <PackageReference Include="bblanchon.PDFium.Win32" Version="$(PDFiumVersion)" PrivateAssets="analyzers" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.103" PrivateAssets="All" />
+  </ItemGroup>
+  <!-- .NET Standard 2.0/2.1 需要额外的包以支持 Span<T> 和 Memory<T> -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1'">
+    <PackageReference Include="System.Memory" Version="4.5.5" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\CppSharp\src\Runtime\MarshalUtil.cs" Link="CppSharp\MarshalUtil.cs" />
+		<Compile Include="..\CppSharp\src\Runtime\Pointer.cs" Link="CppSharp\Pointer.cs" />
+		<Compile Include="..\CppSharp\src\Runtime\SafeUnmanagedMemoryHandle.cs" Link="CppSharp\SafeUnmanagedMemoryHandle.cs" />
+		<Compile Include="..\CppSharp\src\Runtime\SymbolResolver.cs" Link="CppSharp\SymbolResolver.cs" />
+		<Compile Include="..\CppSharp\src\Runtime\UTF32Marshaller.cs" Link="CppSharp\UTF32Marshaller.cs" />
+		<Compile Include="..\CppSharp\src\Runtime\UTF8Marshaller.cs" Link="CppSharp\UTF8Marshaller.cs" />
+		<Compile Include="..\CppSharp\src\Runtime\VTables.cs" Link="CppSharp\VTables.cs" />
+	</ItemGroup>
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+</Project>
