@@ -13,8 +13,8 @@ public enum PdfAnnotationSubtype
     Underline = 5,
     Squiggly = 6,
     StrikeOut = 7,
-    Popup = 8
-    FileAttachment = 9
+    Popup = 8,
+    FileAttachment = 9,
     Sound = 10,
     Movie = 11,
     Widget = 12,
@@ -23,9 +23,9 @@ public enum PdfAnnotationSubtype
     TrapNet = 15,
     Redact = 16,
     Watermark = 17,
-   threeD = 18,
+    ThreeD = 18,
     Caret = 19,
-    PolyLine = 20
+    PolyLine = 20,
     Polygon = 21,
     Line = 22,
     Square = 23,
@@ -33,6 +33,6 @@ public enum PdfAnnotationSubtype
     GeomString = 25,
     Ink = 26,
     Stamp = 27,
-    TextArea = 28
+    TextArea = 28,
     RichMedia = 29
 }

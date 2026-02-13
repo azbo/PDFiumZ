@@ -189,8 +189,8 @@ public class PdfPage : IDisposable
         try
         {
             // 加载链接
-            IntPtr linkPageHandle = fpdf_text.FPDFLinkLoadWebLinks(textPageHandle);
-            if (linkPageHandle == IntPtr.Zero)
+            FpdfPagelinkT linkPageHandle = fpdf_text.FPDFLinkLoadWebLinks(textPageHandle);
+            if (linkPageHandle == null)
                 return links;
 
             try
@@ -199,26 +199,25 @@ public class PdfPage : IDisposable
 
                 for (int i = 0; i < linkCount; i++)
                 {
-                    // 获取 URL
-                    int urlLen = fpdf_text.FPDFLinkGetURL(linkPageHandle, i, IntPtr.Zero, 0);
+                    // 获取 URL - 首先获取长度
+                    ushort urlLen = 0;
+                    fpdf_text.FPDFLinkGetURL(linkPageHandle, i, ref urlLen, 0);
                     if (urlLen == 0)
                         continue;
 
-                    unsafe
+                    // 分配缓冲区并获取实际数据
+                    var urlBuffer = new ushort[urlLen];
+                    fpdf_text.FPDFLinkGetURL(linkPageHandle, i, ref urlBuffer[0], urlLen);
+
+                    // UTF-16LE 转 string
+                    char[] charBuffer = new char[urlLen];
+                    for (int j = 0; j < urlLen; j++)
                     {
-                        var urlBuffer = stackalloc ushort[urlLen];
-                        fpdf_text.FPDFLinkGetURL(linkPageHandle, i, urlBuffer, urlLen);
-
-                        // UTF-16LE 转 string
-                        char[] charBuffer = new char[urlLen];
-                        for (int j = 0; j < urlLen; j++)
-                        {
-                            charBuffer[j] = (char)urlBuffer[j];
-                        }
-                        string url = new string(charBuffer);
-
-                        links.Add(new PdfLink { Url = url });
+                        charBuffer[j] = (char)urlBuffer[j];
                     }
+                    string url = new string(charBuffer);
+
+                    links.Add(new PdfLink { Url = url });
                 }
             }
             finally

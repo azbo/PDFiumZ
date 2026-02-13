@@ -202,189 +202,47 @@ public class PdfDocument : IDisposable
         }
     }
 
-    /// <summary>
-    /// 生成图像并保存到指定目录
-    /// </summary>
-    /// <param name="directory">目标目录</param>
-    /// <param name="baseName">基础文件名（默认: "page"）</param>
-    /// <param name="settings">可选的图像生成设置</param>
-    public void GenerateImagesToDirectory(
-        string directory,
-        string baseName = "page",
-        ImageGenerationSettings? settings = null)
-    {
-        settings ??= new ImageGenerationSettings();
+    // ==================== IDisposable 实现 ===================
 
-        GenerateImages(
-            index => System.IO.Path.Combine(directory, $"{baseName}{index}.{GetFileExtension(settings.ImageFormat)}"),
-            settings
-        );
+    /// <summary>
+    /// 释放资源
+    /// </summary>
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
-    private static string GetFileExtension(ImageFormat format) => format switch
-    {
-        ImageFormat.Png => "png",
-        ImageFormat.Jpeg => "jpg",
-        ImageFormat.Bmp => "bmp",
-        _ => "png"
-    };
-
-    public void Dispose()
+    protected virtual void Dispose(bool disposing)
     {
         if (_handle != null)
         {
+            fpdfview.FPDF_CloseDocument(_handle);
             _handle = null;
-        }
-
-        if (_isInitialized)
-        {
-            fpdfview.FPDF_DestroyLibrary();
-            _isInitialized = false;
-        }
-
-    // ==================== 表单操作 ===================
-
-    /// <summary>
-    /// 获取所有表单字段
-    /// </summary>
-    public System.Collections.Generic.List<PdfFormField> GetFormFields()
-    {
-        var fields = new System.Collections.Generic.List<PdfFormField>();
-
-        for (int i = 0; i < PageCount; i++)
-        {
-            using var page = Pages[i];
-            FpdfPageT pageHandle = fpdfview.FPDF_LoadPage(Handle, i);
-            if (pageHandle == null)
-                continue;
-
-            try
-            {
-                int fieldCount = fpdfview.FPDFPageGetFormFieldCount(pageHandle);
-
-                for (int j = 0; j < fieldCount; j++)
-                {
-                    // 获取字段类型
-                    int fieldType = fpdfview.FPDFPageGetFormFieldType(pageHandle, j);
-                    string name = GetFormFieldName(pageHandle, j);
-
-                    fields.Add(new PdfFormField((PdfFormFieldType)fieldType, name));
-                }
-            }
-            finally
-            {
-                fpdfview.FPDF_ClosePage(pageHandle);
-            }
-        }
-
-        return fields;
-    }
-
-    /// <summary>
-    /// 获取表单字段名称
-    /// </summary>
-    private string GetFormFieldName(FpdfPageT pageHandle, int fieldIndex)
-    {
-        // 首先获取名称长度
-        unsafe
-        {
-            ushort len = fpdfview.FPDFPageGetFormFieldFullName(pageHandle, fieldIndex, null, 0);
-            if (len == 0)
-                return string.Empty;
-
-            // 分配缓冲区
-            var buffer = new char[len];
-            fixed (char* ptr = buffer)
-            {
-                fpdfview.FPDFPageGetFormFieldFullName(pageHandle, fieldIndex, new IntPtr(ptr), len);
-            }
-
-            return new string(buffer).TrimEnd('\0');
-        }
-    }
-
-    /// <summary>
-    /// 获取表单字段值
-    /// </summary>
-    private string? GetFormFieldValue(FpdfPageT pageHandle, int fieldIndex)
-    {
-        // 首先获取值长度
-        unsafe
-        {
-            ushort len = fpdfview.FPDFPageGetFormFieldValue(pageHandle, fieldIndex, null, 0);
-            if (len == 0)
-                return null;
-
-            // 分配缓冲区
-            var buffer = new char[len];
-            fixed (char* ptr = buffer)
-            {
-                fpdfview.FPDFPageGetFormFieldValue(pageHandle, fieldIndex, new IntPtr(ptr), len);
-            }
-
-            return new string(buffer).TrimEnd('\0');
         }
     }
 }
 
-    // ==================== 注释操作 ===================
-
+/// <summary>
+/// PdfDocument 扩展方法
+/// </summary>
+public static class PdfDocumentExtensions
+{
     /// <summary>
-    /// 获取页面注释数量
+    /// 将文档所有页面生成为图像并保存到指定目录
     /// </summary>
-    public int GetAnnotationCount(int pageIndex)
+    /// <param name="document">PDF 文档</param>
+    /// <param name="directory">目标目录</param>
+    /// <param name="fileNamePrefix">文件名前缀</param>
+    public static void GenerateImagesToDirectory(this PdfDocument document, string directory, string fileNamePrefix = "page")
     {
-        FpdfPageT pageHandle = GetPageHandle(pageIndex);
-        if (pageHandle == null)
-            return 0;
-        return fpdfview.FPDFPageGetAnnotCount(pageHandle);
-    }
+        if (!System.IO.Directory.Exists(directory))
+            System.IO.Directory.CreateDirectory(directory);
 
-    /// <summary>
-    /// 获取指定索引的注释
-    /// </summary>
-    public FpdfAnnotationT GetAnnotation(int pageIndex, int index)
-    {
-        FpdfPageT pageHandle = GetPageHandle(pageIndex);
-        if (pageHandle == null)
-            return null;
-
-        return fpdfview.FPDFPageGetAnnot(pageHandle, index);
-    }
-
-    /// <summary>
-    /// 创建新的注释
-    /// </summary>
-    public FpdfAnnotationT CreateAnnotation(int pageIndex, PdfAnnotationSubtype subtype)
-    {
-        FpdfPageT pageHandle = GetPageHandle(pageIndex);
-        if (pageHandle == null)
-            return null;
-
-        return fpdfview.FPDFPageCreateAnnot(pageHandle, subtype);
-    }
-
-    /// <summary>
-    /// 删除注释
-    /// </summary>
-    public void RemoveAnnotation(int pageIndex, FpdfAnnotationT annot)
-    {
-        FpdfPageT pageHandle = GetPageHandle(pageIndex);
-        if (pageHandle == null)
-            return;
-
-        fpdfview.FPDFPageCloseAnnot(annot);
-    }
-
-    /// <summary>
-    /// 设置注释内容
-    /// </summary>
-    public void SetAnnotationContent(int pageIndex, FpdfAnnotationT annot, string content)
-    {
-        FpdfPageT pageHandle = GetPageHandle(pageIndex);
-        if (pageHandle == null)
-            return;
-
-        fpdfview.FPDFPageSetAnnotContent(annot, content);
+        document.GenerateImages(index =>
+        {
+            string extension = ".png";
+            return System.IO.Path.Combine(directory, $"{fileNamePrefix}{index}{extension}");
+        });
     }
 }
