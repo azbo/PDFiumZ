@@ -12,7 +12,8 @@
       "Bash(dotnet test:*)",
       "Bash(objdump:*)",
       "Bash(powershell.exe:*)",
-      "Bash(dotnet clean:*)"
+      "Bash(dotnet clean:*)",
+      "Bash(iconv:*)"
     ]
   }
 }

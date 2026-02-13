@@ -174,8 +174,72 @@ public class PdfPage : IDisposable
         }
     }
 
+    /// <summary>
+    /// 提取页面中的所有超链接
+    /// </summary>
+    public System.Collections.Generic.List<PdfLink> GetLinks()
+    {
+        var links = new System.Collections.Generic.List<PdfLink>();
+
+        // 加载文本页面
+        FpdfTextpageT textPageHandle = fpdf_text.FPDFTextLoadPage(_handle);
+        if (textPageHandle == null)
+            return links;
+
+        try
+        {
+            // 加载链接
+            IntPtr linkPageHandle = fpdf_text.FPDFLinkLoadWebLinks(textPageHandle);
+            if (linkPageHandle == IntPtr.Zero)
+                return links;
+
+            try
+            {
+                int linkCount = fpdf_text.FPDFLinkCountWebLinks(linkPageHandle);
+
+                for (int i = 0; i < linkCount; i++)
+                {
+                    // 获取 URL
+                    int urlLen = fpdf_text.FPDFLinkGetURL(linkPageHandle, i, IntPtr.Zero, 0);
+                    if (urlLen == 0)
+                        continue;
+
+                    unsafe
+                    {
+                        var urlBuffer = stackalloc ushort[urlLen];
+                        fpdf_text.FPDFLinkGetURL(linkPageHandle, i, urlBuffer, urlLen);
+
+                        // UTF-16LE 转 string
+                        char[] charBuffer = new char[urlLen];
+                        for (int j = 0; j < urlLen; j++)
+                        {
+                            charBuffer[j] = (char)urlBuffer[j];
+                        }
+                        string url = new string(charBuffer);
+
+                        links.Add(new PdfLink { Url = url });
+                    }
+                }
+            }
+            finally
+            {
+                fpdf_text.FPDFLinkCloseWebLinks(linkPageHandle);
+            }
+        }
+        finally
+        {
+            fpdf_text.FPDFTextClosePage(textPageHandle);
+        }
+
+        return links;
+    }
+
     public void Dispose()
     {
-        // 页面句柄由 PDFium 管理，不需要手动释放
+        if (_handle != null)
+        {
+            fpdfview.FPDF_ClosePage(_handle);
+            _handle = null;
+        }
     }
 }

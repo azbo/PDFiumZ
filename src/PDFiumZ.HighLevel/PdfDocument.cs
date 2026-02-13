@@ -11,6 +11,7 @@ public class PdfDocument : IDisposable
     private bool _isInitialized;
     private FpdfDocumentT? _handle;
     private PdfPageCollection? _pages;
+    private PdfMetadata? _metadata;
 
     /// <summary>
     /// 从文件路径加载 PDF 文档
@@ -104,6 +105,46 @@ public class PdfDocument : IDisposable
     /// 按索引获取页面
     /// </summary>
     public PdfPage this[int index] => Pages[index];
+
+    /// <summary>
+    /// 获取文档元数据
+    /// </summary>
+    public PdfMetadata Metadata => _metadata ??= LoadMetadata();
+
+    private PdfMetadata LoadMetadata()
+    {
+        return new PdfMetadata
+        {
+            Title = GetMetaText("Title"),
+            Author = GetMetaText("Author"),
+            Subject = GetMetaText("Subject"),
+            Keywords = GetMetaText("Keywords"),
+            Creator = GetMetaText("Creator"),
+            Producer = GetMetaText("Producer"),
+            CreationDate = GetMetaText("CreationDate"),
+            ModDate = GetMetaText("ModDate")
+        };
+    }
+
+    private string? GetMetaText(string tag)
+    {
+        // 首次调用获取所需缓冲区大小
+        ulong len = fpdf_doc.FPDF_GetMetaText(Handle, tag, IntPtr.Zero, 0);
+        if (len == 0)
+            return null;
+
+        // 分配缓冲区并获取实际数据
+        byte[] buffer = new byte[(int)len];
+        unsafe
+        {
+            fixed (byte* ptr = buffer)
+            {
+                fpdf_doc.FPDF_GetMetaText(Handle, tag, new IntPtr(ptr), len);
+            }
+        }
+        // UTF-16LE 编码，前两个字节是 BOM
+        return System.Text.Encoding.Unicode.GetString(buffer, 2, (int)len - 2);
+    }
 
     // ============ 图像生成（QuestPDF 风格）============
 
