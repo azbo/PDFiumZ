@@ -23,7 +23,7 @@
     <PackageReference Include="bblanchon.PDFium.Linux" Version="148.0.7734" PrivateAssets="analyzers" />
     <PackageReference Include="bblanchon.PDFium.macOS" Version="148.0.7734" PrivateAssets="analyzers" />
     <PackageReference Include="bblanchon.PDFium.Win32" Version="148.0.7734" PrivateAssets="analyzers" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.103" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.201" PrivateAssets="All" />
   </ItemGroup>
   <!-- .NET Standard 2.0/2.1 需要额外的包以支持 Span<T> 和 Memory<T> -->
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1'">
