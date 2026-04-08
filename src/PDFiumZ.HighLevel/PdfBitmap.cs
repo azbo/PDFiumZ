@@ -10,7 +10,8 @@ namespace PDFiumZ.HighLevel;
 /// </summary>
 public class PdfBitmap : IDisposable
 {
-    private readonly FpdfBitmapT _handle;
+    private FpdfBitmapT? _handle;
+    private bool _disposed;
 
     /// <summary>
     /// 位图宽度（像素）
@@ -34,8 +35,11 @@ public class PdfBitmap : IDisposable
     /// </summary>
     public ReadOnlySpan<byte> GetData()
     {
+        if (_disposed)
+            throw new ObjectDisposedException(nameof(PdfBitmap));
+
         int stride = Width * 4; // BGRA = 4 bytes per pixel
-        IntPtr buffer = fpdfview.FPDFBitmapGetBuffer(_handle);
+        IntPtr buffer = fpdfview.FPDFBitmapGetBuffer(_handle!);
 
         if (buffer == IntPtr.Zero)
             return ReadOnlySpan<byte>.Empty;
@@ -138,7 +142,15 @@ public class PdfBitmap : IDisposable
 
     public void Dispose()
     {
-        // SkiaSharp SKBitmap 会自动管理内存
-        // PDFium 位图句柄由 PDFium 库管理
+        if (!_disposed)
+        {
+            if (_handle != null)
+            {
+                fpdfview.FPDFBitmapDestroy(_handle);
+                _handle = null;
+            }
+
+            _disposed = true;
+        }
     }
 }

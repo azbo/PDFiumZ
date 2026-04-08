@@ -13,11 +13,26 @@ public class PdfPage : IDisposable
     private readonly PdfDocument _document;
     private readonly int _index;
     private FpdfPageT? _handle;
+    private bool _disposed;
 
     internal PdfPage(PdfDocument document, int index)
     {
         _document = document;
         _index = index;
+    }
+
+    /// <summary>
+    /// 获取或加载页面句柄（延迟加载）
+    /// </summary>
+    private FpdfPageT Handle
+    {
+        get
+        {
+            if (_disposed)
+                throw new ObjectDisposedException(nameof(PdfPage));
+            return _handle ??= fpdfview.FPDF_LoadPage(_document.Handle, _index)
+                ?? throw new InvalidOperationException($"Failed to load page at index {_index}");
+        }
     }
 
     /// <summary>
@@ -101,13 +116,9 @@ public class PdfPage : IDisposable
         clipping.Bottom = 0;
         clipping.Top = height;
 
-        // 渲染页面 - 加载页面句柄
-        FpdfPageT pageHandle = fpdfview.FPDF_LoadPage(_document.Handle, _index);
-        if (pageHandle == null)
-            throw new InvalidOperationException($"Failed to load page at index {_index}");
-
+        // 渲染页面 - 使用延迟加载的页面句柄
         fpdfview.FPDF_RenderPageBitmapWithMatrix(
-            bitmap, pageHandle, matrix, clipping,
+            bitmap, Handle, matrix, clipping,
             (int)settings.RenderFlags);
 
         return new PdfBitmap(bitmap, width, height);
@@ -182,7 +193,7 @@ public class PdfPage : IDisposable
         var links = new System.Collections.Generic.List<PdfLink>();
 
         // 加载文本页面
-        FpdfTextpageT textPageHandle = fpdf_text.FPDFTextLoadPage(_handle);
+        FpdfTextpageT textPageHandle = fpdf_text.FPDFTextLoadPage(Handle);
         if (textPageHandle == null)
             return links;
 
@@ -235,10 +246,15 @@ public class PdfPage : IDisposable
 
     public void Dispose()
     {
-        if (_handle != null)
+        if (!_disposed)
         {
-            fpdfview.FPDF_ClosePage(_handle);
-            _handle = null;
+            if (_handle != null)
+            {
+                fpdfview.FPDF_ClosePage(_handle);
+                _handle = null;
+            }
+
+            _disposed = true;
         }
     }
 }
