@@ -72,6 +72,15 @@ public class PdfDocument : IDisposable
             throw new InvalidOperationException("Failed to load PDF document from byte array");
     }
 
+    /// <summary>
+    /// 从已有的 PDFium 文档句柄创建包装（内部使用）
+    /// </summary>
+    internal PdfDocument(FpdfDocumentT handle)
+    {
+        InitializeLibrary();
+        _handle = handle;
+    }
+
     private void InitializeLibrary()
     {
         if (!_isInitialized)
@@ -110,6 +119,11 @@ public class PdfDocument : IDisposable
     /// 获取文档元数据
     /// </summary>
     public PdfMetadata Metadata => _metadata ??= LoadMetadata();
+
+    /// <summary>
+    /// 获取文档书签/大纲集合
+    /// </summary>
+    public PdfBookmarkCollection Bookmarks => new(this);
 
     private PdfMetadata LoadMetadata()
     {

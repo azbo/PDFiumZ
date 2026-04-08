@@ -186,6 +186,40 @@ public class PdfPage : IDisposable
     }
 
     /// <summary>
+    /// 获取页面的文本内容提取器
+    /// </summary>
+    /// <returns>文本页面对象，调用方负责释放</returns>
+    public PdfTextPage GetTextPage()
+    {
+        FpdfTextpageT textPage = fpdf_text.FPDFTextLoadPage(Handle);
+        if (textPage == null)
+            throw new InvalidOperationException($"Failed to load text page for page {_index}");
+        return new PdfTextPage(textPage);
+    }
+
+    /// <summary>
+    /// 获取页面中的所有文本
+    /// </summary>
+    public string GetText()
+    {
+        using var textPage = GetTextPage();
+        return textPage.GetAllText();
+    }
+
+    /// <summary>
+    /// 获取指定矩形区域内的文本
+    /// </summary>
+    /// <param name="left">左边界（页面坐标）</param>
+    /// <param name="top">上边界（页面坐标）</param>
+    /// <param name="right">右边界（页面坐标）</param>
+    /// <param name="bottom">下边界（页面坐标）</param>
+    public string GetBoundedText(double left, double top, double right, double bottom)
+    {
+        using var textPage = GetTextPage();
+        return textPage.GetBoundedText(left, top, right, bottom);
+    }
+
+    /// <summary>
     /// 提取页面中的所有超链接
     /// </summary>
     public System.Collections.Generic.List<PdfLink> GetLinks()
