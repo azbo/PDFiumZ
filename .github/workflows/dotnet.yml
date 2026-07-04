@@ -19,10 +19,9 @@ jobs:
                              
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        submodules: true
 
     - name: Install .NET
       uses: actions/setup-dotnet@v4
@@ -31,9 +30,6 @@ jobs:
         source-url: https://api.nuget.org/v3/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        
-    - name: Download libraries
-      run: bash download_package.sh
 
     - name: Build
       run: dotnet build src/PDFiumZ -c Release
