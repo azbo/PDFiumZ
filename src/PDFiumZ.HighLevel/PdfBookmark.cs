@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PDFiumZ;
 
-namespace PDFiumZ.HighLevel;
+namespace PDFiumZ;
 
 /// <summary>
 /// 表示 PDF 文档中的一个书签条目

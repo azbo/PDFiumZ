@@ -1,4 +1,4 @@
-using PDFiumZ.HighLevel;
+using PDFiumZ;
 using System.Drawing;
 
 namespace PDFiumZDemo

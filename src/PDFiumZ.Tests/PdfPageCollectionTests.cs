@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
-using PDFiumZ.HighLevel;
+using PDFiumZ;
 
 namespace PDFiumZ.Tests;
 

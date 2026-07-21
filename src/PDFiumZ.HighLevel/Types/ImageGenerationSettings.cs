@@ -1,6 +1,6 @@
 using SkiaSharp;
 
-namespace PDFiumZ.HighLevel;
+namespace PDFiumZ;
 
 /// <summary>
 /// PDF 页面图像生成设置

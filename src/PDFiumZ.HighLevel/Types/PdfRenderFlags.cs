@@ -1,6 +1,6 @@
 using System;
 
-namespace PDFiumZ.HighLevel;
+namespace PDFiumZ;
 
 /// <summary>
 /// PDF 渲染标志

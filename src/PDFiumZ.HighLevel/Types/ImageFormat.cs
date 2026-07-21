@@ -1,4 +1,4 @@
-namespace PDFiumZ.HighLevel;
+namespace PDFiumZ;
 
 /// <summary>
 /// 支持的图像格式

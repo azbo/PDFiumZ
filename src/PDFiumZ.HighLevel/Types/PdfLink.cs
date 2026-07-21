@@ -1,4 +1,4 @@
-namespace PDFiumZ.HighLevel;
+namespace PDFiumZ;
 
 /// <summary>
 /// PDF 页面中的超链接

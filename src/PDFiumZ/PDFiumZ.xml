@@ -5616,5 +5616,671 @@
             FPDF_RENDER_NO_SMOOTHPATH: Set to disable anti-aliasing on paths.
             </summary>
         </member>
+        <member name="T:PDFiumZ.PdfBitmap">
+            <summary>
+            表示渲染的 PDF 位图（使用 SkiaSharp）
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfBitmap.Width">
+            <summary>
+            位图宽度（像素）
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfBitmap.Height">
+            <summary>
+            位图高度（像素）
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfBitmap.GetData">
+            <summary>
+            获取原始像素数据
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfBitmap.SaveAsPng(System.String)">
+            <summary>
+            保存为 PNG 文件
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfBitmap.SaveAsPng(System.IO.Stream)">
+            <summary>
+            保存为 PNG 流
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfBitmap.SaveAsJpeg(System.String,System.Int32)">
+            <summary>
+            保存为 JPEG 文件
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfBitmap.SaveAsJpeg(System.IO.Stream,System.Int32)">
+            <summary>
+            保存为 JPEG 流
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfBitmap.SaveAsBmp(System.String)">
+            <summary>
+            保存为 BMP 文件
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfBitmap.SaveAsBmp(System.IO.Stream)">
+            <summary>
+            保存为 BMP 流
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfBitmap.ToSKBitmap">
+            <summary>
+            转换为 SkiaSharp.SKBitmap
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfBookmark">
+            <summary>
+            表示 PDF 文档中的一个书签条目
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfBookmark.Title">
+            <summary>
+            书签标题
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfBookmark.DestPageIndex">
+            <summary>
+            书签目标的页面索引，如果无目标返回 -1
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfBookmark.Count">
+            <summary>
+            子书签数量（仅直接子项）
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfBookmark.FirstChild">
+            <summary>
+            获取第一个子书签
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfBookmark.NextSibling">
+            <summary>
+            获取下一个兄弟书签
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfBookmark.GetChildren">
+            <summary>
+            递归遍历所有子书签（深度优先）
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfBookmarkCollection">
+            <summary>
+            PDF 文档书签集合，提供对文档大纲树的访问
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfBookmarkCollection.FirstChild">
+            <summary>
+            获取第一个顶层书签
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfDocument">
+            <summary>
+            表示 PDF 文档，提供文档级别的操作
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfDocument.#ctor(System.String,System.String)">
+            <summary>
+            从文件路径加载 PDF 文档
+            </summary>
+            <param name="filePath">PDF 文件路径</param>
+            <param name="password">文档密码（如有加密）</param>
+        </member>
+        <member name="M:PDFiumZ.PdfDocument.#ctor(System.IO.Stream,System.String)">
+            <summary>
+            从字节流加载 PDF 文档
+            </summary>
+            <param name="stream">包含 PDF 数据的流</param>
+            <param name="password">文档密码（如有加密）</param>
+        </member>
+        <member name="M:PDFiumZ.PdfDocument.#ctor(System.Byte[],System.String)">
+            <summary>
+            从字节数组加载 PDF 文档
+            </summary>
+            <param name="data">PDF 数据</param>
+            <param name="password">文档密码（如有加密）</param>
+        </member>
+        <member name="M:PDFiumZ.PdfDocument.#ctor(PDFiumZ.FpdfDocumentT)">
+            <summary>
+            从已有的 PDFium 文档句柄创建包装（内部使用）
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfDocument.PageCount">
+            <summary>
+            获取文档页数
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfDocument.Pages">
+            <summary>
+            获取文档所有页面的集合
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfDocument.Item(System.Int32)">
+            <summary>
+            按索引获取页面
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfDocument.Metadata">
+            <summary>
+            获取文档元数据
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfDocument.Bookmarks">
+            <summary>
+            获取文档书签/大纲集合
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfDocument.GenerateImages">
+            <summary>
+            将文档的所有页面生成为图像
+            </summary>
+            <returns>每页图像的字节数组枚举</returns>
+        </member>
+        <member name="M:PDFiumZ.PdfDocument.GenerateImages(PDFiumZ.ImageGenerationSettings)">
+            <summary>
+            使用指定设置生成图像
+            </summary>
+            <param name="settings">图像生成设置</param>
+            <returns>每页图像的字节数组枚举</returns>
+        </member>
+        <member name="M:PDFiumZ.PdfDocument.GenerateImages(System.Func{System.Int32,System.String})">
+            <summary>
+            生成图像并保存到文件
+            </summary>
+            <param name="fileNameCallback">
+            用于生成文件名的回调函数，参数为页面索引
+            例如: index => $"page{index}.png"
+            </param>
+        </member>
+        <member name="M:PDFiumZ.PdfDocument.GenerateImages(System.Func{System.Int32,System.String},PDFiumZ.ImageGenerationSettings)">
+            <summary>
+            使用指定设置生成图像并保存到文件
+            </summary>
+            <param name="fileNameCallback">文件名回调函数</param>
+            <param name="settings">图像生成设置</param>
+        </member>
+        <member name="M:PDFiumZ.PdfDocument.AsImgs">
+            <summary>
+            将文档所有页面生成为图像,返回每页图像的字节数组枚举(使用默认设置)。
+            <code>
+            IEnumerable&lt;byte[]&gt; images = document.AsImgs();
+            </code>
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfDocument.AsImgs(PDFiumZ.ImageGenerationSettings)">
+            <summary>
+            使用指定设置将文档所有页面生成为图像,返回每页图像的字节数组枚举。
+            <code>
+            var settings = new ImageGenerationSettings
+            {
+                ImageFormat = ImageFormat.Png,
+                ImageCompressionQuality = ImageCompressionQuality.High,
+                RasterDpi = 288
+            };
+            IEnumerable&lt;byte[]&gt; images = document.AsImgs(settings);
+            </code>
+            </summary>
+            <param name="settings">图像生成设置</param>
+        </member>
+        <member name="M:PDFiumZ.PdfDocument.AsImgs(System.Func{System.Int32,System.String})">
+            <summary>
+            将文档所有页面生成为图像并保存到文件(使用默认设置)。
+            <code>
+            document.AsImgs(i =&gt; $"image{i}.png");
+            </code>
+            </summary>
+            <param name="fileNameCallback">
+            用于生成文件名的回调函数,参数为页面索引(从 0 开始)。
+            例如: <c>i =&gt; $"image{i}.png"</c>
+            </param>
+        </member>
+        <member name="M:PDFiumZ.PdfDocument.AsImgs(System.Func{System.Int32,System.String},PDFiumZ.ImageGenerationSettings)">
+            <summary>
+            使用指定设置将文档所有页面生成为图像并保存到文件。
+            <code>
+            var settings = new ImageGenerationSettings { ImageFormat = ImageFormat.Jpeg, RasterDpi = 300 };
+            document.AsImgs(i =&gt; $"image{i}.jpg", settings);
+            </code>
+            </summary>
+            <param name="fileNameCallback">文件名回调函数</param>
+            <param name="settings">图像生成设置</param>
+        </member>
+        <member name="M:PDFiumZ.PdfDocument.Dispose">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfDocumentExtensions">
+            <summary>
+            PdfDocument 扩展方法
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfDocumentExtensions.GenerateImagesToDirectory(PDFiumZ.PdfDocument,System.String,System.String)">
+            <summary>
+            将文档所有页面生成为图像并保存到指定目录
+            </summary>
+            <param name="document">PDF 文档</param>
+            <param name="directory">目标目录</param>
+            <param name="fileNamePrefix">文件名前缀</param>
+        </member>
+        <member name="T:PDFiumZ.PdfDocumentOperations">
+            <summary>
+            PDF 文档操作扩展方法
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfDocumentOperations.Save(PDFiumZ.PdfDocument)">
+            <summary>
+            将文档保存到字节数组
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfDocumentOperations.Save(PDFiumZ.PdfDocument,System.IO.Stream)">
+            <summary>
+            将文档保存到流
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfDocumentOperations.Save(PDFiumZ.PdfDocument,System.String)">
+            <summary>
+            将文档保存到文件
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfDocumentOperations.ImportPages(PDFiumZ.PdfDocument,PDFiumZ.PdfDocument,System.String,System.Int32)">
+            <summary>
+            从源文档导入页面到当前文档
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfDocumentOperations.ImportPages(PDFiumZ.PdfDocument,PDFiumZ.PdfDocument,System.Int32[],System.Int32)">
+            <summary>
+            从源文档按索引导入指定页面
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfDocumentOperations.DeletePage(PDFiumZ.PdfDocument,System.Int32)">
+            <summary>
+            删除文档中的指定页面
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfDocumentOperations.SplitToPages(PDFiumZ.PdfDocument)">
+            <summary>
+            将文档拆分为单页 PDF 字节数组
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfDocumentOperations.MergeDocuments(System.String,System.String[])">
+            <summary>
+            合并多个 PDF 文档为一个
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfDocumentOperations.ImportNPagesToOne(PDFiumZ.PdfDocument,System.Single,System.Single,System.UInt64,System.UInt64)">
+            <summary>
+            将多页文档 N-up 合并为单页
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.FileWriteHolder">
+            <summary>
+            持有 FPDF_FILEWRITE_ 和回调委托，防止 GC 回收
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfPage">
+            <summary>
+            表示 PDF 中的一个页面（简化版本）
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfPage.Handle">
+            <summary>
+            获取或加载页面句柄（延迟加载）
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfPage.Index">
+            <summary>
+            获取页面索引
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfPage.Width">
+            <summary>
+            获取页面宽度（点）
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfPage.Height">
+            <summary>
+            获取页面高度（点）
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfPage.Render(PDFiumZ.ImageGenerationSettings)">
+            <summary>
+            渲染页面为位图
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfPage.GenerateImage">
+            <summary>
+            生成图像字节流
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfPage.GenerateImage(PDFiumZ.ImageGenerationSettings)">
+            <summary>
+            使用设置生成图像字节流
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfPage.SaveAsImage(System.String)">
+            <summary>
+            保存为图像文件
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfPage.SaveAsImage(System.String,PDFiumZ.ImageGenerationSettings)">
+            <summary>
+            使用设置保存为图像文件
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfPage.GetTextPage">
+            <summary>
+            获取页面的文本内容提取器
+            </summary>
+            <returns>文本页面对象，调用方负责释放</returns>
+        </member>
+        <member name="M:PDFiumZ.PdfPage.GetText">
+            <summary>
+            获取页面中的所有文本
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfPage.GetBoundedText(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            获取指定矩形区域内的文本
+            </summary>
+            <param name="left">左边界（页面坐标）</param>
+            <param name="top">上边界（页面坐标）</param>
+            <param name="right">右边界（页面坐标）</param>
+            <param name="bottom">下边界（页面坐标）</param>
+        </member>
+        <member name="M:PDFiumZ.PdfPage.GetLinks">
+            <summary>
+            提取页面中的所有超链接
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfPageCollection">
+            <summary>
+            PDF 页面集合
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfTextPage">
+            <summary>
+            表示 PDF 页面的文本内容，提供文本提取和搜索功能
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfTextPage.CharCount">
+            <summary>
+            页面中的字符总数
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfTextPage.GetAllText">
+            <summary>
+            获取页面中的所有文本
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfTextPage.GetBoundedText(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            获取指定矩形区域内的文本
+            </summary>
+            <param name="left">左边界（页面坐标）</param>
+            <param name="top">上边界（页面坐标）</param>
+            <param name="right">右边界（页面坐标）</param>
+            <param name="bottom">下边界（页面坐标）</param>
+        </member>
+        <member name="M:PDFiumZ.PdfTextPage.Search(System.String,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            在页面文本中搜索指定字符串
+            </summary>
+            <param name="text">搜索文本</param>
+            <param name="startIndex">起始字符索引（默认 0）</param>
+            <param name="matchCase">是否区分大小写</param>
+            <param name="matchWholeWord">是否全词匹配</param>
+            <returns>搜索结果列表</returns>
+        </member>
+        <member name="M:PDFiumZ.PdfTextPage.GetCharUnicode(System.Int32)">
+            <summary>
+            获取指定字符的 Unicode 值
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfTextPage.GetCharFontSize(System.Int32)">
+            <summary>
+            获取指定字符的字体大小
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfTextPage.GetCharBox(System.Int32,System.Double@,System.Double@,System.Double@,System.Double@)">
+            <summary>
+            获取指定字符的边界框
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfSearchResult">
+            <summary>
+            文本搜索结果
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfSearchResult.Index">
+            <summary>
+            匹配文本的起始字符索引
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfSearchResult.Length">
+            <summary>
+            匹配文本的字符数
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.ImageCompressionQuality">
+            <summary>
+            图像压缩质量等级
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.ImageFormat">
+            <summary>
+            支持的图像格式
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.ImageGenerationSettings">
+            <summary>
+            PDF 页面图像生成设置
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.ImageGenerationSettings.ImageFormat">
+            <summary>
+            图像格式（默认: PNG）
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.ImageGenerationSettings.ImageCompressionQuality">
+            <summary>
+            图像压缩质量（默认: High）
+            仅对 JPEG 格式有效
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.ImageGenerationSettings.RasterDpi">
+            <summary>
+            渲染 DPI（默认: 288）
+            控制输出图像的分辨率。更高的 DPI 产生更高质量的图像，
+            但会增加文件大小和处理时间
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.ImageGenerationSettings.BackgroundColor">
+            <summary>
+            背景颜色（默认: 白色）
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.ImageGenerationSettings.RenderFlags">
+            <summary>
+            渲染标志（默认: 渲染注释 + LCD 文本优化）
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.ImageGenerationSettings.Rotation">
+            <summary>
+            旋转角度（默认: 无旋转）
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfAnnotationSubtype">
+            <summary>
+            PDF 注释类型枚举
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfFormField">
+            <summary>
+            表示 PDF 表单字段
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfFormField.FieldType">
+            <summary>
+            字段类型
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfFormField.Name">
+            <summary>
+            字段名称
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfFormField.Value">
+            <summary>
+            字段值
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfFormField.Flags">
+            <summary>
+            标志（只读、必填等）
+            </summary>
+        </member>
+        <member name="M:PDFiumZ.PdfFormField.#ctor(PDFiumZ.PdfFormFieldType,System.String)">
+            <summary>
+            创建一个新的表单字段
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfFormFieldFlags">
+            <summary>
+            PDF 表单字段标志
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.PdfFormFieldFlags.ReadOnly">
+            <summary>
+            字段是只读的
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.PdfFormFieldFlags.Required">
+            <summary>
+            字段是必填的
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.PdfFormFieldFlags.Highlight">
+            <summary>
+            字段应高亮显示
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfFormFieldType">
+            <summary>
+            PDF 表单字段类型
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfLink">
+            <summary>
+            PDF 页面中的超链接
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfLink.Url">
+            <summary>
+            链接 URL
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfLink.StartIndex">
+            <summary>
+            链接文本的起始字符索引
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfLink.CharCount">
+            <summary>
+            链接文本的字符数量
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfLink.EndIndex">
+            <summary>
+            链接文本的结束字符索引（不包括）
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfMetadata">
+            <summary>
+            PDF 文档元数据
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfMetadata.Title">
+            <summary>
+            文档标题
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfMetadata.Author">
+            <summary>
+            文档作者
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfMetadata.Subject">
+            <summary>
+            文档主题
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfMetadata.Keywords">
+            <summary>
+            文档关键词
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfMetadata.Creator">
+            <summary>
+            创建文档的应用程序
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfMetadata.Producer">
+            <summary>
+            PDF 生产器
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfMetadata.CreationDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:PDFiumZ.PdfMetadata.ModDate">
+            <summary>
+            修改日期
+            </summary>
+        </member>
+        <member name="T:PDFiumZ.PdfRenderFlags">
+            <summary>
+            PDF 渲染标志
+            </summary>
+        </member>
+        <member name="F:PDFiumZ.PdfRenderFlags.RenderAnnotations">
+            <summary>渲染注释</summary>
+        </member>
+        <member name="F:PDFiumZ.PdfRenderFlags.LcdTextOptimization">
+            <summary>LCD 文本优化</summary>
+        </member>
+        <member name="F:PDFiumZ.PdfRenderFlags.NoNativeText">
+            <summary>不使用原生文本输出</summary>
+        </member>
+        <member name="F:PDFiumZ.PdfRenderFlags.Grayscale">
+            <summary>灰度输出</summary>
+        </member>
+        <member name="F:PDFiumZ.PdfRenderFlags.LimitImageCacheSize">
+            <summary>限制图像缓存大小</summary>
+        </member>
+        <member name="F:PDFiumZ.PdfRenderFlags.ForceHalftone">
+            <summary>强制使用半色调</summary>
+        </member>
+        <member name="F:PDFiumZ.PdfRenderFlags.RenderForPrinting">
+            <summary>打印模式渲染</summary>
+        </member>
+        <member name="F:PDFiumZ.PdfRenderFlags.DisableTextAntialiasing">
+            <summary>禁用文本抗锯齿</summary>
+        </member>
+        <member name="F:PDFiumZ.PdfRenderFlags.DisableImageAntialiasing">
+            <summary>禁用图像抗锯齿</summary>
+        </member>
+        <member name="F:PDFiumZ.PdfRenderFlags.DisablePathAntialiasing">
+            <summary>禁用路径抗锯齿</summary>
+        </member>
+        <member name="T:PDFiumZ.PdfRotation">
+            <summary>
+            PDF 页面旋转角度
+            </summary>
+        </member>
     </members>
 </doc>

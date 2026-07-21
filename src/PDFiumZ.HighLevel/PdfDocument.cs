@@ -1,7 +1,7 @@
 using System;
 using PDFiumZ;
 
-namespace PDFiumZ.HighLevel;
+namespace PDFiumZ;
 
 /// <summary>
 /// 表示 PDF 文档，提供文档级别的操作
@@ -215,6 +215,59 @@ public class PdfDocument : IDisposable
             page.SaveAsImage(fileName, settings);
         }
     }
+
+    // ============ AsImgs:更简洁的别名(委托给 GenerateImages)============
+
+    /// <summary>
+    /// 将文档所有页面生成为图像,返回每页图像的字节数组枚举(使用默认设置)。
+    /// <code>
+    /// IEnumerable&lt;byte[]&gt; images = document.AsImgs();
+    /// </code>
+    /// </summary>
+    public System.Collections.Generic.IEnumerable<byte[]> AsImgs()
+        => GenerateImages();
+
+    /// <summary>
+    /// 使用指定设置将文档所有页面生成为图像,返回每页图像的字节数组枚举。
+    /// <code>
+    /// var settings = new ImageGenerationSettings
+    /// {
+    ///     ImageFormat = ImageFormat.Png,
+    ///     ImageCompressionQuality = ImageCompressionQuality.High,
+    ///     RasterDpi = 288
+    /// };
+    /// IEnumerable&lt;byte[]&gt; images = document.AsImgs(settings);
+    /// </code>
+    /// </summary>
+    /// <param name="settings">图像生成设置</param>
+    public System.Collections.Generic.IEnumerable<byte[]> AsImgs(ImageGenerationSettings settings)
+        => GenerateImages(settings);
+
+    /// <summary>
+    /// 将文档所有页面生成为图像并保存到文件(使用默认设置)。
+    /// <code>
+    /// document.AsImgs(i =&gt; $"image{i}.png");
+    /// </code>
+    /// </summary>
+    /// <param name="fileNameCallback">
+    /// 用于生成文件名的回调函数,参数为页面索引(从 0 开始)。
+    /// 例如: <c>i =&gt; $"image{i}.png"</c>
+    /// </param>
+    public void AsImgs(System.Func<int, string> fileNameCallback)
+        => GenerateImages(fileNameCallback);
+
+    /// <summary>
+    /// 使用指定设置将文档所有页面生成为图像并保存到文件。
+    /// <code>
+    /// var settings = new ImageGenerationSettings { ImageFormat = ImageFormat.Jpeg, RasterDpi = 300 };
+    /// document.AsImgs(i =&gt; $"image{i}.jpg", settings);
+    /// </code>
+    /// </summary>
+    /// <param name="fileNameCallback">文件名回调函数</param>
+    /// <param name="settings">图像生成设置</param>
+    public void AsImgs(System.Func<int, string> fileNameCallback, ImageGenerationSettings settings)
+        => GenerateImages(fileNameCallback, settings);
+
 
     // ==================== IDisposable 实现 ===================
 

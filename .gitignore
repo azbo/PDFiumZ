@@ -47,3 +47,6 @@ Thumbs.db
 # Project specific
 PDFium.Z.zip
 *.zip
+
+# IDE/agent workspace
+.zcode/

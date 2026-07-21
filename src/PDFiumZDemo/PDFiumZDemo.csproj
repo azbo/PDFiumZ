@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PDFiumZ.HighLevel\PDFiumZ.HighLevel.csproj" />
+    <ProjectReference Include="..\PDFiumZ\PDFiumZ.csproj" />
   </ItemGroup>
 
   <ItemGroup>

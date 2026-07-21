@@ -1,4 +1,4 @@
-using PDFiumZ.HighLevel;
+using PDFiumZ;
 using System.Drawing;
 
 namespace PDFiumZDemo;
@@ -31,6 +31,11 @@ class Program
 
         // 示例 5: 自定义设置生成图像
         CustomSettingsExample();
+
+        System.Console.WriteLine();
+
+        // 示例 5b: AsImgs 简洁 API
+        AsImgsExample();
 
         System.Console.WriteLine();
 
@@ -120,6 +125,32 @@ class Program
 
         System.Collections.Generic.IEnumerable<byte[]> images = document.GenerateImages(settings);
         System.Console.WriteLine($"使用 DPI {settings.RasterDpi} 生成了 {document.PageCount} 个图像");
+    }
+
+    /// <summary>
+    /// 示例 5b: 使用 AsImgs 简洁 API（GenerateImages 的别名，一行搞定）
+    /// </summary>
+    static void AsImgsExample()
+    {
+        System.Console.WriteLine("--- 示例 5b: AsImgs 简洁 API ---");
+        using var document = new PdfDocument("pdf-sample.pdf");
+
+        // 一行：所有页面 → 字节数组（默认设置）
+        System.Collections.Generic.IEnumerable<byte[]> images = document.AsImgs();
+
+        // 一行：保存为文件
+        document.AsImgs(i => $"image{i}.png");
+
+        // 带自定义设置
+        var settings = new ImageGenerationSettings
+        {
+            ImageFormat = ImageFormat.Png,
+            ImageCompressionQuality = ImageCompressionQuality.High,
+            RasterDpi = 288
+        };
+        document.AsImgs(i => $"image{i}.png", settings);
+
+        System.Console.WriteLine("AsImgs 已生成所有页面");
     }
 
     /// <summary>

@@ -1,4 +1,4 @@
-namespace PDFiumZ.HighLevel;
+namespace PDFiumZ;
 
 /// <summary>
 /// 图像压缩质量等级

@@ -3,7 +3,7 @@ using System.IO;
 using PDFiumZ;
 using SkiaSharp;
 
-namespace PDFiumZ.HighLevel;
+namespace PDFiumZ;
 
 /// <summary>
 /// 表示渲染的 PDF 位图（使用 SkiaSharp）

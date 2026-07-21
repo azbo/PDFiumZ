@@ -3,7 +3,7 @@ using System.IO;
 using PDFiumZ;
 using SkiaSharp;
 
-namespace PDFiumZ.HighLevel;
+namespace PDFiumZ;
 
 /// <summary>
 /// 表示 PDF 中的一个页面（简化版本）

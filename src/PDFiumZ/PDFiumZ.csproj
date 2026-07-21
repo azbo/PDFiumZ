@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net9.0;net10.0;netstandard2.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net9.0;net10.0;netstandard2.1;netstandard2.0</TargetFrameworks>
+    <LangVersion>10.0</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/azbo/PDFiumZ</PackageProjectUrl>
@@ -24,6 +25,7 @@
     <PackageReference Include="bblanchon.PDFium.macOS" Version="152.0.7961" PrivateAssets="analyzers" />
     <PackageReference Include="bblanchon.PDFium.Win32" Version="152.0.7961" PrivateAssets="analyzers" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.301" PrivateAssets="All" />
+    <PackageReference Include="SkiaSharp" Version="4.150.1" />
   </ItemGroup>
   <!-- .NET Standard 2.0/2.1 需要额外的包以支持 Span<T> 和 Memory<T> -->
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1'">
@@ -38,6 +40,27 @@
 		<Compile Include="..\CppSharp\src\Runtime\UTF32Marshaller.cs" Link="CppSharp\UTF32Marshaller.cs" />
 		<Compile Include="..\CppSharp\src\Runtime\UTF8Marshaller.cs" Link="CppSharp\UTF8Marshaller.cs" />
 		<Compile Include="..\CppSharp\src\Runtime\VTables.cs" Link="CppSharp\VTables.cs" />
+	</ItemGroup>
+	<!-- 高层 API (HighLevel) 源码合并进主程序集，namespace 为 PDFiumZ -->
+	<ItemGroup>
+		<Compile Include="..\PDFiumZ.HighLevel\PdfBitmap.cs" Link="HighLevel\PdfBitmap.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\PdfBookmark.cs" Link="HighLevel\PdfBookmark.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\PdfDocument.cs" Link="HighLevel\PdfDocument.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\PdfDocumentOperations.cs" Link="HighLevel\PdfDocumentOperations.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\PdfPage.cs" Link="HighLevel\PdfPage.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\PdfPageCollection.cs" Link="HighLevel\PdfPageCollection.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\PdfTextPage.cs" Link="HighLevel\PdfTextPage.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\Types\ImageCompressionQuality.cs" Link="HighLevel\Types\ImageCompressionQuality.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\Types\ImageFormat.cs" Link="HighLevel\Types\ImageFormat.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\Types\ImageGenerationSettings.cs" Link="HighLevel\Types\ImageGenerationSettings.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\Types\PdfAnnotationSubtype.cs" Link="HighLevel\Types\PdfAnnotationSubtype.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\Types\PdfFormField.cs" Link="HighLevel\Types\PdfFormField.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\Types\PdfFormFieldFlags.cs" Link="HighLevel\Types\PdfFormFieldFlags.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\Types\PdfFormFieldType.cs" Link="HighLevel\Types\PdfFormFieldType.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\Types\PdfLink.cs" Link="HighLevel\Types\PdfLink.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\Types\PdfMetadata.cs" Link="HighLevel\Types\PdfMetadata.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\Types\PdfRenderFlags.cs" Link="HighLevel\Types\PdfRenderFlags.cs" />
+		<Compile Include="..\PDFiumZ.HighLevel\Types\PdfRotation.cs" Link="HighLevel\Types\PdfRotation.cs" />
 	</ItemGroup>
   <ItemGroup>
     <None Include="icon.png" Pack="true" PackagePath="" />

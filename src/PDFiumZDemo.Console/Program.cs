@@ -1,5 +1,5 @@
 using System;
-using PDFiumZ.HighLevel;
+using PDFiumZ;
 
 class Program
 {

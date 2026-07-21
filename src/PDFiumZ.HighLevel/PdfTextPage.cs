@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using PDFiumZ;
 
-namespace PDFiumZ.HighLevel;
+namespace PDFiumZ;
 
 /// <summary>
 /// 表示 PDF 页面的文本内容，提供文本提取和搜索功能

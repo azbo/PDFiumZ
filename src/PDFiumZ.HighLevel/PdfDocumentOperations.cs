@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using PDFiumZ;
 
-namespace PDFiumZ.HighLevel;
+namespace PDFiumZ;
 
 /// <summary>
 /// PDF 文档操作扩展方法

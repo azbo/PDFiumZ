@@ -1,4 +1,4 @@
-namespace PDFiumZ.HighLevel;
+namespace PDFiumZ;
 
 /// <summary>
 /// PDF 文档元数据
